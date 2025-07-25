@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Home } from './home/home';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { Payment } from './payment/payment';
@@ -12,9 +13,11 @@ import { Step5 } from './step-5/step-5';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
+  { path: 'home', component: Home },
+
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'payment', component: Payment },
