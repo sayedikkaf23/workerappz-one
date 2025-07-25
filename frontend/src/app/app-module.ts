@@ -5,9 +5,12 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Login } from './login/login';
 import { Register } from './register/register';
+import { Payment } from './payment/payment';
+import { Step1 } from './step-1/step-1';
+import { Step2 } from './step-2/step-2';
 
 @NgModule({
-  declarations: [App, Login, Register],
+  declarations: [App, Login, Register, Payment, Step1, Step2],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
