@@ -8,9 +8,10 @@ import { Register } from './register/register';
 import { Payment } from './payment/payment';
 import { Step1 } from './step-1/step-1';
 import { Step2 } from './step-2/step-2';
+import { Step3 } from './step-3/step-3';
 
 @NgModule({
-  declarations: [App, Login, Register, Payment, Step1, Step2, ],
+  declarations: [App, Login, Register, Payment, Step1, Step2, Step3, ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
