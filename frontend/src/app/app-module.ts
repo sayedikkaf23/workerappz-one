@@ -10,7 +10,7 @@ import { Step1 } from './step-1/step-1';
 import { Step2 } from './step-2/step-2';
 
 @NgModule({
-  declarations: [App, Login, Register, Payment, Step1, Step2],
+  declarations: [App, Login, Register, Payment, Step1, Step2, ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
