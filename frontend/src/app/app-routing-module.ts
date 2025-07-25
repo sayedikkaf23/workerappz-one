@@ -6,6 +6,7 @@ import { Payment } from './payment/payment';
 import { Step1 } from './step-1/step-1';
 import { Step2 } from './step-2/step-2';
 import { Step3 } from './step-3/step-3';
+import { Step4 } from './step-4/step-4';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'step-1', component: Step1 },
   { path: 'step-2', component: Step2 },
   { path: 'step-3', component: Step3 },
+  { path: 'step-4', component: Step4 },
 ];
 
 @NgModule({
