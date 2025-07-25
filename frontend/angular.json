@@ -28,15 +28,14 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.css"
-            ]
+              "src/assets/css/style.css",
+              "src/assets/css/responsive.css"
+              
+            ],
+            "scripts": ["src/assets/js/custom.js"
+          ]
           },
           "configurations": {
             "production": {

@@ -1,1 +1,111 @@
-<p>login works!</p>
+<body class="p-0 dark-active">
+
+    <div class="login-page">
+        <a class="logo">
+            <img src="assets/images/logo.png" alt="" class="dark-logo">
+            <img src="assets/images/light-logo-img.png" alt="" class="light-logo">
+        </a>
+        <div class="title text-center">
+            <h3>Sign-In for WorkerAppz ONE</h3>
+            <p>Send. Spend. Exchange. All in ONE.</p>
+        </div>
+        <div class="form-box">
+            <form action="">
+                <div class="form-field">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter email address"
+                        required>
+                </div>
+                <div class="form-field password position-relative">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="**********"
+                        required>
+                    <span class="password-hideshow">
+                        <input type="checkbox" onclick="myFunction()">
+                        <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.5757 8.14837C19.858 8.54422 19.9992 8.74219 19.9992 9.03516C19.9992 9.32812 19.858 9.52609 19.5757 9.92194C18.3072 11.7007 15.0677 15.5352 10.7134 15.5352C6.35917 15.5352 3.11968 11.7007 1.8512 9.92194C1.56889 9.52609 1.42773 9.32812 1.42773 9.03516C1.42773 8.74219 1.56889 8.54422 1.8512 8.14837C3.11968 6.36964 6.35917 2.53516 10.7134 2.53516C15.0677 2.53516 18.3072 6.36964 19.5757 8.14837Z"
+                                stroke="currentcolor" stroke-width="1.3" />
+                            <path
+                                d="M13.4992 9.03571C13.4992 7.49716 12.252 6.25 10.7134 6.25C9.1749 6.25 7.92773 7.49716 7.92773 9.03571C7.92773 10.5743 9.1749 11.8214 10.7134 11.8214C12.252 11.8214 13.4992 10.5743 13.4992 9.03571Z"
+                                stroke="currentcolor" stroke-width="1.3" />
+                            <path d="M17 1.03516L3.99924 16.9637" stroke="currentcolor" stroke-width="1.3"
+                                stroke-linecap="round" />
+                        </svg>
+
+                        <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.5767 7.11321C19.859 7.50906 20.0001 7.70704 20.0001 8C20.0001 8.29296 19.859 8.49094 19.5767 8.88679C18.3082 10.6656 15.0687 14.5 10.7144 14.5C6.36015 14.5 3.12066 10.6656 1.85218 8.88679C1.56986 8.49094 1.42871 8.29296 1.42871 8C1.42871 7.70704 1.56986 7.50906 1.85218 7.11321C3.12066 5.33448 6.36015 1.5 10.7144 1.5C15.0687 1.5 18.3082 5.33448 19.5767 7.11321Z"
+                                stroke="currentcolor" stroke-width="1.3" />
+                            <path
+                                d="M13.5001 8.00007C13.5001 6.46152 12.253 5.21436 10.7144 5.21436C9.17588 5.21436 7.92871 6.46152 7.92871 8.00007C7.92871 9.53862 9.17588 10.7858 10.7144 10.7858C12.253 10.7858 13.5001 9.53862 13.5001 8.00007Z"
+                                stroke="currentcolor" stroke-width="1.3" />
+                        </svg>
+
+                    </span>
+                </div>
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <div class="form-check mb-0">
+                            <input type="checkbox" class="form-check-input" id="keeplogged">
+                            <label class="form-check-label" for="keeplogged">Remember me</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="link"><u>Forgot Password?</u></a>
+                    </div>
+                </div>
+                <button type="submit" class="btn w-100">Login</button>
+            </form>
+            <p class="or-text">or</p>
+            <a class="btn w-100 google-btn">
+                <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_550_1466)">
+                        <path
+                            d="M20.7495 11.2055C20.7495 10.3042 20.6797 9.64644 20.5286 8.96436H10.7041V13.0325H16.4708C16.3546 14.0435 15.7268 15.566 14.3316 16.5891L14.312 16.7253L17.4183 19.2463L17.6335 19.2688C19.61 17.3565 20.7495 14.5429 20.7495 11.2055Z"
+                            fill="#4285F4" />
+                        <path
+                            d="M10.7038 21.924C13.529 21.924 15.9008 20.9495 17.6332 19.2687L14.3312 16.589C13.4476 17.2346 12.2617 17.6852 10.7038 17.6852C7.93665 17.6852 5.5881 15.773 4.7509 13.1299L4.62819 13.1408L1.3982 15.7596L1.35596 15.8826C3.07667 19.4635 6.61117 21.924 10.7038 21.924Z"
+                            fill="#34A853" />
+                        <path
+                            d="M4.75131 13.1301C4.53041 12.448 4.40256 11.7171 4.40256 10.962C4.40256 10.2068 4.53041 9.47597 4.73968 8.79389L4.73383 8.64862L1.46336 5.98779L1.35636 6.04111C0.64717 7.52712 0.240234 9.19585 0.240234 10.962C0.240234 12.7281 0.64717 14.3967 1.35636 15.8828L4.75131 13.1301Z"
+                            fill="#FBBC05" />
+                        <path
+                            d="M10.7038 4.23869C12.6686 4.23869 13.994 5.12785 14.7498 5.87089L17.7029 2.85018C15.8892 1.08405 13.529 0 10.7038 0C6.61117 0 3.07667 2.46039 1.35596 6.04135L4.73928 8.79412C5.5881 6.15102 7.93665 4.23869 10.7038 4.23869Z"
+                            fill="#EB4335" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_550_1466">
+                            <rect width="21" height="22" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+
+                Continue with Google</a>
+
+        </div>
+        <p>Don’t have an account? <a routerLink="/register">Register</a></p>
+    </div>
+
+
+    <div class="theme-switch">
+        <div class="icon">
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M16 10.1408C15.0529 10.6465 13.9711 10.9332 12.8224 10.9332C9.09139 10.9332 6.06678 7.90861 6.06678 4.17751C6.06678 3.02884 6.35346 1.94712 6.85918 1C3.50078 1.78709 1 4.80142 1 8.39982C1 12.5973 4.40271 16 8.60018 16C12.1986 16 15.2129 13.4993 16 10.1408Z"
+                    stroke="#023764" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M13.9975 9.66502C13.9975 12.0578 12.0578 13.9975 9.66502 13.9975C7.27225 13.9975 5.33252 12.0578 5.33252 9.66502C5.33252 7.27225 7.27225 5.33252 9.66502 5.33252C12.0578 5.33252 13.9975 7.27225 13.9975 9.66502Z"
+                    stroke="#023764" stroke-width="1.3"></path>
+                <path
+                    d="M9.665 1V2.29975M9.665 17.0303V18.33M15.7918 15.7923L14.8728 14.8732M4.45669 4.45669L3.53763 3.53763M18.33 9.665H17.0303M2.29975 9.665H1M15.7923 3.53773L14.8732 4.45679M4.45712 14.8733L3.53806 15.7924"
+                    stroke="#023764" stroke-width="1.3" stroke-linecap="round"></path>
+            </svg>
+
+        </div>
+        <span class="dark-text">Dark Mode</span>
+        <span class="light-text">Light Mode</span>
+    </div>
+
+
+</body>

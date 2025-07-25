@@ -5,7 +5,7 @@ body{
     font-size: 16px;
     line-height: 140%;
     overflow-x: hidden;
-    padding-top: 90px;
+    /* padding-top: 90px; */
 }
 body.dark-active{
     --primary:#023764;
@@ -177,7 +177,7 @@ body.dark-active .banner_sec{
     margin-left: auto;
     max-width: 365px;
     width: 100%;
-    background-image: url(../images/shadow-img.png);
+    /* background-image: url(../images/shadow-img.png); */
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
@@ -1100,7 +1100,7 @@ ul.step_list li.active .circle span::before {
     background-color: #366690;
     height: 16px;
     width: 16px;
-    background-image: url();
+    /* background-image: url(); */
 }
 ul.step_list li::Before {
     content: "";
