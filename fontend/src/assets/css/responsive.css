@@ -1,0 +1,1108 @@
+@media (max-width:1366px) {
+    .step_document_button {
+        padding: 0px 50px;
+    }
+}
+@media (max-width:1199px) {
+    .banner_wrap h3 {
+    font-size: 45px;
+    }
+    .banner_wrap p {
+        font-size: 20px;
+    }
+    .payment_box .content {
+        padding: 20px 0px 0px 20px;
+    }
+    .payment_box h4 a{
+        font-size: 24px;
+    }
+    .footer_top p {
+        max-width: 300px;
+        font-size: 14px;
+    }
+    .card {
+        padding: 20px;
+    } 
+    .step_form h3 {
+        font-size: 18px;
+    }
+    .card.card-light h3 {
+    font-size: 17px;
+}
+.card.card-light h5 {
+    font-size: 14px;
+}
+.rq_box h4 {
+    font-size: 18px;
+}
+.rq_box .icon {
+    height: 60px;
+    width: 60px;
+}
+.rq_box .icon svg {
+    width: 38px;
+}
+.card.card-light .document_wrap {
+    justify-content: center;
+}
+.basic_detail_wrp .dl_mode_wrap {
+    margin-right: 25px;
+}
+.step3_form .details_wrap {
+    margin: 0;
+}
+.step_button {
+    padding: 0px 50px;
+}
+}
+@media (min-width:992px) and (max-width:1199px) {
+    section.steps_sec .col-lg-2 {
+        width: 25%;
+    }
+    section.steps_sec .col-lg-10 {
+        width: 75%;
+    }
+    .step_form, .dark-active .step_form {
+        max-width: 700px;
+        margin: 0 auto 30px;
+    }
+    .step_button {
+        max-width: 700px;
+    }
+    ul.step_list {
+        padding: 0 10px;
+    }
+    .banner_wrap .cc_box p {
+        font-size: 16px;
+    }
+    .balance_wrp {
+        padding: 40px 50px 40px 50px;
+    }
+    .logo-name h5 {
+        font-size: 16px;
+        margin-left: 12px;
+    }
+    .logo-name img {
+        width: 40px;
+    }
+    .kyc_col_2 .top-header-bar {
+        padding: 15px 25px;
+    }
+    .balance_wrp {
+        padding: 25px;
+    }
+    .currencies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .dashboard-section {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .currencies .currency-box {
+        min-width: auto;
+        padding: 15px;
+        font-size: 16px;
+    }
+    .dashboard-actions {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .account-balance-section .account-box .iban-number {    
+        font-size: 22px;
+    }
+    .account-balance-section .account-box {
+        padding: 20px;
+        min-width: 325px;
+    }
+    .iban-actions {
+        gap: 8px;
+    }
+    .iban-actions .btn {
+        font-size: 12px;
+    }
+    .account-balance-section {
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+}
+@media (max-width:991px) {
+    header ul {
+        margin-left: 0px;
+    }
+        .navbar-toggle {
+        display: block !important;
+    }
+    .nav-wrap {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0px;
+        background-color: white;
+        z-index: 10;
+        align-items: start;
+        padding-top: 35px;
+        max-width: 320px;
+        width: 100%;
+        transform: translateX(100%);
+        transition: all 0.5s;
+        height: 100vh;
+        overflow: auto;
+    }
+    .nav-wrap.active {
+        transform: translateX(0%);
+        box-shadow: -2px 0px 7px 4px #0000001a;
+    }
+    .nav-wrap nav.nav-bar .main-ul-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 30px;
+        margin-top: 20px;
+    }
+    header ul li a {
+        color: #023764;
+    }
+    button.close_btn.menu_toggle_btn.btn {
+        position: absolute;
+        right: 0px;
+        top: 14px;
+        max-width: fit-content;
+        display: block;
+        background: transparent;
+    }
+    .banner_wrap h3 {
+        font-size: 34px;
+    }
+    .banner_wrap p {
+        font-size: 18px;
+    }
+    .banner_wrap .cc_box p {
+        font-size: 15px;
+    }
+    .banner_wrap .cc_box {
+        padding: 20px 25px;
+        max-width: 320px;
+    }
+    .cc_box h5 {
+        font-size: 20px;
+    }
+    .cc_box .select2-container--default .select2-selection--single img {
+        width: 32px;
+    }
+    .cc_box .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-size: 18px;
+    }
+    .cc_box .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 25px;
+        top: -3px;
+        right: 12px;
+        width: 20px;
+    }
+    .cc_box .form {
+        padding: 15px;
+        margin: 18px 0px;
+    }
+    .currency_text .form-control {
+        max-width: 90px;
+        font-size: 15px !important;
+    }
+    .title h3 {
+        font-size: 34px;    
+    }
+    .payment_wrap .pa_btn_wrap {
+        margin-bottom: 50px;
+        gap: 10px;
+    }
+    .payment_wrap a.btn {
+        padding: 0px 20px;
+    }
+    .footer_top .footer-logo img {
+        display: block;
+        margin: 0px auto;
+    }
+    .footer_top p {
+        max-width: 600px;
+        font-size: 14px;
+        text-align: center;
+        margin: 30px auto 0px;
+    }
+    .dark-active input.form-control, .dark-active select.form-select, input.form-control, select.form-select {
+        height: 44px;
+        font-size: 15px;
+    }
+    .step_button {
+        max-width: 100%;
+        margin: 0 auto 20px;
+        padding: 0px 25px;
+    }
+    ul.step_list li h3 {
+        font-size: 15px;
+    }
+    .basic_detail_wrp h4 {
+        font-size: 20px;
+    }
+    .basic_detail_wrp {
+        padding: 18px 20px;
+    }
+    .step_icon {
+        padding: 20px 0;
+    }
+    .step_icon img {
+        max-width: 60px;
+    }
+    ul.step_list {
+        padding: 0 12px;
+    }
+    .step_button .btn {
+        line-height: 44px;
+        padding: 0 28px;
+    }
+    label.form-label, .dark-active label.form-label, label.form-label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    .step1_form form, .dark-active .step1_form form {
+        max-width: 100%;
+    }
+    .rqm_wrap .form-check .form-check-label{
+        padding: 15px;
+        font-size: 15px;
+          gap: 10px;
+    }
+    .rqm_wrap .form-check .image {
+        height: 55px;
+        width: 55px;
+    }
+    .rqm_wrap .form-check .image svg {
+    width: 28px;
+    height: 28px;
+    }
+    .rqm_wrap .form-check .form-check-input[type=radio] {
+        height: 18px;
+        width: 18px;
+        right: 6px;
+        top: 2px;
+    }
+    .rqm_wrap .form-check .form-check-input[type=radio]:checked {
+        background-size: 10px;
+    }
+    html body.dark-active .steps_sec .step_wrp {
+        max-width: 250px;
+    }
+    html .steps_sec .step_wrp{
+        max-width: 250px;
+    }
+    .step_form, .dark-active .step_form {
+    max-width: 100%;
+    margin: 0 auto 20px;
+    padding: 50px 20px 30px;
+    min-height: calc(100vh - 150px);
+}
+    .payment_nav .nav-link {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+    .payment_nav .nav-link span .form-check-input[type=radio] {
+        height: 18px;
+        width: 18px;
+        background-size: 10px;
+    }
+    .payment_nav .nav-link span .image {
+        height: 55px;
+        padding: 0px 10px;
+        max-width: 90px;
+        margin: 0px auto 10px;
+    }
+     .card.card-light .sh_detail_wrap {
+    padding-left: 10px;
+    border: 0px;
+}
+.card.card-light h3 br{
+    display: none;
+}
+.card.card-light .document_wrap .image_box h4 {
+    font-size: 16px;
+}
+.card.card-light .document_wrap .image_box h4 br{
+    display: none;
+}
+.document_wrap .image_box {
+    width: 50%;
+}
+.card.card-light .document_wrap {
+    gap: 10px;
+}
+/* .step_button {
+    padding: 0px 0;
+} */
+.basic_detail_wrp h4 {
+    font-size: 18px;
+}
+
+.balance_wrp {
+    padding: 20px;
+    background-color: #FFF;
+}
+.account-balance-section {
+    flex-wrap: wrap;
+}
+.dashboard-actions {
+    flex-wrap: wrap;
+}
+.dashboard-actions .action-item a {
+    padding: 15px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    min-height: auto;
+    height: 100%;
+}
+.currencies .currency-box {
+    padding: 12px;
+    min-width: auto;
+    font-weight: 500;
+    font-size: 15px;
+    flex: 1;
+}
+.dashboard-actions .action-item .action_img {
+    height: 44px;
+    width: 44px;
+    margin-bottom: 10px;
+    padding: 12px;
+}
+.currencies .currency-box img {
+    height: 35px;
+    width: 35px;
+}
+.dashboard-actions .action-item {
+    width: 100%;
+    font-size: 12px;
+}
+.dashboard-actions {
+    gap: 18px;
+    grid-template-columns: repeat(4,1fr);
+    margin-bottom: 20px;
+}
+.exchange-rent {
+    padding: 20px;
+}
+.card-offer .card-offer-content h4 {
+    font-size: 20px;
+}
+.card-offer .card-offer-content p {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+.logo-name h5 {
+    font-size: 14px;
+    margin-left: 10px;
+}
+.logo-name img {
+    width: 35px;
+}
+.dashboard ul li a {
+    padding: 5px 15px 5px 40px;
+    font-size: 12px;
+}
+.dashboard ul li a::Before, .options ul li a::before {
+    height: 16px;
+    width: 16px;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.kyc_col_1 {
+    width: 270px;
+    padding: 16px;
+}
+.dashboard {
+    padding: 20px 0 0px;
+}
+.kyc_col_2 .top-header-bar {
+    padding: 12px 20px;
+    margin: 0;
+}
+.kyc_col_2 .top-header-bar .left-section h3 {
+    font-size: 16px;
+}
+.kyc_col_2 .top-header-bar .left-section p {
+    font-size: 12px;
+}
+.kyc_col_2 .top-header-bar .user-profile {
+    justify-content: end;
+}
+.header-arrow {
+    height: 25px;
+    width: 25px;
+    left: -14px;
+}
+.account-balance-section .account-box .iban-number {
+    font-size: 18px;
+}
+.account-balance-section .account-box {
+    padding: 20px;
+}
+.transactions-box {
+    padding: 15px;
+}
+.transactions-box th, .transactions-box td {
+    padding: 8px 6px;
+    font-size: 12px;
+}
+.card-offer-img img {
+    max-width: 160px;
+}
+.transactions-box td.date {
+    font-size: 12px;
+}
+.exchange-rent h4 {
+    font-size: 18px;
+}
+.exchange-rent p.eur-text {
+    font-size: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.chart-section .chart-tabs .chart-button {
+    font-size: 11px;
+    padding: 0px 11px;
+    line-height: 28px;
+}
+.header-arrow {
+    height: 20px;
+    width: 20px;
+    left: 164px;
+    padding: 3px;
+    border-radius: 3px;
+    top: 15px;
+}
+.sidebar-collapsein .kyc_col_1 {
+    width: 180px;
+    padding: 18px;
+}
+.sidebar-collapsein {
+    padding-left: 180px;
+}
+body.sidebar-collapsed .kyc_col_1 h5 {
+    margin: 0;
+}
+body.sidebar-collapsed .sidebar-collapsein .kyc_col_1 {
+    width: 76px;
+}
+.sidebar-collapsed .logo-name {
+    justify-content: center;
+}
+.card-offer .card-carousel .item {
+    padding: 20px 20px;
+    border-radius: 8px;
+}
+.card-offer-img img {
+    max-width: 150px;
+}
+.card-offer-content .btn {
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 38px;
+}
+body.sidebar-collapsed .header-arrow {
+    left: 60px;
+}
+.cc_box .frm_btn_wrap {
+    margin: 0;
+}
+}
+@media (max-width:767px) {
+body {
+    padding-top: 74px;
+}
+header .main-header-wrap,
+    html.sticky header .main-header-wrap {
+    padding: 12px 0px;
+}
+section {
+    padding: 50px 0px;
+}
+.banner_sec {
+    padding: 45px 0px;
+}
+.banner_wrap h3 {
+font-size: 25px;
+text-align: center;
+margin-bottom: 12px;
+}
+html .steps_sec .step_content_wrap {
+    padding: 0;
+}
+.steps_sec .step_wrp,
+body.dark-active .steps_sec .step_wrp {
+    background-color: var(--primary);
+    height: auto;
+    position: fixed;
+    width: 100%;
+    max-width: 100%;
+    z-index: 99;
+}
+html .step_form,html .dark-active .step_form {
+    padding: 80px 20px 85px;
+     margin: 0px 0px 20px ;
+     height: 100vh;
+     overflow: auto;
+}
+html .step_button {
+    padding: 20px 20px ;
+    margin: 0px;
+    position: fixed;
+    bottom: 0px;
+    max-width: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: #021c33;
+}
+.banner_wrap p {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.banner_wrap a.btn{
+    display: block;
+    width: fit-content;
+    margin: 0px auto 30px;
+}
+section.banner_sec .banner_wrap .content p {
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+.title h3 {
+    font-size: 25px;
+}
+.payment_wrap .pa_btn_wrap {
+    gap: 12px;
+    flex-direction: column;
+    margin-bottom: 40px;
+    display: inline-flex;
+}
+.payment_wrap {
+    text-align: center;
+}
+.payment_box h4 {
+    font-size: 22px;
+    text-align: left;
+}
+.footer_top {
+    padding: 50px 0px;
+}
+footer p {
+    font-size: 14px;
+    text-align: center;
+}
+.footer_bottom {
+    padding: 15px 0px;
+}
+.footer_top h4 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.footer_top ul li {
+    margin-bottom: 6px;
+}
+.footer_top ul li a {
+    font-size: 14px;
+}
+.login-page {
+    gap: 20px;
+    padding-bottom: 80px;
+}
+.login-page p {
+    font-size: 14px;
+}
+.login-page .logo {
+    position: static;
+    text-align: center;
+}
+.login-page .title h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+.login-page .title p {
+    font-size: 14px;
+}
+.login-page .form-box {
+    padding: 30px 20px;
+}
+.login-page .form-field {
+    margin-bottom: 12px;
+}
+.login-page .form-control {
+    height: 44px;
+    font-size: 14px;
+}
+.login-page .form-box .form-check-input {
+    width: 16px;
+    height: 16px;
+}
+.login-page .form-box .form-check {
+    gap: 8px;
+}
+.login-page .form-box .form-check-label, .login-page .form-box a {
+    font-size: 13px;;
+}
+.login-page .form-box .btn {
+    margin: 25px 0px 22px;
+    line-height: 38px;
+    font-size: 14px;
+}
+.login-page .form-box .form-check-input:checked[type=checkbox] {
+    background-size: 10px;
+}
+.theme-switch {
+    background: #023764;
+    color: var(--white);
+    padding: 0 !important;
+    font-size: 0;
+    margin: 0px;
+    position: static;
+    bottom: auto;
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    margin-left: auto;
+}
+.dark-active .theme-switch{
+    background: #0072bd;
+}
+.theme-switch  .icon, .dark-active .theme-switch .icon {
+    transform: translateX(0);
+    background: transparent;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+    position: static;
+}
+.theme-switch .icon svg {
+    filter: brightness(0) invert(1);
+}
+.dark-active ul.step_list li.active .circle {
+    background-color: transparent;
+    border: 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 11;
+}
+span.mobile {
+    display: flex !important;
+}
+.dark-active ul.step_list li.active .circle span {
+    background-color: transparent !important;
+}
+.basic_detail_wrp {
+    padding: 0px ;
+    border-bottom: 0px ;
+    display: block ;
+}
+.basic_detail_wrp h4,
+.basic_detail_wrp h5 {
+    display: none;
+}
+.basic_detail_wrp .dl_mode_wrap {
+    margin-right: 0px;
+    margin-top: 0px;
+    z-index: 99;
+    padding: 10px 0;
+}
+.basic_detail_wrp .dl_mode_wrap .theme-switch {
+    top: 20px;
+    position: fixed;
+}   
+ul.step_list li {
+    display: none;
+    padding: 10px;
+}
+ul.step_list li.active {
+    display: flex;
+}
+ul.step_list li::before{
+    display: none;
+}
+.step_icon {
+    display: none;
+}
+ul.step_list {
+    padding: 10px 10px;
+    margin: auto;
+}
+.basic_detail_wrp h4 {
+    font-size: 16px;
+}
+.step_form, .dark-active .step_form {
+    margin: 0 auto 20px;
+    padding: 20px 20px 30px;
+    min-height: calc(100vh - 162px);
+}
+.step_button {
+    padding: 0px 20px;
+}
+.step_button .btn {
+    line-height: 40px;
+    padding: 0 24px;
+}
+.step1_form form, .dark-active .step1_form form {
+    max-width: 100%;
+    margin: auto;
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px;
+}
+.dark-active .step1_form input, .dark-active .step1_form select, .step1_form input, .step1_form select {
+    height: 40px;
+    font-size: 13px;
+}
+.step1_form label, .dark-active .step1_form label, .step1_form label {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+.dark-active select.form-select, select.form-select {
+    background-size: 12px;
+}
+.dark-active input[type="date"], input[type="date"] {
+    background-size: 18px;
+    padding-right: 44px;
+}
+ul.step_list li.active .circle span::before {
+    content: "";
+}
+ul.step_list li.active .circle span::after {
+    content: "/6";
+}
+.dark-active input.form-control, .dark-active select.form-select, input.form-control, select.form-select {
+    height: 40px;
+    font-size: 13px;
+}
+.dark-active .banner_sec::Before {
+    display: block;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: -100px;
+    margin: auto;
+}
+.home-page .theme-switch {
+    z-index: 100;
+    right: 60px;
+    border-radius: 8px;
+}
+html body.dark-active .steps_sec .step_wrp {
+    max-width: 100%;
+}
+html  .steps_sec .step_wrp {
+    max-width: 100%;
+}
+label.form-label, .dark-active label.form-label, label.form-label {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+.step_form h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+ul.step_list li.active .circle {
+    background-color: transparent;
+    border: 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 11;
+}
+ul.step_list li.active .circle span {
+    background-color: transparent !important;
+}
+.step4_form .file-upload {
+    margin-bottom: 20px;
+}
+.step4_form .file-upload label {
+    padding: 20px;
+}
+.step4_form .file-upload svg {
+    width: 50px;
+}
+.step4_form .file-upload h5 {
+    font-size: 14px;
+}
+.payment_nav {
+    justify-content: center !important;
+    flex-wrap: wrap;
+    column-gap: 12px;
+    row-gap: 15px;
+}
+.payment_nav li {
+    width: 48%;
+}
+.banner_wrap .cc_box {
+    padding: 20px 20px;
+    border-radius: 12px;
+    margin: 0;
+    max-width: 100%;
+}
+.cc_box h4 {
+    font-size: 22px;
+}
+.banner_wrap .cc_box p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.cc_box .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 16px;
+}
+html .exchange-box  .cc_box .select2-container--default .select2-selection--single img {
+    width: 28px;
+    margin-right: 4px;
+}
+.cc_box .select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 8px;
+    top: -3px;
+}
+.cc_box .select2-container--default .select2-selection--single img {
+    width: 30px;
+}
+.currency_text .form-control {
+    max-width: 100px;
+    font-size: 15px !important;
+}
+.cc_box h5 {
+    font-size: 18px;
+}
+.banner_sec::Before{
+    display: none;
+}
+html .select2-results__option {
+    font-size: 14px;
+    padding: 10px 10px;
+    height: 45px;
+}
+span.select2-dropdown.select2-dropdown--below {
+    width: 150px !important;
+}
+.cc_box .cc_btn {
+    height: 30px;
+    width: 30px;
+    padding: 9px;
+}
+.card.card-light h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+.card.card-light .document_wrap {
+    gap: 0px;
+}
+    .card.card-light .document_wrap .image_box h4 {
+    font-size: 14px;
+}
+.card.card-light .sh_document_wrap{
+    flex-wrap: wrap;
+    gap: 10px 0px;
+}
+.card.card-light .document_wrap img{
+   max-width: 140px;
+   width: 100%;
+}
+body:has(.nav-wrap.active) .theme-switch {
+    z-index: 0;
+}
+.kyc_col_1 {
+    width: 100%;
+    padding: 15px;
+    position: relative;
+    top: 0;
+}
+.dashboard-actions {
+    gap: 16px;
+    grid-template-columns: repeat(2,1fr);
+    margin-bottom: 20px;
+}
+.dark-active .transactions-box {
+    overflow: auto;
+}
+.currencies {
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.sidebar-collapsein .kyc_col_1 {
+    width: 100%;
+    padding: 12px 20px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    background: #023764;
+    z-index: 2;
+    box-shadow: 0 6px 20px 0 #0000000e;
+    gap: 12px;
+}
+.sidebar-collapsein {
+    padding-left: 0;
+}
+.kyc_col_1 .mobil_wrp {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+    transform: translateX(-101%);
+    width: 210px;
+    padding: 18px;
+    background: linear-gradient(180deg, #021C33 0%, #023764 100%);
+}
+.kyc_col_1 .mobil_wrp .dashboard {
+    padding: 0;
+}
+body.menu_show .mobil_wrp {
+    transform: translateX(0%);
+}
+.navbar-icon {
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0072bd;
+    border: 1px solid #2A3B4A;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.navbar-icon .nav-open-icon {
+    display: none;
+}
+.header-arrow{
+    display: none;
+}
+body.menu_show .nav-open-icon {
+    display: block;
+}
+body.menu_show  .nav-close-icon {
+    display: none;
+}
+.logo-name img {
+    width: 45px;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+}
+body.menu_show .overlay {
+    opacity: 0.6;
+    visibility: visible;
+}
+body:not(.dark-active) .mobil_wrp {
+    background: #FFF;
+}
+body:not(.dark-active)  .kyc_col_1 {
+    background: #FFFF;
+}
+body:not(.dark-active) .kyc_col_1 .navbar-icon {
+    color: #FFF;
+    border-color: #0072bd;
+}
+.kyc_col_2 .top-header-bar>* {
+    padding: 0;
+}
+.kyc_col_2 .top-header-bar .left-section {
+    margin-bottom: 18px;
+}
+.balance-box p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.currencies .currency-box {
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    line-height: 120%;
+}
+.currencies .currency-box img {
+    height: 25px;
+    width: 25px;
+}
+.dashboard-actions .action-item a {
+    font-size: 13px;
+}
+.transactions-box td.date {
+    white-space: nowrap;
+}
+.transactions-box td:first-child {
+    min-width: 100px;
+    line-height: normal;
+}
+.transactions-box {
+    padding: 13px;
+    border-radius: 8px;
+}
+.card-offer .card-offer-content h4 {
+    font-size: 17px;
+}
+.card-offer-content .btn {
+    font-size: 12px;
+    line-height: 32px;
+    padding: 0 14px;
+    min-width: auto;
+}
+.card-offer .card-carousel .item {
+    padding: 16px 18px;
+    border-radius: 6px;
+}
+.card-offer-img img {
+    max-width: 90px;
+}
+.exchange-box .cc_box input.form-control {
+    width: 60px;
+    text-align: center;
+}
+.cc_box .form {
+    padding: 12px;
+    border-radius: 6px;
+}
+.dark-active .exchange-box .cc_box .form .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+}
+.exchange-box  .cc_box .select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 0px;
+}
+.kyc_col_2 .top-header-bar {
+    padding: 14px 20px;
+}
+.transactions-box td.rupees {
+    font-size: 12px;
+}
+.transactions-box h4 {
+    font-size: 17px;
+}
+.exchange-rent {
+    padding: 16px;
+}
+}
