@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
+  standalone: false,
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('workerappz-one');
+  protected readonly title = signal('my-project-name');
 }
