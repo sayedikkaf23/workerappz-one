@@ -1,4 +1,4 @@
-<body class="dark-active home-page">
+<div class="dark-active theme-wrapper home-page p-0">
 
     <header>
         <div class="container">
@@ -69,7 +69,7 @@
                                 ONE
                             </h3>
                             <p>Send. Spend. Exchange. All in ONE</p>
-                            <a href="#" class="btn">START TODAY</a>
+                            <a href="/step-1" class="btn">START TODAY</a>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -82,12 +82,25 @@
                                         <label for="" class="form-label">Amount</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <select class="flag-select">
-                                                    <option value="usd" data-image="assets/images/usd.png">USD</option>
-                                                    <option value="sgd" data-image="assets/images/sgd.png">SGD</option>
-                                                    <option value="china" data-image="assets/images/china.png">China</option>
-                                                    <option value="india" data-image="assets/images/india.png">India</option>
-                                                </select>
+                                                <!-- currency-dropdown.component.html -->
+                                                <div class="currency-dropdown">
+                                                <div class="selected" (click)="toggleDropdown()">
+                                                    <img [src]="getSelectedCurrency()?.image" alt="" />
+                                                    <span>{{ getSelectedCurrency()?.text }}</span>
+                                                    <span class="arrow" [class.open]="dropdownOpen">▼</span>
+                                                </div>
+                                                <div class="dropdown-list" *ngIf="dropdownOpen">
+                                                    <div
+                                                    class="dropdown-item"
+                                                    *ngFor="let currency of currencies"
+                                                    (click)="selectCurrency(currency)"
+                                                    >
+                                                    <img [src]="currency.image" alt="" />
+                                                    <span>{{ currency.text }}</span>
+                                                    </div>
+                                                </div>
+                                                </div>
+
                                             </div>
                                             <div class="currency_text">
                                                 <input type="number" class="form-control" value="1000">
@@ -115,12 +128,24 @@
                                         <label for="" class="form-label">Converted Amount</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <select class="flag-select">
-                                                    <option value="usd" data-image="assets/images/usd.png">USD</option>
-                                                    <option value="sgd" data-image="assets/images/sgd.png">SGD</option>
-                                                    <option value="china" data-image="assets/images/china.png">China</option>
-                                                    <option value="india" data-image="assets/images/india.png">India</option>
-                                                </select>
+                                              <!-- currency-dropdown.component.html -->
+                                                <div class="currency-dropdown">
+                                                <div class="selected" (click)="toggleDropdown2()">
+                                                    <img [src]="getSelectedCurrency2()?.image" alt="" />
+                                                    <span>{{ getSelectedCurrency2()?.text }}</span>
+                                                    <span class="arrow" [class.open]="dropdownOpen2">▼</span>
+                                                </div>
+                                                <div class="dropdown-list" *ngIf="dropdownOpen2">
+                                                    <div
+                                                    class="dropdown-item"
+                                                    *ngFor="let currency of currencies"
+                                                    (click)="selectCurrency2(currency)"
+                                                    >
+                                                    <img [src]="currency.image" alt="" />
+                                                    <span>{{ currency.text }}</span>
+                                                    </div>
+                                                </div>
+                                                </div>
                                             </div>
                                             <div class="currency_text">
                                                 <input type="number" class="form-control" value="1000">
@@ -254,7 +279,7 @@
         </div>
     </section>
 
-    <div class="theme-switch">
+    <div class="theme-switch" (click)="toggleDarkMode()">
         <div class="icon">
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -383,4 +408,4 @@
 
 
 
-</body>
+</div>

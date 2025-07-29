@@ -12,10 +12,12 @@ import { Step3 } from './step-3/step-3';
 import { Step4 } from './step-4/step-4';
 import { Step5 } from './step-5/step-5';
 import { Home } from './home/home';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms'; 
 
 @NgModule({
   declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

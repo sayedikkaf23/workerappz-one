@@ -91,11 +91,16 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+               "src/assets/css/style.css",
+              "src/assets/css/responsive.css"
+              
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5d505bee-4330-4caf-8961-94c886717ac1"
   }
 }

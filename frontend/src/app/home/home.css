@@ -1,0 +1,69 @@
+/* currency-dropdown.component.css */
+.currency-dropdown {
+  position: relative;
+  width: 120px; /* adjust width */
+  font-family: Arial, sans-serif;
+  background-color: #F0F5F8 ;
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.selected img {
+  width: 24px;
+  margin-right: 4px;
+  height: 24px;             /* keep it square so it becomes a circle */
+  border-radius: 50%;       /* make it perfectly rounded */
+  object-fit: cover;  
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 12px;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  margin-top: 4px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.dropdown-item img {
+  width: 24px;
+  margin-right: 8px;
+   height: 24px;             /* keep it square so it becomes a circle */
+  border-radius: 50%;       /* make it perfectly rounded */
+  object-fit: cover;  
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}

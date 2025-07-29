@@ -290,7 +290,7 @@
     .rqm_wrap .form-check .form-check-input[type=radio]:checked {
         background-size: 10px;
     }
-    html body.dark-active .steps_sec .step_wrp {
+    html .theme-wrapper.dark-active .steps_sec .step_wrp {
         max-width: 250px;
     }
     html .steps_sec .step_wrp{
@@ -487,10 +487,10 @@
 .sidebar-collapsein {
     padding-left: 180px;
 }
-body.sidebar-collapsed .kyc_col_1 h5 {
+.theme-wrapper.sidebar-collapsed .kyc_col_1 h5 {
     margin: 0;
 }
-body.sidebar-collapsed .sidebar-collapsein .kyc_col_1 {
+.theme-wrapper.sidebar-collapsed .sidebar-collapsein .kyc_col_1 {
     width: 76px;
 }
 .sidebar-collapsed .logo-name {
@@ -508,7 +508,7 @@ body.sidebar-collapsed .sidebar-collapsein .kyc_col_1 {
     font-size: 14px;
     line-height: 38px;
 }
-body.sidebar-collapsed .header-arrow {
+.theme-wrapper.sidebar-collapsed .header-arrow {
     left: 60px;
 }
 .cc_box .frm_btn_wrap {
@@ -516,7 +516,7 @@ body.sidebar-collapsed .header-arrow {
 }
 }
 @media (max-width:767px) {
-body {
+.theme-wrapper {
     padding-top: 74px;
 }
 header .main-header-wrap,
@@ -538,7 +538,7 @@ html .steps_sec .step_content_wrap {
     padding: 0;
 }
 .steps_sec .step_wrp,
-body.dark-active .steps_sec .step_wrp {
+.theme-wrapper.dark-active .steps_sec .step_wrp {
     background-color: var(--primary);
     height: auto;
     position: fixed;
@@ -798,7 +798,7 @@ ul.step_list li.active .circle span::after {
     right: 60px;
     border-radius: 8px;
 }
-html body.dark-active .steps_sec .step_wrp {
+html .theme-wrapper.dark-active .steps_sec .step_wrp {
     max-width: 100%;
 }
 html  .steps_sec .step_wrp {
@@ -913,7 +913,7 @@ span.select2-dropdown.select2-dropdown--below {
    max-width: 140px;
    width: 100%;
 }
-body:has(.nav-wrap.active) .theme-switch {
+.theme-wrapper:has(.nav-wrap.active) .theme-switch {
     z-index: 0;
 }
 .kyc_col_1 {
@@ -973,7 +973,7 @@ body:has(.nav-wrap.active) .theme-switch {
 .kyc_col_1 .mobil_wrp .dashboard {
     padding: 0;
 }
-body.menu_show .mobil_wrp {
+.theme-wrapper.menu_show .mobil_wrp {
     transform: translateX(0%);
 }
 .navbar-icon {
@@ -995,10 +995,10 @@ body.menu_show .mobil_wrp {
 .header-arrow{
     display: none;
 }
-body.menu_show .nav-open-icon {
+.theme-wrapper.menu_show .nav-open-icon {
     display: block;
 }
-body.menu_show  .nav-close-icon {
+.theme-wrapper.menu_show  .nav-close-icon {
     display: none;
 }
 .logo-name img {
@@ -1015,17 +1015,17 @@ body.menu_show  .nav-close-icon {
     opacity: 0;
     visibility: hidden;
 }
-body.menu_show .overlay {
+.theme-wrapper.menu_show .overlay {
     opacity: 0.6;
     visibility: visible;
 }
-body:not(.dark-active) .mobil_wrp {
+.theme-wrapper:not(.dark-active) .mobil_wrp {
     background: #FFF;
 }
-body:not(.dark-active)  .kyc_col_1 {
+.theme-wrapper:not(.dark-active)  .kyc_col_1 {
     background: #FFFF;
 }
-body:not(.dark-active) .kyc_col_1 .navbar-icon {
+.theme-wrapper:not(.dark-active) .kyc_col_1 .navbar-icon {
     color: #FFF;
     border-color: #0072bd;
 }

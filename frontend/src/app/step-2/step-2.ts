@@ -8,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class Step2 {
 
+     isDark = true;
+toggleDarkMode() {
+  this.isDark = !this.isDark;
+  const wrapper = document.querySelector('.theme-wrapper');
+  if (wrapper) {
+    if (this.isDark) {
+      wrapper.classList.add('dark-active');
+    } else {
+      wrapper.classList.remove('dark-active');
+    }
+  }
+}
+
 }
