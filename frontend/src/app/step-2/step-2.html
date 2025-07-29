@@ -96,8 +96,9 @@
                         <div class="row g-lg-4 g-2">
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1" checked="">
+                                    <input class="form-check-input" type="radio" name="requirement"
+                                        id="flexRadioDefault1" [(ngModel)]="selectedRequirement" [value]="'personal'" />
+
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         <div class="image">
                                             <svg width="46" height="46" viewBox="0 0 46 46" fill="none"
@@ -121,8 +122,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault2" checked="">
+                                    <input class="form-check-input" type="radio" name="requirement"
+                                        id="flexRadioDefault2" [(ngModel)]="selectedRequirement" [value]="'business'" />
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         <div class="image">
                                             <svg width="52" height="52" viewBox="0 0 52 52" fill="none"
@@ -160,8 +161,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault3" checked="">
+                                    <input class="form-check-input" type="radio" name="requirement"
+                                        id="flexRadioDefault3" [(ngModel)]="selectedRequirement" [value]="'prepaid'" />
                                     <label class="form-check-label" for="flexRadioDefault3">
                                         <div class="image">
                                             <svg width="46" height="50" viewBox="0 0 46 50" fill="none"
@@ -179,8 +180,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault4" checked="">
+                                    <input class="form-check-input" type="radio" name="requirement"
+                                        id="flexRadioDefault4" [(ngModel)]="selectedRequirement" [value]="'transfer'" />
                                     <label class="form-check-label" for="flexRadioDefault4">
                                         <div class="image">
                                             <svg width="50" height="50" viewBox="0 0 50 50" fill="none"
@@ -217,7 +218,7 @@
                             </a>
                         </div>
                         <div class="col-auto">
-                            <a routerLink="/step-3" class="btn">Next
+                            <a class="btn" (click)="submit()">Next
                                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.8462 6H1" stroke="currentColor" stroke-width="1.4"

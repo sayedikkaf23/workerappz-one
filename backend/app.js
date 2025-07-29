@@ -1,16 +1,23 @@
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
+const onboardingRoutes = require("./routes/onboarding.routes");
 
-// Load environment config
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+// Load .env or .env.production based on NODE_ENV
+const envFile =
+  process.env.NODE_ENV === "production" ? ".env.production" : ".env";
 dotenv.config({ path: path.resolve(__dirname, envFile) });
 
 const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
+
+// Mount all onboarding routes under /api
+app.use("/api", onboardingRoutes);
 
 // MongoDB Connection
 mongoose

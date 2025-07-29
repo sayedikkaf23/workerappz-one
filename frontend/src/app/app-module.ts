@@ -1,6 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';  // <-- Import HttpClientModule
+import { FormsModule } from '@angular/forms'; 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Login } from './login/login';
@@ -13,10 +14,17 @@ import { Step4 } from './step-4/step-4';
 import { Step5 } from './step-5/step-5';
 import { Home } from './home/home';
 import { KycApproved } from './kyc-approved/kyc-approved';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, KycApproved, ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule,    HttpClientModule ,FormsModule,
+    
+ MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
