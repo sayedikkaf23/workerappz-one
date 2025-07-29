@@ -1,3 +1,8 @@
+::ng-deep body {
+  padding-top: 90px;
+ 
+}
+
 /* currency-dropdown.component.css */
 .currency-dropdown {
   position: relative;
