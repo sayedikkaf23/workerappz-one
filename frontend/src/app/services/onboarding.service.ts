@@ -27,6 +27,9 @@ export class OnboardingService {
       payload
     );
   }
+    getNationalities(): Observable<{ value: string; label: string }[]> {
+    return this.http.get<{ value: string; label: string }[]>(`${this.apiUrl}/nationalities/nationalities`);
+  }
 
   constructor(private http: HttpClient) {}
 }

@@ -18,6 +18,7 @@ export class Step1 implements OnInit {
     dob: '1990-01-01'
   };
   message = '';
+  nationalities: { value: string; label: string }[] = [];
 
   constructor(
     private svc: OnboardingService,
@@ -35,7 +36,16 @@ export class Step1 implements OnInit {
         nationality: saved.nationality || '',
         dob: saved.dob ? new Date(saved.dob).toISOString().substr(0,10) : '1990-01-01'
       };
+      
     }
+this.svc.getNationalities().subscribe({
+  next: (data: any) => {
+    this.nationalities = data;
+  },
+  error: () => this.message = 'Failed to load nationalities'
+});
+
+
   }
 
   openDatePicker() {
@@ -57,4 +67,17 @@ export class Step1 implements OnInit {
         }
       });
   }
+   isDark = true;
+toggleDarkMode() {
+  this.isDark = !this.isDark;
+  const wrapper = document.querySelector('.theme-wrapper');
+  if (wrapper) {
+    if (this.isDark) {
+      wrapper.classList.add('dark-active');
+    } else {
+      wrapper.classList.remove('dark-active');
+    }
+  }
+}
+
 }

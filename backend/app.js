@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
 const onboardingRoutes = require("./routes/onboarding.routes");
+const nationalities = require("./routes/nationality.routes");
 
 // Load .env or .env.production based on NODE_ENV
 const envFile =
@@ -18,6 +19,7 @@ app.use(cors());
 
 // Mount all onboarding routes under /api
 app.use("/api", onboardingRoutes);
+app.use("/nationalities", nationalities);
 
 // MongoDB Connection
 mongoose

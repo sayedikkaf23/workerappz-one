@@ -14,17 +14,12 @@ import { Step4 } from './step-4/step-4';
 import { Step5 } from './step-5/step-5';
 import { Home } from './home/home';
 import { KycApproved } from './kyc-approved/kyc-approved';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, KycApproved, ],
-  imports: [BrowserModule, AppRoutingModule,    HttpClientModule ,FormsModule,
-    
- MatDatepickerModule,
-    MatInputModule,
-    MatNativeDateModule],
+  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule,HttpClientModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
