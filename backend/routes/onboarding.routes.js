@@ -1,6 +1,5 @@
-// routes/onboarding.routes.js
-const express    = require("express");
-const router     = express.Router();
+const express = require("express");
+const router = express.Router();
 const controller = require("../controller/onboarding.controller");
 
 // Step 1 endpoint

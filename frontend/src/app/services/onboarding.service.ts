@@ -5,11 +5,15 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingService {
-  private apiUrl = environment.apiUrl; 
+  private apiUrl = environment.apiUrl;
   private cache: any = null;
 
-  setCachedData(data: any) { this.cache = { ...data }; }
-  getCachedData(): any   { return this.cache;    }
+  setCachedData(data: any) {
+    this.cache = { ...data };
+  }
+  getCachedData(): any {
+    return this.cache;
+  }
 
   // Step 1 & update full doc
   saveOrUpdateOnboarding(data: any): Observable<any> {
@@ -20,15 +24,17 @@ export class OnboardingService {
   saveRequirements(payload: {
     _id?: string;
     email?: string;
-    requirements: 'personal'|'business'|'prepaid'|'transfer';
+    requirements: 'personal' | 'business' | 'prepaid' | 'transfer';
   }): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/api/onboarding/requirements`,
       payload
     );
   }
-    getNationalities(): Observable<{ value: string; label: string }[]> {
-    return this.http.get<{ value: string; label: string }[]>(`${this.apiUrl}/nationalities/nationalities`);
+  getNationalities(): Observable<{ value: string; label: string }[]> {
+    return this.http.get<{ value: string; label: string }[]>(
+      `${this.apiUrl}/nationalities/country-risk`
+    );
   }
 
   constructor(private http: HttpClient) {}

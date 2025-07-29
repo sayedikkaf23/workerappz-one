@@ -1,14 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const nationalityController = require('../controller/nationality.controller');
+const nationalityController = require("../controller/nationality.controller");
 
-// Add multiple nationalities (seed data)
-router.post('/nationalities', nationalityController.addNationalities);
+router.post("/country-risk", nationalityController.addCountryRisk);
 
-// Get all nationalities
-router.get('/nationalities', nationalityController.getNationalities);
+router.get("/country-risk", nationalityController.getAllCountryRisks);
 
-// Get all countries
-router.get('/countries', nationalityController.getCountries);
+router.put("/country-risk/:id", nationalityController.updateCountryRisk);
+
+router.delete("/country-risk/:id", nationalityController.deleteCountryRisk);
 
 module.exports = router;
