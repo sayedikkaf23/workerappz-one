@@ -4,5 +4,10 @@ node_modules/
 # Environment files
 .env
 
+
+# Production Environment files
+.env.production
+
 # Logs
 *.log
+
