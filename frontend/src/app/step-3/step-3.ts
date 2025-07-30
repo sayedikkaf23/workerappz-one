@@ -150,6 +150,11 @@ export class Step3 implements OnInit, OnDestroy {
 
     return true; // Form is valid
   }
+getMaxDobDate(): string {
+    const today = new Date();
+    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18));  // Subtract 18 years
+    return minAgeDate.toISOString().split('T')[0];  // Format as YYYY-MM-DD
+}
 
   submitForm() {
      if (!this.validateForm()) {
@@ -162,7 +167,7 @@ export class Step3 implements OnInit, OnDestroy {
       ...this.formData,
       email: cached.email || this.formData.email,
       shareholders: [...this.formData.shareholders],
-      
+
     };
 
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
