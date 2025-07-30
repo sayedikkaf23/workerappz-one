@@ -1,3 +1,4 @@
+
 .theme-wrapper{
     margin: 0;
      font-family: "Poppins", sans-serif;
@@ -2399,4 +2400,57 @@ html .balance-box button {
 
 .chart-graph-placeholder img {
     width: 100%;
+}
+
+/* Light Mode Toastr */
+.toastr-container {
+    --toastr-background: var(--primary); 
+    --toastr-text: var(--white);
+    --toastr-border: var(--primary);
+}
+
+/* Dark Mode Toastr */
+.theme-wrapper.dark-active .toastr-container {
+    --toastr-background: var(--dark); 
+    --toastr-text: var(--white);
+    --toastr-border: var(--white);
+}
+
+/* Toastr Success Message */
+.toastr-container .toast-success {
+    background-color: var(--primary) !important;
+    color: var(--white) !important;
+    border: 1px solid var(--primary) !important;
+}
+
+/* Toastr Error Message */
+.toastr-container .toast-error {
+    background-color: #e74c3c !important;
+    color: #fff !important;
+    border: 1px solid #e74c3c !important;
+}
+
+/* Toastr Info Message */
+.toastr-container .toast-info {
+    background-color: #3498db !important;
+    color: #fff !important;
+    border: 1px solid #3498db !important;
+}
+
+/* Toastr Warning Message */
+.toastr-container .toast-warning {
+    background-color: #f39c12 !important;
+    color: #fff !important;
+    border: 1px solid #f39c12 !important;
+}
+
+/* Customize Toast Position (Optional) */
+.toast-top-right {
+    top: 10px;
+    right: 10px;
+}
+
+.toast-bottom-right {
+    bottom: 10px;
+    right: 10px;
 }

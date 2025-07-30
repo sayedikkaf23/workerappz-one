@@ -1,8 +1,8 @@
-
 import { CountryISO, SearchCountryField } from 'ngx-intl-tel-input';
 import { Component, OnInit } from '@angular/core';
 import { OnboardingService } from '../services/onboarding.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 
 @Component({
   selector: 'app-step-1',
@@ -10,12 +10,10 @@ import { Router } from '@angular/router';
   templateUrl: './step-1.html',
   styleUrl: './step-1.css',
 })
-
-  
 export class Step1 implements OnInit {
-   isDark = true;
-    SearchCountryField = SearchCountryField;  // Assign to use in template
-  CountryISO = CountryISO;  
+  isDark = true;
+  SearchCountryField = SearchCountryField; // Assign to use in template
+  CountryISO = CountryISO;
 
   formData = {
     firstName: '',
@@ -23,14 +21,19 @@ export class Step1 implements OnInit {
     mobileNumber: '',
     email: '',
     nationality: '',
-    dob: this.getCurrentDate(), 
+    dob: '',
   };
   message = '';
   nationalities: { value: string; label: string }[] = [];
 
-  constructor(private svc: OnboardingService, private router: Router) {}
+  constructor(
+    private svc: OnboardingService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
+
     const saved = this.svc.getCachedData();
     if (saved) {
       this.formData = {
@@ -67,32 +70,83 @@ export class Step1 implements OnInit {
     input?.showPicker?.();
   }
 
-  submitForm() {
-    const cached = this.svc.getCachedData() || {};
-
-    const payload = {
-      ...cached,
-      ...this.formData,
-      dob: this.formatDate(this.formData.dob),
-    };
-
-    this.svc.saveOrUpdateOnboarding(payload).subscribe({
-      next: (res) => {
-        this.svc.setCachedData(res.data);
-        this.router.navigate(['/step-2']);
-      },
-      error: (err) => console.error('Error saving step 1:', err),
-    });
+submitForm() {
+   if (!this.formData.firstName) {
+    this.toastr.error('First Name is required');
+    return;
   }
+  if (!this.formData.lastName) {
+    this.toastr.error('Last Name is required');
+    return;
+  }
+  if (!this.formData.mobileNumber) {
+    this.toastr.error('Mobile Number is required');
+    return;
+  }
+  if (!this.formData.email) {
+    this.toastr.error('Email Address is required');
+    return;
+  }
+  if (!this.formData.nationality) {
+    this.toastr.error('Nationality is required');
+    return;
+  }
+  if (!this.formData.dob) {
+    this.toastr.error('Date of Birth is required');
+    return;
+  }
+  const cached = this.svc.getCachedData() || {};
+
+  const payload = {
+    ...cached,
+    ...this.formData,
+    dob: this.formatDate(this.formData.dob),
+  };
+
+  this.svc.saveOrUpdateOnboarding(payload).subscribe({
+    next: (res) => {
+      this.svc.setCachedData(res.data);
+      this.router.navigate(['/step-2']);
+    },
+    error: (err) => {
+      console.error('Error saving step 1:', err);
+
+      // Extract error message from backend response or default to a generic message
+      const errorMessage = err?.error?.error || err?.message || 'Error saving your details';
+
+      // Show the error message with Toastr
+      this.toastr.error(errorMessage);  // Toastr will display the error message
+    },
+  });
+}
+
   toggleDarkMode() {
-  this.isDark = !this.isDark;
-  const wrapper = document.querySelector('.theme-wrapper');
-  if (wrapper) {
-    if (this.isDark) {
-      wrapper.classList.add('dark-active');
-    } else {
-      wrapper.classList.remove('dark-active');
+    this.isDark = !this.isDark;
+    const wrapper = document.querySelector('.theme-wrapper');
+    if (wrapper) {
+      if (this.isDark) {
+        wrapper.classList.add('dark-active');
+      } else {
+        wrapper.classList.remove('dark-active');
+      }
     }
   }
-} 
+  // Validate Date of Birth
+  validateDob() {
+    const today = new Date();
+    const dob = new Date(this.formData.dob);
+    const age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+
+    // Check if the user is under 18 or the DOB is in the future
+    if (dob > today || age < 18 || (age === 18 && m < 0)) {
+      return true; // Invalid DOB
+    }
+    return false; // Valid DOB
+  }
+  getMaxDobDate(): string {
+    const today = new Date();
+    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18));
+    return minAgeDate.toISOString().split('T')[0];
+  }
 }

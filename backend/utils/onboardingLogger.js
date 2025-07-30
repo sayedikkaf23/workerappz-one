@@ -1,11 +1,18 @@
 const CommonDbLog = require("../models/commonDbLog");
 
-const logOnboardingDb = async ({ methodName, request, response, requestedBy }) => {
+const logOnboardingDb = async ({
+  methodName,
+  request,
+  response,
+  requestedBy,
+}) => {
   try {
     const latestLog = await CommonDbLog.findOne().sort({ serialNumber: -1 });
     const serialNumber = latestLog ? latestLog.serialNumber + 1 : 1;
 
-    console.log(`[OnboardingLog] Logging ${methodName} as serial: ${serialNumber}`);
+    console.log(
+      `[OnboardingLog] Logging ${methodName} as serial: ${serialNumber}`
+    );
 
     await CommonDbLog.create({
       serialNumber,
@@ -13,7 +20,7 @@ const logOnboardingDb = async ({ methodName, request, response, requestedBy }) =
       request,
       response,
       requestedBy,
-      dateTime: new Date()
+      dateTime: new Date(),
     });
   } catch (error) {
     console.error("Failed to log CommonDbLog:", error.message);

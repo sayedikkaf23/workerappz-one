@@ -29,3 +29,8 @@ ngx-intl-tel-input {
   overflow-y: auto;
   z-index: 9999;           /* keep it above other elements */
 }
+.error-text {
+  color: red;
+  font-size: 12px;
+}
+

@@ -37,7 +37,7 @@
             >
               <span>3</span>
             </div>
-            <a href="#">
+            <a routerLink="/step-3">
               <h5>Step 3</h5>
               <h3>Business Details</h3>
             </a>
@@ -236,18 +236,15 @@
                     </div>
                     <div class="form-field">
                       <label class="form-label">Nationality</label>
-                      <select
-                        class="form-select"
-                        [(ngModel)]="formData.nationality"
-                        name="nationality"
-                      >
+                     <select
+  class="form-select"
+  [(ngModel)]="shareholder.nationality"
+  name="nationality{{ i }}"
+>
                         <option value="" disabled>Select Nationality</option>
-                        <option
-                          *ngFor="let country of nationalities"
-                          [value]="country.value"
-                        >
-                          {{ country.label }}
-                        </option>
+  <option *ngFor="let country of nationalities" [value]="country.value">
+    {{ country.label }}
+  </option>
                       </select>
                     </div>
                     <div class="form-field">

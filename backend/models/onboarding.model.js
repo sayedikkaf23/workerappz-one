@@ -3,8 +3,14 @@ const mongoose = require("mongoose");
 const onboardingSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  mobileNumber: String,
-  email: { type: String, unique: true, required: true },
+ mobileNumber: {
+    number: String,
+    internationalNumber: String,
+    nationalNumber: String,
+    e164Number: String,
+    countryCode: String,
+    dialCode: String
+  },  email: { type: String, unique: true, required: true },
   nationality: String,
   dob: Date,
 
