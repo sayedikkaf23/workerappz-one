@@ -3,7 +3,6 @@ import { OnboardingService } from '../services/onboarding.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 
-
 @Component({
   selector: 'app-step-3',
   standalone: false,
@@ -28,10 +27,9 @@ export class Step3 implements OnInit, OnDestroy {
     ],
   };
 
-  constructor(private svc: OnboardingService, private router: Router,private toastr: ToastrService) {}
+  constructor(private svc: OnboardingService, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit() {
-
     const cache =
       this.svc.getCachedData() ||
       JSON.parse(localStorage.getItem('onboarding-step3') || 'null');
@@ -50,6 +48,7 @@ export class Step3 implements OnInit, OnDestroy {
           : this.formData.shareholders,
       };
     }
+
     this.svc.getNationalities().subscribe({
       next: (data: any) => {
         this.nationalities = data.map((item: any) => ({
@@ -64,8 +63,6 @@ export class Step3 implements OnInit, OnDestroy {
   toggleDarkMode() {
     this.isDark = !this.isDark;
   }
-
-  
 
   addShareholder() {
     this.formData.shareholders.push({
@@ -100,7 +97,8 @@ export class Step3 implements OnInit, OnDestroy {
       this.formData.shareholders.splice(count);
     }
   }
-    validateForm() {
+
+  validateForm() {
     // Validate email, company name, etc.
     if (!this.formData.email) {
       this.toastr.error('Email is required');
@@ -150,24 +148,24 @@ export class Step3 implements OnInit, OnDestroy {
 
     return true; // Form is valid
   }
-getMaxDobDate(): string {
+
+  getMaxDobDate(): string {
     const today = new Date();
     const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18));  // Subtract 18 years
     return minAgeDate.toISOString().split('T')[0];  // Format as YYYY-MM-DD
-}
+  }
 
   submitForm() {
-     if (!this.validateForm()) {
+    if (!this.validateForm()) {
       return;
     }
-    const cached = this.svc.getCachedData() || {};
 
+    const cached = this.svc.getCachedData() || {};
     const payload = {
       ...cached,
       ...this.formData,
       email: cached.email || this.formData.email,
       shareholders: [...this.formData.shareholders],
-
     };
 
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
@@ -176,7 +174,10 @@ getMaxDobDate(): string {
         localStorage.setItem('onboarding-step3', JSON.stringify(res.data));
         this.router.navigate(['/step-4']);
       },
-      error: (err) => console.error('Error saving step 3:', err),
+      error: (err) => {
+        console.error('Error saving step 3:', err);
+        this.toastr.error('An error occurred while saving the data');
+      },
     });
   }
 
@@ -184,12 +185,10 @@ getMaxDobDate(): string {
     const input = document.getElementById(`dob-${index}`) as HTMLInputElement;
     input?.showPicker?.();
   }
-  
 
   ngOnDestroy() {
     // Cache current state for back/next navigation
     this.svc.setCachedData(this.formData);
     localStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
   }
-  
 }

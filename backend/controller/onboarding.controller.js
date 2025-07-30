@@ -19,15 +19,38 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   } = req.body;
 
   try {
-    let user = await Onboarding.findOne({ email });
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        error: "Email already exists. Please provide a different email.",
-      });
+    // Step 1: Check if the email is being updated
+    if (req.body._id) {
+      // Fetch the existing user to compare the emails
+      const existingUser = await Onboarding.findById(req.body._id);
+      
+      // If the email is being changed, check for duplicates
+      if (existingUser && existingUser.email !== email) {
+        const emailExists = await Onboarding.findOne({ email });
+        if (emailExists) {
+          return res.status(400).json({
+            success: false,
+            error: "Email already exists. Please use a different email address.",
+          });
+        }
+      }
+    } else {
+      // Step 2: Check if the user is trying to create a new account with an existing email
+      const existingUser = await Onboarding.findOne({ email });
+      if (existingUser) {
+        // If user already exists, throw an error
+        return res.status(400).json({
+          success: false,
+          error: "Email already exists. Please use a different email address.",
+        });
+      }
     }
 
+    // Step 3: Process for saving or updating user details
+    let user = await Onboarding.findOne({ email });
+
     if (user) {
+      // If user exists, update the fields
       if (firstName) user.firstName = firstName;
       if (lastName) user.lastName = lastName;
       if (mobileNumber) user.mobileNumber = mobileNumber;
@@ -37,16 +60,15 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
       // Step 3 fields
       if (companyName) user.companyName = companyName;
       if (companyWebsite) user.companyWebsite = companyWebsite;
-      if (countryOfIncorporation)
-        user.countryOfIncorporation = countryOfIncorporation;
+      if (countryOfIncorporation) user.countryOfIncorporation = countryOfIncorporation;
       if (natureOfBusiness) user.natureOfBusiness = natureOfBusiness;
-      if (numberOfShareholders)
-        user.numberOfShareholders = numberOfShareholders;
+      if (numberOfShareholders) user.numberOfShareholders = numberOfShareholders;
       if (shareholders) user.shareholders = shareholders;
 
       user.updatedAt = Date.now();
       await user.save();
     } else {
+      // If user does not exist, create a new user
       user = new Onboarding({
         email,
         firstName,
@@ -100,6 +122,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 exports.saveOnboardingRequirements = async (req, res) => {
   const { _id, email, requirements } = req.body;

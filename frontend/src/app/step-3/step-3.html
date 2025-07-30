@@ -250,13 +250,14 @@
                     <div class="form-field">
                       <label class="form-label">Date of Birth</label>
                       <input
-                        type="date"
-                        id="dob-{{ i }}"
-                        [(ngModel)]="shareholder.dob"
-                        name="dob{{ i }}"
-                        (focus)="openDatePicker(i)"
-                        class="form-control"
-                      />
+    type="date"
+    id="dob-{{ i }}"
+    [(ngModel)]="shareholder.dob"
+    name="dob{{ i }}"
+    [max]="getMaxDobDate()" 
+    (focus)="openDatePicker(i)"
+    class="form-control"
+  />
                     </div>
                     <div class="form-field">
                       <label class="form-label">% Shareholding</label>
