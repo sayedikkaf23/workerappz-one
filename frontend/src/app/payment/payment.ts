@@ -20,4 +20,9 @@ toggleDarkMode() {
   }
 }
 
+  openDatePicker(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.showPicker(); // Explicitly trigger the date picker
+  }
+
 }
