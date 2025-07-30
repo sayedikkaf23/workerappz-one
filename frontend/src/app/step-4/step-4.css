@@ -1,0 +1,11 @@
+.file-item button {
+  background: none;
+  border-radius: 6px;
+  color: #0072BD; /* or any color you want */
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.file-item button:hover {
+  color: #005999;
+}

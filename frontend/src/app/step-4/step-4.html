@@ -82,9 +82,9 @@
                             <div class="col-lg-6">
                                 <h3 class="text-center text-lg-start">Trade License or Incorporation Document</h3>
                                 <div>
-                                    <div class="file-upload">
-                                    <label for="file-upload">
-                                        <input type="file" name="license-incorporation-document" id="license-incorporation-document" class="d-none">
+                                    <div class="file-upload" (dragover)="onDragOver($event)" (drop)="onDrop($event, uploadedTradeLicense)">
+                                    <label for="license-incorporation-document">
+                                        <input type="file" name="license-incorporation-document" id="license-incorporation-document" class="d-none"  (change)="onFileSelected($event, uploadedTradeLicense)">
                                        <svg width="56" height="43" viewBox="0 0 56 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M42.7579 11.7998C41.9754 8.4715 40.0914 5.50525 37.4114 3.38224C34.7314 1.25922 31.4127 0.104004 27.9937 0.104004C24.5747 0.104004 21.256 1.25922 18.576 3.38224C15.896 5.50525 14.012 8.4715 13.2295 11.7998C9.39433 12.278 5.88638 14.2023 3.42215 17.1797C0.957919 20.1571 -0.276673 23.963 -0.0294686 27.82C0.217735 31.6769 1.92808 35.2941 4.75225 37.9325C7.57642 40.571 11.3013 42.0317 15.1662 42.0164H25.6662V23.5014L20.5795 28.5881C20.1335 28.9477 19.5709 29.1306 18.9987 29.102C18.4265 29.0735 17.8848 28.8354 17.4769 28.4332C17.0689 28.031 16.8232 27.4928 16.7865 26.9211C16.7498 26.3494 16.9247 25.7842 17.2779 25.3331L26.3545 16.2564L26.4362 16.1864C26.52 16.106 26.6097 16.0319 26.7045 15.9648L26.9145 15.8481L27.1012 15.7431L27.3579 15.6614H27.5329C27.6842 15.6466 27.8366 15.6466 27.9879 15.6614C28.1314 15.6481 28.2759 15.6481 28.4195 15.6614L28.6529 15.7314L28.8629 15.7898L29.1312 15.9298L29.2595 15.9998C29.39 16.0884 29.5112 16.19 29.6212 16.3031L38.7212 25.3331C38.938 25.5499 39.1099 25.8073 39.2273 26.0905C39.3446 26.3738 39.405 26.6773 39.405 26.9839C39.405 27.2905 39.3446 27.5941 39.2273 27.8774C39.1099 28.1606 38.938 28.418 38.7212 28.6348C38.5044 28.8516 38.247 29.0235 37.9638 29.1409C37.6805 29.2582 37.3769 29.3186 37.0704 29.3186C36.7638 29.3186 36.4602 29.2582 36.1769 29.1409C35.8937 29.0235 35.6363 28.8516 35.4195 28.6348L30.3329 23.5014V42.0164H40.8329C44.6967 42.0287 48.4195 40.5658 51.2413 37.9264C54.0631 35.287 55.7712 31.6701 56.0169 27.8141C56.2625 23.9581 55.0272 20.1537 52.5631 17.1776C50.099 14.2014 46.592 12.2779 42.7579 11.7998Z" fill="#0072BD"/>
                                                 </svg>
@@ -92,13 +92,24 @@
                                         <h5>Choose file or drag and drop here to upload</h5>
                                         <p>JPG, PNG, or PDF less than 20 MB</p>
                                     </label>
+                                    <div class="uploaded-files mt-3" *ngIf="uploadedTradeLicense.length > 0">
+                                        <div class="file-item" *ngFor="let file of uploadedTradeLicense; let i = index">
+                                            <span>{{ file.name }}</span>
+                                               <button type="button" (click)="viewFile(file)">
+                                                <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" (click)="removeFile(i, uploadedTradeLicense)">
+                                                <i class="fas fa-trash"></i>
+                                                </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
                                  <h3 class="text-center text-lg-start">MOA/AOA</h3>
                                 <div>
-                                    <div class="file-upload">
-                                    <label for="file-upload">
-                                        <input type="file" name="moa-aoa-document" id="moa-aoa-document" class="d-none">
+                                    <div class="file-upload" (dragover)="onDragOver($event)" (drop)="onDrop($event, uploadedMoaAoa)">
+                                    <label for="moa-aoa-document">
+                                        <input type="file" name="moa-aoa-document" id="moa-aoa-document"  (change)="onFileSelected($event, uploadedMoaAoa)" class="d-none">
                                        <svg width="56" height="43" viewBox="0 0 56 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M42.7579 11.7998C41.9754 8.4715 40.0914 5.50525 37.4114 3.38224C34.7314 1.25922 31.4127 0.104004 27.9937 0.104004C24.5747 0.104004 21.256 1.25922 18.576 3.38224C15.896 5.50525 14.012 8.4715 13.2295 11.7998C9.39433 12.278 5.88638 14.2023 3.42215 17.1797C0.957919 20.1571 -0.276673 23.963 -0.0294686 27.82C0.217735 31.6769 1.92808 35.2941 4.75225 37.9325C7.57642 40.571 11.3013 42.0317 15.1662 42.0164H25.6662V23.5014L20.5795 28.5881C20.1335 28.9477 19.5709 29.1306 18.9987 29.102C18.4265 29.0735 17.8848 28.8354 17.4769 28.4332C17.0689 28.031 16.8232 27.4928 16.7865 26.9211C16.7498 26.3494 16.9247 25.7842 17.2779 25.3331L26.3545 16.2564L26.4362 16.1864C26.52 16.106 26.6097 16.0319 26.7045 15.9648L26.9145 15.8481L27.1012 15.7431L27.3579 15.6614H27.5329C27.6842 15.6466 27.8366 15.6466 27.9879 15.6614C28.1314 15.6481 28.2759 15.6481 28.4195 15.6614L28.6529 15.7314L28.8629 15.7898L29.1312 15.9298L29.2595 15.9998C29.39 16.0884 29.5112 16.19 29.6212 16.3031L38.7212 25.3331C38.938 25.5499 39.1099 25.8073 39.2273 26.0905C39.3446 26.3738 39.405 26.6773 39.405 26.9839C39.405 27.2905 39.3446 27.5941 39.2273 27.8774C39.1099 28.1606 38.938 28.418 38.7212 28.6348C38.5044 28.8516 38.247 29.0235 37.9638 29.1409C37.6805 29.2582 37.3769 29.3186 37.0704 29.3186C36.7638 29.3186 36.4602 29.2582 36.1769 29.1409C35.8937 29.0235 35.6363 28.8516 35.4195 28.6348L30.3329 23.5014V42.0164H40.8329C44.6967 42.0287 48.4195 40.5658 51.2413 37.9264C54.0631 35.287 55.7712 31.6701 56.0169 27.8141C56.2625 23.9581 55.0272 20.1537 52.5631 17.1776C50.099 14.2014 46.592 12.2779 42.7579 11.7998Z" fill="#0072BD"/>
                                                 </svg>
@@ -106,6 +117,17 @@
                                         <h5>Choose file or drag and drop here to upload</h5>
                                         <p>JPG, PNG, or PDF less than 20 MB</p>
                                     </label>
+                                    <div class="uploaded-files mt-3" *ngIf="uploadedMoaAoa.length">
+                                        <div class="file-item" *ngFor="let file of uploadedMoaAoa; let i = index">
+                                        <span>{{ file.name }}</span>
+                                            <button type="button" (click)="viewFile(file)">
+                                            <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button" (click)="removeFile(i, uploadedMoaAoa)">
+                                            <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
                             </div>
@@ -113,10 +135,10 @@
                                 <h3 class="text-center text-lg-start">Shareholder Documents</h3>
                                 <h5>Passport</h5>
                                  <div>
-                                    <div class="file-upload">
-                                    <label for="file-upload" >
+                                    <div class="file-upload" (dragover)="onDragOver($event)" (drop)="onDrop($event, uploadedPassport)">
+                                    <label for="passport-document" >
                                         <div>
-                                             <input type="file" name="passport-document" id="passport-document" class="d-none">
+                                             <input type="file" name="passport-document" id="passport-document" (change)="onFileSelected($event, uploadedPassport)" class="d-none">
                                        <svg width="56" height="43" viewBox="0 0 56 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M42.7579 11.7998C41.9754 8.4715 40.0914 5.50525 37.4114 3.38224C34.7314 1.25922 31.4127 0.104004 27.9937 0.104004C24.5747 0.104004 21.256 1.25922 18.576 3.38224C15.896 5.50525 14.012 8.4715 13.2295 11.7998C9.39433 12.278 5.88638 14.2023 3.42215 17.1797C0.957919 20.1571 -0.276673 23.963 -0.0294686 27.82C0.217735 31.6769 1.92808 35.2941 4.75225 37.9325C7.57642 40.571 11.3013 42.0317 15.1662 42.0164H25.6662V23.5014L20.5795 28.5881C20.1335 28.9477 19.5709 29.1306 18.9987 29.102C18.4265 29.0735 17.8848 28.8354 17.4769 28.4332C17.0689 28.031 16.8232 27.4928 16.7865 26.9211C16.7498 26.3494 16.9247 25.7842 17.2779 25.3331L26.3545 16.2564L26.4362 16.1864C26.52 16.106 26.6097 16.0319 26.7045 15.9648L26.9145 15.8481L27.1012 15.7431L27.3579 15.6614H27.5329C27.6842 15.6466 27.8366 15.6466 27.9879 15.6614C28.1314 15.6481 28.2759 15.6481 28.4195 15.6614L28.6529 15.7314L28.8629 15.7898L29.1312 15.9298L29.2595 15.9998C29.39 16.0884 29.5112 16.19 29.6212 16.3031L38.7212 25.3331C38.938 25.5499 39.1099 25.8073 39.2273 26.0905C39.3446 26.3738 39.405 26.6773 39.405 26.9839C39.405 27.2905 39.3446 27.5941 39.2273 27.8774C39.1099 28.1606 38.938 28.418 38.7212 28.6348C38.5044 28.8516 38.247 29.0235 37.9638 29.1409C37.6805 29.2582 37.3769 29.3186 37.0704 29.3186C36.7638 29.3186 36.4602 29.2582 36.1769 29.1409C35.8937 29.0235 35.6363 28.8516 35.4195 28.6348L30.3329 23.5014V42.0164H40.8329C44.6967 42.0287 48.4195 40.5658 51.2413 37.9264C54.0631 35.287 55.7712 31.6701 56.0169 27.8141C56.2625 23.9581 55.0272 20.1537 52.5631 17.1776C50.099 14.2014 46.592 12.2779 42.7579 11.7998Z" fill="#0072BD"/>
                                                 </svg>
@@ -126,15 +148,26 @@
                                         <p>JPG, PNG, or PDF less than 20 MB</p>
                                         </div>
                                     </label>
+                                     <div class="uploaded-files mt-3" *ngIf="uploadedPassport.length">
+                                        <div class="file-item" *ngFor="let file of uploadedPassport; let i = index">
+                                        <span>{{ file.name }}</span>
+                                           <button type="button" (click)="viewFile(file)">
+                                            <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button" (click)="removeFile(i, uploadedPassport)">
+                                            <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
 
                                  <h5>National ID</h5>
                                  <div>
-                                    <div class="file-upload">
-                                    <label for="file-upload" >
+                                    <div class="file-upload"(dragover)="onDragOver($event)" (drop)="onDrop($event, uploadedNationalId)">
+                                    <label for="nation-id-document" >
                                         <div>
-                                             <input type="file" name="nation-id-document" id="nation-id-document" class="d-none">
+                                             <input type="file" name="nation-id-document" (change)="onFileSelected($event, uploadedNationalId)" id="nation-id-document" class="d-none">
                                        <svg width="56" height="43" viewBox="0 0 56 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M42.7579 11.7998C41.9754 8.4715 40.0914 5.50525 37.4114 3.38224C34.7314 1.25922 31.4127 0.104004 27.9937 0.104004C24.5747 0.104004 21.256 1.25922 18.576 3.38224C15.896 5.50525 14.012 8.4715 13.2295 11.7998C9.39433 12.278 5.88638 14.2023 3.42215 17.1797C0.957919 20.1571 -0.276673 23.963 -0.0294686 27.82C0.217735 31.6769 1.92808 35.2941 4.75225 37.9325C7.57642 40.571 11.3013 42.0317 15.1662 42.0164H25.6662V23.5014L20.5795 28.5881C20.1335 28.9477 19.5709 29.1306 18.9987 29.102C18.4265 29.0735 17.8848 28.8354 17.4769 28.4332C17.0689 28.031 16.8232 27.4928 16.7865 26.9211C16.7498 26.3494 16.9247 25.7842 17.2779 25.3331L26.3545 16.2564L26.4362 16.1864C26.52 16.106 26.6097 16.0319 26.7045 15.9648L26.9145 15.8481L27.1012 15.7431L27.3579 15.6614H27.5329C27.6842 15.6466 27.8366 15.6466 27.9879 15.6614C28.1314 15.6481 28.2759 15.6481 28.4195 15.6614L28.6529 15.7314L28.8629 15.7898L29.1312 15.9298L29.2595 15.9998C29.39 16.0884 29.5112 16.19 29.6212 16.3031L38.7212 25.3331C38.938 25.5499 39.1099 25.8073 39.2273 26.0905C39.3446 26.3738 39.405 26.6773 39.405 26.9839C39.405 27.2905 39.3446 27.5941 39.2273 27.8774C39.1099 28.1606 38.938 28.418 38.7212 28.6348C38.5044 28.8516 38.247 29.0235 37.9638 29.1409C37.6805 29.2582 37.3769 29.3186 37.0704 29.3186C36.7638 29.3186 36.4602 29.2582 36.1769 29.1409C35.8937 29.0235 35.6363 28.8516 35.4195 28.6348L30.3329 23.5014V42.0164H40.8329C44.6967 42.0287 48.4195 40.5658 51.2413 37.9264C54.0631 35.287 55.7712 31.6701 56.0169 27.8141C56.2625 23.9581 55.0272 20.1537 52.5631 17.1776C50.099 14.2014 46.592 12.2779 42.7579 11.7998Z" fill="#0072BD"/>
                                                 </svg>
@@ -144,15 +177,26 @@
                                         <p>JPG, PNG, or PDF less than 20 MB</p>
                                         </div>
                                     </label>
+                                     <div class="uploaded-files mt-3" *ngIf="uploadedNationalId.length">
+                                        <div class="file-item" *ngFor="let file of uploadedNationalId; let i = index">
+                                        <span>{{ file.name }}</span>
+                                        <button type="button" (click)="viewFile(file)">
+                                        <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" (click)="removeFile(i, uploadedNationalId)">
+                                        <i class="fas fa-trash"></i>
+                                        </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
 
                                 <h5>Residence Proof</h5>
                                  <div>
-                                    <div class="file-upload">
-                                    <label for="file-upload" >
+                                    <div class="file-upload" (dragover)="onDragOver($event)"(drop)="onDrop($event, uploadedResidenceProof)">
+                                    <label for="residence-proof" >
                                         <div>
-                                             <input type="file" name="residence-proof" id="residence-proof" class="d-none">
+                                             <input type="file" name="residence-proof" id="residence-proof" class="d-none" (change)="onFileSelected($event, uploadedResidenceProof)">
                                        <svg width="56" height="43" viewBox="0 0 56 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M42.7579 11.7998C41.9754 8.4715 40.0914 5.50525 37.4114 3.38224C34.7314 1.25922 31.4127 0.104004 27.9937 0.104004C24.5747 0.104004 21.256 1.25922 18.576 3.38224C15.896 5.50525 14.012 8.4715 13.2295 11.7998C9.39433 12.278 5.88638 14.2023 3.42215 17.1797C0.957919 20.1571 -0.276673 23.963 -0.0294686 27.82C0.217735 31.6769 1.92808 35.2941 4.75225 37.9325C7.57642 40.571 11.3013 42.0317 15.1662 42.0164H25.6662V23.5014L20.5795 28.5881C20.1335 28.9477 19.5709 29.1306 18.9987 29.102C18.4265 29.0735 17.8848 28.8354 17.4769 28.4332C17.0689 28.031 16.8232 27.4928 16.7865 26.9211C16.7498 26.3494 16.9247 25.7842 17.2779 25.3331L26.3545 16.2564L26.4362 16.1864C26.52 16.106 26.6097 16.0319 26.7045 15.9648L26.9145 15.8481L27.1012 15.7431L27.3579 15.6614H27.5329C27.6842 15.6466 27.8366 15.6466 27.9879 15.6614C28.1314 15.6481 28.2759 15.6481 28.4195 15.6614L28.6529 15.7314L28.8629 15.7898L29.1312 15.9298L29.2595 15.9998C29.39 16.0884 29.5112 16.19 29.6212 16.3031L38.7212 25.3331C38.938 25.5499 39.1099 25.8073 39.2273 26.0905C39.3446 26.3738 39.405 26.6773 39.405 26.9839C39.405 27.2905 39.3446 27.5941 39.2273 27.8774C39.1099 28.1606 38.938 28.418 38.7212 28.6348C38.5044 28.8516 38.247 29.0235 37.9638 29.1409C37.6805 29.2582 37.3769 29.3186 37.0704 29.3186C36.7638 29.3186 36.4602 29.2582 36.1769 29.1409C35.8937 29.0235 35.6363 28.8516 35.4195 28.6348L30.3329 23.5014V42.0164H40.8329C44.6967 42.0287 48.4195 40.5658 51.2413 37.9264C54.0631 35.287 55.7712 31.6701 56.0169 27.8141C56.2625 23.9581 55.0272 20.1537 52.5631 17.1776C50.099 14.2014 46.592 12.2779 42.7579 11.7998Z" fill="#0072BD"/>
                                                 </svg>
@@ -162,6 +206,17 @@
                                         <p>JPG, PNG, or PDF less than 20 MB</p>
                                         </div>
                                     </label>
+                                     <div class="uploaded-files mt-3" *ngIf="uploadedResidenceProof.length">
+                                        <div class="file-item" *ngFor="let file of uploadedResidenceProof; let i = index">
+                                        <span>{{ file.name }}</span>
+                                         <button type="button" (click)="viewFile(file)">
+                                            <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button" (click)="removeFile(i, uploadedResidenceProof)">
+                                            <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
                             </div>
