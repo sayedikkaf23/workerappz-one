@@ -1,7 +1,6 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';  // <-- Import HttpClientModule
-import { FormsModule } from '@angular/forms'; 
+import { HttpClientModule } from '@angular/common/http'; 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Login } from './login/login';
@@ -15,11 +14,14 @@ import { Step5 } from './step-5/step-5';
 import { Home } from './home/home';
 import { KycApproved } from './kyc-approved/kyc-approved';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, KycApproved, ],
-  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule,HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule, ReactiveFormsModule,HttpClientModule, NgxIntlTelInputModule, BrowserAnimationsModule ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

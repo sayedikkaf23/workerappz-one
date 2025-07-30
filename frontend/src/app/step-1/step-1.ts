@@ -1,3 +1,5 @@
+
+import { CountryISO, SearchCountryField } from 'ngx-intl-tel-input';
 import { Component, OnInit } from '@angular/core';
 import { OnboardingService } from '../services/onboarding.service';
 import { Router } from '@angular/router';
@@ -8,7 +10,13 @@ import { Router } from '@angular/router';
   templateUrl: './step-1.html',
   styleUrl: './step-1.css',
 })
+
+  
 export class Step1 implements OnInit {
+   isDark = true;
+    SearchCountryField = SearchCountryField;  // Assign to use in template
+  CountryISO = CountryISO;  
+
   formData = {
     firstName: '',
     lastName: '',
@@ -76,13 +84,15 @@ export class Step1 implements OnInit {
       error: (err) => console.error('Error saving step 1:', err),
     });
   }
-
-  isDark = true;
   toggleDarkMode() {
-    this.isDark = !this.isDark;
-    const wrapper = document.querySelector('.theme-wrapper');
-    if (wrapper) {
-      wrapper.classList.toggle('dark-active', this.isDark);
+  this.isDark = !this.isDark;
+  const wrapper = document.querySelector('.theme-wrapper');
+  if (wrapper) {
+    if (this.isDark) {
+      wrapper.classList.add('dark-active');
+    } else {
+      wrapper.classList.remove('dark-active');
     }
   }
+} 
 }

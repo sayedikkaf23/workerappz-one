@@ -1,0 +1,31 @@
+/* In src/styles.scss or similar global stylesheet */
+ngx-intl-tel-input {
+  display: block; /* Important: Make it a block element to properly contain its children */
+  position: relative; /* THIS IS KEY: Allows absolute children to position relative to it */
+  width: 100%; /* Ensure it takes full width within its grid column */
+}
+
+/* If you are using a component's stylesheet (e.g., step-1.component.scss)
+   and need to pierce encapsulation: */
+::ng-deep ngx-intl-tel-input {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+
+/* Adjust the flag dropdown part */
+::ng-deep .ngx-tel-input .iti__flag-container {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  cursor: pointer;
+}
+
+::ng-deep .ngx-tel-input .iti__country-list {
+  max-height: 250px;       /* adjust as you prefer */
+  overflow-y: auto;
+  z-index: 9999;           /* keep it above other elements */
+}
