@@ -12,6 +12,9 @@ ngx-intl-tel-input {
   position: relative;
   width: 100%;
 }
+::ng-deep ngx-intl-tel-input .iti{
+  width: 100%;
+}
 ::ng-deep .ngx-tel-input .selected-dial-code {
   color: rgba(255, 255, 255, 0.4) !important;
 }
