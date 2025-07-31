@@ -17,11 +17,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, KycApproved, ],
-  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule, ReactiveFormsModule,HttpClientModule, NgxIntlTelInputModule, BrowserAnimationsModule ],
+  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule, ReactiveFormsModule,HttpClientModule, NgxIntlTelInputModule, BrowserAnimationsModule,    ToastrModule.forRoot({ 
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true,
+      closeButton: true,
+    }), ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

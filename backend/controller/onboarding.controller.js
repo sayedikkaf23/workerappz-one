@@ -124,3 +124,107 @@ exports.saveOnboardingRequirements = async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 };
+
+exports.addOrUpdateUploadedFiles = async (req, res) => {
+  const { email } = req.body;
+  const {
+    uploadedTradeLicense,
+    uploadedMoaAoa,
+    uploadedPassport,
+    uploadedNationalId,
+    uploadedResidenceProof
+  } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ success: false, error: "Email is required" });
+  }
+
+  try {
+    let user = await Onboarding.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+
+    // Only update fields provided in request
+    if (uploadedTradeLicense) user.uploadedTradeLicense = uploadedTradeLicense;
+    if (uploadedMoaAoa) user.uploadedMoaAoa = uploadedMoaAoa;
+    if (uploadedPassport) user.uploadedPassport = uploadedPassport;
+    if (uploadedNationalId) user.uploadedNationalId = uploadedNationalId;
+    if (uploadedResidenceProof) user.uploadedResidenceProof = uploadedResidenceProof;
+
+    user.updatedAt = Date.now();
+    await user.save();
+
+    // Log action
+    await logOnboardingDb({
+      methodName: "addOrUpdateUploadedFiles",
+      request: req.body,
+      response: { success: true, data: user },
+      requestedBy: email
+    });
+
+    return res.json({ success: true, data: user });
+  } catch (err) {
+    console.error("Error updating uploaded files:", err);
+
+    await logOnboardingDb({
+      methodName: "addOrUpdateUploadedFiles",
+      request: req.body,
+      response: { success: false, error: err.message },
+      requestedBy: email
+    });
+
+    return res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.getOnboardingByEmail = async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    const user = await Onboarding.findOne({ email });
+
+     if (!user) {
+      const response = { success: false, error: "User not found" };
+      await logOnboardingDb({
+        methodName: "getOnboardingByEmail",
+        request: req.query,
+        response,
+        requestedBy: email
+      });
+      return res.status(404).json(response);
+    }
+
+    const response = { success: true, data: user };
+
+    // Log success
+    await logOnboardingDb({
+      methodName: "getOnboardingByEmail",
+      request: req.query,
+      response,
+      requestedBy: email
+    });
+
+    return res.json(response);
+
+  } catch (err) {
+    console.error('Error fetching onboarding data:', err);
+
+    const response = { success: false, error: err.message };
+
+    // Log error
+    await logOnboardingDb({
+      methodName: "getOnboardingByEmail",
+      request: req.query,
+      response,
+      requestedBy: email || "unknown"
+    });
+
+    return res.status(500).json(response);
+  }
+};

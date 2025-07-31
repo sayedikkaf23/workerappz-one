@@ -20,7 +20,7 @@ export class Step1 implements OnInit {
   formData = {
     firstName: '',
     lastName: '',
-    mobileNumber: '',
+    mobileNumber: null,
     email: '',
     nationality: '',
     dob: this.getCurrentDate(), 

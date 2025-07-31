@@ -97,27 +97,27 @@
                                     <h3>Enter basic details</h3>
                                     <div class="row row-cols-md-3 row-cols-2 g-3">
                                         <div class="col">
-                                            <h5>John</h5>
+                                            <h5>{{ onboardingData?.firstName || '-' }}</h5>
                                             <p>First Name</p>
                                         </div>
                                         <div class="col">
-                                            <h5>Smith</h5>
+                                            <h5>{{ onboardingData?.lastName || '-' }}</h5>
                                             <p>Last Name</p>
                                         </div>
                                         <div class="col">
-                                            <h5>+91 98765 43210</h5>
+                                            <h5>{{ onboardingData?.mobileNumber || '-' }}</h5>
                                             <p>Mobile Number</p>
                                         </div>
                                         <div class="col">
-                                            <h5>johnsmith@gmail.com</h5>
+                                            <h5>{{ onboardingData?.email || '-' }}</h5>
                                             <p>Email Address</p>
                                         </div>
                                         <div class="col">
-                                            <h5>Lorem ipsum</h5>
+                                            <h5>{{ onboardingData?.nationality || '-' }}</h5>
                                             <p>Nationality</p>
                                         </div>
                                         <div class="col">
-                                            <h5>28-04-2025 </h5>
+                                            <h5>{{ onboardingData?.dob | date:'dd-MM-yyyy' }}</h5>
                                             <p>Date of Birth</p>
                                         </div>
                                     </div>
@@ -170,47 +170,48 @@
                                         <div class="col-lg-6 col-12">
                                             <div class="row row-cols-2 g-3">
                                                 <div class="col">
-                                                    <h5>Lorem ipsum</h5>
+                                                    <h5>{{ onboardingData?.companyName || '-' }}</h5>
                                                     <p>Name of Company</p>
                                                 </div>
                                                 <div class="col">
-                                                    <h5>Lorem ipsum</h5>
-                                                    <p>Name of Company</p>
+                                                    <h5>{{ onboardingData?.companyWebsite || '-' }}</h5>
+                                                    <p>Company Website</p>
                                                 </div>
                                                 <div class="col">
-                                                    <h5>Lorem ipsum</h5>
-                                                    <p>Name of Company</p>
+                                                    <h5>{{ onboardingData?.countryOfIncorporation || '-' }}</h5>
+                                                    <p>Country of Incorporation</p>
                                                 </div>
                                                 <div class="col">
-                                                    <h5>Lorem ipsum</h5>
-                                                    <p>Name of Company</p>
+                                                    <h5>{{ onboardingData?.natureOfBusiness || '-' }}</h5>
+                                                    <p>Nature of Business</p>
                                                 </div>
                                                 <div class="col">
-                                                    <h5>123456</h5>
-                                                    <p>Number of Shareholders </p>
+                                                    <h5>{{ onboardingData?.numberOfShareholders || '-' }}</h5>
+                                                    <p>Number of Shareholders</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-12 sh_detail_wrap">
+                                        <div class="col-lg-6 col-12 sh_detail_wrap" *ngIf="onboardingData?.shareholders?.length">
                                             <h3>Shareholder Details </h3>
-                                            <div class="row row-cols-2 g-3">
-                                                <div class="col">
-                                                    <h5>John</h5>
-                                                    <p>First Name</p>
-                                                </div>
-                                                <div class="col">
-                                                    <h5>Lorem ipsum</h5>
+                                            <div class="row row-cols-2 g-3" *ngFor="let sh of onboardingData.shareholders">
+                                                    <div class="col">
+                                                    <h5>{{ sh.fullName || '-' }}</h5>
+                                                    <p>Full Name</p>
+                                                    </div>
+                                                    <div class="col">
+                                                    <h5>{{ sh.nationality || '-' }}</h5>
                                                     <p>Nationality</p>
-                                                </div>
-                                                <div class="col">
-                                                    <h5>28-04-2025</h5>
-                                                    <p>Date of Birth </p>
-                                                </div>
-                                                <div class="col">
-                                                    <h5>20%</h5>
-                                                    <p>% shareholding in the company.</p>
-                                                </div>
+                                                    </div>
+                                                    <div class="col">
+                                                    <h5>{{ sh.dob | date:'dd-MM-yyyy' }}</h5>
+                                                    <p>Date of Birth</p>
+                                                    </div>
+                                                    <div class="col">
+                                                    <h5>{{ sh.shareholdingPercentage }}%</h5>
+                                                    <p>% shareholding in the company</p>
+                                                    </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

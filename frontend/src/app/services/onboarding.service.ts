@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 export class OnboardingService {
   private apiUrl = environment.apiUrl;
   private cache: any = null;
+  constructor(private http: HttpClient) {}
 
   setCachedData(data: any) {
     this.cache = { ...data };
@@ -37,5 +38,21 @@ export class OnboardingService {
     );
   }
 
-  constructor(private http: HttpClient) {}
+    getPresignedUrl(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file); // Add the file to the form data
+  
+    // Send the POST request with FormData
+    return this.http.post(`${this.apiUrl}/api/upload-file`, formData);
+  }
+
+    addOrUpdateUploadedFiles(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/onboarding/addFiles`, payload);
+  }
+
+   getOnboardingDetailsByEmail(email: string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get(`${this.apiUrl}/api/onboarding/getDetails`, { params });
+  }
+  
 }
