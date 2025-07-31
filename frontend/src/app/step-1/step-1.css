@@ -12,7 +12,9 @@ ngx-intl-tel-input {
   position: relative;
   width: 100%;
 }
-
+::ng-deep .ngx-tel-input .selected-dial-code {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
 
 /* Adjust the flag dropdown part */
 ::ng-deep .ngx-tel-input .iti__flag-container {
@@ -24,6 +26,12 @@ ngx-intl-tel-input {
   cursor: pointer;
 }
 
+
+.iti .selected-dial-code {
+  color: rgba(2, 28, 51, 0.4) !important;
+}
+
+
 ::ng-deep .ngx-tel-input .iti__country-list {
   max-height: 250px;       /* adjust as you prefer */
   overflow-y: auto;
@@ -32,5 +40,15 @@ ngx-intl-tel-input {
 .error-text {
   color: red;
   font-size: 12px;
+}
+
+::ng-deep .ngx-tel-input .dropdown-menu {
+    background-color: #023764;
+}
+
+::ng-deep .ngx-tel-input .iti__country-name {
+ 
+  color: #fff; /* Change text color to white */
+  
 }
 
