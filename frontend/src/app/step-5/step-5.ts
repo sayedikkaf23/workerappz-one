@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OnboardingService } from '../services/onboarding.service';
 
 @Component({
   selector: 'app-step-5',
@@ -9,6 +10,24 @@ import { Component } from '@angular/core';
 export class Step5 {
 
      isDark = true;
+     onboardingData: any;
+
+  constructor(private onboardingService: OnboardingService) {}
+
+  ngOnInit() {
+    const email = this.onboardingService.getCachedData()?.email || '';
+    this.onboardingService.getOnboardingDetailsByEmail(email).subscribe(
+      (response) => {
+        if (response.success) {
+          this.onboardingData = response.data;
+          console.log('Fetched onboarding data:', this.onboardingData);
+        }
+      },
+      (error) => {
+        console.error('Error fetching onboarding data:', error);
+      }
+    );
+  }
 toggleDarkMode() {
   this.isDark = !this.isDark;
   const wrapper = document.querySelector('.theme-wrapper');

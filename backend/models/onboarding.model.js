@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const fileSchema = new mongoose.Schema({
+  name: String,
+  type: String,
+  url: String,
+}, { _id: false });
+
 const onboardingSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
@@ -37,6 +43,13 @@ const onboardingSchema = new mongoose.Schema({
       shareholdingPercentage: Number,
     },
   ],
+
+    // File uploads
+  uploadedTradeLicense: [fileSchema],
+  uploadedMoaAoa: [fileSchema],
+  uploadedPassport: [fileSchema],
+  uploadedNationalId: [fileSchema],
+  uploadedResidenceProof: [fileSchema],
 
   updatedAt: { type: Date, default: Date.now },
 });
