@@ -1,1 +1,57 @@
-<p>roles works!</p>
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+
+<div class="role-page" *ngIf="!isLoading">
+  <div class="role-header">
+
+    <h2>Add Role</h2>
+
+    <a class="back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+</div>
+  
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label for="roleName">Role Name</label>
+        <input type="text" id="roleName" [(ngModel)]="roleName" name="roleName" required>
+      </div>
+    
+      <div>
+        <label for="status">Status</label>
+        <select id="status" [(ngModel)]="status" name="status">
+          <option value="">Select Status</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      </div>
+    
+      <div>
+        <label>Permissions:</label>
+        <div class="permissions-list mt-1">
+          <div class="permission-item mb-2" *ngFor="let permission of allPermissions">
+           
+            <div class="checkbox-container">
+              <span class="permission-label">{{ permission }}</span>
+              <input 
+                type="checkbox" 
+                [value]="permission"
+                (change)="onPermissionChange($event)" 
+                [checked]="selectedPermissions.includes(permission)"
+              >
+            </div>
+           
+          </div>
+        </div>
+      </div>
+      
+      
+    
+      <button type="submit">Submit</button>
+    </form>
+</div>

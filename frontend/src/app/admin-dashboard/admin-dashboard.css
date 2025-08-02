@@ -10,7 +10,7 @@
         min-height: calc(100vh - 60px);
     }
 @media (max-width: 768px) {
-    .main-content {
+    .dashboard-container {
         margin-left: 0px;
     }
 }

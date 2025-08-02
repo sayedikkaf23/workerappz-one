@@ -1,1 +1,43 @@
-<p>show-ipaddress works!</p>
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading"><app-spinner></app-spinner></div>
+
+<div class="topup-page" *ngIf="!isLoading">
+  <form (ngSubmit)="onSubmit()">
+    <!-- TITLE -->
+    <div class="full-width">
+      <h2>Add IP Address</h2>
+    </div>
+
+    <!-- MAC ADDRESS -->
+    <div>
+      <label for="mac_address">
+        MAC Address<span class="required">*</span>
+      </label>
+      <input id="mac_address" name="mac_address" type="text" [(ngModel)]="mac_address" required />
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div>
+      <label for="description">
+        Description
+      </label>
+      <input id="description" name="description" type="text" [(ngModel)]="description" />
+    </div>
+
+    <!-- STATUS SWITCH -->
+    <div>
+      <label for="status">Status</label>
+      <label class="switch">
+        <input id="status" type="checkbox" name="status" [(ngModel)]="isActive" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="full-width">
+      <button type="submit">Send</button>
+    </div>
+  </form>
+</div>

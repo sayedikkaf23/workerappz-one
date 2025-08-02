@@ -13,6 +13,9 @@
     .main-content {
         margin-left: 0px;
     }
+    .dashboard-container {
+        margin-left: 0px !important;
+    }
 }
 /* Table Container Styling */
 .table-container {
