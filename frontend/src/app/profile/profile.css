@@ -1,0 +1,131 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+/* Modal Container */
+.mat-dialog-container {
+    max-width: 900px; /* Wider modal */
+    width: 95%; /* Responsive width */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Title */
+  .dialog-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Description */
+  .dialog-description {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Form Grid */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 1.5rem; /* Space between items */
+  }
+  
+  /* Full-Width Fields (e.g., Address) */
+  .form-group.full-width {
+    grid-column: span 2; /* Span both columns */
+  }
+  
+  /* Form Group */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .input-field:focus,
+  .textarea-field:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .textarea-field {
+    resize: none;
+    height: 100px;
+  }
+  
+ /* Actions Section */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  /* Close Button */
+  .close-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    /*Morerounded*/background-color: #e0e0e0;
+    /*Neutralgray*/color: #333;
+    /*Darktext*/border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+   
+}
+  
+  .close-button:hover {
+    background-color: #d6d6d6; /* Slightly darker on hover */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Save Button */
+ 
+  .save-button {
+    /* background: linear-gradient(45deg, #042a52, #003f8a);
+    color:#fff */
+
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    /*Morerounded*/background-color: #e0e0e0;
+    /*Neutralgray*/color: #333;
+    /*Darktext*/border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+  

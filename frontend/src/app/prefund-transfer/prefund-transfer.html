@@ -1,0 +1,107 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" *ngIf="!isLoading">
+  <!-- Prefund Transaction History Section -->
+  <div class="cards-actions">
+    <div class="user-section">
+      <h2><i class="fas fa-list-alt"></i> Customer Purchase Transaction History</h2>
+    </div>
+
+    <div class="filter-export-buttons">
+      <div class="search-container">
+<input
+  type="text"
+  placeholder="Search..."
+  [(ngModel)]="searchTerm"
+  (input)="onSearch()"
+>        <button class="search-button" (click)="onSearch()"><i class="fas fa-search"></i> SEARCH</button>
+      </div>
+      
+      <!-- Date Filter Section (new) -->
+      <div class="date-filter">
+        <label for="fromDate">From:</label>
+        <input id="fromDate" type="date" [(ngModel)]="fromDate">
+        <label for="toDate">To:</label>
+        <input id="toDate" type="date" [(ngModel)]="toDate">
+        <button class="filter-button" (click)="applyDateFilter()">
+          <i class="fas fa-filter"></i> Filter by Date
+        </button>
+      </div>
+      
+      <button class="export-button" (click)="exportToExcel()">
+        <i class="fas fa-file-export"></i> EXPORT
+      </button>
+    </div>
+
+    <!-- Displaying Results Information -->
+    <!-- <span class="display-info">
+      Displaying results for the: <strong>Previous 7 Days</strong>
+    </span> -->
+    <!-- Displaying Results Information -->
+<div class="results-info">
+  <i class="fas fa-info-circle"></i>
+  Displaying <strong>{{ filteredTransactions.length }}</strong> result(s)
+  <!-- <ng-container *ngIf="fromDate || toDate">
+    from <strong>{{ fromDate || '...' }}</strong> to <strong>{{ toDate || '...' }}</strong>
+  </ng-container>
+  <ng-container *ngIf="!fromDate && !toDate">
+    for:  -->
+    <strong>All Time</strong>
+  <!-- </ng-container> -->
+</div>
+
+
+    <!-- Prefund Transactions Data Table -->
+    <div class="table-container">
+      <table class="cards-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Merchant Name</th>
+            <th>Amount</th>
+            <th>Balance</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Transaction Currency</th>
+            <th>Total transaction amount</th>
+            <th>Transaction network</th>
+            <th>Partner Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of paginatedTransactions">
+            <td>{{ transaction.userEmail  }}</td>
+            <td>{{ transaction.details.merchant_name }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.balance }}</td>
+            <td>{{ transaction.type }}</td>
+            <td>{{ transaction.status }}</td>
+            <!-- Use Angular’s date pipe to display the date in a friendly format -->
+            <td>{{ transaction.date | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ transaction.details.transaction_currency }}</td>
+            <td>{{ transaction.details.total_transaction_amount }}</td>
+            <td>{{ transaction.details.transaction_network }}</td>
+             <td>{{ transaction.companyName || 'NA' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      
+    <div class="pagination">
+      <button class="pagination-button back-button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+        <i class="fas fa-chevron-left"></i> BACK
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="pagination-button next-button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+        NEXT <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" *ngIf="!isLoading">
+  <div class="cards-actions">
+    <div class="user-section">
+      <h2><i class="fas fa-user"></i> Transfer History</h2>
+    </div>
+
+    <div class="filter-export-buttons">
+      <div class="search-container">
+       <input
+  type="text"
+  placeholder="Search..."
+  [(ngModel)]="searchTerm"
+/>
+        <button class="search-button" (click)="onSearch()">
+          <i class="fas fa-search"></i> SEARCH
+        </button>
+      </div>
+
+      <!-- Date Filter Section -->
+      <div class="date-filter">
+        <label for="fromDate">From:</label>
+        <input id="fromDate" type="date" [(ngModel)]="fromDate" />
+        <label for="toDate">To:</label>
+        <input id="toDate" type="date" [(ngModel)]="toDate" />
+        <button class="filter-button" (click)="applyDateFilter()">
+          <i class="fas fa-filter"></i> Filter by Date
+        </button>
+      </div>
+
+      <button class="export-button" (click)="exportToExcel()">
+        <i class="fas fa-file-export"></i> EXPORT
+      </button>
+    </div>
+<!-- Displaying Results Information -->
+<div class="results-info">
+  <i class="fas fa-info-circle"></i>
+  Displaying <strong>{{ filteredTransactions.length }}</strong> result(s)
+  <!-- <ng-container *ngIf="fromDate || toDate">
+    from <strong>{{ fromDate || '...' }}</strong> to <strong>{{ toDate || '...' }}</strong>
+  </ng-container>
+  <ng-container *ngIf="!fromDate && !toDate"> -->
+    <!-- for: -->
+     <strong>All Time</strong>
+  <!-- </ng-container> -->
+</div>
+
+
+    <!-- Table Container -->
+    <div class="table-container" *ngIf="paginatedTransactions && paginatedTransactions.length > 0; else noData">
+      <table class="cards-table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Sender Name</th>
+            <th>Sender Amount</th>
+            <th>Receiver Name</th>
+            <th>Receiver Amount</th>
+            <th>Individual User</th>
+           
+            <th>Amount Transferred</th>
+            <th>Date of Transfer</th>
+             <th>Purchase Declined Fee</th>
+            <th>Virtual Card Fee</th>
+            <th>Physical Card Fee</th>
+            <th>Load Balance Fee</th>
+            <th>Master Load Balance Fee</th>
+            <th>Transfer Fee</th>
+            <th>Partner Name</th>
+            <th>Transaction ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of paginatedTransactions; let i = index">
+            <td>{{ (page - 1) * itemsPerPage + (i + 1) }}</td>
+            <td>{{ item.fullTransactionData?.sender?.email || item.from || 'N/A' }}</td>
+            <td> -{{ item.sender_amount || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.fullTransactionData?.recipient?.email || item.to || 'N/A' }}</td>
+            <td>{{ item.receiver_amount|| 0 | number:'1.2-2' }}</td>
+            <td>{{ item.individual_user || 'N/A' }}</td>
+            
+
+            <td>{{ item.fullTransactionData?.amount || item.amount || 'N/A' | number:'1.2-2' }}</td>
+            <td>
+              {{ (item.fullTransactionData?.date?.created || item.createdAt)
+              | date:'yyyy-MM-dd HH:mm:ss' }}
+            </td>
+            <td>{{ item.transaction_declined_fee || 'N/A' }}</td>
+            <td>{{ item.vr_card_fee || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.py_card_fee || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.load_balance_fee || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.master_load_balance || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.tranfer_fee || 0 | number:'1.2-2' }}</td>
+            <td>{{ item.companyname !== "" ? item.companyname : "NA" }}</td>
+            <td>{{ item.transactionId || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Data Template -->
+    <ng-template #noData>
+      <p class="no-data-message">No transactions found.</p>
+    </ng-template>
+
+    <!-- Pagination Controls -->
+    <div class="pagination" *ngIf="transactions.length > 0">
+      <button class="pagination-button back-button" (click)="prevPage()" [disabled]="page === 1">
+        <i class="fas fa-chevron-left"></i> BACK
+      </button>
+      <span>Page {{ page }} of {{ totalPages }}</span>
+      <button class="pagination-button next-button" (click)="nextPage()" [disabled]="page === totalPages">
+        NEXT <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div class="user-page">
+    <!-- Template for the user list, like in the first image -->
+    <!-- Search & Export -->
+  <div class="filter-export-buttons">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+         (ngModelChange)="onSearch()"  
+        name="searchTerm"
+      />
+      <button (click)="onSearch()" class="search-button">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+    <button (click)="exportToExcel()" class="export-button">
+      <i class="fas fa-file-export"></i> EXPORT
+    </button>
+        <button (click)="navigateToRoles()">+ New Partner Code</button>
+
+  </div>
+
+         <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredCodes.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Partner Code</th>
+          <th>Company Name</th>
+          <th>Status</th>
+          <th>Updated At</th>
+          <th>Created At</th>
+          <th>Actions</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through user roles and display them -->
+      <!-- In pender-code.component.html -->
+<tr *ngFor="let panterCode of filteredCodes; trackBy: trackByPanterCodeId">
+  <td>{{ panterCode.partnerCode }}</td>
+  <td>{{ panterCode.companyname }}</td>
+  <td>
+    <label class="switch">
+      <input type="checkbox" [checked]="panterCode.status" (change)="toggleStatus(panterCode)">
+      <span class="slider round"></span>
+    </label>
+  </td>
+  <td>{{ panterCode.updatedAt | date:'MM-dd-yyyy HH:mm' }}</td>
+  <td>{{ panterCode.createdAt | date:'MM-dd-yyyy HH:mm' }}</td>
+  <td class="action-cell">
+    <div class="dropdown">
+      <button class="dropdown-toggle" (click)="toggleDropdown(panterCode)">
+        ⋮ <!-- Vertical ellipsis icon -->
+      </button>
+      <ul [class.show]="panterCode.showDropdown" class="dropdown-menu">
+        <li (click)="editCode(panterCode)">Edit</li>
+        <!-- <li (click)="viewPanterCode(panterCode)">View</li> -->
+        <li (click)="deletePanterCode(panterCode)">Delete</li>
+      </ul>
+    </div>
+  </td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+
+
+
+  

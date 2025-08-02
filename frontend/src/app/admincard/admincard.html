@@ -1,0 +1,139 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+<!-- Main Content -->
+<div class="main-content" *ngIf="!isLoading">
+  <!-- Cards Actions Section -->
+  <div class="cards-actions">
+    <div class="user-section">
+      <h2><i class="fas fa-tag"></i> Cards</h2>
+    </div>
+
+    <div class="filter-export-buttons">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search..."
+          [(ngModel)]="searchTerm"
+        />
+        <button class="search-button" (click)="filterUsers()">
+          <i class="fas fa-search"></i> SEARCH
+        </button>
+      </div>
+
+      <!-- Date Filter Section -->
+      <div class="date-filter">
+        <label for="fromDate">From:</label>
+        <input
+          id="fromDate"
+          type="date"
+          [(ngModel)]="fromDate"
+        />
+        <label for="toDate">To:</label>
+        <input
+          id="toDate"
+          type="date"
+          [(ngModel)]="toDate"
+        />
+        <button class="filter-button" (click)="filterUsers()">
+          <i class="fas fa-filter"></i> Filter by Date
+        </button>
+      </div>
+
+      <button class="export-button" (click)="exportToExcel()">
+        <i class="fas fa-file-export"></i> EXPORT
+      </button>
+    </div>
+
+   <!-- Displaying Results Information -->
+<div class="results-info">
+  <i class="fas fa-info-circle"></i>
+  Displaying <strong>{{ filteredUsers.length }}</strong> result(s)
+  <!-- <span *ngIf="fromDate || toDate">from <strong>{{ fromDate || '...' }}</strong> to <strong>{{ toDate || '...' }}</strong></span>
+  <span *ngIf="!fromDate && !toDate">for the:  -->
+    
+    <strong>All Time</strong>
+  <!-- </span> -->
+</div>
+
+
+    <!-- Cards Data Table -->
+    <table class="cards-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Card ID</th>
+          <!-- <th>View Card IDs</th> -->
+          <th>Name</th>
+          <!-- <th>Partner Code</th> -->
+           <th>Partner Name</th>
+          <th>Date Created</th> <!-- New column for date -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers; let i = index">
+          <td>{{ (currentPage - 1) * itemsPerPage + (i + 1) }}</td>
+          <td>
+            <div *ngFor="let cardId of user.userCardIds; let last = last">
+              {{ cardId }}<span *ngIf="!last">,</span>
+            </div>
+          </td>
+          <!-- <td>
+            <button
+              class="export-button"
+              *ngIf="user.userCardIds.length > 1"
+              (click)="openModal(user)"
+            >
+              View More
+            </button>
+          </td> -->
+          <td>{{ user.firstname + ' ' + user.lastname }}</td>
+          <td>{{ user.companyname !== "" ? user.companyname : "NA" }}</td>
+          <!-- Format the createdAt date using Angular's date pipe -->
+<td>
+  {{ user.createdAt
+     ? (user.createdAt | date:'yyyy-MM-dd HH:mm')
+     : 'N/A'
+  }}
+</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button
+        class="pagination-button back-button"
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        <i class="fas fa-chevron-left"></i> BACK
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        class="pagination-button next-button"
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        NEXT <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Viewing All Card IDs -->
+<div *ngIf="selectedUser" class="modal">
+  <div class="modal-content">
+    <h3>All Card IDs</h3>
+    <div class="card-list">
+      <div class="card-item" *ngFor="let cardId of selectedUser.userCardIds">
+        <strong>Card ID:</strong> {{ cardId }}
+      </div>
+    </div>
+    <button class="close-btn primary-button" (click)="closeModal()">
+      Close
+    </button>
+  </div>
+</div>

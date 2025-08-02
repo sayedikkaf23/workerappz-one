@@ -1,0 +1,83 @@
+<!-- Loader HTML -->
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading" class="main-content">
+    <!-- Cards Actions Section -->
+    <div class="cards-actions">
+        <div class="user-section">
+            <h2><i class="fas fa-tag"></i> Category</h2>
+        </div>
+
+        <div class="filter-export-buttons">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" >
+                <button class="search-button" (click)="filterCategories()">
+                    <i class="fas fa-search"></i> SEARCH
+                </button>
+            </div>
+            <button class="export-button" (click)="exportToExcel()">
+                <i class="fas fa-file-export"></i> EXPORT
+            </button>
+            <button class="export-button" (click)="showAddCategoryModal = true">
+                <i class="fas fa-plus"></i> ADD CATEGORY
+            </button>
+
+            <!-- Add Category Modal -->
+            <app-add-category-modal *ngIf="showAddCategoryModal"
+                                    (categoryAdded)="handleCategoryAdded($event)"
+                                    (modalClosed)="showAddCategoryModal = false">
+            </app-add-category-modal>
+        </div>
+
+
+        <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredCategories.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+        <!-- Cards Data Table -->
+        <div class="table-container">
+            <table class="cards-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Factor</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of paginatedCategories">
+                        <td>sdfghj</td>
+                        <td>xdfgh</td>
+                        <td>dfghn</td>
+                        <td>xfghjk</td>
+                        <td>dcfvgbn</td>
+                        <td>cfghjk</td>
+                        <td>dfghj</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button class="pagination-button back-button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i> BACK
+            </button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button class="pagination-button next-button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+                NEXT <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

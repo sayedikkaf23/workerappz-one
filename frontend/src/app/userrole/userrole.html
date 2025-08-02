@@ -1,0 +1,351 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+<div class="role-page" *ngIf="!isLoading">
+  <form (ngSubmit)="onSubmit()">
+    <div class="full-width">
+      <h2>Basic Details</h2>
+ 
+      <a class="back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    </div>
+ 
+    <div>
+      <label for="email">Email<span class="required">*</span></label>
+      <input type="text" id="email" [(ngModel)]="email" name="email"  required>
+    </div>
+ 
+    <div>
+      <label for="password">Password<span class="required">*</span></label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        #passwordField="ngModel"
+        required
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        minlength="8"
+      >
+      <!-- Error Messages -->
+      <div *ngIf="passwordField.touched && passwordField.invalid">
+        <small *ngIf="passwordField.errors?.['required']" class="error">Password is required.</small>
+        <small *ngIf="passwordField.errors?.['pattern']" class="error">
+          Password must be at least 8 characters long and include a Number and a letter.
+        </small>
+        <small *ngIf="passwordField.errors?.['minlength']" class="error">
+          Password must be at least 8 characters long.
+        </small>
+      </div>
+    </div>
+   
+ 
+    <div>
+      <label for="firstName">First Name<span class="required">*</span></label>
+      <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
+    </div>
+ 
+    <div>
+      <label for="lastName">Last Name<span class="required">*</span></label>
+      <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
+    </div>
+    <div class="form-field">
+      <label class="w-100">Mobile Country Code<span class="required">*</span></label>
+     
+      <ngx-intl-tel-input
+      class="custom-form-control cus"
+ 
+      [preferredCountries]="preferredCountries"
+      [enableAutoCountrySelect]="true"
+      [enablePlaceholder]="true"
+      [searchCountryFlag]="true"
+      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+      [selectFirstCountry]="false"
+      [selectedCountryISO]="CountryISO.India"
+      [maxLength]="19"
+      [phoneValidation]="true"
+      [separateDialCode]="true"
+      [numberFormat]="PhoneNumberFormat.National"
+      name="mobile"
+      [(ngModel)]="mobile"
+   
+    >
+    </ngx-intl-tel-input>
+   
+   
+    </div>
+   
+   
+   
+   
+    <div>
+      <label for="preferredName">Category Name<span class="required">*</span></label>
+      <input type="text" id="preferredName" [(ngModel)]="preferredName" name="preferredName" required>
+    </div>
+ 
+ <!-- Nationality Dropdown -->
+<div>
+  <label for="nationality">Nationality <span class="required">*</span></label>
+  <select
+    id="nationality"
+    name="nationality"
+    [(ngModel)]="nationality"
+    required
+  >
+    <!-- Default option -->
+    <option value="" disabled>Select Nationality</option>
+   
+    <!-- Populate from the nationalities array -->
+    <option *ngFor="let nat of nationalities" [value]="nat.code">
+      {{ nat.code }}
+    </option>
+  </select>
+</div>
+ 
+ 
+    <div>
+      <label for="panterCode">Partner Code<span class="required">*</span></label>
+      <select id="panterCode" [(ngModel)]="selectedPanterCode" name="panterCode" required>
+        <option value="" disabled>Select Partner Code</option>
+        <option *ngFor="let code of panterCodes" [value]="code.partnerCode">
+          {{ code.companyname }} ({{ code.partnerCode }})
+        </option>
+      </select>
+    </div>
+ 
+    <div>
+      <label for="role">Role<span class="required">*</span></label>
+      <select id="role" [(ngModel)]="roleid" name="role" required>
+        <option value="" disabled>Select Role</option>
+        <option *ngFor="let r of roles" [value]="r._id">{{ r.role_name }}</option>
+      </select>
+    </div>
+ 
+    <div>
+      <label for="status">Status<span class="required">*</span></label>
+      <select id="status" [(ngModel)]="status" name="status" required>
+        <option value="" disabled>Select Status</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+    </div>
+    <div>
+      <label for="vr_card_fee">Virtual Card Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="vr_card_fee"
+        id="vr_card_fee"
+        name="vr_card_fee"
+        required
+        pattern="^[0-9]*$"
+        #vrCardFee="ngModel"
+      >
+      <div *ngIf="vrCardFee.invalid && (vrCardFee.dirty || vrCardFee.touched)">
+       
+        <small *ngIf="vrCardFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+   
+    <div>
+      <label for="py_card_fee">Physical Card Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="py_card_fee"
+        id="py_card_fee"  
+        name="py_card_fee"
+        required
+        pattern="^[0-9]*$"
+        #pyCardFee="ngModel"
+      >
+      <div *ngIf="pyCardFee.invalid && (pyCardFee.dirty || pyCardFee.touched)">
+       
+        <small *ngIf="pyCardFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+   
+    <div>
+      <label for="load_balance_fee">Load Balance Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="load_balance_fee"
+        id="load_balance_fee"  
+        name="load_balance_fee"
+        required
+        pattern="^[0-9]*$"
+        #loadBalanceFee="ngModel"
+      >
+      <div *ngIf="loadBalanceFee.invalid && (loadBalanceFee.dirty || loadBalanceFee.touched)">
+       
+        <small *ngIf="loadBalanceFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+ 
+    <div>
+      <label for="master_load_balance">Master Load Balance </label>
+      <input
+        type="text"
+        [(ngModel)]="master_load_balance"
+        id="master_load_balance"  
+        name="master_load_balance"
+        required
+        pattern="^[0-9]*$"
+        #masterLoadBalance="ngModel"
+      >
+      <div *ngIf="masterLoadBalance.invalid && (masterLoadBalance.dirty || masterLoadBalance.touched)">
+       
+        <small *ngIf="masterLoadBalance.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+ 
+    <div>
+      <label for="kyc_fee">KYC Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="kyc_fee"
+        id="kyc_fee"
+        name="kyc_fee"
+        required
+        pattern="^[0-9]*$"
+        #kycFee="ngModel"
+      >
+      <div *ngIf="kycFee.invalid && (kycFee.dirty || kycFee.touched)">
+       
+        <small *ngIf="kycFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+ 
+ 
+      <div>
+      <label for="transaction_fee">Transaction Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="transaction_fee"
+        id="transaction_fee"
+        name="transaction_fee"
+        required
+        pattern="^[0-9]*$"
+        #transactionFee="ngModel"
+      >
+      <div *ngIf="transactionFee.invalid && (transactionFee.dirty || transactionFee.touched)">
+       
+        <small *ngIf="transactionFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+ 
+    <div>
+      <label for="transfer_fee">Transfer Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="transfer_fee"
+        id="transfer_fee"  
+        name="transfer_fee"
+        required
+        pattern="^[0-9]*$"
+        #transferFee="ngModel"
+      >
+      <div *ngIf="transferFee.invalid && (transferFee.dirty || transferFee.touched)">
+       
+        <small *ngIf="transferFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+<!-- make sure FormsModule is imported in your module -->
+ 
+<!-- <div>
+  <label for="purchase_fee">Purchase Fee</label>
+  <div class="dropdown-input-wrapper d-flex align-items-center" style="gap: 0.5rem;">
+ 
+    <div class="dropdown-button">
+      <button
+        id="purchase_fee"
+        type="button"
+        class="btn-custom dropdown-toggle"
+        data-bs-toggle="dropdown">
+        {{ selectedRange || 'Select Range' }}
+      </button>
+      <ul class="dropdown-menu">
+      <li><a class="dropdown-item" (click)="selectedRange = '0-100 USD'">0-100 USD</a></li>
+          <li><a class="dropdown-item" (click)="selectedRange = '101+ USD'">101+ USD</a></li>
+      </ul>
+    </div>
+ 
+    <input
+      type="number"
+      class="input-custom flex-fill"
+      placeholder="Enter fee"
+      [(ngModel)]="feeInput"
+      name="feeInput"
+    />
+  </div>
+</div> -->
+ 
+  <div>
+      <label for="isActive_fee">IsActive Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="isActive_fee"
+        id="isActive_fee"
+        name="isActive_fee"
+        required
+        pattern="^[0-9]*$"
+        #isActiveFee="ngModel"
+      >
+      <div *ngIf="isActiveFee.invalid && (isActiveFee.dirty || isActiveFee.touched)">
+       
+        <small *ngIf="isActiveFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <label for="inActive_fee">InActive Fee</label>
+      <input
+        type="text"
+        [(ngModel)]="inActive_fee"
+        id="inActive_fee"
+        name="inActive_fee"
+        required
+        pattern="^[0-9]*$"
+        #inActiveFee="ngModel"
+      >
+      <div *ngIf="inActiveFee.invalid && (inActiveFee.dirty || inActiveFee.touched)">
+       
+        <small *ngIf="inActiveFee.errors?.['pattern']" class="error">
+          Only numbers are allowed.
+        </small>
+      </div>
+    </div>
+   
+    <button type="submit">Submit</button>
+  </form>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

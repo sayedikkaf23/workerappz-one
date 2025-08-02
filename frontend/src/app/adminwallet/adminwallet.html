@@ -1,0 +1,92 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+<div  *ngIf="!isLoading" class="main-content">
+    <!-- Cards Actions Section -->
+    <div class="cards-actions">
+        <div class="user-section">
+            <h2><i class="fas fa-tag"></i> Wallet</h2>
+        </div>
+ 
+        <div class="filter-export-buttons">
+          <div class="search-container">
+            <input type="text" placeholder="Search..." [(ngModel)]="searchTerm">
+            
+            <!-- Built-in HTML5 Date Pickers -->
+            <input type="date" placeholder="Start Date" [(ngModel)]="startDate">
+            <input type="date" placeholder="End Date" [(ngModel)]="endDate">
+        
+            <button class="search-button" (click)="onSearch()">
+              <i class="fas fa-search"></i> SEARCH
+            </button>
+          </div>
+          
+          <button class="export-button" (click)="exportToExcel()">
+            <i class="fas fa-file-export"></i> EXPORT
+          </button>
+        </div>
+ 
+         <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredWallets.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+ 
+        <!-- Cards Data Table -->
+        <div class="table-container">
+            <table class="cards-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">No</th>
+                        <th rowspan="2">Name</th>
+                        <th rowspan="2">Mail ID</th>
+                        <!-- <th rowspan="2">Amount</th> -->
+                        <th rowspan="2">Wallet Number</th>
+                        <th rowspan="2">Data Issued</th>
+                        <th rowspan="2">Balance</th>
+                        <th rowspan="2">Wallet Hash ID</th>
+                        <th rowspan="2">Partner Name</th>
+                        <th rowspan="2">User Hash ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let wallet of paginatedWallets; let i = index">
+                        <td>{{ getIndex(i) }}</td>
+ 
+ 
+                        <td>
+                            njhgcfx
+                        </td>
+                        <td>nbjv</td>
+                        <td>dfghjk</td> <!-- Show "No wallet for user" if wallet is null -->
+                        <td>dfghjk</td> <!-- Handle null case for issued date -->
+                        <td>dfghjk</td> <!-- Handle null case for available amount -->
+                        <td>cdfghjk</td> <!-- Handle null case for wallet ID -->
+                        <!-- <td>{{ wallet.user.userHashedId || 'N/A' }}</td> Handle null case for wallet ID -->
+                        <!-- <td>{{ getCompanyName(wallet.user.partnercode) }}</td> -->
+                        <td>hjgjfthdr</td>
+ 
+                        <td>sdfghj</td>
+                    </tr>
+                </tbody>
+               
+            </table>
+        </div>
+ 
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button class="pagination-button back-button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+              <i class="fas fa-chevron-left"></i> BACK
+            </button>
+           
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+           
+            <button class="pagination-button next-button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+              NEXT <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+         
+         
+    </div>
+</div>

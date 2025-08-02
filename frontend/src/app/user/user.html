@@ -1,0 +1,84 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div class="user-page">
+    <!-- Template for the user list, like in the first image -->
+  <div class="filter-export-buttons">
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Search..."
+  [(ngModel)]="searchTerm"
+  (ngModelChange)="onSearch()"   
+  name="searchTerm"
+    />
+    <button class="search-button" (click)="onSearch()">
+      <i class="fas fa-search"></i> SEARCH
+    </button>
+  </div>
+        <button class="export-button" (click)="exportToExcel()"><i class="fas fa-file-export"></i> EXPORT</button>
+    <button (click)="navigateToRoles()">+ New User</button>
+
+</div>
+       <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredRoles.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role Name</th>
+          <th>Partner Code</th>
+          <!-- <th>Status</th> -->
+          <th>Updated On</th>
+          
+          <th>Wallet Balance</th>
+          <th>Actions</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through user roles and display them -->
+<tr *ngFor="let role of filteredRoles">
+          <!-- Email -->
+          <td>{{ role.email }}</td>
+        
+          <!-- Role Name (check if role object exists) -->
+          <td *ngIf="role.role">{{ role.role.role_name }}</td>
+          <td *ngIf="!role.role">N/A</td>
+        
+          <!-- Partner Code -->
+          <td>{{ role.partnerCode || 'N/A' }}</td>
+        
+          <!-- Updated On -->
+          <td>{{ role.updatedAt | date:'MM-dd-yyyy HH:mm' }}</td>
+        
+          <!-- Total Amount -->
+          <td>USD {{ role.totalAmount }}</td>
+        
+          <!-- Actions -->
+          <td class="action-cell">
+            <div class="dropdown">
+              <button class="dropdown-toggle" (click)="toggleDropdown(role)">
+                ⋮ <!-- Vertical ellipsis icon -->
+              </button>
+        
+              <!-- Dropdown menu, displayed if showDropdown is true -->
+              <ul *ngIf="role.email !== 'admin@gmail.com'" [class.show]="role.showDropdown" class="dropdown-menu">
+                <!-- Disable "Edit" if email is "admin@gmail.com" -->
+                <li  (click)="editUser(role)">Edit</li>
+                <!-- <li *ngIf="role.email === 'admin@gmail.com'" class="disabled">Edit (Not Allowed)</li> -->
+                
+                <!-- Delete option -->
+                <!-- <li *ngIf="role.email !== 'admin@gmail.com'" (click)="deleteRole(role)">Delete</li> -->
+              </ul>
+            </div>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+  </div>
