@@ -10,6 +10,7 @@ import { Step3 } from './step-3/step-3';
 import { Step4 } from './step-4/step-4';
 import { Step5 } from './step-5/step-5';
 import { KycApproved } from './kyc-approved/kyc-approved';
+import { AdminLogin } from './admin-login/admin-login';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
   { path: 'step-4', component: Step4 },
   { path: 'step-5', component: Step5 },
   { path: 'kyc-approved', component: KycApproved },
+
+  // admin
+  { path: 'admin/login', component: AdminLogin },
 ];
 
 @NgModule({

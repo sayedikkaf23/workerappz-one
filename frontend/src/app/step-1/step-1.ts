@@ -69,14 +69,33 @@ export class Step1 implements OnInit {
     const input = document.getElementById('dob') as HTMLInputElement;
     input?.showPicker?.();
   }
+allowOnlyLetters(e: KeyboardEvent) {
+  const char = String.fromCharCode(e.keyCode || e.which);
+  if (!/[A-Za-z ]/.test(char)) {
+    e.preventDefault();
+  }
+}
 
 submitForm() {
-   if (!this.formData.firstName) {
+  const lettersOnly = /^[A-Za-z ]+$/;
+
+  // ---- First Name ----
+  if (!this.formData.firstName?.trim()) {
     this.toastr.error('First Name is required');
     return;
   }
-  if (!this.formData.lastName) {
+  if (!lettersOnly.test(this.formData.firstName)) {
+    this.toastr.error('First Name can contain only letters');
+    return;
+  }
+
+  // ---- Last Name ----
+  if (!this.formData.lastName?.trim()) {
     this.toastr.error('Last Name is required');
+    return;
+  }
+  if (!lettersOnly.test(this.formData.lastName)) {
+    this.toastr.error('Last Name can contain only letters');
     return;
   }
   if (!this.formData.mobileNumber) {
@@ -119,6 +138,7 @@ submitForm() {
     },
   });
 }
+
 
   toggleDarkMode() {
     this.isDark = !this.isDark;

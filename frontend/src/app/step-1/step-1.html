@@ -288,6 +288,7 @@
                   placeholder="enter first name"
                   [(ngModel)]="formData.firstName"
                   name="firstName"
+                   pattern="[A-Za-z ]+"
                 />
               </div>
             </div>
@@ -300,6 +301,8 @@
                   placeholder="enter last name"
                   [(ngModel)]="formData.lastName"
                   name="lastName"
+                   pattern="[A-Za-z ]+"
+
                 />
               </div>
             </div>

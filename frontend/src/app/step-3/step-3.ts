@@ -27,7 +27,11 @@ export class Step3 implements OnInit, OnDestroy {
     ],
   };
 
-  constructor(private svc: OnboardingService, private router: Router, private toastr: ToastrService) {}
+  constructor(
+    private svc: OnboardingService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     const cache =
@@ -42,7 +46,7 @@ export class Step3 implements OnInit, OnDestroy {
           ? cache.shareholders.map((s: any) => ({
               fullName: s.fullName || '',
               nationality: s.nationality || '',
-              dob: s.dob ? s.dob.split('T')[0] : '', // ✅ 
+              dob: s.dob ? s.dob.split('T')[0] : '', // ✅
               shareholding: s.shareholding ?? 10,
             }))
           : this.formData.shareholders,
@@ -76,6 +80,12 @@ export class Step3 implements OnInit, OnDestroy {
   removeShareholder(index: number) {
     if (this.formData.shareholders.length > 1) {
       this.formData.shareholders.splice(index, 1);
+    }
+  }
+  allowOnlyLetters(e: KeyboardEvent) {
+    const char = String.fromCharCode(e.keyCode || e.which);
+    if (!/[A-Za-z ]/.test(char)) {
+      e.preventDefault();
     }
   }
 
@@ -127,11 +137,26 @@ export class Step3 implements OnInit, OnDestroy {
 
     // Validate shareholders fields
     for (let i = 0; i < this.formData.shareholders.length; i++) {
+      const onlyLetters = /^[A-Za-z ]+$/; // place near top of method
+
       const shareholder = this.formData.shareholders[i];
-      if (!shareholder.fullName) {
+      // if (!shareholder.fullName) {
+      //   this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
+      //   return false;
+      // }
+      if (!shareholder.fullName?.trim()) {
         this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
         return false;
       }
+
+      /* 2️⃣ contains digits/symbols? */
+      if (!onlyLetters.test(shareholder.fullName)) {
+        this.toastr.error(
+          `Shareholder ${i + 1} Full Name can contain only letters`
+        );
+        return false;
+      }
+
       if (!shareholder.nationality) {
         this.toastr.error(`Shareholder ${i + 1} Nationality is required`);
         return false;
@@ -141,7 +166,9 @@ export class Step3 implements OnInit, OnDestroy {
         return false;
       }
       if (shareholder.shareholding <= 0) {
-        this.toastr.error(`Shareholder ${i + 1} Shareholding should be greater than 0`);
+        this.toastr.error(
+          `Shareholder ${i + 1} Shareholding should be greater than 0`
+        );
         return false;
       }
     }
@@ -151,8 +178,8 @@ export class Step3 implements OnInit, OnDestroy {
 
   getMaxDobDate(): string {
     const today = new Date();
-    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18));  // Subtract 18 years
-    return minAgeDate.toISOString().split('T')[0];  // Format as YYYY-MM-DD
+    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18)); // Subtract 18 years
+    return minAgeDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   }
 
   submitForm() {
