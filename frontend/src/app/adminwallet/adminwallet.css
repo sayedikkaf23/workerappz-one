@@ -1,0 +1,542 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+.results-info {
+  margin: 16px 0;
+  padding: 10px 16px;
+  /* background-color: #eef4fc; */
+  /* border: 1px solid #c8d7ee; */
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5d5959;
+  /* color: #1e3a8a; dark blue */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Container for action buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin: 10px 0; /* Margin around the button group */
+  }
+  
+  /* Base button styles */
+  .action-button {
+    padding: 10px 20px; /* Adjusted padding for better appearance */
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+  
+  /* Specific styles for primary button */
+  .primary-button {
+    background-color: #3498db; /* Blue color */
+  }
+  
+  .primary-button:hover {
+    background-color: #2980b9; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+  
+  /* Specific styles for approve button */
+  .approve-button {
+    background-color: #2980b9; /* Blue color for approve */
+  }
+  
+  .approve-button:hover {
+    background-color: #1f6f9b; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+  
+  /* Specific styles for reject button */
+  .reject-button {
+    background-color: #dc3545; /* Red color for reject */
+  }
+  
+  .reject-button:hover {
+    background-color: #c82333; /* Darker red for hover effect */
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+  
+  .user-section {
+    background-color: #e6ebf1; /* Light background color for the section */
+    padding: 20px; /* Space inside the section */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below the section */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    display: flex; /* Aligns items horizontally */
+    align-items: center; /* Centers items vertically */
+  }
+  
+  .user-section h2 {
+    font-size: 24px; /* Size of the text */
+    font-weight: bold; /* Makes the text bold */
+    color: #5d5959; /* Dark text color */
+    margin: 0; /* Removes default margin */
+    display: flex; /* Allows items within to align */
+    align-items: center; /* Centers the icon and text vertically */
+  }
+  
+  .user-section h2 i {
+    color: #007bff; /* Color for the icon (blue shade) */
+    margin-right: 10px; /* Space between the icon and the text */
+    font-size: 28px; /* Slightly larger icon size */
+  }
+  
+     /* Color for
+  /* } */
+  /* Main Content Area */
+  .main-content {
+      padding: 20px;
+      background-color: #f5f5f5; /* Light background for contrast */
+      min-height: calc(100vh - 60px); /* Ensure full height minus header */
+    }
+    
+    /* Cards Actions Section */
+    .cards-actions {
+      background-color: #ffffff; /* White background for card effect */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .cards-actions h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #34495e;
+      display: flex;
+      align-items: center;
+    }
+    
+    .cards-actions h2 i {
+      margin-right: 10px;
+    }
+    
+    /* Filter and Export Buttons */
+    .filter-export-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .filter-button, .export-button {
+      padding: 10px 20px;
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .filter-button i, .export-button i {
+      margin-right: 8px;
+    }
+    
+    .filter-button:hover, .export-button:hover {
+      background-color: #2980b9; /* Darker blue on hover */
+    }
+    
+    /* Display Information */
+    .display-info {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #7f8c8d;
+    }
+    
+    /* Cards Data Table */
+    .table-container {
+      overflow-x: auto; /* Horizontal scrolling for smaller screens */
+      margin-bottom: 20px;
+    }
+    
+    .cards-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .cards-table th, .cards-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    .cards-table th {
+      background-color: #ecf0f1; /* Light gray for headers */
+      color: #34495e;
+    }
+    
+    .cards-table tr:hover {
+      background-color: #f1f1f1; /* Row hover effect */
+    }
+    
+    /* Pagination Controls */
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    
+    .pagination-button {
+      padding: 8px 16px;
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .pagination-button i {
+      margin: 0 5px;
+    }
+    
+    .pagination-button:hover {
+      background-color: #2980b9; /* Darker blue on hover */
+    }
+    
+    /* Responsive Adjustments */
+    @media screen and (max-width: 768px) {
+      .cards-actions h2 {
+        font-size: 20px;
+      }
+      .filter-button, .export-button, .pagination-button {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+      .cards-table th, .cards-table td {
+        padding: 8px 10px;
+      }
+      /* Loader Overlay */
+  .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000; /* Ensure it sits above other content */
+    }
+    
+    /* Spinner Animation */
+    .spinner {
+      border: 8px solid #f3f3f3; /* Light grey background */
+      border-top: 8px solid #3498db; /* Blue color for the spinner */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    /* Pagination Controls */
+  .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .pagination-button {
+      padding: 8px 16px;
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .pagination-button i {
+      margin: 0 5px;
+    }
+    
+    .pagination-button:hover {
+      background-color: #2980b9; /* Darker blue on hover */
+    }
+    
+    .pagination-button[disabled] {
+      background-color: #b0bec5; /* Disabled state color */
+      cursor: not-allowed;
+    }
+    
+    .pagination span {
+      align-self: center;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px; /* Adjust the gap size as needed */
+    }
+    
+    .action-button {
+      padding: 8px 16px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    
+    .approve-button {
+      background-color: #2980b9; /* Green color for approve */
+    }
+    
+    .reject-button {
+      background-color: #dc3545; /* Red color for reject */
+    }
+    
+    /* Spin Animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    }
+  /* Container for action buttons */
+  .action-buttons {
+      display: flex;
+      gap: 10px; /* Space between buttons */
+      margin: 10px 0; /* Margin around the button group */
+    }
+    
+    /* Base button styles */
+    .action-button {
+      padding: 10px 20px; /* Adjusted padding for better appearance */
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 5px; /* Slightly rounded corners */
+      transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    }
+    
+    /* Specific styles for approve button */
+    .approve-button {
+      background-color: #2980b9; /* Blue color for approve */
+    }
+    
+    .approve-button:hover {
+      background-color: #1f6f9b; /* Darker blue for hover effect */
+      transform: scale(1.05); /* Slightly larger on hover */
+    }
+    
+    /* Specific styles for reject button */
+    .reject-button {
+      background-color: #dc3545; /* Red color for reject */
+    }
+    
+    .reject-button:hover {
+      background-color: #c82333; /* Darker red for hover effect */
+      transform: scale(1.05); /* Slightly larger on hover */
+    }
+    .view-buttons{
+      padding: 10px 20px; /* Adjusted padding for better appearance */
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 5px; /* Slightly rounded corners */
+      transition: background-color 0.3s ease, transform 0.3s ease; 
+    }
+    .search-container {
+        display: flex;
+        align-items: center;
+      }
+      
+      .search-container input {
+        padding: 8px;
+        margin-right: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      .search-button {
+        padding: 8px 16px;
+        background-color: #007bff; /* Adjust color as needed */
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      .search-button i {
+        margin-right: 4px;
+      }
+      
+    /* Optional spin animation (if needed) */
+    @keyframes spin {
+      0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -ms-transform: rotate(0deg); -o-transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+
+    @media (max-width: 768px) 
+    {
+
+     .main-content{
+       margin-left: 0px;
+     }
+
+      /* User Section Heading */
+   .user-section h2 {
+     font-size: 18px; /* Reduce font size */
+ }
+
+ /* Search & Export Button Container */
+ .filter-export-buttons {
+     flex-direction: column;
+     align-items: stretch;
+     gap: 8px; /* Add spacing */
+ }
+
+ /* Search Input */
+ .search-container {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+ }
+
+ .search-container input {
+     width: 100%;
+     font-size: 12px;
+     padding: 8px;
+     margin-bottom: 10px;
+ }
+
+ .search-button {
+     width: 100%;
+     font-size: 12px;
+     padding: 8px;
+ }
+
+ /* Export Button */
+ .export-button {
+     width: 100%;
+     font-size: 12px;
+     padding: 8px;
+ }
+
+ /* Display Info */
+ .display-info {
+     font-size: 12px;
+     display: block;
+     text-align: center;
+     margin-top: 8px;
+ }
+
+ /* Table Adjustments */
+ .cards-table {
+     width: 100%;
+     font-size: 12px;
+     overflow-x: auto;
+     display: block;
+ }
+
+ 
+
+ .cards-table tbody,.cards-table thead,
+ .cards-table tr,
+ .cards-table td {
+     
+     width: 100%;
+ }
+
+ .cards-table tr {
+     margin-bottom: 10px;
+     border: 1px solid #ddd;
+     padding: 8px;
+     background: #f9f9f9;
+ }
+
+ .cards-table th,
+ .cards-table td {
+     text-align: left;
+     padding: 10px;
+     min-width: 20%; /* Ensure all columns expand evenly */
+     word-wrap: break-word;
+ }
+
+ /* Make Each Row Act Like a Card */
+ .cards-table td::before {
+     content: attr(data-label);
+     font-weight: bold;
+     display: block;
+     text-transform: capitalize;
+     color: #34495e;
+ }
+
+ /* Pagination Controls */
+ .pagination {
+     display: flex;
+     
+     align-items: center;
+     gap: 8px;
+ }
+
+ .pagination-button {
+     width: 18%;
+     font-size: 10px;
+     padding: 10px;
+ }
+
+ /* Modal */
+ .modal {
+     align-items: center;
+     justify-content: center;
+     display: flex;
+ }
+
+ .modal-content {
+     width: 90%;
+     padding: 15px;
+ }
+
+ .modal-content h3 {
+     font-size: 14px;
+ }
+
+ .card-item{
+   font-size: 12px;
+ }
+
+ .close-btn {
+     width: 100%;
+     font-size: 12px;
+ }
+     
+   }
+
+   @media (max-width: 991px) 
+    {
+     .cards-table{
+       display: block;
+       overflow-x: auto;
+
+     }
+   }

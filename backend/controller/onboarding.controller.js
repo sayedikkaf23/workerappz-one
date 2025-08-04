@@ -122,7 +122,55 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 };
+exports.getOnboardingByEmail = async (req, res) => {
+  const { email } = req.query;
 
+  try {
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    const user = await Onboarding.findOne({ email });
+
+     if (!user) {
+      const response = { success: false, error: "User not found" };
+      await logOnboardingDb({
+        methodName: "getOnboardingByEmail",
+        request: req.query,
+        response,
+        requestedBy: email
+      });
+      return res.status(404).json(response);
+    }
+
+    const response = { success: true, data: user };
+
+    // Log success
+    await logOnboardingDb({
+      methodName: "getOnboardingByEmail",
+      request: req.query,
+      response,
+      requestedBy: email
+    });
+
+    return res.json(response);
+
+  } catch (err) {
+    console.error('Error fetching onboarding data:', err);
+
+    const response = { success: false, error: err.message };
+
+    // Log error
+    await logOnboardingDb({
+      methodName: "getOnboardingByEmail",
+      request: req.query,
+      response,
+      requestedBy: email || "unknown"
+    });
+
+    return res.status(500).json(response);
+  }
+};
 
 exports.saveOnboardingRequirements = async (req, res) => {
   const { _id, email, requirements } = req.body;
@@ -232,52 +280,6 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
   }
 };
 
-exports.getOnboardingByEmail = async (req, res) => {
-  const { email } = req.query;
 
-  try {
-    if (!email) {
-      return res.status(400).json({ success: false, error: "Email is required" });
-    }
 
-    const user = await Onboarding.findOne({ email });
 
-     if (!user) {
-      const response = { success: false, error: "User not found" };
-      await logOnboardingDb({
-        methodName: "getOnboardingByEmail",
-        request: req.query,
-        response,
-        requestedBy: email
-      });
-      return res.status(404).json(response);
-    }
-
-    const response = { success: true, data: user };
-
-    // Log success
-    await logOnboardingDb({
-      methodName: "getOnboardingByEmail",
-      request: req.query,
-      response,
-      requestedBy: email
-    });
-
-    return res.json(response);
-
-  } catch (err) {
-    console.error('Error fetching onboarding data:', err);
-
-    const response = { success: false, error: err.message };
-
-    // Log error
-    await logOnboardingDb({
-      methodName: "getOnboardingByEmail",
-      request: req.query,
-      response,
-      requestedBy: email || "unknown"
-    });
-
-    return res.status(500).json(response);
-  }
-};

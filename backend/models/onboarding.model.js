@@ -40,7 +40,7 @@ const onboardingSchema = new mongoose.Schema({
       fullName: String,
       nationality: String,
       dob: Date,
-      shareholdingPercentage: Number,
+      shareholding: Number,
     },
   ],
 

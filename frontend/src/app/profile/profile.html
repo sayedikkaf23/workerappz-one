@@ -1,0 +1,42 @@
+<h2 mat-dialog-title class="dialog-title">Profile Details</h2>
+<div mat-dialog-content class="dialog-content">
+  <p class="dialog-description">Update your profile details below:</p>
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" matInput [(ngModel)]="data.name" placeholder="Enter Name" class="input-field" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" matInput [(ngModel)]="data.email" placeholder="Enter Email" class="input-field" />
+    </div>
+    <div class="form-group">
+      <label for="nationality">Nationality</label>
+      <input
+        id="nationality"
+        matInput
+        [(ngModel)]="data.nationality"
+        placeholder="Enter Nationality"
+        class="input-field"
+      />
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input id="phone" matInput [(ngModel)]="data.phone" placeholder="Enter Phone" class="input-field" />
+    </div>
+    <div class="form-group full-width">
+      <label for="address">Address</label>
+      <textarea
+        id="address"
+        matInput
+        [(ngModel)]="data.address"
+        placeholder="Enter Address"
+        class="textarea-field"
+      ></textarea>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button mat-dialog-close class="close-button">Close</button>
+  <button mat-button  class="save-button" style="color: #000;" (click)="saveChanges()">Save</button>
+</div>

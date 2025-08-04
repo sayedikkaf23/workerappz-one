@@ -1,0 +1,629 @@
+@media (min-width:1400px) and (max-width:1550px) {
+    .currencies-sec .currencies-wrp {
+        max-width: 70vw;
+        width: 100%;
+        padding: 0;
+    }
+    .currencies-box .info {
+        padding-top: 34px;
+    }
+}
+@media (min-width:1200px) and (max-width:1399px){
+    .login-image {
+        padding-right: 7%;
+    }
+    .login-image .card-img img {
+        max-width: 630px;
+        width: 100%;
+    }
+    .login-image .card-img img {
+        max-width: 530px;
+        width: 100%;
+    }
+    .add-balance-box button:nth-child(2) {
+        padding-right: 12px;
+    }
+    .add-balance-box button:nth-child(1) {
+        padding-left: 30px;
+    }
+    .transfer-info_header .search {
+        margin-left: -120px;
+        max-width: 200px;
+    }
+    .transfer-info_header ul {
+        max-width: 585px;
+    }
+    .currencies-sec .currencies-wrp {
+        padding: 0 35px;
+    }
+    .currencies-box ,.currencies-active-box .active-btn button.btn.border-btn{
+        padding: 15px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+@media (min-width:992px) and (max-width:1199px){
+    :root {
+        --sidebar-width: 370px;
+    }
+    .sidebar-row {
+        padding: 35px;
+    }
+    .details-content {
+        padding: 45px 30px 70px;
+    }
+    .admin-body {
+        --sidebar-width: 250px;
+    }
+    .admin-header input[type="search"] {
+        min-width: 194px !important;
+        width: 194px;
+    }
+    .admin-sidebar .logo {
+        max-width: 120px;
+        margin: 0 auto;
+    }
+    .icon-menu .sidebarnav > ul > li > a {
+        margin-bottom: 8px;
+    }
+    .sidebarnav > ul > li > a {
+        padding: 9px 10px;
+        font-size: 13px;
+        margin-bottom: 0px;
+    }
+    .admin-sidebar .sidebar-row {
+        padding: 30px 20px;
+    }
+    .admin-header h3 {
+        font-size: 20px;
+    }
+    .admin-body .title h3 {
+        font-size: 20px;
+    }
+    .rate-exchange {
+        padding: 25px 20px;
+    }
+    .admin-body-content .admin-body-inner {
+        padding: 24px;
+    }
+    .admin-header-inner {
+        padding: 28px 20px 25px;
+        margin-bottom: 6px;
+    }
+    .filter-bar {
+        margin: 30px -24px 40px;
+        padding: 20px 24px;
+    }
+    .cash-show h3 {
+        font-size: 26px;
+    }
+    .login-image .card-img img {
+        max-width: 420px;
+    }
+    .login-image {
+        padding-right: 4%;
+    }
+    body.login-page {
+        padding: 0 0 0 4%;
+    }
+    .add-balance-box button:nth-child(2) {
+        padding-right: 11px;
+        padding-top: 10px;
+    }
+    .add-balance-box button:nth-child(1) {
+        padding-left: 28px;
+        border-left: 0px solid;
+    }
+    .header_icon_group {
+        margin-right: 18px;
+    }
+    .transfer-info_header ul {
+        max-width: 550px;
+    }
+    .transfer-info_header .search {
+        width: 200px;
+    }
+    .balance_amount_sec {
+        padding: 20px 20px 60px 20px;
+    }
+    .currencies-sec .currencies-wrp {
+        max-width: 100%;
+        padding: 0 30px;
+    }
+    .currencies-box {
+        padding: 16px;
+        margin: 0 0px 20px;
+    }
+    .currencies-active-box .active-btn button.btn.border-btn {
+        margin: 0 0px 35px;
+        padding: 20px;
+    }
+    .currencies-box .flag img {
+        width: 26px;
+    }
+    .currencies-box .flag h5 {
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+    .currencies-box .info .left-text h4 {
+        font-size: 20px;
+    }
+    .row.creat-cont-row >* {
+        padding: 0px 10px;
+    }
+    .step-form-wrp form .form-field.file-field {
+        margin: 0 0px 30px;
+    }
+    .form-field.file-field h5 {
+        font-size: 13px;
+    }
+
+}
+@media (min-width:768px) and (max-width:991px){
+    :root {
+        --sidebar-width: 320px;
+        --body-font-size:13px;
+    }
+    .sidebar-row {
+        padding: 25px;
+    }
+    .details-content {
+        padding: 35px 20px 60px;
+    }
+    .admin-sidebar {
+        transform: translateX(-102%);
+        transition: all 0.5s;
+        z-index: 999;
+    }
+    .sidebar-collapsein .admin-sidebar{
+        transform: translateX(0);
+    }
+    .admin-body {
+        --sidebar-width: 290px;
+        padding: 0;
+    }
+    .admin-header-inner {
+        padding: 10px 6px 10px;
+        margin-bottom: 0;
+        background: var(--dark);
+    }
+    .admin-header input[type="search"] {
+        min-width: 200px;
+    }
+    .admin-body-content .admin-body-inner {
+        padding: 20px;
+    }
+    .admin-body-inner .title h3 {
+        font-size: 22px;
+    }
+    .add-balance-box button:nth-child(1) {
+        padding-left: 0px;
+        padding-bottom: 10px;
+        border: 0;
+    }
+    .add-balance-box button:nth-child(2) {
+        padding-right: 5px;
+    }
+    .transfer-info_header ul {
+        max-width: 570px;
+        width: 100%;
+    }
+    .admin-header-inner {
+        margin: 0;
+    }
+    .header_icon_group {
+        display: none !important;
+    }
+    .transfer-info_header .search {
+        margin-left: -123px;
+        width: 185px;
+    }
+    .currencies-sec .currencies-wrp {
+        max-width: 100%;
+        padding: 0 25px;
+    }
+    .currencies-box {
+        padding: 14px;
+        margin: 0 auto 20px
+    }
+    .currencies-box .flag h5 {
+        font-size: 13px
+    }
+    .currencies-box .info .left-text h4 {
+        font-size: 22px;
+    }
+    .currencies-active-box .active-btn button.btn.border-btn {
+        margin: 0 auto 20px;
+    }
+    .step-form-wrp form .form-field.file-field {
+        margin: 0 0px 30px;
+    }
+    .form-field.file-field label {
+        height: 200px;
+    }
+    .form-field.file-field h5 {
+        font-size: 12px;
+        padding: 15px 7px;
+        font-weight: 500;
+    }
+}
+@media  (max-width:991px){
+    .login-main {
+        flex-direction: column;
+    }
+    .simplebar-content .navbar-toggle {
+        position: absolute;
+        right: 11px;
+        top: 12px;
+    }
+    .admin-sidebar {
+        border-radius: 0px 10px 10px 0px;
+    }
+    body.admin-body.sidebar-collapsein .icon-menu .logo {
+        opacity: 0;
+    }
+    .admin-sidebar .logo {
+        height: 50px;
+    }
+    body.login-page {
+        padding: 0 5% 0 5%;
+    }
+    .admin-header .logo {
+        max-width: 152px;
+        margin: 0 auto;
+    }
+    .header-profile-name .btn:after {
+        filter: invert(1);
+    }
+    .login-content .logo img {
+        min-width: 212px;
+    }
+    .login-image {
+        padding-top: 0%;
+        padding-right: 0;
+    }
+    body.login-page:after {
+        width: 211px;
+        height: 200px;
+    }
+    .form-sec .input-field {
+        max-width: 100%;
+    }
+    .right-header {
+        padding-left: 0;
+    }
+    .admin-sidebar {
+        transform: translateX(-102%);
+        transition: all 0.5s;
+        z-index: 999;
+    }
+    .sidebar-collapsein.admin-body {
+        --sidebar-width: 320px;
+    }
+    .sidebar-collapsein .admin-sidebar{
+        transform: translateX(0);
+    }
+    .admin-body {
+        padding: 0;
+    }
+    .admin-header-inner {
+        padding: 10px 12px 10px;
+        margin-bottom: 0;
+        background: var(--dark);
+    }
+    .admin-header input[type="search"] {
+        min-width: 200px;
+    }
+    .login-image .card-img img {
+        max-width: 266px;
+    }
+    .login-content form {
+        min-height: auto;
+    }
+    .header-profile-name .btn h5 {
+        color: #ffffff;
+    }
+    .header-profile-name .btn h5 small {
+        color: #ffffff;
+    }
+    .sidebarnav > ul > li > a {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+    .sidebarnav {
+        margin-top: 30px;
+    }
+    .admin-header .btn-icon {
+        background: #fff;
+    }
+    .admin-header .btn-icon svg path{
+        fill: var(--dark);
+    }
+    .row.creat-cont-row >* {
+        padding: 0px 10px;
+    }
+    .steps-header img {
+        max-width: 130px;
+    }
+    .step-details-form .title h4 {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    .step-row .points {
+        font-size: 12px;
+        margin: 0 20px;
+    }
+    .step-row .points:after {
+        width: calc(100% - 50px);
+    }
+    .step-form-wrp form {
+        padding: 50px 20px 50px;
+    }
+    .step-form-wrp {
+        margin: 0 30px;
+    }
+    .step-details-form .form-field label{
+        font-size: 12px;
+    }
+    .step-details-form  .form-control, .step-details-form .form-select, .step-details-form .select2-container--default .select2-selection--single {
+        height: 40px;
+    }
+    html .next-btn a.btn {
+        height: 41px;
+    }
+    span.input-group-addon {
+        line-height: 40px;
+    }
+    
+}
+@media (max-width:767px){
+    :root {
+        --sidebar-width: 0;
+        --body-font-size:14px;
+    }
+    .admin-sidebar .sidebar-row {
+        padding: 15px;
+    }
+    body.login-page {
+        padding: 0 3% 0 3%;
+        background-size: contain;
+        background-position: bottom;
+        min-height: 100vh;
+        background-color: #040613;
+        height: 100vh;
+        overflow: hidden;
+    }
+    body.login-page:after {
+        width: 100px;
+        height: 90px;
+    }
+    .login-content .logo {
+        margin-bottom: 47px;
+    }
+    .form-field {
+        margin: 0 0 12px;
+        line-height: 120%;
+    }
+    .login-content h2 {
+        font-size: 18px;
+        margin: 0 0 12px;
+    }
+    .logo {
+        max-width: 109px;
+        background: var(--dark);
+    }
+    .login-page  .logo{
+        max-width: 150px;
+        background: transparent;
+        width: 100%;
+    }
+    .login-content .logo {
+        margin: 10px auto 21px;
+    }
+    .login-main {
+        flex-direction: column;
+    }
+    .login-content {
+        width: 342px;
+        padding-bottom: 0;
+    }
+    .login-content  label {
+        font-size: 12px;
+    }
+    .login-image .card-img img {
+        width: 100%;
+    }
+    .login-content form {
+        padding: 45px 18px;
+        min-height: auto;
+    }
+    .login-content  .btn {
+        height: 42px;
+    }
+    .login-content .form-control {
+        font-size: 13px;
+    }
+    .login-content .logo img {
+        min-width: 150px;
+        margin-top: 10px;
+    }
+    .login-content form:after {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .header-profile-name .btn h5{
+        display: none;
+    }
+    .admin-sidebar .logo {
+        height: 50px;
+        width: 100%;
+        text-align: center !important;
+        margin: 0 auto;
+    }
+    .header-profile-name .btn:after{
+        filter: invert(1);
+    }
+    .header-profile-name .btn .icon {
+        width: 40px;
+        height: 40px;
+        margin: 0;
+        border: 1px solid #ffffff45;
+    }
+    .admin-body-content .admin-body-inner {
+        padding: 20px 20px 20px;
+        margin-top: 0px;
+    }
+    .admin-body-inner .title h3 {
+        font-size: 20px;
+    }
+    .section.submit_btn {
+        padding-top: 0px;
+    }
+    .section.submit_btn button {
+        font-size: 14px;
+    }
+    .add-balance-box button:nth-child(2) {
+        padding-right: 0;
+    }
+    .add-balance-box button:nth-child(1) {
+        padding-left: 0px;
+        border-left: 0px;
+    }
+    .balance_amount_sec {
+        padding: 20px 0px 65px 0px;
+    }
+    .right-header {
+        padding-left: 0;
+    }
+    .header_icon_group {
+        display: none !important;
+    }
+    .admin-header-inner {
+        margin: 0 0px;
+    }
+    .admin-body-content .admin-body-inner {
+        padding: 20px 10px 0px;
+    }
+    .balance-box {
+        margin-bottom: 18px;
+    }
+    .balance-box .text h5 {
+        font-size: 16px;
+    }
+    .add-balance-box {
+        text-align: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #ffffff45;
+    }
+    .transfer-info {
+        padding: 15px 15px;
+    }
+    .transfer-info .info li button {
+        font-size: 15px;
+        padding-bottom: 10px;
+    }
+    .transfer-info  .info {
+        margin-top: 25px;
+    }
+    .transfer-info_header .search {
+        margin-left: 0;
+        width: 100%;
+    }
+    .transfer-info_header .search input {
+        background-color: #fff;
+        padding: 10px 10px 10px 42px;
+        font-size: 15px;
+        width: 100%;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .transfer-info .info .tab-content {
+        margin-top: 6px;
+    }
+    .add-balance-box button span {
+        width: 40px;
+        height: 40px;
+    }
+    .add-balance-box button:nth-child(2) span svg {
+        max-width: 18px;
+    }
+    .transfer-info .info .tab-content table.table th {
+        text-wrap: nowrap;
+        font-size: 13px;
+        padding: 10px 30px 10px 10px;
+    }
+    .currencies-sec .currencies-wrp {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+    .currencies-active-box .active-btn button.btn.border-btn {
+        min-height: 145px;
+    }
+    .modal-btn a.btn {
+        margin: 0px 7px 0;
+    }
+    body .active-currency-modal .modal-content form {
+        margin-top: 40px;
+    }
+    body .active-currency-modal  .modal-btn {
+        margin-top: 70px;
+    }
+    body .active-currency-modal .modal-content {
+        height: 420px;
+        padding: 40px 40px;
+    }
+    .currencies-sec .currencies-wrp {
+        padding: 0;
+    }
+    .customer-info {
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .customer-info table th {
+        text-wrap: nowrap;
+    }
+    .customer-info table td {
+        padding: 10px 10px;
+    }
+    .customer-info table td a img {
+        min-width: 20px;
+    }
+    .container-wrp {
+        padding: 0;
+    }
+    .row.creat-cont-row >* {
+        padding: 0px 10px;
+    }
+    .step-form-wrp form {
+        padding: 20px 20px 9px;
+    }
+    .step-form-wrp {
+        margin: 0 15px;
+    }
+    .form-field.file-field label {
+        height: 200px;
+    }
+    .step-form-wrp form .form-field.file-field {
+        margin: 0 0px 20px;
+    }
+    .form-field.file-field h5 {
+        font-size: 12px;
+        padding: 15px 10px;
+        font-weight: 500;
+        height: 58px;
+    }
+    .form-field.file-field label {
+        height: 150px;
+    }
+    .step-form .submit_btn .btn {
+        margin-top: 20px;
+    }
+}
+
+
+
+
+
+
+

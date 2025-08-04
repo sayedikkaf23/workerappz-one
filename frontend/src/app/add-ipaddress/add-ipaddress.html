@@ -1,0 +1,66 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div class="user-page">
+  <div class="filter-export-buttons">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+         (ngModelChange)="onSearch()"  
+        name="searchTerm"
+      />
+      <button class="search-button" (click)="onSearch()">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+
+    <button class="export-button" (click)="exportToExcel()">
+      <i class="fas fa-file-export"></i> EXPORT
+    </button>
+
+    <button class="new-button" (click)="navigateToRoles()">
+      + New IP
+    </button>
+  </div>
+         <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredIpAddresses.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+
+<table class="user-table">
+  <thead>
+    <tr>
+      <th>MAC Address</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ip of filteredIpAddresses">
+      <td>{{ ip.mac_address }}</td>
+      <td>{{ ip.description }}</td>
+      <td>
+        <label class="switch">
+          <input
+            type="checkbox"
+            [checked]="ip.isActive"
+            (change)="toggleStatus(ip)"
+          />
+          <span class="slider round"></span>
+        </label>
+      </td>
+    <td class="action-cell">
+  <div style="display: flex; gap: 10px;">
+    <button (click)="editUser(ip._id)">Edit</button>
+    <button (click)="deleteUser(ip._id)">Delete</button>
+  </div>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>

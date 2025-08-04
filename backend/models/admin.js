@@ -1,16 +1,10 @@
-// models/Admin.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const adminSchema = new mongoose.Schema(
-  {
-    email:        { type: String, required: true, unique: true },
-    password:     { type: String, required: true },   // bcrypt hash
-    totpSecret:   { type: String },                   // base32 secret for TOTP
-    mfaEnabled:   { type: Boolean, default: false },  // flips to true after first verification
-    lastLogin:    { type: Date, default: null },
-    userHashedId: { type: String, required: true }
-  },
-  { timestamps: true }
-);
+const adminSchema = new mongoose.Schema({
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    secret: { type: String },       // MFA secret
+    mfaEnabled: { type: Boolean, default: false }
+});
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model('Admin', adminSchema);

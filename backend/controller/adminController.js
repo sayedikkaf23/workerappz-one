@@ -1,92 +1,83 @@
-/* controllers/authController.js */
-const bcrypt    = require("bcryptjs");
-const speakeasy = require("speakeasy");
-const qrcode    = require("qrcode");
-const Admin     = require("../models/admin");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
+const Admin = require('../models/admin');
+const e = require('express');
 
-// ───────────────────────────────────────────────────────────
-// GET /auth/mfa/setup  – generate a TOTP secret + QR for the
-//                       currently logged-in admin
-// ───────────────────────────────────────────────────────────
-exports.mfaSetup = async (req, res) => {
-  const admin = req.user;                         // set by auth middleware
-  if (admin.mfaEnabled) {
-    return res.status(400).json({ msg: "MFA already enabled" });
-  }
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
-  const secret = speakeasy.generateSecret({
-    name: `WorkerAppz ONE (${admin.email})`,
-    length: 32
-  });
+// REGISTER
+exports.register = async (req, res) => {
+    const { email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  admin.totpSecret = secret.base32;
-  await admin.save();
+    const admin = new Admin({ email, password: hashedPassword });
+    await admin.save();
 
-  const otpAuthUrl = secret.otpauth_url;
-  const qr = await qrcode.toDataURL(otpAuthUrl);  // Base64 for <img src="...">
-
-  res.json({ otpAuthUrl, qr });
+    res.json({ message: "Admin registered successfully" });
 };
 
-// ───────────────────────────────────────────────────────────
-// POST /auth/mfa/verify  – confirm the code shown in the app
-// Body: { token }
-// ───────────────────────────────────────────────────────────
-exports.mfaVerify = async (req, res) => {
-  const { token } = req.body;
-  const admin = req.user;
-
-  const ok = speakeasy.totp.verify({
-    secret: admin.totpSecret,
-    encoding: "base32",
-    token,
-    window: 1
-  });
-
-  if (!ok) return res.status(401).json({ msg: "Invalid TOTP code" });
-
-  admin.mfaEnabled = true;
-  await admin.save();
-  res.json({ msg: "MFA successfully enabled" });
-};
-
-// ───────────────────────────────────────────────────────────
-// POST /auth/login
-// Body: { email, password, token }
-// ───────────────────────────────────────────────────────────
+// LOGIN
 exports.login = async (req, res) => {
-  const { email, password, token } = req.body;
-  const admin = await Admin.findOne({ email: email.toLowerCase() }).populate("role");
+    const { email, password } = req.body;
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(400).json({ message: "Invalid credentials" });
 
-  if (!admin) return res.status(404).json({ message: "Admin not found" });
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-  const okPw = await bcrypt.compare(password, admin.password);
-  if (!okPw) return res.status(401).json({ message: "Invalid password" });
-
-  // If MFA not configured yet, tell front-end to start setup
-  if (!admin.mfaEnabled) {
-    return res.status(403).json({ mfaSetupRequired: true });
-  }
-
-  if (!token) return res.status(400).json({ message: "TOTP token required" });
-
-  const okTotp = speakeasy.totp.verify({
-    secret: admin.totpSecret,
-    encoding: "base32",
-    token,
-    window: 1
-  });
-  if (!okTotp) return res.status(401).json({ message: "Invalid TOTP token" });
-
-  admin.lastLogin = new Date();
-  await admin.save();
-
-  // TODO: issue JWT / session here
-  res.json({
-    admin: {
-      id:     admin._id,
-      email:  admin.email,
-      role:   admin.role || null
+    if (admin.mfaEnabled) {
+        return res.json({ mfaRequired: true, email });
     }
-  });
+
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+};
+
+// ENABLE MFA (Generate QR)
+exports.enableMFA = async (req, res) => {
+    const { email } = req.body;
+    console.log("sd",email)
+    const admin = await Admin.findOne({ email });
+        console.log(admin)
+
+    if (!admin) return res.status(400).json({ message: "Admin not found" });
+
+    const secret = speakeasy.generateSecret({ length: 20 });
+    admin.secret = secret.base32;
+    await admin.save();
+
+    const otpauthUrl = speakeasy.otpauthURL({
+        secret: admin.secret,
+        label: `MyApp (${email})`, // ✅ Fixed: label is now a string
+        issuer: 'MyApp',
+        encoding: 'base32'
+    });
+
+    qrcode.toDataURL(otpauthUrl, (err, dataURL) => {
+        if (err) return res.status(500).json({ message: "Failed to generate QR" });
+        res.json({ qrCode: dataURL });
+    });
+};
+
+// VERIFY MFA
+// VERIFY MFA
+exports.verifyMFA = async (req, res) => {
+    const { email, token } = req.body;
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(400).json({ message: "Admin not found" });
+
+    const verified = speakeasy.totp.verify({
+        secret: admin.secret,
+        encoding: 'base32',
+        token
+    });
+
+    if (!verified) return res.status(400).json({ message: "Invalid token" });
+
+    admin.mfaEnabled = true;
+    await admin.save();
+
+    res.json({ message: "MFA verified successfully" });
 };

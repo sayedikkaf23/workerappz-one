@@ -7,57 +7,80 @@
                 <div class="step_icon">
                     <img src="assets/images/footer-logo.png" alt="">
                 </div>
-                <ul class="step_list">
-                    <li class="">
-                        <div class="circle" style="background-image: url(assets/images/step-1-icon.svg);">
-                            <span>1</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 1</h5>
-                            <h3>Enter basic details</h3>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="circle" style="background-image: url(assets/images/step-2-icon.svg);"><span>2</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 2</h5>
-                            <h3>Select which suits your requirements</h3>
-                        </a>
-                    </li>
-                    <li class="">
-                        <div class="circle" style="background-image: url(assets/images/step-3-icon.svg);"><span>3</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 3</h5>
-                            <h3>Business Details</h3>
-                        </a>
-                    </li>
-                    <li class="">
-                        <div class="circle" style="background-image: url(assets/images/step-4-icon.svg);"><span>4</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 4</h5>
-                            <h3>Upload Business Documents</h3>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <div class="circle" style="background-image: url(assets/images/step-5-icon.svg);"><span>5</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 5</h5>
-                            <h3>Review Your Details</h3>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="circle" style="background-image: url(assets/images/step-6-icon.svg);"><span>6</span>
-                        </div>
-                        <a href="#">
-                            <h5>Step 6</h5>
-                            <h3>Payment</h3>
-                        </a>
-                    </li>
-                </ul>
+               <ul class="step_list">
+          <li>
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-1-icon.svg)"
+            >
+              <span>1</span>
+            </div>
+            <a routerLink="/step-1">
+              <h5>Step 1</h5>
+              <h3>Enter basic details</h3>
+            </a>
+          </li>
+          <li>
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-2-icon.svg)"
+            >
+              <span>2</span>
+            </div>
+            <a routerLink="/step-2">
+              <h5>Step 2</h5>
+              <h3>Select requirements</h3>
+            </a>
+          </li>
+          <li class="active">
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-3-icon.svg)"
+            >
+              <span>3</span>
+            </div>
+            <a routerLink="/step-3">
+              <h5>Step 3</h5>
+              <h3>Business Details</h3>
+            </a>
+          </li>
+          <li>
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-4-icon.svg)"
+            >
+              <span>4</span>
+            </div>
+            <a routerLink="/step-4">
+              <h5>Step 4</h5>
+              <h3>Upload Documents</h3>
+            </a>
+          </li>
+          <li>
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-5-icon.svg)"
+            >
+              <span>5</span>
+            </div>
+            <a routerLink="/step-5">
+              <h5>Step 5</h5>
+              <h3>Review Details</h3>
+            </a>
+          </li>
+          <li>
+            <div
+              class="circle"
+              style="background-image: url(assets/images/step-6-icon.svg)"
+            >
+              <span>6</span>
+            </div>
+            <a routerLink="/step-6">
+              <h5>Step 6</h5>
+              <h3>Payment</h3>
+            </a>
+          </li>
+        </ul>
             </div>
             <div class="step_content_wrap">
                 <div class="basic_detail_wrp">
@@ -105,7 +128,7 @@
                                             <p>Last Name</p>
                                         </div>
                                         <div class="col">
-                                            <h5>{{ onboardingData?.mobileNumber || '-' }}</h5>
+                                            <h5>{{ onboardingData?.mobileNumber.internationalNumber || '-' }}</h5>
                                             <p>Mobile Number</p>
                                         </div>
                                         <div class="col">
@@ -207,7 +230,7 @@
                                                     <p>Date of Birth</p>
                                                     </div>
                                                     <div class="col">
-                                                    <h5>{{ sh.shareholdingPercentage }}%</h5>
+                                                    <h5>{{ sh.shareholding }}%</h5>
                                                     <p>% shareholding in the company</p>
                                                     </div>
                                             </div>
@@ -276,7 +299,7 @@
                             </a>
                         </div>
                         <div class="col-auto">
-                            <a routerLink="/payment" class="btn">Next
+                            <a routerLink="/payment" class="btn">Skip For Now
                                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.8462 6H1" stroke="currentColor" stroke-width="1.4"

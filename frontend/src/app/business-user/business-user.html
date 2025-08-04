@@ -1,0 +1,100 @@
+<!-- Loader HTML -->
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+
+<!-- Main Content -->
+<div class="main-content" *ngIf="!isLoading">
+    <!-- Cards Actions Section -->
+    <div class="cards-actions">
+        <div class="user-section">
+            <h2><i class="fas fa-user"></i> Business User</h2>
+        </div>
+
+        <div class="filter-export-buttons">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." [(ngModel)]="searchTerm">
+                <button class="search-button" (click)="onSearch()"><i class="fas fa-search"></i> SEARCH</button>
+            </div>
+            <button class="export-button" (click)="exportToExcel()"><i class="fas fa-file-export"></i> EXPORT</button>
+        </div>
+
+         <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredCards.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+        <!-- Cards Data Table -->
+        <div class="table-container">
+            <table class="cards-table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                      
+                        <th>Actions</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let card of paginatedCards; let i = index">
+                        <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                        <td>{{ card.name }}</td> <!-- Displaying the user's full name -->
+                        <td>{{ card.email }}</td>
+                        <td>{{ card.mobileNumber.internationalNumber }}</td>
+                        <td>{{ card.isApprove ? 'Approved' : 'Pending' }}</td>
+                        <td>{{ card.createdAt | date:'yyyy-MM-dd' }}</td>  <!-- ← new -->
+  <td>{{ card.createdAt | date:'HH:mm:ss' }}</td>    <!-- ← new -->
+                        <td>
+                            <div class="action-buttons">
+                                <!-- Show Reject button if card status is true -->
+                                <button 
+                                  class="action-button reject-button" 
+                                  (click)="approve(card.email)" 
+                                  [disabled]="card.isApprove !== true" 
+                                  *ngIf="card.isApprove === true">Reject
+                                </button>
+                              
+                                <!-- Show Approve button if card status is false -->
+                                <button 
+                                  class="action-button approve-button" 
+                                  (click)="approve(card.email)" 
+                                  [disabled]="card.isApprove !== false" 
+                                  *ngIf="card.isApprove === false">Approve
+                                </button>
+                              </div>
+                        </td>
+                        <td>
+                            
+                            <div class="action-buttons">
+                                <button class="action-button primary-button"
+                                    (click)="openBusinessViewModal(card)">View Details</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button class="pagination-button back-button" (click)="goToPage(currentPage - 1)"
+                [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i> BACK
+            </button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button class="pagination-button next-button" (click)="goToPage(currentPage + 1)"
+                [disabled]="currentPage === totalPages">
+                NEXT <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

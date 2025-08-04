@@ -1,0 +1,189 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div class="dashboard-container">
+    <app-loader *ngIf="loading"></app-loader>
+    <div class="dashboard-header">
+        <!-- <h1>Admin Dashboard</h1> -->
+    </div>
+
+    <div class="cards-container" style="
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    max-width: 1600px;">
+
+        <!-- Topup Prefunding Balance -->
+        <div class="card" style="background-color: #c93525; color: white; width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fa fa-arrow-up"></i>
+                <h3>Current Balance</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value"> {{ credit != null ? (credit | number:'1.3-3') : (creditPrefundCredit?.balance !=
+                    null ? (creditPrefundCredit.balance | number:'1.3-3') : 'Loading...') }} USD
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Debit Prefunding Balance -->
+        <div class="card" style="background-color: #9b59b6; color: white; width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>Debited Amount</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{ totalAmount != null ? (totalAmount | number:'1.3-3') :
+                    (creditPrefundBalance?.balance != null ? (creditPrefundBalance.balance | number:'1.3-3') :
+                    'Loading...') }} USD
+                </p>
+            </div>
+        </div>
+
+
+
+        <!-- Total Individual Users -->
+        <div class="card" style="width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fa fa-users"></i>
+                <h3>Total Individual Users</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{ totalIndividualUsers }}</p>
+            </div>
+        </div>
+
+        <!-- Total Business Users -->
+        <div class="card" style="width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fa fa-briefcase"></i>
+                <h3>Total Business Users</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{ totalBusinessUsers }}</p>
+            </div>
+        </div>
+
+        <!-- Sample 1 -->
+        <div class="card" style="width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-credit-card"></i>
+                <h3>Total Virtual Card</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{ vr_card_total }}</p>
+            </div>
+        </div>
+
+        <!-- Sample 2 -->
+        <div class="card" style="width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-id-card"></i>
+                <h3>Total Physical Card</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{ py_card_total }}</p>
+            </div>
+        </div>
+
+        <div class="card" style="background-color: #9b59b6; color: white; width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Purchase Balance</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{purchase_bal}}</p>
+            </div>
+        </div>
+        <div class="card" style="background-color: #9e60b8; color: white; width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-wallet"></i>
+                <h3>Total Wallet</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{totalWallet}}</p>
+            </div>
+        </div>
+
+
+        <div *ngIf="partnercode === 'superadmin'" class="card"
+            style="background-color: #b66f59; color: white; width: 30%; min-width: 320px;">
+            <div class="card-header">
+                <i class="fas fa-user-shield"></i>
+                <h3>Total Master</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-value">{{totalMaster}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="partnercode === 'superadmin'" class="table-container">
+
+
+        <div class="table-header-container">
+            <div class="table-header-title">
+                <i class="fas fa-wallet table-header-icon"></i>
+                <h3>Partners Balance</h3>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search Partners" [(ngModel)]="searchQuery">
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Partner Name </th>
+                    <th>Total Amount </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let master of filteredAndPagedMasterDetails; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ master.partnerName }}</td>
+                    <td>{{ master.totalAmount | currency: 'USD' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination-container">
+            <span class="pagination-text">
+                Showing {{ (currentPage - 1) * rowsPerPage + 1 }} to
+                {{ (currentPage * rowsPerPage) > filteredMasterDetails.length ? filteredMasterDetails.length :
+                (currentPage * rowsPerPage) }}
+                of 10 entries
+            </span>
+
+
+            <span class="pagination-info">
+                {{ (currentPage - 1) * rowsPerPage + filteredAndPagedMasterDetails.length }} / 10
+            </span>
+
+            <div class="pagination-controls">
+                <button class="pagination-button" id="prevPage" (click)="changePage(currentPage - 1)"
+                    [disabled]="currentPage === 1">
+                    <i class="fas fa-chevron-left"></i> BACK
+                </button>
+
+                <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+
+                <button class="pagination-button" id="nextPage" (click)="changePage(currentPage + 1)"
+                    [disabled]="currentPage === totalPages">
+                    NEXT <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="graph-section">
+        <h2 class="graph-title">Sales Data (Individual Users)</h2>
+        <app-pie-chart></app-pie-chart> <!-- Insert Pie Chart here -->
+    </div>
+</div>

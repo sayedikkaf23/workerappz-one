@@ -1,0 +1,211 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+/* Sidebar container */
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 70px); /* Adjusted for the top margin */
+  background-color: #2c3e50; /* Dark Blue */
+  color: white;
+  position: fixed;
+  top: 60px; /* Adjusted to start below the top navigation bar */
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+  z-index: 800;
+    height: calc(100vh - 60px); /* Consistent with top bar height */
+
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Sidebar Menu Items */
+.sidebar-menu li {
+  margin: 0; /* Removed unnecessary margin */
+  border-bottom: 1px solid #1f2d3d; /* Optional border for separation */
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px; /* Reduced padding */
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active a {
+  background-color: #3498db; /* Bright Blue for active item */
+}
+
+.sidebar-menu li i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  padding: 15px 20px; /* Reduced padding */
+  background-color: #34495e; /* Slightly lighter dark blue */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1f2d3d;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px; /* Reduced padding */
+  border-top: 1px solid #1f2d3d;
+}
+
+.sidebar-footer a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 0; /* Adjusted padding */
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.sidebar-footer a:hover {
+  color: #2980b9; /* Light Blue */
+}
+
+.sidebar-footer i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Dropdown Styling */
+.sidebar-menu .dropdown {
+  position: relative;
+}
+
+.sidebar-menu .dropdown-menu {
+  display: none;
+  background-color: #34495e; /* Slightly lighter dark blue */
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  left: 0;
+  width: 100%; /* Full width */
+  border-top: 1px solid #1f2d3d; /* Border to separate from parent */
+  z-index: 900; /* Ensure dropdown is above other content */
+}
+
+.sidebar-menu .dropdown.active .dropdown-menu {
+  display: block;
+}
+
+.sidebar-menu .dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-menu .dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Sidebar when closed */
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 45%; /* Full width for mobile screens */
+    transform: translateX(-100%); /* Hidden on smaller screens */
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-menu li a {
+    padding: 10px;
+    font-size: 12px;
+}
+
+.sidebar-footer a {
+    padding: 6px 0;
+    font-size: 12px;
+}
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+      width: 70%; /* Full width for mobile screens */
+      transform: translateX(-100%); /* Hidden on smaller screens */
+  }
+
+  .sidebar.open {
+      transform: translateX(0);
+  }
+
+  .sidebar-menu li a {
+      padding: 10px;
+      font-size: 12px;
+  }
+
+  .sidebar-footer a {
+      padding: 6px 0;
+      font-size: 12px;
+  }
+
+}
+/* Dropdown Styling */
+.sidebar-menu .dropdown {
+  position: relative;
+}
+
+.sidebar-menu .dropdown-menu {
+  display: none;
+  background-color: #34495e; /* Slightly lighter dark blue */
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  right: 0; /* Align to the end of the parent */
+  width: 90%; /* Adjust width based on content */
+  border-top: 1px solid #1f2d3d; /* Border to separate from parent */
+  z-index: 900; /* Ensure dropdown is above other content */
+}
+
+.sidebar-menu .dropdown.active .dropdown-menu {
+  display: block;
+}
+
+.sidebar-menu .dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-menu .dropdown-icon.open {
+  transform: rotate(180deg);
+}
+

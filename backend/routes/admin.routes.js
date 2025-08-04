@@ -1,14 +1,14 @@
 /* routes/authRoutes.js */
 const express = require("express");
-const router  = express.Router();
-const admin = require("../controllers/authController");
-const authMiddleware = require("../middleware/auth"); // verifies existing JWT
+const router = express.Router();
+const admin = require("../controller/adminController");
 
-// Public
-router.post("/login", admin.login);
+// Public Routes
+router.post("/register", admin.register); // Admin registration
+router.post("/login", admin.login);       // Admin login
 
-// Protected – require valid session/JWT first
-router.get ("/mfa/setup",  authMiddleware, admin.mfaSetup);
-router.post("/mfa/verify", authMiddleware, admin.mfaVerify);
+// MFA Routes (Protected)
+router.post("/mfa/enable", admin.enableMFA); // Generate QR & enable MFA
+router.post("/mfa/verify", admin.verifyMFA); // Verify MFA token
 
 module.exports = router;

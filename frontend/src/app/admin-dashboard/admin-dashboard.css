@@ -1,0 +1,133 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin-left: 0px;
+    }
+}
+/* General container for the role page */
+.role-page {
+    margin-left: 270px; /* Adjust for sidebar */
+    padding: 40px;
+    background-color: #f4f6f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Title styling */
+.role-page h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    text-align: left; /* Align title to the left */
+}
+
+/* Form styling */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 30px;
+    align-items: start;
+}
+
+/* Full-width elements (for headings, etc.) */
+.full-width {
+    grid-column: span 2;
+    text-align: left; /* Align headings to the left */
+}
+
+/* Label and input styling */
+form label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #7f8c8d;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form select {
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Make input fields full width */
+}
+
+/* Input focus states */
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Red star for required fields */
+.required {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* Submit button styling */
+form button {
+    grid-column: span 2;
+    padding: 14px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Make the button full width */
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+form button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .role-page {
+      margin-left: 0;
+      padding: 20px;
+    }
+
+    form {
+      grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+
+    form button {
+      grid-column: span 1;
+    }
+}

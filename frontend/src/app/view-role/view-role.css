@@ -1,0 +1,16 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}

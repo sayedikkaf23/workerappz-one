@@ -6,12 +6,19 @@ const awsController = require("../controller/awsController");
 // Step 1 endpoint
 router.post("/onboarding", controller.saveOrUpdateOnboardingDetails);
 
+router.get('/onboarding/getDetails',  controller.getOnboardingByEmail);
+
+
+router.get("/onboarding", controller.getOnboardingByEmail);
+
+
 // Step 2 endpoint
 router.post("/onboarding/requirements", controller.saveOnboardingRequirements);
 
 router.post('/onboarding/addFiles',  controller.addOrUpdateUploadedFiles);
 
-router.get('/onboarding/getDetails',  controller.getOnboardingByEmail);
+
+
 
 // File upload endpoint
 router.post('/upload-file',  awsController.uploadFileToS3);

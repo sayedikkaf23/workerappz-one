@@ -1,0 +1,66 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div class="user-page">
+    <!-- Button for adding new roles -->
+ <div class="filter-export-buttons">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+         (ngModelChange)="onSearch()"  
+        name="searchTerm"
+      />
+      <button class="search-button" (click)="onSearch()">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+   
+     <button class="export-button" (click)="exportToExcel()"><i class="fas fa-file-export"></i> EXPORT</button>
+        <button (click)="navigateToRoles()">+ New Role</button>
+
+  </div>
+         <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredRoles.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+    <table class="user-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Updated On</th>
+            <th>Action</th> <!-- Action column -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through user roles -->
+          <tr *ngFor="let role of filteredRoles; trackBy: trackByRoleName">
+            <td>{{ role.role_name }}</td>
+            <td>
+              <label class="switch">
+                <input type="checkbox" [checked]="role.status" (change)="toggleStatus(role)">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td>{{ role.updatedAt | date:'MM-dd-yyyy HH:mm' }}</td>
+            <td class="action-cell"> <!-- Action cell -->
+              <div class="dropdown" [class.show]="role.showDropdown">
+                <button class="dropdown-toggle" (click)="toggleDropdown(role);  $event.stopPropagation()">
+                  ⋮ <!-- Vertical ellipsis icon -->
+                </button>
+                <!-- Dropdown menu, displayed if showDropdown is true -->
+                <ul [class.show]="role.showDropdown" class="dropdown-menu">
+                  <!-- <li (click)="editRole(role)">Edit</li> -->
+                  <li (click)="viewRole(role)">Edit</li>
+                  <li (click)="deleteRole(role)">Delete</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+</div>

@@ -1,0 +1,389 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+    .dashboard-container {
+        margin-left: 0px !important;
+    }
+}
+/* Table Container Styling */
+.table-container {
+    background-color: #ffffff; /* White background for the table */
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1140px;  /* Keep the max-width fixed */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    margin-right: 400px;
+}
+
+
+
+/* Ensure the table behaves responsively at smaller screens */
+@media (max-width: 768px) {
+    .table-container {
+        max-width: 100%; /* Allow the container to shrink on small screens */
+    }
+}
+/* Table Header Container */
+.table-header-container {
+    display: flex;
+    justify-content: space-between; /* Space between heading and search */
+    align-items: center; /* Vertically center the content */
+    margin-bottom: 20px; /* Add some space below */
+}
+
+/* Heading and Icon Styling */
+.table-header-title {
+    display: flex;
+    align-items: center; /* Align the icon and text vertically */
+    gap: 10px; /* Add some space between the icon and the text */
+}
+
+.table-header-title h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #34495e; /* Dark gray color for the text */
+    font-weight: bold; /* Make the heading bold */
+}
+
+/* Icon Styling */
+.table-header-icon {
+    font-size: 24px; /* Adjust the icon size */
+    color: #3498db; /* Blue color for the icon */
+}
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+}
+
+.search-bar input {
+    padding: 10px 15px;
+    width: 250px; /* Adjust size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    justify-content: flex-end; /* Align to the left */
+    margin-bottom: 20px; /* Space below the search bar */
+}
+
+.search-bar input {
+    padding: 10px 15px;
+    width: 250px; /* Adjust size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+
+
+/* Table Header */
+.table th {
+    background-color: #ecf0f1;  /* Light background for the header */
+    color: #34495e;  /* Dark text */
+    padding: 16px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;  /* Horizontal line for row separation */
+    text-align: left;
+    cursor: pointer;
+    border-right: 1px solid #ddd;  /* Ensures the right border matches */
+    box-sizing: border-box;  /* Include padding and border in width calculation */
+}
+
+/* Table Data */
+.table td {
+    padding: 16px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;  /* Horizontal line for row separation */
+    border-right: 1px solid #ddd;  /* Ensures the right border matches */
+    box-sizing: border-box;  /* Include padding and border in width calculation */
+}
+
+/* Aligning Columns */
+.table th, .table td {
+    width: 33.33%;  /* Equal width for all columns */
+    box-sizing: border-box;  /* Ensures padding is included in the width */
+}
+
+/* Aligning SN Column (Left) */
+.table td:first-child, .table th:first-child {
+    text-align: left;  /* Left-align SN */
+    border-left: 1px solid #ddd;  /* Vertical line on the left */
+}
+
+/* Center Align the Partner Name Column */
+.table td:nth-child(2), .table th:nth-child(2) {
+    text-align: left;  /* Center-align Partner Name */
+}
+
+/* Right Align the Total Amount Column */
+.table td:last-child, .table th:last-child {
+    text-align: left;  /* Right-align the Total Amount */
+}
+
+/* Row Hover Effect */
+.table tbody tr:hover {
+    background-color: #f1f1f1;  /* Light blue hover effect */
+    cursor: pointer;
+}
+/* Pagination Button (Back and Next) */
+.pagination-button {
+    padding: 8px 16px;
+    background-color: #3498db; /* Blue for buttons */
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+/* Add icon spacing */
+.pagination-button i {
+    margin-right: 6px; /* Space between icon and text */
+}
+
+/* Button Hover Effect */
+.pagination-button:hover {
+    background-color: #2980b9;  /* Darker blue on hover */
+    transform: scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect */
+}
+
+/* Disabled Pagination Button */
+.pagination-button[disabled] {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+    opacity: 0.5;  /* Make disabled buttons a bit transparent */
+}
+
+/* Pagination Text */
+.pagination-info {
+    font-size: 14px;
+    margin-left: 10px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+/* Pagination Text (Showing entries) */
+.pagination-text {
+    font-size: 14px;
+    color: #34495e;
+    margin-right: 10px;
+}
+
+/* Pagination Container */
+.pagination-container {
+    display: flex;
+    justify-content: space-between; /* Space between the left and right elements */
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #34495e;
+}
+
+/* Pagination Controls (Back, Next) */
+.pagination-controls {
+    display: flex;
+    justify-content: flex-end; /* Align pagination controls to the right */
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Adjustments for small screens */
+@media screen and (max-width: 768px) {
+    .pagination-button {
+        padding: 6px 12px;  /* Reduce padding for smaller screens */
+    }
+
+    .pagination-text {
+        font-size: 12px;
+    }
+
+    .pagination-info {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-container {
+        flex-direction: column; /* Stack pagination on small screens */
+        align-items: flex-start; /* Align to the left */
+    }
+
+    .pagination-button, .pagination-text, .pagination-info {
+        width: 100%; /* Full width for buttons and text on small screens */
+        margin: 5px 0; /* Add some margin between elements */
+    }
+}
+
+
+/* Dashboard container */
+.dashboard-container {
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #f4f6f9;
+    min-height: calc(100vh - 70px);
+    transition: margin-left 0.3s ease;
+    margin-top: 100px;
+}
+
+/* Dashboard header */
+.dashboard-header {
+    margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+    color: #34495e; /* Dark gray for title */
+}
+
+/* Card container */
+.cards-container {
+    display: flex;
+    gap: 20px; /* Space between cards */
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+}
+
+/* Card styles */
+.card {
+    background-color: #2c3e50;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: translateY(-10px) scale(1.05); /* Lift and scale on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Card header */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header h3 {
+    font-size: 18px;
+    color: #fff;
+    margin: 0;
+}
+
+.card-header i {
+    font-size: 24px; /* Icon size */
+}
+
+/* Card body */
+.card-body {
+    margin-top: 20px;
+}
+
+.card-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.progress-bar span {
+    display: block;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Graph section */
+.graph-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 70px;
+}
+
+/* Graph title */
+.graph-title {
+    font-size: 22px;
+    color: #34495e;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Circular graph container */
+.graph-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+}
+
+.line-chart {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .graph-section {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .graph-container {
+        width: 100%;
+    }
+}
