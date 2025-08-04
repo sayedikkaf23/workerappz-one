@@ -52,4 +52,20 @@ export class Step5 {
       }
     }
   }
+  // Already have this – keep it.
+getFileType(fileName: string): 'pdf' | 'excel' | 'image' | 'unknown' {
+  if (!fileName) return 'unknown';
+  const ext = fileName.split('.').pop()!.toLowerCase();
+  if (ext === 'pdf') return 'pdf';
+  if (['xls', 'xlsx'].includes(ext)) return 'excel';
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'image';
+  return 'unknown';
+}
+
+// New – open the file in a new tab
+openFile(url: string): void {
+  window.open(url, '_blank');
+}
+
+  
 }
