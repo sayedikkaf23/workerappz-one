@@ -240,45 +240,95 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card card-light">
-                                    <h3 class="text-center text-xl-start">Upload Business Documents</h3>
-                                    <div class="row gy-4">
-                                        <div class="col-xl-6 col-12">
-                                            <div class="document_wrap">
-                                                <div class="image_box">
-                                                    <h4>Trade License or <br> Incorporation Document</h4>
-                                                    <img src="assets/images/img-1.png" alt="">
-                                                </div>
-                                                <div class="image_box">
-                                                    <h4>MOA/AOA</h4>
-                                                    <img src="assets/images/img-2.png" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-12">
-                                            <h3 class="text-center text-xl-start">Shareholder Documents</h3>
-                                            <div class="document_wrap sh_document_wrap">
-                                                <div class="image_box">
-                                                    <img src="assets/images/img-3.png" alt="">
-                                                    <h5>Passport</h5>
-                                                </div>
-                                                <div class="image_box">
-                                                    <img src="assets/images/img-4.png" alt="">
-                                                    <h5>National ID</h5>
-                                                </div>
-                                                <div class="image_box">
-                                                    <img src="assets/images/img-5.png" alt="">
-                                                    <h5>Residence Proof</h5>
-                                                </div>
+<div class="row">
+  <div class="col-12">
+    <div class="card card-light">
+      <h3 class="text-center text-xl-start">Upload Business Documents</h3>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <div class="row gy-4">
+        <!-- ====== Business docs ====== -->
+        <div class="col-xl-6 col-12">
+          <div class="document_wrap">
+            <!-- Trade Licence / Incorporation -->
+            <div class="image_box" *ngIf="onboardingData?.uploadedTradeLicense?.length; else tlPlaceholder">
+              <h4>Trade License / Incorporation</h4>
+              <ng-container *ngFor="let file of onboardingData.uploadedTradeLicense">
+                <figure (click)="openFile(file.url)" class="doc-thumb">
+                  <ng-container [ngSwitch]="getFileType(file.name)">
+                    <img *ngSwitchCase="'image'" [src]="file.url" [alt]="file.name" />
+                    <img *ngSwitchCase="'pdf'" src="assets/images/pdf-icon.svg" alt="PDF" />
+                    <img *ngSwitchCase="'excel'" src="assets/images/excel-icon.svg" alt="Excel" />
+                    <img *ngSwitchDefault src="assets/icons/file-icon.svg" alt="File" />
+                  </ng-container>
+                  <figcaption>{{ file.name }}</figcaption>
+                </figure>
+              </ng-container>
+            </div>
+            <ng-template #tlPlaceholder>
+              <div class="image_box">
+                <h4>Trade License / Incorporation</h4>
+                <img src="assets/images/img-1.png" alt="placeholder" />
+              </div>
+            </ng-template>
+
+            <!-- MOA / AOA -->
+            <div class="image_box" *ngIf="onboardingData?.uploadedMoaAoa?.length; else moaPlaceholder">
+              <h4>MOA / AOA</h4>
+              <ng-container *ngFor="let file of onboardingData.uploadedMoaAoa">
+                <figure (click)="openFile(file.url)" class="doc-thumb">
+                  <ng-container [ngSwitch]="getFileType(file.name)">
+                    <img *ngSwitchCase="'image'" [src]="file.url" [alt]="file.name" />
+                    <img *ngSwitchCase="'pdf'" src="assets/icons/pdf-icon.svg" alt="PDF" />
+                    <img *ngSwitchCase="'excel'" src="assets/icons/excel-icon.svg" alt="Excel" />
+                    <img *ngSwitchDefault src="assets/icons/file-icon.svg" alt="File" />
+                  </ng-container>
+                  <figcaption>{{ file.name }}</figcaption>
+                </figure>
+              </ng-container>
+            </div>
+            <ng-template #moaPlaceholder>
+              <div class="image_box">
+                <h4>MOA / AOA</h4>
+                <img src="assets/images/img-2.png" alt="placeholder" />
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- ====== Shareholder docs ====== -->
+        <div class="col-xl-6 col-12">
+          <h3 class="text-center text-xl-start">Shareholder Documents</h3>
+          <div class="document_wrap sh_document_wrap">
+            <ng-container *ngFor="let block of [
+              { label: 'Passport', arr: onboardingData?.uploadedPassport },
+              { label: 'National ID', arr: onboardingData?.uploadedNationalId },
+              { label: 'Residence Proof', arr: onboardingData?.uploadedResidenceProof }
+            ]">
+              <div class="image_box" *ngIf="block.arr?.length; else placeholder">
+                <figure (click)="openFile(block.arr[0].url)" class="doc-thumb">
+                  <ng-container [ngSwitch]="getFileType(block.arr[0].name)">
+                    <img *ngSwitchCase="'image'" [src]="block.arr[0].url" [alt]="block.arr[0].name" />
+                    <img *ngSwitchCase="'pdf'" src="assets/icons/pdf-icon.svg" alt="PDF" />
+                    <img *ngSwitchCase="'excel'" src="assets/icons/excel-icon.svg" alt="Excel" />
+                    <img *ngSwitchDefault src="assets/icons/file-icon.svg" alt="File" />
+                  </ng-container>
+                  <figcaption>{{ block.label }}</figcaption>
+                </figure>
+              </div>
+              <ng-template #placeholder>
+                <div class="image_box">
+                  <img src="assets/images/img-placeholder.png" alt="placeholder" />
+                  <h5>{{ block.label }}</h5>
+                </div>
+              </ng-template>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
                     </div>
                 </div>
                 <div class="step_button step_document_button">
