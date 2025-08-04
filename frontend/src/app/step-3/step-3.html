@@ -120,7 +120,7 @@
         <div class="step_form step3_form">
           <div class="details_wrap">
             <div class="row g-xl-4 g-lg-3 gy-4">
-              <div class="col-xl-8 col-lg-7">
+              <div class="col-12">
                 <h3>Business Details</h3>
                 <div class="card">
                   <form (ngSubmit)="submitForm()">
@@ -214,16 +214,13 @@
                   </form>
                 </div>
               </div>
-
-              <div class="col-xl-4 col-lg-5">
-                <h3>Shareholder Details</h3>
-                <div class="card">
-                  <div
-                    *ngFor="
-                      let shareholder of formData.shareholders;
-                      let i = index
-                    "
-                  >
+              <div class="row g-xl-4 g-lg-3 gy-4">
+                <div class="col-12">
+                  <h3>Shareholder Details</h3>
+                </div>
+                <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
+                  <div class="col-xl-6 col-lg-6 col-12">
+                    <div class="card">
                     <div class="form-field">
                       <label class="form-label">Full Name</label>
                       <input
@@ -237,27 +234,27 @@
                     <div class="form-field">
                       <label class="form-label">Nationality</label>
                      <select
-  class="form-select"
-  [(ngModel)]="shareholder.nationality"
-  name="nationality{{ i }}"
->
+                        class="form-select"
+                        [(ngModel)]="shareholder.nationality"
+                        name="nationality{{ i }}"
+                      >
                         <option value="" disabled>Select Nationality</option>
-  <option *ngFor="let country of nationalities" [value]="country.value">
-    {{ country.label }}
-  </option>
+                        <option *ngFor="let country of nationalities" [value]="country.value">
+                          {{ country.label }}
+                        </option>
                       </select>
                     </div>
                     <div class="form-field">
                       <label class="form-label">Date of Birth</label>
-                      <input
-    type="date"
-    id="dob-{{ i }}"
-    [(ngModel)]="shareholder.dob"
-    name="dob{{ i }}"
-    [max]="getMaxDobDate()" 
-    (focus)="openDatePicker(i)"
-    class="form-control"
-  />
+                                          <input
+                        type="date"
+                        id="dob-{{ i }}"
+                        [(ngModel)]="shareholder.dob"
+                        name="dob{{ i }}"
+                        [max]="getMaxDobDate()" 
+                        (focus)="openDatePicker(i)"
+                        class="form-control"
+                      />
                     </div>
                     <div class="form-field">
                       <label class="form-label">% Shareholding</label>
@@ -281,6 +278,7 @@
                   </div>
                   <!-- <button type="button" class="btn btn-secondary mt-2" (click)="addShareholder()">Add Shareholder</button> -->
                 </div>
+              </ng-container>
               </div>
             </div>
           </div>
