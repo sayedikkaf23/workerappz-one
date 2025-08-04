@@ -27,7 +27,8 @@ export class Step4 {
   ngOnInit() {
     this.email = this.onBoardingService.getCachedData()?.email || '';
     // Fetch existing uploaded files if any
-    this.onBoardingService.getOnboardingDetailsByEmail(this.email).subscribe(
+    if(this.email){
+       this.onBoardingService.getOnboardingDetailsByEmail(this.email).subscribe(
       (response) => {
         if (response.success) {
           const data = response.data;
@@ -43,6 +44,12 @@ export class Step4 {
         this.toastr.error(error.message || 'Failed to fetch onboarding details');
       }
     );
+    }
+    else{
+      this.toastr.error("email ID is not provided for this user", "Email not found")
+      this.router.navigate(['/step-1']);;
+    }
+   
   }
   toggleDarkMode() {
     this.isDark = !this.isDark;

@@ -49,9 +49,4 @@ ngx-intl-tel-input {
     background-color: #023764;
 }
 
-::ng-deep .ngx-tel-input .iti__country-name {
- 
-  color: #fff; /* Change text color to white */
-  
-}
 
