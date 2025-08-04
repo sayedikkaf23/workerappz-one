@@ -10,7 +10,7 @@ import { OnboardingService } from '../services/onboarding.service';
 export class Step5 {
   isDark = true;
   onboardingData: any;
-
+  loading: boolean = false;
   constructor(private onboardingService: OnboardingService) {}
 
   ngOnInit() {
@@ -22,20 +22,23 @@ export class Step5 {
 
     if (email) {
       sessionStorage.setItem('email', email);
-
+      this.loading =true;
       this.onboardingService.getOnboardingDetailsByEmail(email).subscribe(
         (response) => {
           if (response.success) {
             this.onboardingData = response.data;
             console.log('Fetched onboarding data:', this.onboardingData);
+            this.loading = false;
           }
         },
         (error) => {
           console.error('Error fetching onboarding data:', error);
+          this.loading = false;
         }
       );
     } else {
       console.warn('Email not found in cache or session storage.');
+      this.loading = false;
     }
   }
 

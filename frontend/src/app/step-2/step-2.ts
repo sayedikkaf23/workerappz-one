@@ -11,7 +11,8 @@ import { OnboardingService }    from '../services/onboarding.service';
 export class Step2 implements OnInit {
   selectedRequirement: 'personal'|'business'|'prepaid'|'transfer' = 'personal';
   cache: any;
-
+  loading:boolean = false;
+   isDark = true;
   constructor(
     private svc: OnboardingService,
     private router: Router
@@ -28,19 +29,26 @@ export class Step2 implements OnInit {
     // merge in our choice
     this.cache.requirements = this.selectedRequirement;
     this.svc.setCachedData(this.cache);
-
+    this.loading = true;
     // call the separate requirements API
     this.svc.saveRequirements({
       _id:          this.cache._id,
       email:        this.cache.email,
       requirements: this.selectedRequirement
     }).subscribe({
-      next: () => this.router.navigate(['/step-3']),
-      error: err => console.error('Step2 save failed', err)
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/step-3']);
+
+      },
+      error: err =>{
+        console.error('Step2 save failed', err);
+        this.loading = false;
+      } 
     });
   }
 
-     isDark = true;
+    
 toggleDarkMode() {
   this.isDark = !this.isDark;
   const wrapper = document.querySelector('.theme-wrapper');

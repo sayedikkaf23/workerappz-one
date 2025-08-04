@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './step-4.css',
 })
 export class Step4 {
+  loading: boolean = false;
+
   isDark = true;
   email = '';
   uploadedTradeLicense: File[] = [];
@@ -101,6 +103,7 @@ export class Step4 {
       this.toastr.error(`File "${file.name}" is too large. Max size is ${this.MAX_FILE_SIZE_MB} MB.`, 'File Size Exceeded');
       return; // Stop the upload process
     }
+    this.loading = true;
     this.onBoardingService.getPresignedUrl(file).subscribe(
       (response: any) => {
         const presignedUrl = response.url;
@@ -120,19 +123,22 @@ export class Step4 {
             url: uploadedUrl
           });
           console.log('File uploaded successfully:', uploadedUrl);
-
+           this.loading = false; 
           this.toastr.success('File uploaded successfully!');
         }).catch((error) => {
           console.error('File upload failed', error);
           this.toastr.error(error.message || 'Failed to upload file');
+           this.loading = false; 
         });
       },
       (error) => {
         console.error('Error getting presigned URL', error);
         const errorMsg = error.error?.error || 'Failed to get upload URL';
         this.toastr.error(errorMsg);
+         this.loading = false; 
       }
     );
+    
   }
 
   onSubmit() {
@@ -171,14 +177,16 @@ export class Step4 {
       uploadedResidenceProof: this.uploadedResidenceProof
     };
 
+    this.loading =true; 
     this.onBoardingService.addOrUpdateUploadedFiles(payload).subscribe(
       (response) => {
         console.log('Files saved successfully:', response);
-        
+        this.loading = false;
         this.toastr.success('Files saved successfully!');
         this.router.navigate(['/step-5']);
       },
       (error) => {
+        this.loading = false;
         console.error('Error saving files:', error);
         this.toastr.error(error.message || 'Failed to save files');
       }

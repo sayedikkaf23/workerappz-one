@@ -25,7 +25,7 @@ export class Step1 implements OnInit {
   };
   message = '';
   nationalities: { value: string; label: string }[] = [];
-
+  loading:boolean = false;
   constructor(
     private svc: OnboardingService,
     private router: Router,
@@ -121,15 +121,16 @@ submitForm() {
     ...this.formData,
     dob: this.formatDate(this.formData.dob),
   };
-
+  this.loading = true;
   this.svc.saveOrUpdateOnboarding(payload).subscribe({
     next: (res) => {
       this.svc.setCachedData(res.data);
+      this.loading = false;
       this.router.navigate(['/step-2']);
     },
     error: (err) => {
       console.error('Error saving step 1:', err);
-
+      this.loading = false;
       // Extract error message from backend response or default to a generic message
       const errorMessage = err?.error?.error || err?.message || 'Error saving your details';
 

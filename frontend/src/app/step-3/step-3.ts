@@ -13,7 +13,7 @@ export class Step3 implements OnInit, OnDestroy {
   isDark = true;
   nationalities: { value: string; label: string }[] = [];
   message = '';
-
+  loading: boolean = false;
   formData = {
     email: '',
     companyName: '',
@@ -46,7 +46,7 @@ export class Step3 implements OnInit, OnDestroy {
           ? cache.shareholders.map((s: any) => ({
               fullName: s.fullName || '',
               nationality: s.nationality || '',
-              dob: s.dob ? s.dob.split('T')[0] : '', // ✅
+              dob: s.dob ? s.dob.split('T')[0] : '', 
               shareholding: s.shareholding ?? 10,
             }))
           : this.formData.shareholders,
@@ -195,14 +195,18 @@ export class Step3 implements OnInit, OnDestroy {
       shareholders: [...this.formData.shareholders],
     };
 
+    this.loading = true;
+
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
       next: (res) => {
         this.svc.setCachedData(res.data);
         localStorage.setItem('onboarding-step3', JSON.stringify(res.data));
+        this.loading = false;
         this.router.navigate(['/step-4']);
       },
       error: (err) => {
         console.error('Error saving step 3:', err);
+        this.loading = false;
         this.toastr.error('An error occurred while saving the data');
       },
     });
