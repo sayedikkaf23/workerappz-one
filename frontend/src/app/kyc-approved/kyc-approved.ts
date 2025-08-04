@@ -11,6 +11,19 @@ declare var bootstrap: any;
 })
 export class KycApproved {
 
+   isDark = true;
+toggleDarkMode() {
+  this.isDark = !this.isDark;
+  const wrapper = document.querySelector('.theme-wrapper');
+  if (wrapper) {
+    if (this.isDark) {
+      wrapper.classList.add('dark-active');
+    } else {
+      wrapper.classList.remove('dark-active');
+    }
+  }
+}
+
 
   ngAfterViewInit(): void {
     // Overlay menu hide
@@ -35,6 +48,11 @@ export class KycApproved {
       new bootstrap.Tooltip(tooltipTriggerEl);
     });
   }
+
+  toggleSidebar() {
+  document.body.classList.toggle('sidebar-collapsed');
+}
+
 
   formatState(opt: any) {
     if (!opt.id) return opt.text;
