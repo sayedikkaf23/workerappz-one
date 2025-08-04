@@ -1,6 +1,6 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Login } from './login/login';
@@ -14,7 +14,7 @@ import { Step5 } from './step-5/step-5';
 import { Home } from './home/home';
 import { KycApproved } from './kyc-approved/kyc-approved';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -51,12 +51,67 @@ import { Topup } from './topup/topup';
 import { Dashboards } from './dashboards/dashboards';
 import { PieChart } from './pie-chart/pie-chart';
 import { Loader } from './loader/loader';
-
+import { AdminLogin } from './admin-login/admin-login';
 
 @NgModule({
-  declarations: [App, Login, Register, Payment, Step1, Step2, Step3, Step4, Step5, Home, KycApproved, CardActions, AdminDashboard, Adminsidebar, Topbar, Profile,  Userrole, Roles, User, Users, Partnercode, AddPartnercode, EditPartnercode, Transferfund, Admincategory, Adminwallet, Admincard, Transferhistory, Spinner, BusinessUser, AddCategoryModal, ViewBusinessUserModal, UserEdit, MasterTransfer, Edituser, AddIpaddress, ShowIpaddress, EditIpaddress, ViewRole, PrefundTransfer, Topup, Dashboards, PieChart, Loader, ],
-  imports: [BrowserModule, AppRoutingModule, NgSelectModule, FormsModule, ReactiveFormsModule,HttpClientModule, NgxIntlTelInputModule, BrowserAnimationsModule, 
-  ToastrModule.forRoot() ],
+  declarations: [
+    App,
+    Login,
+    Register,
+    Payment,
+    Step1,
+    Step2,
+    Step3,
+    Step4,
+    Step5,
+    Home,
+    KycApproved,
+    CardActions,
+    AdminDashboard,
+    Adminsidebar,
+    Topbar,
+    Profile,
+    Userrole,
+    Roles,
+    User,
+    Users,
+    Partnercode,
+    AddPartnercode,
+    EditPartnercode,
+    Transferfund,
+    Admincategory,
+    Adminwallet,
+    Admincard,
+    Transferhistory,
+    Spinner,
+    BusinessUser,
+    AddCategoryModal,
+    ViewBusinessUserModal,
+    UserEdit,
+    MasterTransfer,
+    Edituser,
+    AddIpaddress,
+    ShowIpaddress,
+    EditIpaddress,
+    ViewRole,
+    PrefundTransfer,
+    Topup,
+    Dashboards,
+    PieChart,
+    Loader,
+    AdminLogin,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxIntlTelInputModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+  ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
