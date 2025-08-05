@@ -183,7 +183,7 @@ export class Step4 {
         console.log('Files saved successfully:', response);
         this.loading = false;
         this.toastr.success('Files saved successfully!');
-        this.router.navigate(['/step-5']);
+        this.router.navigate(['/customer/step-5']);
       },
       (error) => {
         this.loading = false;

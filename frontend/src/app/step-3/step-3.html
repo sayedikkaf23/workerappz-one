@@ -8,12 +8,9 @@
         <div class="step_icon">
           <img src="assets/images/footer-logo.png" alt="" />
         </div>
-         <ul class="step_list">
+        <ul class="step_list">
           <li>
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-1-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-1-icon.svg)">
               <span>1</span>
             </div>
             <a routerLink="/step-1">
@@ -22,10 +19,7 @@
             </a>
           </li>
           <li>
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-2-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-2-icon.svg)">
               <span>2</span>
             </div>
             <a routerLink="/step-2">
@@ -34,22 +28,16 @@
             </a>
           </li>
           <li class="active">
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-3-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-3-icon.svg)">
               <span>3</span>
             </div>
             <a routerLink="/step-3">
               <h5>Step 3</h5>
-                             <h3>Customer Details</h3>
+              <h3>Customer Details</h3>
             </a>
           </li>
           <li>
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-4-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-4-icon.svg)">
               <span>4</span>
             </div>
             <a routerLink="/step-4">
@@ -58,10 +46,7 @@
             </a>
           </li>
           <li>
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-5-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-5-icon.svg)">
               <span>5</span>
             </div>
             <a routerLink="/step-5">
@@ -70,10 +55,7 @@
             </a>
           </li>
           <li>
-            <div
-              class="circle"
-              style="background-image: url(assets/images/step-6-icon.svg)"
-            >
+            <div class="circle" style="background-image: url(assets/images/step-6-icon.svg)">
               <span>6</span>
             </div>
             <a routerLink="/step-6">
@@ -93,24 +75,15 @@
                 <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
                   <path
                     d="M16 10.1408C15.0529 10.6465 13.9711 10.9332 12.8224 10.9332C9.09139 10.9332 6.06678 7.90861 6.06678 4.17751C6.06678 3.02884 6.35346 1.94712 6.85918 1C3.50078 1.78709 1 4.80142 1 8.39982C1 12.5973 4.40271 16 8.60018 16C12.1986 16 15.2129 13.4993 16 10.1408Z"
-                    stroke="#023764"
-                    stroke-width="1.3"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+                    stroke="#023764" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
                   <path
                     d="M13.9975 9.66502C13.9975 12.0578 12.0578 13.9975 9.66502 13.9975C7.27225 13.9975 5.33252 12.0578 5.33252 9.66502C5.33252 7.27225 7.27225 5.33252 9.66502 5.33252C12.0578 5.33252 13.9975 7.27225 13.9975 9.66502Z"
-                    stroke="#023764"
-                    stroke-width="1.3"
-                  />
+                    stroke="#023764" stroke-width="1.3" />
                   <path
                     d="M9.665 1V2.29975M9.665 17.0303V18.33M15.7918 15.7923L14.8728 14.8732M4.45669 4.45669L3.53763 3.53763M18.33 9.665H17.0303M2.29975 9.665H1M15.7923 3.53773L14.8732 4.45679M4.45712 14.8733L3.53806 15.7924"
-                    stroke="#023764"
-                    stroke-width="1.3"
-                    stroke-linecap="round"
-                  />
+                    stroke="#023764" stroke-width="1.3" stroke-linecap="round" />
                 </svg>
               </div>
               <span class="dark-text">Dark Mode</span>
@@ -130,55 +103,87 @@
                     <div class="row g-lg-4 g-md-3 g-2">
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
-                          <label class="form-label"
-                            >Enter Name of Company</label
-                          >
-                          <input
-                            type="text"
-                            [(ngModel)]="formData.companyName"
-                            name="companyName"
-                            class="form-control"
-                            placeholder="Enter name of company"
-                          />
+                          <label class="form-label">Is your company located in UAE?</label>
+                          <select name="resident" id="resident" class="form-select"
+                            [(ngModel)]="formData.companylocation">
+                            <option value="" disabled>Is your company located in UAE</option>
+
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
                         </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
+
                         <div class="form-field">
-                          <label class="form-label">Company Website</label>
-                          <input
-                            type="text"
-                            [(ngModel)]="formData.companyWebsite"
-                            name="companyWebsite"
-                            class="form-control"
-                            placeholder="Enter company website"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label"
-                            >Country of Incorporation</label
-                          >
-                          <select
-                            [(ngModel)]="formData.countryOfIncorporation"
-                            name="countryOfIncorporation"
-                            class="form-select"
-                          >
-                            <option value="" disabled>Select Country</option>
-                            <option value="indian">Indian</option>
-                            <option value="american">American</option>
-                            <option value="british">British</option>
+                          <label class="form-label">Where is your Company licensed?</label>
+                          <select name="Companylicensed" id="Companylicensed" class="form-select"
+                            [(ngModel)]="formData.Companylicensed">
+                            <option value="" disabled>
+                              Where is your Company licensed?
+                            </option>
+                            <option value="Mainland">Mainland</option>
+                            <option value="Freezone">Freezone</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
+                          <label class="form-label"> What are the type of activities mentioned on your trade
+                            license?</label>
+                          <select name="companyactivity" id="companyactivity" class="form-select"
+                            [(ngModel)]="formData.companyactivity">
+                            <option value="" disabled>
+                              Where is your Company licensed?
+                            </option>
+                            <option value="Mainland">Mainland</option>
+                            <option value="Freezone">Freezone</option>
+                          </select>
+                        </div>
+
+                        <div class="form-field">
+                          <label class="form-label">Do you wish to apply for?</label>
+                          <select name="Bank" id="Bank" class="form-select" [(ngModel)]="formData.Bank">
+                            <option value="" disabled>
+                              Do you wish to apply for?
+                            </option>
+
+                            <option value="Traditional Corporate Bank Account Opening">Traditional Corporate Bank
+                              Account Opening
+                            </option>
+                            <option value="Digital Corporate Bank Account Opening">Digital Corporate Bank Account
+                              Opening
+                            </option>
+                            <option value="Any of the above">Any of the above
+                            </option>
+                          </select>
+                        </div>
+
+
+                        <!-- <div class="form-field">
+                          <label class="form-label">Company Website</label>
+                          <input type="text" [(ngModel)]="formData.companyWebsite" name="companyWebsite"
+                            class="form-control" placeholder="Enter company website" />
+                        </div> -->
+                      </div>
+                     
+                      <div class="col-xl-6 col-12">
+                        <div class="form-field">
+                          <label class="form-label">Turnover of the company (Annually)?</label>
+                          <select name="Turnover" id="Turnover" class="form-select" [(ngModel)]="formData.Turnover">
+                            <option value="" disabled> Turnover of the company (Annually)?
+                            </option>
+                            <option value="AED 0-50,000">AED 0-50,000</option>
+                            <option value="AED 50,001-150,000">AED 50,001-150,000</option>
+                            <option value="AED 50,001-150,000">AED 50,001-150,000</option>
+                            <option value="AED 500,000+">AED 500,000+</option>
+                          </select>
+                        </div>
+                        
+
+                      </div>
+                      <!-- <div class="col-xl-6 col-12">
+                        <div class="form-field">
                           <label class="form-label">Nature of Business</label>
-                          <select
-                            [(ngModel)]="formData.natureOfBusiness"
-                            name="natureOfBusiness"
-                            class="form-select"
-                          >
+                          <select [(ngModel)]="formData.natureOfBusiness" name="natureOfBusiness" class="form-select">
                             <option value="" disabled>
                               Select nature of business
                             </option>
@@ -189,27 +194,19 @@
                             <option value="agriculture">Agriculture</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
-                          <label class="form-label"
-                            >Number of Shareholders</label
-                          >
-                          <select
-                            [(ngModel)]="formData.numberOfShareholders"
-                            (change)="onShareholdersChange($event)"
-                            name="numberOfShareholders"
-                            class="form-select"
-                          >
+                          <label class="form-label">How many shareholders does your company have?</label>
+                          <select [(ngModel)]="formData.numberOfShareholders" (change)="onShareholdersChange($event)"
+                            name="numberOfShareholders" class="form-select">
                             <option value="" disabled>
                               Select Number of Shareholders
                             </option>
-                            <option
-                              *ngFor="let num of [1, 2, 3, 4, 5]"
-                              [value]="num"
-                            >
-                              {{ num }}
-                            </option>
+                           <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">
+  {{ num }}
+</option>
+
                           </select>
                         </div>
                       </div>
@@ -224,66 +221,39 @@
                 <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
                   <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                     <div class="card h-100">
-                    <div class="form-field">
-                      <label class="form-label">Full Name</label>
-                      <input
-                        type="text"
-                        [(ngModel)]="shareholder.fullName"
-                        name="fullName{{ i }}"
-                        class="form-control"
-                        placeholder="Enter full name"
-                          pattern="[A-Za-z ]+"
-
-                      />
+                      <div class="form-field">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" [(ngModel)]="shareholder.fullName" name="fullName{{ i }}"
+                          class="form-control" placeholder="Enter full name" pattern="[A-Za-z ]+" />
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">Nationality</label>
+                        <select class="form-select" [(ngModel)]="shareholder.nationality" name="nationality{{ i }}">
+                          <option value="" disabled>Select Nationality</option>
+                          <option *ngFor="let country of nationalities" [value]="country.value">
+                            {{ country.label }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" id="dob-{{ i }}" [(ngModel)]="shareholder.dob" name="dob{{ i }}"
+                          [max]="getMaxDobDate()" (focus)="openDatePicker(i)" class="form-control" />
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">% Shareholding</label>
+                        <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}"
+                          class="form-control" placeholder="Enter %" />
+                      </div>
+                      <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeShareholder(i)"
+                        *ngIf="formData.shareholders.length > 1">
+                        Remove
+                      </button>
+                      <hr *ngIf="i !== formData.shareholders.length - 1" />
                     </div>
-                    <div class="form-field">
-                      <label class="form-label">Nationality</label>
-                     <select
-                        class="form-select"
-                        [(ngModel)]="shareholder.nationality"
-                        name="nationality{{ i }}"
-                      >
-                        <option value="" disabled>Select Nationality</option>
-                        <option *ngFor="let country of nationalities" [value]="country.value">
-                          {{ country.label }}
-                        </option>
-                      </select>
-                    </div>
-                    <div class="form-field">
-                      <label class="form-label">Date of Birth</label>
-                                          <input
-                        type="date"
-                        id="dob-{{ i }}"
-                        [(ngModel)]="shareholder.dob"
-                        name="dob{{ i }}"
-                        [max]="getMaxDobDate()" 
-                        (focus)="openDatePicker(i)"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="form-field">
-                      <label class="form-label">% Shareholding</label>
-                      <input
-                        type="number"
-                        [(ngModel)]="shareholder.shareholding"
-                        name="shareholding{{ i }}"
-                        class="form-control"
-                        placeholder="Enter %"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-sm mt-2"
-                      (click)="removeShareholder(i)"
-                      *ngIf="formData.shareholders.length > 1"
-                    >
-                      Remove
-                    </button>
-                    <hr *ngIf="i !== formData.shareholders.length - 1" />
+                    <!-- <button type="button" class="btn btn-secondary mt-2" (click)="addShareholder()">Add Shareholder</button> -->
                   </div>
-                  <!-- <button type="button" class="btn btn-secondary mt-2" (click)="addShareholder()">Add Shareholder</button> -->
-                </div>
-              </ng-container>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -292,9 +262,7 @@
         <div class="step_button step_form_button">
           <div class="row justify-content-between">
             <div class="col-auto">
-              <a routerLink="/customer/step-2" class="btn btn-border btn-dark"
-                >Previous</a
-              >
+              <a routerLink="/customer/step-2" class="btn btn-border btn-dark">Previous</a>
             </div>
             <div class="col-auto">
               <button class="btn" (click)="submitForm()">Next</button>

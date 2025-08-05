@@ -11,6 +11,7 @@ router.get('/onboarding/getDetails',  controller.getOnboardingByEmail);
 
 router.get("/onboarding", controller.getOnboardingByEmail);
 
+router.get('/getAllBusinessCategories', controller.getAllBusinessCategories);
 
 // Step 2 endpoint
 router.post("/onboarding/requirements", controller.saveOnboardingRequirements);

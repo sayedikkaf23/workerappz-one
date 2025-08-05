@@ -15,13 +15,14 @@ export class Step3 implements OnInit, OnDestroy {
   message = '';
   loading: boolean = false;
   formData = {
+    _id:'',
     email: '',
-    companyName: '',
-    companyWebsite: '',
-    nationality: '',
-    countryOfIncorporation: '',
-    natureOfBusiness: '',
+    companylocation:'',
     numberOfShareholders: 1,
+    Companylicensed:'',
+    companyactivity:'',
+    Turnover:'',
+    Bank:'',
     shareholders: [
       { fullName: '', nationality: '', dob: '', shareholding: 10 },
     ],
@@ -34,25 +35,41 @@ export class Step3 implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const cache =
-      this.svc.getCachedData() ||
-      JSON.parse(localStorage.getItem('onboarding-step3') || 'null');
+      const email = sessionStorage.getItem('email');  // Assuming 'userEmail' is stored in sessionStorage
 
-    if (cache) {
-      this.formData = {
-        ...this.formData,
-        ...cache,
-        shareholders: cache.shareholders?.length
-          ? cache.shareholders.map((s: any) => ({
-              fullName: s.fullName || '',
-              nationality: s.nationality || '',
-              dob: s.dob ? s.dob.split('T')[0] : '', 
-              shareholding: s.shareholding ?? 10,
-            }))
-          : this.formData.shareholders,
-      };
-    }
+   
 
+     if (email) {
+    // Fetch the onboarding details using the email
+    this.svc.getOnboardingDetailsByEmail(email).subscribe(
+      (data) => {
+                console.log('API Response:', data);  // Log the entire response
+
+                this.formData._id     = data.data._id || '';
+                console.log(data._id)
+
+        // // Populate formData with the API response data
+        this.formData.email = email;  // Assign email from sessionStorage
+        this.formData.companylocation = data.data.companylocation;
+                this.formData.Companylicensed = data.data.Companylicensed;
+        this.formData.companyactivity = data.data.companyactivity;
+        this.formData.Turnover = data.data.Turnover;
+        this.formData.Bank = data.data.Bank;
+         this.formData.shareholders = data.data.shareholders || [
+            { fullName: '', nationality: '', dob: '', shareholding: 10 },
+          ];
+
+      
+
+        // Log the data for debugging
+        console.log('Onboarding data fetched:', data);
+        console.log('Form data after setting:', this.formData);  // Check if formData is populated
+      },
+      () => {
+        this.message = 'Failed to load onboarding details';
+      }
+    );
+  }
     this.svc.getNationalities().subscribe({
       next: (data: any) => {
         this.nationalities = data.map((item: any) => ({
@@ -110,30 +127,8 @@ export class Step3 implements OnInit, OnDestroy {
 
   validateForm() {
     // Validate email, company name, etc.
-    if (!this.formData.email) {
-      this.toastr.error('Email is required');
-      return false;
-    }
-    if (!this.formData.companyName) {
-      this.toastr.error('Company Name is required');
-      return false;
-    }
-    if (!this.formData.companyWebsite) {
-      this.toastr.error('Company Website is required');
-      return false;
-    }
-    if (!this.formData.nationality) {
-      this.toastr.error('Nationality is required');
-      return false;
-    }
-    if (!this.formData.countryOfIncorporation) {
-      this.toastr.error('Country of Incorporation is required');
-      return false;
-    }
-    if (!this.formData.natureOfBusiness) {
-      this.toastr.error('Nature of Business is required');
-      return false;
-    }
+   
+   
 
     // Validate shareholders fields
     for (let i = 0; i < this.formData.shareholders.length; i++) {
@@ -188,11 +183,19 @@ export class Step3 implements OnInit, OnDestroy {
     }
 
     const cached = this.svc.getCachedData() || {};
+
+     const formattedShareholders = this.formData.shareholders.map(shareholder => {
+    const formattedDob = new Date(shareholder.dob).toISOString().split('T')[0]; // Format the date
+    return {
+      ...shareholder,
+      dob: formattedDob,  // Use the formatted date
+    };
+  });
     const payload = {
-      ...cached,
+      // ...cached,
       ...this.formData,
       email: cached.email || this.formData.email,
-      shareholders: [...this.formData.shareholders],
+      shareholders:formattedShareholders,
     };
 
     this.loading = true;
@@ -200,9 +203,8 @@ export class Step3 implements OnInit, OnDestroy {
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
       next: (res) => {
         this.svc.setCachedData(res.data);
-        localStorage.setItem('onboarding-step3', JSON.stringify(res.data));
         this.loading = false;
-        this.router.navigate(['/step-4']);
+        this.router.navigate(['/customer/step-4']);
       },
       error: (err) => {
         console.error('Error saving step 3:', err);
@@ -220,6 +222,5 @@ export class Step3 implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Cache current state for back/next navigation
     this.svc.setCachedData(this.formData);
-    localStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
   }
 }

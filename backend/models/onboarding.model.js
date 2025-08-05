@@ -48,11 +48,25 @@ Bank: {
   type: String,
 },
 
+companyactivity: {
+  type: String,
+},
+companylocation: {
+  type: String,
+},
+Turnover: {
+  type: String,
+},
+
+Companylicensed: {
+  type: String,
+},
+
   shareholders: [
     {
       fullName: String,
       nationality: String,
-      dob: Date,
+      dob: String,
       shareholding: Number,
     },
   ],

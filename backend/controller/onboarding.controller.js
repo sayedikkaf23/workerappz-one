@@ -1,7 +1,7 @@
 const Onboarding = require("../models/onboarding.model");
 const transporter = require("../_config/email");
 const logOnboardingDb = require("../utils/onboardingLogger");
-
+const BusinessCategory = require('../models/BusinessCategory'); // adjust path if needed
 
 exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   const {
@@ -15,6 +15,10 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     working,
     salary,
     Bank,
+    Companylicensed,
+    Turnover,
+    companylocation,
+    companyactivity,
     companyname,
     companyWebsite,
     countryOfIncorporation,
@@ -24,18 +28,19 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   } = req.body;
 
   try {
-     // Step 1: Check if the email is being updated
+    // Step 1: Check if the email is being updated
     if (req.body._id) {
       // Fetch the existing user to compare the emails
       const existingUser = await Onboarding.findById(req.body._id);
-      
+
       // If the email is being changed, check for duplicates
       if (existingUser && existingUser.email !== email) {
         const emailExists = await Onboarding.findOne({ email });
         if (emailExists) {
           return res.status(400).json({
             success: false,
-            error: "Email already exists. Please use a different email address.",
+            error:
+              "Email already exists. Please use a different email address.",
           });
         }
       }
@@ -54,7 +59,6 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     let user = await Onboarding.findOne({ email });
 
     if (user) {
-      
       // If the user already exists, update the fields
       user.firstName = firstName || user.firstName;
       user.lastName = lastName || user.lastName;
@@ -67,26 +71,34 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
       user.Bank = Bank || user.Bank;
       user.companyName = companyname || user.companyName;
       user.companyWebsite = companyWebsite || user.companyWebsite;
-      user.countryOfIncorporation = countryOfIncorporation || user.countryOfIncorporation;
+      user.countryOfIncorporation =
+        countryOfIncorporation || user.countryOfIncorporation;
       user.natureOfBusiness = natureOfBusiness || user.natureOfBusiness;
-      user.numberOfShareholders = numberOfShareholders || user.numberOfShareholders;
+      user.numberOfShareholders =
+        numberOfShareholders || user.numberOfShareholders;
       user.shareholders = shareholders || user.shareholders;
 
-      user.updatedAt = Date.now();
-       if(working == "Self Employed"){
-      user.salary = " ";
+      user.Companylicensed = Companylicensed || user.Companylicensed;
+      user.Turnover = Turnover || user.Turnover;
+      user.companylocation = companylocation || user.companylocation;
+      user.companyactivity = companyactivity || user.companyactivity;
 
+      user.updatedAt = Date.now();
+      if (working == "Self Employed") {
+        user.salary = " ";
       }
       await user.save();
     } else {
       // If the user does not exist, create a new user
+      const formattedDob = new Date(dob).toISOString().split("T")[0];
+
       user = new Onboarding({
         email,
         firstName,
         lastName,
         mobileNumber,
         nationality,
-        dob,
+        dob: formattedDob,
         resident,
         working,
         salary,
@@ -97,7 +109,12 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
         natureOfBusiness,
         numberOfShareholders,
         shareholders,
+        Companylicensed,
+        Turnover,
+        companylocation,
+        companyactivity,
       });
+
       await user.save();
     }
 
@@ -113,18 +130,20 @@ exports.getOnboardingByEmail = async (req, res) => {
 
   try {
     if (!email) {
-      return res.status(400).json({ success: false, error: "Email is required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Email is required" });
     }
 
     const user = await Onboarding.findOne({ email });
 
-     if (!user) {
+    if (!user) {
       const response = { success: false, error: "User not found" };
       await logOnboardingDb({
         methodName: "getOnboardingByEmail",
         request: req.query,
         response,
-        requestedBy: email
+        requestedBy: email,
       });
       return res.status(404).json(response);
     }
@@ -136,13 +155,12 @@ exports.getOnboardingByEmail = async (req, res) => {
       methodName: "getOnboardingByEmail",
       request: req.query,
       response,
-      requestedBy: email
+      requestedBy: email,
     });
 
     return res.json(response);
-
   } catch (err) {
-    console.error('Error fetching onboarding data:', err);
+    console.error("Error fetching onboarding data:", err);
 
     const response = { success: false, error: err.message };
 
@@ -151,7 +169,7 @@ exports.getOnboardingByEmail = async (req, res) => {
       methodName: "getOnboardingByEmail",
       request: req.query,
       response,
-      requestedBy: email || "unknown"
+      requestedBy: email || "unknown",
     });
 
     return res.status(500).json(response);
@@ -219,7 +237,7 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
     uploadedMoaAoa,
     uploadedPassport,
     uploadedNationalId,
-    uploadedResidenceProof
+    uploadedResidenceProof,
   } = req.body;
 
   if (!email) {
@@ -238,7 +256,8 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
     if (uploadedMoaAoa) user.uploadedMoaAoa = uploadedMoaAoa;
     if (uploadedPassport) user.uploadedPassport = uploadedPassport;
     if (uploadedNationalId) user.uploadedNationalId = uploadedNationalId;
-    if (uploadedResidenceProof) user.uploadedResidenceProof = uploadedResidenceProof;
+    if (uploadedResidenceProof)
+      user.uploadedResidenceProof = uploadedResidenceProof;
 
     user.updatedAt = Date.now();
     await user.save();
@@ -248,7 +267,7 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
       methodName: "addOrUpdateUploadedFiles",
       request: req.body,
       response: { success: true, data: user },
-      requestedBy: email
+      requestedBy: email,
     });
 
     return res.json({ success: true, data: user });
@@ -259,13 +278,25 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
       methodName: "addOrUpdateUploadedFiles",
       request: req.body,
       response: { success: false, error: err.message },
-      requestedBy: email
+      requestedBy: email,
     });
 
     return res.status(500).json({ success: false, error: err.message });
   }
+
+  
 };
 
-
-
-
+ exports.getAllBusinessCategories = async (req, res) => {
+    try {
+      const categories = await BusinessCategory.find({  }); 
+  
+      res.status(200).json({
+        message: `${categories.length} active categories found`,
+        data: categories
+      });
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+      res.status(500).json({ message: 'Server error while fetching categories' });
+    }
+  };
