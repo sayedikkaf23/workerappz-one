@@ -52,6 +52,7 @@ import { Dashboards } from './dashboards/dashboards';
 import { PieChart } from './pie-chart/pie-chart';
 import { Loader } from './loader/loader';
 import { AdminLogin } from './admin-login/admin-login';
+import { PersonalBank } from './personal-bank/personal-bank';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { AdminLogin } from './admin-login/admin-login';
     PieChart,
     Loader,
     AdminLogin,
+    PersonalBank,
   ],
   imports: [
     BrowserModule,

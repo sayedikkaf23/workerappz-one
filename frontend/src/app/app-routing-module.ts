@@ -36,6 +36,7 @@ import { Topup } from './topup/topup';
 import { PrefundTransfer } from './prefund-transfer/prefund-transfer';
 import { Dashboard } from './services/dashboard';
 import { Dashboards } from './dashboards/dashboards';
+import { PersonalBank } from './personal-bank/personal-bank';
 
 const routes: Routes = [
   {
@@ -43,20 +44,24 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  { path: 'home', component: Home },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'payment', component: Payment },
-  { path: 'step-1', component: Step1 },
-  { path: 'step-2', component: Step2 },
-  { path: 'step-3', component: Step3 },
-  { path: 'step-4', component: Step4 },
-  { path: 'step-5', component: Step5 },
-  { path: 'kyc-approved', component: KycApproved },
+  { path: 'customer/home', component: Home },
+  { path: 'customer/login', component: Login },
+  { path: 'customer/register', component: Register },
+  { path: 'customer/payment', component: Payment },
+  { path: 'customer/step-1', component: Step1 },
+  { path: 'customer/step-2', component: Step2 },
+  // { path: 'customer/step-3', component: Step3 },
+  { path: 'customer/step-4', component: Step4 },
+  { path: 'customer/step-5', component: Step5 },
+    { path: 'customer/personal-bank', component: PersonalBank },
+      { path: 'customer/business-bank', component: Step3 },
 
+
+  { path: 'customer/kyc-approved', component: KycApproved },
+  
   // admin
   { path: 'admin/login', component: AdminLogin },
-  { path: 'admindashboard', component: AdminDashboard },
+  { path: 'admin/admindashboard', component: AdminDashboard },
   { path: 'usersrole', component: Users},
   // { path: '', redirectTo: '/users/role', pathMatch: 'full' },
   { path: 'roles', component: Roles },
