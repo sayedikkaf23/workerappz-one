@@ -24,7 +24,6 @@ const onboardingSchema = new mongoose.Schema({
   requirements: {
     type: String,
     enum: ["personal", "business", "prepaid", "transfer"],
-    default: "personal",
   },
 
   // Business Details

@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './step-2.css'
 })
 export class Step2 implements OnInit {
-  selectedRequirement: 'personal'|'business'|'prepaid'|'transfer' | null = null;
+  selectedRequirement: null = null;
   cache: any;
   loading:boolean = false;
    isDark = true;
@@ -22,8 +22,19 @@ export class Step2 implements OnInit {
 
   ngOnInit() {
     this.cache = this.svc.getCachedData() || {};
-    if (this.cache.requirements) {
-      this.selectedRequirement = this.cache.requirements;
+    if (this.cache.email) {
+      this.svc.getOnboardingDetailsByEmail(this.cache.email).subscribe(
+      (response) => {
+        if (response.success) {
+          const data = response.data;
+          this.selectedRequirement = data.requirements;
+        }
+      },
+      (error) => {
+        console.error('Error fetching onboarding details:', error);
+        this.toastr.error(error.message || 'Failed to fetch onboarding details');
+      }
+    );
     }
   }
 
@@ -37,7 +48,7 @@ export class Step2 implements OnInit {
       this.svc.saveRequirements({
       _id:          this.cache._id,
       email:        this.cache.email,
-      requirements: this.selectedRequirement
+      requirements: this.selectedRequirement as 'personal' | 'business' | 'prepaid' | 'transfer'
     }).subscribe({
       next: () => {
         this.loading = false;
