@@ -88,6 +88,8 @@ submitForm() {
     this.toastr.error('First Name can contain only letters');
     return;
   }
+    sessionStorage.setItem('email', this.formData.email);
+
 
   // ---- Last Name ----
   if (!this.formData.lastName?.trim()) {
@@ -126,7 +128,7 @@ submitForm() {
     next: (res) => {
       this.svc.setCachedData(res.data);
       this.loading = false;
-      this.router.navigate(['/step-2']);
+      this.router.navigate(['/customer/step-2']);
     },
     error: (err) => {
       console.error('Error saving step 1:', err);

@@ -53,6 +53,7 @@ import { PieChart } from './pie-chart/pie-chart';
 import { Loader } from './loader/loader';
 import { AdminLogin } from './admin-login/admin-login';
 import { PersonalBank } from './personal-bank/personal-bank';
+import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { PersonalBank } from './personal-bank/personal-bank';
     Loader,
     AdminLogin,
     PersonalBank,
+    PersonalReviewOrder,
   ],
   imports: [
     BrowserModule,

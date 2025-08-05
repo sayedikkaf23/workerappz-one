@@ -2,47 +2,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OnboardingService } from '../services/onboarding.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+
 @Component({
   selector: 'app-personal-bank',
   standalone: false,
   templateUrl: './personal-bank.html',
-  styleUrl: './personal-bank.css'
+  styleUrls: ['./personal-bank.css']
 })
-export class PersonalBank {
-   isDark = true;
+export class PersonalBank implements OnInit, OnDestroy {
+  isDark = true;
   nationalities: { value: string; label: string }[] = [];
   message = '';
   loading = false;
+  formData: any = {
+        _id: '',              //  👈  NEW
 
-  formData: {
-    // Step 2 fields
-    resident: string;
-    working: string;
-    salary: string;
-    companyname: string;
-    Bank: string;
-    // Step 3 fields
-    email: string;
-    companyName: string;
-    companyWebsite: string;
-    nationality: string;
-    countryOfIncorporation: string;
-    natureOfBusiness: string;
-    numberOfShareholders: number;
-    shareholders: Array<{
-      fullName: string;
-      nationality: string;
-      dob: string;
-      shareholding: number;
-    }>;
-  } = {
-    // Step 2 defaults
     resident: '',
     working: '',
     salary: '',
     companyname: '',
     Bank: '',
-    // Step 3 defaults
     email: '',
     companyName: '',
     companyWebsite: '',
@@ -50,9 +29,7 @@ export class PersonalBank {
     countryOfIncorporation: '',
     natureOfBusiness: '',
     numberOfShareholders: 1,
-    shareholders: [
-      { fullName: '', nationality: '', dob: '', shareholding: 10 }
-    ]
+    shareholders: [{ fullName: '', nationality: '', dob: '', shareholding: 10 }],
   };
 
   constructor(
@@ -61,42 +38,66 @@ export class PersonalBank {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit() {
-    // load cached data
-    const cache = this.svc.getCachedData() ||
-                  JSON.parse(localStorage.getItem('onboarding-step3') || 'null');
-    if (cache) {
-      this.formData = {
-        ...this.formData,
-        ...cache,
-        shareholders: cache.shareholders?.length
-          ? cache.shareholders.map((s: any) => ({
-              fullName: s.fullName || '',
-              nationality: s.nationality || '',
-              dob: s.dob ? s.dob.split('T')[0] : '',
-              shareholding: s.shareholding ?? 10
-            }))
-          : this.formData.shareholders
-      };
-    }
+ ngOnInit() {
+  // Retrieve the email from sessionStorage
+  const email = sessionStorage.getItem('email');  // Assuming 'userEmail' is stored in sessionStorage
+  
+  console.log('Email retrieved from session:', email);  // Log to check the value of the email
+  
+  if (email) {
+    // Fetch the onboarding details using the email
+    this.svc.getOnboardingDetailsByEmail(email).subscribe(
+      (data) => {
+                console.log('API Response:', data);  // Log the entire response
 
-    // load nationality options
-    this.svc.getNationalities().subscribe({
-      next: data => {
-        this.nationalities = data.map((item: any) => ({
-          value: item.country,
-          label: item.country
-        }));
+                this.formData._id     = data.data._id || '';
+                console.log(data._id)
+
+        // Populate formData with the API response data
+        this.formData.email = email;  // Assign email from sessionStorage
+        this.formData.resident = data.data.resident;
+        console.log("sss",data.data.resident)
+        this.formData.salary = data.data.salary || '';  // Handle null or empty salary
+                this.formData.working = data.data.working || '';  // Handle null or empty salary
+
+        this.formData.companyname = data.data.companyName || '';  // Handle null company name
+        this.formData.Bank = data.data.Bank || '';  // Handle null bank name
+
+        // Load saved form data from sessionStorage (if available)
+       
+
+        // Log the data for debugging
+        console.log('Onboarding data fetched:', data);
+        console.log('Form data after setting:', this.formData);  // Check if formData is populated
       },
-      error: () => (this.message = 'Failed to load nationalities')
-    });
+      () => {
+        this.message = 'Failed to load onboarding details';
+      }
+    );
+  } else {
+    this.message = 'No email found in session';
+    console.error('No email found in session');
   }
+
+  // Load nationality options
+  this.svc.getNationalities().subscribe(
+    (data) => {
+      this.nationalities = data.map((item: any) => ({
+        value: item.country,
+        label: item.country,
+      }));
+    },
+    () => {
+      this.message = 'Failed to load nationalities';
+    }
+  );
+}
+
 
   toggleDarkMode() {
     this.isDark = !this.isDark;
   }
 
-  // only used if you re-enable shareholders UI
   onShareholdersChange(event: Event) {
     const count = +(event.target as HTMLSelectElement).value;
     this.formData.numberOfShareholders = count;
@@ -104,7 +105,10 @@ export class PersonalBank {
     if (count > current) {
       for (let i = current; i < count; i++) {
         this.formData.shareholders.push({
-          fullName: '', nationality: '', dob: '', shareholding: 10
+          fullName: '',
+          nationality: '',
+          dob: '',
+          shareholding: 10,
         });
       }
     } else {
@@ -112,98 +116,30 @@ export class PersonalBank {
     }
   }
 
-  allowOnlyLetters(e: KeyboardEvent) {
-    const char = String.fromCharCode(e.keyCode || e.which);
-    if (!/[A-Za-z ]/.test(char)) e.preventDefault();
-  }
-
-  getMaxDobDate(): string {
-    const d = new Date();
-    d.setFullYear(d.getFullYear() - 18);
-    return d.toISOString().split('T')[0];
-  }
-
-  validateForm(): boolean {
-    // Step 2 validations
-    if (!this.formData.resident) {
-      this.toastr.error('Resident status is required');
-      return false;
-    }
-    if (!this.formData.working) {
-      this.toastr.error('Working status is required');
-      return false;
-    }
-    if (this.formData.working === 'Salaried' && !this.formData.salary) {
-      this.toastr.error('Salary is required');
-      return false;
-    }
-    if (this.formData.working === 'Self Employed' && !this.formData.companyname) {
-      this.toastr.error('Company name is required');
-      return false;
-    }
-    if (!this.formData.Bank) {
-      this.toastr.error('Account type is required');
-      return false;
-    }
-
-    // Step 3 validations
-    if (!this.formData.email) {
-      this.toastr.error('Email is required');
-      return false;
-    }
-    if (!this.formData.companyName) {
-      this.toastr.error('Company Name is required');
-      return false;
-    }
-    if (!this.formData.companyWebsite) {
-      this.toastr.error('Company Website is required');
-      return false;
-    }
-    if (!this.formData.nationality) {
-      this.toastr.error('Nationality is required');
-      return false;
-    }
-    if (!this.formData.countryOfIncorporation) {
-      this.toastr.error('Country of Incorporation is required');
-      return false;
-    }
-    if (!this.formData.natureOfBusiness) {
-      this.toastr.error('Nature of Business is required');
-      return false;
-    }
-
-    return true;
-  }
-
   submitForm() {
-    if (!this.validateForm()) return;
-
-    const cached = this.svc.getCachedData() || {};
-    const payload = {
-      ...cached,
-      ...this.formData,
-      email:   cached.email || this.formData.email,
-      shareholders: [...this.formData.shareholders]
-    };
-
     this.loading = true;
-    this.svc.saveOrUpdateOnboarding(payload).subscribe({
-      next: res => {
+
+    // Save form data to sessionStorage before navigation
+    sessionStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
+
+    this.svc.saveOrUpdateOnboarding(this.formData).subscribe(
+      (res) => {
+        // Save the response data to sessionStorage after submitting
+        sessionStorage.setItem('onboarding-step3', JSON.stringify(res.data));
         this.svc.setCachedData(res.data);
-        localStorage.setItem('onboarding-step3', JSON.stringify(res.data));
         this.loading = false;
-        this.router.navigate(['/step-4']);
+        this.router.navigate(['/customer/personal-review']);
       },
-      error: err => {
+      (err) => {
         console.error('Error saving:', err);
         this.loading = false;
         this.toastr.error('An error occurred while saving the data');
       }
-    });
+    );
   }
 
   ngOnDestroy() {
-    this.svc.setCachedData(this.formData);
-    localStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
+    // Save form data to sessionStorage before leaving the component
+    sessionStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
   }
 }

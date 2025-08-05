@@ -1,0 +1,183 @@
+<div *ngIf="loading" class="loader-overlay">
+    <div class="spinner"></div>
+</div>
+
+<div class="dark-active theme-wrapper p-0">
+    <section class="steps_sec p-0">
+        <div class="d-flex">
+            <div class="step_wrp">
+                <div class="step_icon">
+                    <img src="assets/images/footer-logo.png" alt="" />
+                </div>
+                <ul class="step_list">
+                    <li>
+                        <div class="circle" style="background-image: url(assets/images/step-1-icon.svg)">
+                            <span>1</span>
+                        </div>
+                        <a routerLink="/step-1">
+                            <h5>Step 1</h5>
+                            <h3>Enter basic details</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="circle" style="background-image: url(assets/images/step-2-icon.svg)">
+                            <span>2</span>
+                        </div>
+                        <a routerLink="/step-2">
+                            <h5>Step 2</h5>
+                            <h3>Select requirements</h3>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <div class="circle" style="background-image: url(assets/images/step-3-icon.svg)">
+                            <span>3</span>
+                        </div>
+                        <a routerLink="/step-3">
+                            <h5>Step 3</h5>
+                            <h3>Customer Details</h3>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <div class="circle" style="background-image: url(assets/images/step-5-icon.svg)">
+                            <span>4</span>
+                        </div>
+                        <a routerLink="/customer/personal-review">
+                            <h5>Step 4</h5>
+                            <h3>Review Details</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="circle" style="background-image: url(assets/images/step-6-icon.svg)">
+                            <span>5</span>
+                        </div>
+                        <a routerLink="/step-6">
+                            <h5>Step 5</h5>
+                            <h3>Payment</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step_content_wrap">
+                <div class="basic_detail_wrp">
+                    <h4>Review Your Details</h4>
+                    <div class="dl_mode_wrap">
+                        <div class="theme-switch" (click)="toggleDarkMode()">
+                            <div class="icon">
+                                <!-- Dark Mode Icon -->
+                            </div>
+                            <span class="dark-text">Dark Mode</span>
+                            <span class="light-text">Light Mode</span>
+                        </div>
+                    </div>
+                    <h5><span>05</span> / 06</h5>
+                </div>
+
+                <div class="step_form step5_form">
+                    <div class="detail_wrap">
+                        <div class="row mb-4 gy-4">
+                            <div class="col-lg-8 col-12">
+                                <div class="card card-light">
+                                    <h3>Enter basic details</h3>
+                                    <div class="row row-cols-md-3 row-cols-2 g-3">
+                                        <div class="col">
+                                            <p>First Name</p>
+
+                                            <h5>{{ onboardingData?.firstName || '-' }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <p>Last Name</p>
+
+                                            <h5>{{ onboardingData?.lastName || '-' }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <p>Mobile Number</p>
+
+                                            <h5>{{ onboardingData?.mobileNumber.internationalNumber || '-' }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <p>Email Address</p>
+
+                                            <h5>{{ onboardingData?.email || '-' }}</h5>
+                                        </div>
+                                        <div class="col">
+                                            <p>Nationality</p>
+
+                                            <h5>{{ onboardingData?.nationality || '-' }}</h5>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12">
+                                <div class="card card-light">
+                                    <h3>Select which suits <br> your requirements</h3>
+                                    <div class="rq_box">
+                                        <div class="icon">
+                                            <!-- Icon for Personal -->
+                                        </div>
+                                        <div class="content">
+                                            <h4>Personal</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card card-light">
+                                    <h3>Personal Bank Account Details</h3>
+                                    <div class="row gy-4">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="row row-cols-2 g-3">
+                                                <div class="col">
+                                                    <p>Resident of UAE</p>
+
+                                                    <h5>{{ onboardingData?.resident || '-' }}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p>Employment Status</p>
+
+                                                    <h5>{{ onboardingData?.working || '-' }}</h5>
+                                                </div>
+                                                <div class="col" *ngIf="onboardingData.working === 'Salaried'">
+                                                    <p>Monthly Salary</p>
+
+                                                    <h5>{{ onboardingData?.salary || '-' }}</h5>
+                                                </div>
+                                                <div class="col" *ngIf="onboardingData.working === 'Self Employed'">
+                                                    <p>Company Name</p>
+
+                                                    <h5>{{ onboardingData?.companyName || '-' }}</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p>Bank Account Type</p>
+
+                                                    <h5>{{ onboardingData?.Bank || '-' }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step_button step_document_button">
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <a routerLink="/customer/personal-bank" class="btn btn-border btn-dark">
+                                Previous
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <a routerLink="/payment" class="btn">Skip For Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

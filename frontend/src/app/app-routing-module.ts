@@ -37,6 +37,7 @@ import { PrefundTransfer } from './prefund-transfer/prefund-transfer';
 import { Dashboard } from './services/dashboard';
 import { Dashboards } from './dashboards/dashboards';
 import { PersonalBank } from './personal-bank/personal-bank';
+import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
 
 const routes: Routes = [
   {
@@ -53,41 +54,41 @@ const routes: Routes = [
   // { path: 'customer/step-3', component: Step3 },
   { path: 'customer/step-4', component: Step4 },
   { path: 'customer/step-5', component: Step5 },
-    { path: 'customer/personal-bank', component: PersonalBank },
-      { path: 'customer/business-bank', component: Step3 },
-
+  { path: 'customer/personal-bank', component: PersonalBank },
+  { path: 'customer/business-bank', component: Step3 },
+  { path: 'customer/personal-review', component: PersonalReviewOrder },
 
   { path: 'customer/kyc-approved', component: KycApproved },
-  
+
   // admin
   { path: 'admin/login', component: AdminLogin },
   { path: 'admin/admindashboard', component: AdminDashboard },
-  { path: 'usersrole', component: Users},
+  { path: 'usersrole', component: Users },
   // { path: '', redirectTo: '/users/role', pathMatch: 'full' },
   { path: 'roles', component: Roles },
-  { path: 'user', component: User},
+  { path: 'user', component: User },
   { path: 'userrole', component: Userrole },
   { path: 'partnercode', component: Partnercode },
   { path: 'addpartnercode', component: AddPartnercode },
   { path: 'editpartnercode', component: EditPartnercode },
-  { path: 'transferfund', component: Transferfund},
+  { path: 'transferfund', component: Transferfund },
   { path: 'prefundtransfer', component: PrefundTransfer },
 
   { path: 'topup', component: Topup },
-    { path: 'business-user', component: BusinessUser },
+  { path: 'business-user', component: BusinessUser },
   { path: 'admincategory', component: Admincategory },
   { path: 'adminwallet', component: Adminwallet },
   { path: 'admincard', component: Admincard },
-   { path: 'adminhome', component: Dashboards },
-   { path: 'transferhistory', component: Transferhistory },
+  { path: 'adminhome', component: Dashboards },
+  { path: 'transferhistory', component: Transferhistory },
   { path: 'viewrole', component: ViewRole },
   { path: 'edituser', component: Edituser },
   { path: 'useredit', component: UserEdit },
   { path: 'mastertransfer', component: MasterTransfer },
-    { path: 'addip', component: AddIpaddress },
-        { path: 'getip', component: ShowIpaddress },
-        // { path: 'editip', component: EditIpaddressComponent },
-        { path: 'editip/:id', component: EditIpaddress }
+  { path: 'addip', component: AddIpaddress },
+  { path: 'getip', component: ShowIpaddress },
+  // { path: 'editip', component: EditIpaddressComponent },
+  { path: 'editip/:id', component: EditIpaddress },
 ];
 
 @NgModule({

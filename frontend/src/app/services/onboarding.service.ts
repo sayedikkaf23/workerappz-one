@@ -5,6 +5,9 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingService {
+  cacheData(data: any) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = environment.apiUrl;
   private cache: any = null;
   constructor(private http: HttpClient) {}

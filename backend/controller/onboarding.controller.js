@@ -2,6 +2,7 @@ const Onboarding = require("../models/onboarding.model");
 const transporter = require("../_config/email");
 const logOnboardingDb = require("../utils/onboardingLogger");
 
+
 exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   const {
     email,
@@ -10,7 +11,11 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     mobileNumber,
     nationality,
     dob,
-    companyName,
+    resident,
+    working,
+    salary,
+    Bank,
+    companyname,
     companyWebsite,
     countryOfIncorporation,
     natureOfBusiness,
@@ -19,7 +24,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   } = req.body;
 
   try {
-    // Step 1: Check if the email is being updated
+     // Step 1: Check if the email is being updated
     if (req.body._id) {
       // Fetch the existing user to compare the emails
       const existingUser = await Onboarding.findById(req.body._id);
@@ -45,30 +50,36 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
         });
       }
     }
-
-    // Step 3: Process for saving or updating user details
+    // Step 1: Check if the email is being updated
     let user = await Onboarding.findOne({ email });
 
     if (user) {
-      // If user exists, update the fields
-      if (firstName) user.firstName = firstName;
-      if (lastName) user.lastName = lastName;
-      if (mobileNumber) user.mobileNumber = mobileNumber;
-      if (nationality) user.nationality = nationality;
-      if (dob) user.dob = dob;
-
-      // Step 3 fields
-      if (companyName) user.companyName = companyName;
-      if (companyWebsite) user.companyWebsite = companyWebsite;
-      if (countryOfIncorporation) user.countryOfIncorporation = countryOfIncorporation;
-      if (natureOfBusiness) user.natureOfBusiness = natureOfBusiness;
-      if (numberOfShareholders) user.numberOfShareholders = numberOfShareholders;
-      if (shareholders) user.shareholders = shareholders;
+      
+      // If the user already exists, update the fields
+      user.firstName = firstName || user.firstName;
+      user.lastName = lastName || user.lastName;
+      user.mobileNumber = mobileNumber || user.mobileNumber;
+      user.nationality = nationality || user.nationality;
+      user.dob = dob || user.dob;
+      user.resident = resident || user.resident;
+      user.working = working || user.working;
+      user.salary = salary || user.salary;
+      user.Bank = Bank || user.Bank;
+      user.companyName = companyname || user.companyName;
+      user.companyWebsite = companyWebsite || user.companyWebsite;
+      user.countryOfIncorporation = countryOfIncorporation || user.countryOfIncorporation;
+      user.natureOfBusiness = natureOfBusiness || user.natureOfBusiness;
+      user.numberOfShareholders = numberOfShareholders || user.numberOfShareholders;
+      user.shareholders = shareholders || user.shareholders;
 
       user.updatedAt = Date.now();
+       if(working == "Self Employed"){
+      user.salary = " ";
+
+      }
       await user.save();
     } else {
-      // If user does not exist, create a new user
+      // If the user does not exist, create a new user
       user = new Onboarding({
         email,
         firstName,
@@ -76,7 +87,11 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
         mobileNumber,
         nationality,
         dob,
-        companyName,
+        resident,
+        working,
+        salary,
+        Bank,
+        companyname,
         companyWebsite,
         countryOfIncorporation,
         natureOfBusiness,
@@ -86,42 +101,13 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
       await user.save();
     }
 
-    // Log onboarding action
-    await logOnboardingDb({
-      methodName: "saveOrUpdateOnboardingDetails",
-      request: req.body,
-      response: { success: true, data: user },
-      requestedBy: email,
-    });
-
-    // Send email notification
-    if (email) {
-      await transporter.sendMail({
-        from: process.env.EMAIL_SENDER,
-        to: email,
-        cc: process.env.BUSINESS_TEAM_EMAIL,
-        subject: "Your Onboarding Details",
-        text: `Hello ${
-          firstName || user.firstName || "User"
-        },\n\nYour onboarding details have been successfully saved.\n\nThank you!`,
-      });
-    }
-
     return res.json({ success: true, data: user });
   } catch (err) {
     console.error(err);
-
-    // Log error
-    await logOnboardingDb({
-      methodName: "saveOrUpdateOnboardingDetails",
-      request: req.body,
-      response: { success: false, error: err.message },
-      requestedBy: email || "unknown",
-    });
-
     return res.status(500).json({ success: false, error: err.message });
   }
 };
+
 exports.getOnboardingByEmail = async (req, res) => {
   const { email } = req.query;
 

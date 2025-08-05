@@ -34,7 +34,20 @@ const onboardingSchema = new mongoose.Schema({
   natureOfBusiness: String,
   numberOfShareholders: Number,
 
-  // Shareholder details
+ resident: {
+  type: String,
+},
+working: {
+  type: String,
+},
+salary: {
+  type: String,
+},
+
+Bank: {
+  type: String,
+},
+
   shareholders: [
     {
       fullName: String,
