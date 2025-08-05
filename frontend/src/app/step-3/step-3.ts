@@ -80,6 +80,7 @@ export class Step3 implements OnInit, OnDestroy {
   removeShareholder(index: number) {
     if (this.formData.shareholders.length > 1) {
       this.formData.shareholders.splice(index, 1);
+      this.formData.numberOfShareholders -= 1;
     }
   }
   allowOnlyLetters(e: KeyboardEvent) {
