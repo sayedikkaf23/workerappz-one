@@ -12,19 +12,19 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 export class Step3 implements OnInit, OnDestroy {
   isDark = true;
   nationalities: { value: string; label: string }[] = [];
-    businessCategories: { value: string; label: string }[] = [];  // Store business categories
+  businessCategories: { value: string; label: string }[] = []; // Store business categories
 
   message = '';
   loading: boolean = false;
   formData = {
-    _id:'',
+    _id: '',
     email: '',
-    companylocation:'',
+    companylocation: '',
     numberOfShareholders: 1,
-    Companylicensed:'',
-    companyactivity:'',
-    Turnover:'',
-    Bank:'',
+    Companylicensed: '',
+    companyactivity: '',
+    Turnover: '',
+    Bank: '',
     shareholders: [
       { fullName: '', nationality: '', dob: '', shareholding: 10 },
     ],
@@ -37,41 +37,37 @@ export class Step3 implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-      const email = sessionStorage.getItem('email');  // Assuming 'userEmail' is stored in sessionStorage
+    const email = sessionStorage.getItem('email'); // Assuming 'userEmail' is stored in sessionStorage
 
-   
+    if (email) {
+      // Fetch the onboarding details using the email
+      this.svc.getOnboardingDetailsByEmail(email).subscribe(
+        (data) => {
+          console.log('API Response:', data); // Log the entire response
 
-     if (email) {
-    // Fetch the onboarding details using the email
-    this.svc.getOnboardingDetailsByEmail(email).subscribe(
-      (data) => {
-                console.log('API Response:', data);  // Log the entire response
+          this.formData._id = data.data._id || '';
+          console.log(data._id);
 
-                this.formData._id     = data.data._id || '';
-                console.log(data._id)
-
-        // // Populate formData with the API response data
-        this.formData.email = email;  // Assign email from sessionStorage
-        this.formData.companylocation = data.data.companylocation;
-                this.formData.Companylicensed = data.data.Companylicensed;
-        this.formData.companyactivity = data.data.companyactivity;
-        this.formData.Turnover = data.data.Turnover;
-        this.formData.Bank = data.data.Bank;
-         this.formData.shareholders = data.data.shareholders || [
+          // // Populate formData with the API response data
+          this.formData.email = email; // Assign email from sessionStorage
+          this.formData.companylocation = data.data.companylocation;
+          this.formData.Companylicensed = data.data.Companylicensed;
+          this.formData.companyactivity = data.data.companyactivity;
+          this.formData.Turnover = data.data.Turnover;
+          this.formData.Bank = data.data.Bank;
+          this.formData.shareholders = data.data.shareholders || [
             { fullName: '', nationality: '', dob: '', shareholding: 10 },
           ];
 
-      
-
-        // Log the data for debugging
-        console.log('Onboarding data fetched:', data);
-        console.log('Form data after setting:', this.formData);  // Check if formData is populated
-      },
-      () => {
-        this.message = 'Failed to load onboarding details';
-      }
-    );
-  }
+          // Log the data for debugging
+          console.log('Onboarding data fetched:', data);
+          console.log('Form data after setting:', this.formData); // Check if formData is populated
+        },
+        () => {
+          this.message = 'Failed to load onboarding details';
+        }
+      );
+    }
     this.svc.getNationalities().subscribe({
       next: (data: any) => {
         this.nationalities = data.map((item: any) => ({
@@ -81,26 +77,25 @@ export class Step3 implements OnInit, OnDestroy {
       },
       error: () => (this.message = 'Failed to load nationalities'),
     });
-   this.svc.getBusinessCategory().subscribe({
-    next: (response: any) => {
-      console.log('Business Categories API Response:', response);  // Log the response for debugging
+    this.svc.getBusinessCategory().subscribe({
+      next: (response: any) => {
+        console.log('Business Categories API Response:', response); // Log the response for debugging
 
-      // Map the data to get business categories
-      this.businessCategories = response.data.map((item: any) => ({
-        value: item.name,  // Use _id as value for selection
-        label: item.name, // Use name as label for display
-      }));
+        // Map the data to get business categories
+        this.businessCategories = response.data.map((item: any) => ({
+          value: item.name, // Use _id as value for selection
+          label: item.name, // Use name as label for display
+        }));
 
-      // Log the categories for debugging
-      console.log('Business Categories:', this.businessCategories);
-    },
-    error: () => {
-      this.message = 'Failed to load business categories';
-    },
-  });
+        // Log the categories for debugging
+        console.log('Business Categories:', this.businessCategories);
+      },
+      error: () => {
+        this.message = 'Failed to load business categories';
+      },
+    });
   }
 
-  
   toggleDarkMode() {
     this.isDark = !this.isDark;
   }
@@ -147,8 +142,6 @@ export class Step3 implements OnInit, OnDestroy {
 
   validateForm() {
     // Validate email, company name, etc.
-   
-   
 
     // Validate shareholders fields
     for (let i = 0; i < this.formData.shareholders.length; i++) {
@@ -204,18 +197,22 @@ export class Step3 implements OnInit, OnDestroy {
 
     const cached = this.svc.getCachedData() || {};
 
-     const formattedShareholders = this.formData.shareholders.map(shareholder => {
-    const formattedDob = new Date(shareholder.dob).toISOString().split('T')[0]; // Format the date
-    return {
-      ...shareholder,
-      dob: formattedDob,  // Use the formatted date
-    };
-  });
+    const formattedShareholders = this.formData.shareholders.map(
+      (shareholder) => {
+        const formattedDob = new Date(shareholder.dob)
+          .toISOString()
+          .split('T')[0]; // Format the date
+        return {
+          ...shareholder,
+          dob: formattedDob, // Use the formatted date
+        };
+      }
+    );
     const payload = {
       // ...cached,
       ...this.formData,
       email: cached.email || this.formData.email,
-      shareholders:formattedShareholders,
+      shareholders: formattedShareholders,
     };
 
     this.loading = true;

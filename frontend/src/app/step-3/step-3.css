@@ -3,6 +3,10 @@
   font-size: 12px;
 }
 
+.required {
+  color: red;
+}
+
 
 .loader-overlay {
   position: fixed; /* or absolute if you only want over form */
