@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }               from '@angular/router';
 import { OnboardingService }    from '../services/onboarding.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-step-2',
   standalone: false,
@@ -9,13 +10,14 @@ import { OnboardingService }    from '../services/onboarding.service';
   styleUrl: './step-2.css'
 })
 export class Step2 implements OnInit {
-  selectedRequirement: 'personal'|'business'|'prepaid'|'transfer' = 'personal';
+  selectedRequirement: 'personal'|'business'|'prepaid'|'transfer' | null = null;
   cache: any;
   loading:boolean = false;
    isDark = true;
   constructor(
     private svc: OnboardingService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -31,7 +33,8 @@ export class Step2 implements OnInit {
     this.svc.setCachedData(this.cache);
     this.loading = true;
     // call the separate requirements API
-    this.svc.saveRequirements({
+    if(this.selectedRequirement){
+      this.svc.saveRequirements({
       _id:          this.cache._id,
       email:        this.cache.email,
       requirements: this.selectedRequirement
@@ -46,6 +49,12 @@ export class Step2 implements OnInit {
         this.loading = false;
       } 
     });
+    }
+    else{
+      this.toastr.error("Please select  any of the service provided", "Select a Service");
+      this.loading = false;
+    }
+    
   }
 
     

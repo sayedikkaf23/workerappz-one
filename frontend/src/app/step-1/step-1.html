@@ -153,12 +153,10 @@
     <div class="d-flex">
       <div class="step_wrp">
         <div class="step_icon">
-          <img src="images/footer-logo.png" alt="" />
+          <img src="../../assets/images/footer-logo.png" alt="" />
         </div>
-
-        
-        <!-- <ul class="step_list">
-          <li>
+        <ul class="step_list">
+          <li class="active">
             <div
               class="circle"
               style="background-image: url(assets/images/step-1-icon.svg)"
@@ -182,7 +180,7 @@
               <h3>Select requirements</h3>
             </a>
           </li>
-          <li class="active">
+          <li>
             <div
               class="circle"
               style="background-image: url(assets/images/step-3-icon.svg)"
@@ -225,7 +223,7 @@
             >
               <span>6</span>
             </div>
-            <a routerLink="/step-6">
+            <a routerLink="/payment">
               <h5>Step 6</h5>
               <h3>Payment</h3>
             </a>
@@ -285,11 +283,11 @@
           <div class="row g-lg-4 g-md-3 g-2">
             <div class="col-md-6 col-6">
               <div class="form-field">
-                <label class="form-label">First Name</label>
+                <label class="form-label">First Name<span class="required">*</span></label>
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="enter first name"
+                  placeholder="Enter first name"
                   [(ngModel)]="formData.firstName"
                   name="firstName"
                    pattern="[A-Za-z ]+"
@@ -298,11 +296,11 @@
             </div>
             <div class="col-md-6 col-6">
               <div class="form-field">
-                <label class="form-label">Last Name</label>
+                <label class="form-label">Last Name<span class="required">*</span></label>
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="enter last name"
+                  placeholder="Enter last name"
                   [(ngModel)]="formData.lastName"
                   name="lastName"
                    pattern="[A-Za-z ]+"
@@ -312,7 +310,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-field">
-                <label class="form-label">Mobile Number</label>
+                <label class="form-label">Mobile Number<span class="required">*</span></label>
                 
                  <ngx-intl-tel-input
                     class="ngx-tel-input"
@@ -330,11 +328,11 @@
             </div>
             <div class="col-md-6">
               <div class="form-field">
-                <label class="form-label">Email Address</label>
+                <label class="form-label">Email Address<span class="required">*</span></label>
                 <input
                   type="email"
                   class="form-control"
-                  placeholder="enter email address"
+                  placeholder="Enter email address"
                   [(ngModel)]="formData.email"
                   name="email"
                 />

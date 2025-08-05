@@ -51,6 +51,7 @@ import { Topup } from './topup/topup';
 import { Dashboards } from './dashboards/dashboards';
 import { PieChart } from './pie-chart/pie-chart';
 import { Loader } from './loader/loader';
+import { Sidebar } from './sidebar/sidebar';
 import { AdminLogin } from './admin-login/admin-login';
 
 @NgModule({
@@ -98,7 +99,7 @@ import { AdminLogin } from './admin-login/admin-login';
     Topup,
     Dashboards,
     PieChart,
-    Loader,
+    Loader, Sidebar,
     AdminLogin,
   ],
   imports: [
