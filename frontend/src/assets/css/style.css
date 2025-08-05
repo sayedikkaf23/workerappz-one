@@ -1789,10 +1789,10 @@ body.sidebar-collapsed .kyc_col_1 h5 {
     width: auto;
     transition: all 0.4s;
 }
-.theme-wrapper.sidebar-collapsed .header-arrow {
+body.sidebar-collapsed .header-arrow {
     left: 62px;
 }
-.theme-wrapper.sidebar-collapsed .header-arrow a {
+body.sidebar-collapsed .header-arrow a {
     transform: scale(-1);
 }
 .header-arrow a {
