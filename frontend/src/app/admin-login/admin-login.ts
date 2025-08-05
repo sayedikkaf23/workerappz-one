@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../services/admin.service'; // Import AdminService
 import { Router } from '@angular/router'; // Import Router
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 
 @Component({
   selector: 'app-admin-login',
@@ -16,7 +17,8 @@ export class AdminLogin {
   mfaRequired: boolean = false;
   loading: boolean = false; // Loading state for the login button
 
-  constructor(private adminService: AdminService, private router: Router) {}
+  constructor(private adminService: AdminService, private router: Router,    private toastr: ToastrService // Inject ToastrService
+) {}
 
   // Toggle Dark Mode
   toggleDarkMode() {
@@ -41,12 +43,16 @@ export class AdminLogin {
           this.loading = false;
           if (response.mfaRequired) {
             this.mfaRequired = true;
+            
           } else {
             console.log('Login successful:', response);
           }
         },
         (error) => {
           this.loading = false;
+          const errorMessage =
+            error?.error?.message || error?.message || 'Login failed. Please try again.';
+          this.toastr.error(errorMessage);
           console.error('Login failed:', error);
         }
       );
@@ -63,8 +69,11 @@ export class AdminLogin {
         console.log('MFA verified:', response);
         this.router.navigate(['/adminhome']); // This will navigate to /admindashboard route
       },
-      (error) => {
+       (error) => {
         this.loading = false;
+        const errorMessage =
+          error?.error?.message || error?.message || 'MFA verification failed.';
+        this.toastr.error(errorMessage);
         console.error('MFA verification failed:', error);
       }
     );
