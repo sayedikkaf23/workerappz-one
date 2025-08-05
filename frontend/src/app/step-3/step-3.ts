@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 export class Step3 implements OnInit, OnDestroy {
   isDark = true;
   nationalities: { value: string; label: string }[] = [];
+    businessCategories: { value: string; label: string }[] = [];  // Store business categories
+
   message = '';
   loading: boolean = false;
   formData = {
@@ -79,8 +81,26 @@ export class Step3 implements OnInit, OnDestroy {
       },
       error: () => (this.message = 'Failed to load nationalities'),
     });
+   this.svc.getBusinessCategory().subscribe({
+    next: (response: any) => {
+      console.log('Business Categories API Response:', response);  // Log the response for debugging
+
+      // Map the data to get business categories
+      this.businessCategories = response.data.map((item: any) => ({
+        value: item.name,  // Use _id as value for selection
+        label: item.name, // Use name as label for display
+      }));
+
+      // Log the categories for debugging
+      console.log('Business Categories:', this.businessCategories);
+    },
+    error: () => {
+      this.message = 'Failed to load business categories';
+    },
+  });
   }
 
+  
   toggleDarkMode() {
     this.isDark = !this.isDark;
   }

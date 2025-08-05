@@ -57,5 +57,8 @@ export class OnboardingService {
     const params = new HttpParams().set('email', email);
     return this.http.get(`${this.apiUrl}/api/onboarding/getDetails`, { params });
   }
+   getBusinessCategory(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/getAllBusinessCategories`);
+  }
   
 }

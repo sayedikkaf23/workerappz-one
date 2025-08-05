@@ -126,18 +126,16 @@
                         </div>
                       </div>
                       <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label"> What are the type of activities mentioned on your trade
-                            license?</label>
-                          <select name="companyactivity" id="companyactivity" class="form-select"
-                            [(ngModel)]="formData.companyactivity">
-                            <option value="" disabled>
-                              Where is your Company licensed?
-                            </option>
-                            <option value="Mainland">Mainland</option>
-                            <option value="Freezone">Freezone</option>
-                          </select>
-                        </div>
+                       <div class="form-field">
+  <label class="form-label">What are the type of activities mentioned on your trade license?</label>
+  <select name="companyactivity" id="companyactivity" class="form-select" [(ngModel)]="formData.companyactivity">
+    <option value="" disabled>Select Business Activity</option>
+    <option *ngFor="let category of businessCategories" [value]="category.value">
+      {{ category.label }}
+    </option>
+  </select>
+</div>
+
 
                         <div class="form-field">
                           <label class="form-label">Do you wish to apply for?</label>
