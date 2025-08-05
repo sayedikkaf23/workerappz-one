@@ -9,11 +9,40 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
   styleUrl: './personal-bank.css'
 })
 export class PersonalBank {
- isDark = true;
+   isDark = true;
   nationalities: { value: string; label: string }[] = [];
   message = '';
-  loading: boolean = false;
-  formData = {
+  loading = false;
+
+  formData: {
+    // Step 2 fields
+    resident: string;
+    working: string;
+    salary: string;
+    companyname: string;
+    Bank: string;
+    // Step 3 fields
+    email: string;
+    companyName: string;
+    companyWebsite: string;
+    nationality: string;
+    countryOfIncorporation: string;
+    natureOfBusiness: string;
+    numberOfShareholders: number;
+    shareholders: Array<{
+      fullName: string;
+      nationality: string;
+      dob: string;
+      shareholding: number;
+    }>;
+  } = {
+    // Step 2 defaults
+    resident: '',
+    working: '',
+    salary: '',
+    companyname: '',
+    Bank: '',
+    // Step 3 defaults
     email: '',
     companyName: '',
     companyWebsite: '',
@@ -22,8 +51,8 @@ export class PersonalBank {
     natureOfBusiness: '',
     numberOfShareholders: 1,
     shareholders: [
-      { fullName: '', nationality: '', dob: '', shareholding: 10 },
-    ],
+      { fullName: '', nationality: '', dob: '', shareholding: 10 }
+    ]
   };
 
   constructor(
@@ -33,10 +62,9 @@ export class PersonalBank {
   ) {}
 
   ngOnInit() {
-    const cache =
-      this.svc.getCachedData() ||
-      JSON.parse(localStorage.getItem('onboarding-step3') || 'null');
-
+    // load cached data
+    const cache = this.svc.getCachedData() ||
+                  JSON.parse(localStorage.getItem('onboarding-step3') || 'null');
     if (cache) {
       this.formData = {
         ...this.formData,
@@ -45,21 +73,22 @@ export class PersonalBank {
           ? cache.shareholders.map((s: any) => ({
               fullName: s.fullName || '',
               nationality: s.nationality || '',
-              dob: s.dob ? s.dob.split('T')[0] : '', 
-              shareholding: s.shareholding ?? 10,
+              dob: s.dob ? s.dob.split('T')[0] : '',
+              shareholding: s.shareholding ?? 10
             }))
-          : this.formData.shareholders,
+          : this.formData.shareholders
       };
     }
 
+    // load nationality options
     this.svc.getNationalities().subscribe({
-      next: (data: any) => {
+      next: data => {
         this.nationalities = data.map((item: any) => ({
           value: item.country,
-          label: item.country,
+          label: item.country
         }));
       },
-      error: () => (this.message = 'Failed to load nationalities'),
+      error: () => (this.message = 'Failed to load nationalities')
     });
   }
 
@@ -67,48 +96,57 @@ export class PersonalBank {
     this.isDark = !this.isDark;
   }
 
-  addShareholder() {
-    this.formData.shareholders.push({
-      fullName: '',
-      nationality: '',
-      dob: '',
-      shareholding: 10,
-    });
-  }
-
-  removeShareholder(index: number) {
-    if (this.formData.shareholders.length > 1) {
-      this.formData.shareholders.splice(index, 1);
-    }
-  }
-  allowOnlyLetters(e: KeyboardEvent) {
-    const char = String.fromCharCode(e.keyCode || e.which);
-    if (!/[A-Za-z ]/.test(char)) {
-      e.preventDefault();
-    }
-  }
-
+  // only used if you re-enable shareholders UI
   onShareholdersChange(event: Event) {
     const count = +(event.target as HTMLSelectElement).value;
     this.formData.numberOfShareholders = count;
-    const currentLength = this.formData.shareholders.length;
-
-    if (count > currentLength) {
-      for (let i = currentLength; i < count; i++) {
+    const current = this.formData.shareholders.length;
+    if (count > current) {
+      for (let i = current; i < count; i++) {
         this.formData.shareholders.push({
-          fullName: '',
-          nationality: '',
-          dob: '',
-          shareholding: 10,
+          fullName: '', nationality: '', dob: '', shareholding: 10
         });
       }
-    } else if (count < currentLength) {
+    } else {
       this.formData.shareholders.splice(count);
     }
   }
 
-  validateForm() {
-    // Validate email, company name, etc.
+  allowOnlyLetters(e: KeyboardEvent) {
+    const char = String.fromCharCode(e.keyCode || e.which);
+    if (!/[A-Za-z ]/.test(char)) e.preventDefault();
+  }
+
+  getMaxDobDate(): string {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    return d.toISOString().split('T')[0];
+  }
+
+  validateForm(): boolean {
+    // Step 2 validations
+    if (!this.formData.resident) {
+      this.toastr.error('Resident status is required');
+      return false;
+    }
+    if (!this.formData.working) {
+      this.toastr.error('Working status is required');
+      return false;
+    }
+    if (this.formData.working === 'Salaried' && !this.formData.salary) {
+      this.toastr.error('Salary is required');
+      return false;
+    }
+    if (this.formData.working === 'Self Employed' && !this.formData.companyname) {
+      this.toastr.error('Company name is required');
+      return false;
+    }
+    if (!this.formData.Bank) {
+      this.toastr.error('Account type is required');
+      return false;
+    }
+
+    // Step 3 validations
     if (!this.formData.email) {
       this.toastr.error('Email is required');
       return false;
@@ -134,92 +172,38 @@ export class PersonalBank {
       return false;
     }
 
-    // Validate shareholders fields
-    for (let i = 0; i < this.formData.shareholders.length; i++) {
-      const onlyLetters = /^[A-Za-z ]+$/; // place near top of method
-
-      const shareholder = this.formData.shareholders[i];
-      // if (!shareholder.fullName) {
-      //   this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
-      //   return false;
-      // }
-      if (!shareholder.fullName?.trim()) {
-        this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
-        return false;
-      }
-
-      /* 2️⃣ contains digits/symbols? */
-      if (!onlyLetters.test(shareholder.fullName)) {
-        this.toastr.error(
-          `Shareholder ${i + 1} Full Name can contain only letters`
-        );
-        return false;
-      }
-
-      if (!shareholder.nationality) {
-        this.toastr.error(`Shareholder ${i + 1} Nationality is required`);
-        return false;
-      }
-      if (!shareholder.dob) {
-        this.toastr.error(`Shareholder ${i + 1} Date of Birth is required`);
-        return false;
-      }
-      if (shareholder.shareholding <= 0) {
-        this.toastr.error(
-          `Shareholder ${i + 1} Shareholding should be greater than 0`
-        );
-        return false;
-      }
-    }
-
-    return true; // Form is valid
-  }
-
-  getMaxDobDate(): string {
-    const today = new Date();
-    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18)); // Subtract 18 years
-    return minAgeDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    return true;
   }
 
   submitForm() {
-    if (!this.validateForm()) {
-      return;
-    }
+    if (!this.validateForm()) return;
 
     const cached = this.svc.getCachedData() || {};
     const payload = {
       ...cached,
       ...this.formData,
-      email: cached.email || this.formData.email,
-      shareholders: [...this.formData.shareholders],
+      email:   cached.email || this.formData.email,
+      shareholders: [...this.formData.shareholders]
     };
 
     this.loading = true;
-
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
-      next: (res) => {
+      next: res => {
         this.svc.setCachedData(res.data);
         localStorage.setItem('onboarding-step3', JSON.stringify(res.data));
         this.loading = false;
         this.router.navigate(['/step-4']);
       },
-      error: (err) => {
-        console.error('Error saving step 3:', err);
+      error: err => {
+        console.error('Error saving:', err);
         this.loading = false;
         this.toastr.error('An error occurred while saving the data');
-      },
+      }
     });
   }
 
-  openDatePicker(index: number) {
-    const input = document.getElementById(`dob-${index}`) as HTMLInputElement;
-    input?.showPicker?.();
-  }
-
   ngOnDestroy() {
-    // Cache current state for back/next navigation
     this.svc.setCachedData(this.formData);
     localStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
   }
-  
 }

@@ -122,170 +122,117 @@
 
         <div class="step_form step3_form">
           <div class="details_wrap">
-            <div class="row g-xl-4 g-lg-3 gy-4">
-              <div class="col-12">
-                <h3>Business Details</h3>
-                <div class="card">
-                  <form (ngSubmit)="submitForm()">
-                    <div class="row g-lg-4 g-md-3 g-2">
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label"
-                            >Enter Name of Company</label
-                          >
-                          <input
-                            type="text"
-                            [(ngModel)]="formData.companyName"
-                            name="companyName"
-                            class="form-control"
-                            placeholder="Enter name of company"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label">Company Website</label>
-                          <input
-                            type="text"
-                            [(ngModel)]="formData.companyWebsite"
-                            name="companyWebsite"
-                            class="form-control"
-                            placeholder="Enter company website"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label"
-                            >Country of Incorporation</label
-                          >
-                          <select
-                            [(ngModel)]="formData.countryOfIncorporation"
-                            name="countryOfIncorporation"
-                            class="form-select"
-                          >
-                            <option value="" disabled>Select Country</option>
-                            <option value="indian">Indian</option>
-                            <option value="american">American</option>
-                            <option value="british">British</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label">Nature of Business</label>
-                          <select
-                            [(ngModel)]="formData.natureOfBusiness"
-                            name="natureOfBusiness"
-                            class="form-select"
-                          >
-                            <option value="" disabled>
-                              Select nature of business
-                            </option>
-                            <option value="manufacturing">Manufacturing</option>
-                            <option value="retail">Retail/Wholesale</option>
-                            <option value="service">Service</option>
-                            <option value="trading">Trading</option>
-                            <option value="agriculture">Agriculture</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-xl-6 col-12">
-                        <div class="form-field">
-                          <label class="form-label"
-                            >Number of Shareholders</label
-                          >
-                          <select
-                            [(ngModel)]="formData.numberOfShareholders"
-                            (change)="onShareholdersChange($event)"
-                            name="numberOfShareholders"
-                            class="form-select"
-                          >
-                            <option value="" disabled>
-                              Select Number of Shareholders
-                            </option>
-                            <option
-                              *ngFor="let num of [1, 2, 3, 4, 5]"
-                              [value]="num"
-                            >
-                              {{ num }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="row g-xl-4 g-lg-3 gy-4">
-                <div class="col-12">
-                  <h3>Shareholder Details</h3>
-                </div>
-                <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
-                  <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                    <div class="card h-100">
-                    <div class="form-field">
-                      <label class="form-label">Full Name</label>
-                      <input
-                        type="text"
-                        [(ngModel)]="shareholder.fullName"
-                        name="fullName{{ i }}"
-                        class="form-control"
-                        placeholder="Enter full name"
-                          pattern="[A-Za-z ]+"
+            <div class="row g-lg-4 g-md-3 g-2">
 
-                      />
-                    </div>
-                    <div class="form-field">
-                      <label class="form-label">Nationality</label>
-                     <select
-                        class="form-select"
-                        [(ngModel)]="shareholder.nationality"
-                        name="nationality{{ i }}"
-                      >
-                        <option value="" disabled>Select Nationality</option>
-                        <option *ngFor="let country of nationalities" [value]="country.value">
-                          {{ country.label }}
-                        </option>
-                      </select>
-                    </div>
-                    <div class="form-field">
-                      <label class="form-label">Date of Birth</label>
-                                          <input
-                        type="date"
-                        id="dob-{{ i }}"
-                        [(ngModel)]="shareholder.dob"
-                        name="dob{{ i }}"
-                        [max]="getMaxDobDate()" 
-                        (focus)="openDatePicker(i)"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="form-field">
-                      <label class="form-label">% Shareholding</label>
-                      <input
-                        type="number"
-                        [(ngModel)]="shareholder.shareholding"
-                        name="shareholding{{ i }}"
-                        class="form-control"
-                        placeholder="Enter %"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-sm mt-2"
-                      (click)="removeShareholder(i)"
-                      *ngIf="formData.shareholders.length > 1"
-                    >
-                      Remove
-                    </button>
-                    <hr *ngIf="i !== formData.shareholders.length - 1" />
-                  </div>
-                  <!-- <button type="button" class="btn btn-secondary mt-2" (click)="addShareholder()">Add Shareholder</button> -->
-                </div>
-              </ng-container>
-              </div>
-            </div>
+  <!-- 1. Resident of UAE -->
+  <div class="col-xl-6 col-12">
+    <div class="form-field">
+      <label for="resident" class="form-label">
+        Are you a resident of the UAE?<span class="required">*</span>
+      </label>
+      <select
+        id="resident"
+        name="resident"
+        class="form-select"
+        [(ngModel)]="formData.resident"
+      >
+        <option value="" disabled>Select one</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 2. Salaried or Self-Employed -->
+  <div class="col-xl-6 col-12">
+    <div class="form-field">
+      <label for="working" class="form-label">
+        Are you Salaried or Self-Employed?<span class="required">*</span>
+      </label>
+      <select
+        id="working"
+        name="working"
+        class="form-select"
+        [(ngModel)]="formData.working"
+      >
+        <option value="" disabled>Select one</option>
+        <option value="Salaried">Salaried</option>
+        <option value="Self Employed">Self-Employed</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 3. Monthly Salary (only if Salaried) -->
+  <div
+    class="col-xl-6 col-12"
+    *ngIf="formData.working === 'Salaried'"
+  >
+    <div class="form-field">
+      <label for="salary" class="form-label">
+        Enter your Monthly Salary (AED)<span class="required">*</span>
+      </label>
+      <select
+        id="salary"
+        name="salary"
+        class="form-select"
+        [(ngModel)]="formData.salary"
+      >
+        <option value="" disabled>Select range</option>
+        <option value="AED 0-3,000">AED 0–3,000</option>
+        <option value="AED 3,000-5,000">AED 3,000–5,000</option>
+        <option value="AED 5,000-10,000">AED 5,000–10,000</option>
+        <option value="AED 10,000+">AED 10,000+</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 4. Company Name (only if Self-Employed) -->
+  <!-- Company Name (only if Self-Employed), styled like your email input -->
+<div
+  class="col-md-6"
+  *ngIf="formData.working === 'Self Employed'"
+>
+  <div class="form-field">
+    <label class="form-label">Company Name<span class="required">*</span></label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter company name"
+      [(ngModel)]="formData.companyname"
+      name="companyname"
+    />
+  </div>
+</div>
+
+
+  <!-- 5. Which account to apply for -->
+  <div class="col-xl-6 col-12">
+    <div class="form-field">
+      <label for="Bank" class="form-label">
+        Do you wish to apply for?<span class="required">*</span>
+      </label>
+      <select
+        id="Bank"
+        name="Bank"
+        class="form-select"
+        [(ngModel)]="formData.Bank"
+      >
+        <option value="" disabled>Select one</option>
+        <option value="Digital Personal Bank Account Opening">
+          Digital Personal Bank Account Opening
+        </option>
+        <option value="Traditional Personal bank Account Opening">
+          Traditional Personal Bank Account Opening
+        </option>
+        <option value="Any of the above Bank Account Opening">
+          Any of the above Bank Account Opening
+        </option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
           </div>
         </div>
 
