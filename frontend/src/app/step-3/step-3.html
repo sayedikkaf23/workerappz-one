@@ -103,7 +103,8 @@
                     <div class="row g-lg-4 g-md-3 g-2">
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
-                          <label class="form-label">Is your company located in UAE?<span class="required">*</span></label>
+                          <label class="form-label">Is your company located in UAE?<span
+                              class="required">*</span></label>
                           <select name="resident" id="resident" class="form-select"
                             [(ngModel)]="formData.companylocation">
                             <option value="" disabled>Is your company located in UAE</option>
@@ -114,7 +115,8 @@
                         </div>
 
                         <div class="form-field">
-                          <label class="form-label">Where is your Company licensed?<span class="required">*</span></label>
+                          <label class="form-label">Where is your Company licensed?<span
+                              class="required">*</span></label>
                           <select name="Companylicensed" id="Companylicensed" class="form-select"
                             [(ngModel)]="formData.Companylicensed">
                             <option value="" disabled>
@@ -125,10 +127,11 @@
                           </select>
                         </div>
                       </div>
-                      
+
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
-                          <label class="form-label">What are the type of activities mentioned your trade license?<span class="required">*</span></label>
+                          <label class="form-label">What are the type of activities mentioned your trade license?<span
+                              class="required">*</span></label>
                           <select name="companyactivity" id="companyactivity" class="form-select"
                             [(ngModel)]="formData.companyactivity">
                             <option value="" disabled>Select Business Activity</option>
@@ -167,7 +170,8 @@
 
                       <div class="col-xl-6 col-12">
                         <div class="form-field">
-                          <label class="form-label">Turnover of the company (Annually)?<span class="required">*</span></label>
+                          <label class="form-label">Turnover of the company (Annually)?<span
+                              class="required">*</span></label>
                           <select name="Turnover" id="Turnover" class="form-select" [(ngModel)]="formData.Turnover">
                             <option value="" disabled> Turnover of the company (Annually)?
                             </option>
@@ -195,10 +199,11 @@
                           </select>
                         </div>
                       </div> -->
-                       <div class="col-xl-6 col-12">
+                      <div class="col-xl-6 col-12">
 
                         <div class="form-field">
-                          <label class="form-label">How many shareholders does your company have?<span class="required">*</span></label>
+                          <label class="form-label">How many shareholders does your company have?<span
+                              class="required">*</span></label>
                           <select [(ngModel)]="formData.numberOfShareholders" (change)="onShareholdersChange($event)"
                             name="numberOfShareholders" class="form-select">
                             <option value="" disabled>
@@ -219,35 +224,49 @@
                 </div>
               </div>
               <div class="row g-xl-4 g-lg-3 gy-4" *ngIf="formData.numberOfShareholders > 0">
-  <div class="col-12">
-    <h3>Shareholder Details</h3>
-  </div>
-  <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
-    <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-      <div class="card h-100">
-        <div class="form-field">
-          <label class="form-label">Full Name<span class="required">*</span></label>
-          <input type="text" [(ngModel)]="shareholder.fullName" name="fullName{{ i }}" class="form-control" placeholder="Enter full name" pattern="[A-Za-z ]+" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">Nationality<span class="required">*</span></label>
-          <select class="form-select" [(ngModel)]="shareholder.nationality" name="nationality{{ i }}">
-            <option value="" disabled>Select Nationality</option>
-            <option *ngFor="let country of nationalities" [value]="country.value">{{ country.label }}</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label class="form-label">Date of Birth<span class="required">*</span></label>
-          <input type="date" id="dob-{{ i }}" [(ngModel)]="shareholder.dob" name="dob{{ i }}" [max]="getMaxDobDate()" (focus)="openDatePicker(i)" class="form-control" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">% Shareholding<span class="required">*</span></label>
-          <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}" class="form-control" placeholder="Enter %" />
-        </div>
-      </div>
-    </div>
-  </ng-container>
-</div>
+                <div class="col-12">
+                  <h3>Shareholder Details</h3>
+                </div>
+                <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
+                  <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                    <div class="card h-100">
+                      <div class="form-field">
+                        <label class="form-label">Full Name<span class="required">*</span></label>
+                        <input type="text" [(ngModel)]="shareholder.fullName" name="fullName{{ i }}"
+                          class="form-control" placeholder="Enter full name" pattern="[A-Za-z ]+" />
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">Nationality<span class="required">*</span></label>
+                        <select class="form-select" [(ngModel)]="shareholder.nationality" name="nationality{{ i }}">
+                          <option value="" disabled>Select Nationality</option>
+                          <option *ngFor="let country of nationalities" [value]="country.value">{{ country.label }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">Date of Birth<span class="required">*</span></label>
+                        <input type="date" id="dob-{{ i }}" [(ngModel)]="shareholder.dob" name="dob{{ i }}"
+                          [max]="getMaxDobDate()" (focus)="openDatePicker(i)" class="form-control" />
+                      </div>
+                      <div class="form-field">
+                        <label class="form-label">% Shareholding<span class="required">*</span></label>
+                        <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}"
+                          class="form-control" placeholder="Enter %" />
+                      </div>
+                       <button
+                      type="button"
+                      class="btn btn-danger btn-sm mt-2"
+                      (click)="removeShareholder(i)"
+                      *ngIf="formData.shareholders.length > 0"
+                    >
+                      Remove
+                    </button>
+                    </div>
+                    
+                  </div>
+                  
+                </ng-container>
+              </div>
 
             </div>
           </div>

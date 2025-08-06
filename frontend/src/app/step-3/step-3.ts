@@ -104,6 +104,8 @@ export class Step3 implements OnInit, OnDestroy {
     });
   }
 
+  
+
   toggleDarkMode() {
     this.isDark = !this.isDark;
   }
