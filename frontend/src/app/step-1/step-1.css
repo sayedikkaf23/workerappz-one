@@ -49,6 +49,9 @@ ngx-intl-tel-input {
     background-color: #023764;
 }
 
+.required {
+  color: red;
+}
 
 .loader-overlay {
   position: fixed; /* or absolute if you only want over form */
