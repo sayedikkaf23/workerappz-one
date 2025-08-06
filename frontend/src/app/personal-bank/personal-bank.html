@@ -211,23 +211,24 @@
       <label for="Bank" class="form-label">
         Do you wish to apply for?<span class="required">*</span>
       </label>
-      <select
-        id="Bank"
-        name="Bank"
-        class="form-select"
-        [(ngModel)]="formData.Bank"
-      >
-        <option value="" disabled>Select one</option>
-        <option value="Digital Personal Bank Account Opening">
-          Digital Personal Bank Account Opening
-        </option>
-        <option value="Traditional Personal bank Account Opening">
-          Traditional Personal Bank Account Opening
-        </option>
-        <option value="Any of the above Bank Account Opening">
-          Any of the above Bank Account Opening
-        </option>
-      </select>
+    <select
+  id="personalBank"
+  name="personalBank"
+  class="form-select"
+  [(ngModel)]="formData.personalBank"
+>
+  <option value="" disabled>Select one</option>
+  <option value="Digital Personal Bank Account Opening">
+    Digital Personal Bank Account Opening
+  </option>
+  <option value="Traditional Personal bank Account Opening">
+    Traditional Personal Bank Account Opening
+  </option>
+  <option value="Any of the above Bank Account Opening">
+    Any of the above Bank Account Opening
+  </option>
+</select>
+
     </div>
   </div>
 
