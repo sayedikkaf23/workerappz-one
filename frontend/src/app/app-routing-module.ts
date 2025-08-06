@@ -42,7 +42,7 @@ import { PersonalReviewOrder } from './personal-review-order/personal-review-ord
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: 'customer/home',
     pathMatch: 'full',
   },
   { path: 'customer/home', component: Home },

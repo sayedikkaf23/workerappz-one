@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
   selector: 'app-personal-bank',
   standalone: false,
   templateUrl: './personal-bank.html',
-  styleUrls: ['./personal-bank.css']
+  styleUrls: ['./personal-bank.css'],
 })
 export class PersonalBank implements OnInit, OnDestroy {
   isDark = true;
@@ -15,7 +15,7 @@ export class PersonalBank implements OnInit, OnDestroy {
   message = '';
   loading = false;
   formData: any = {
-        _id: '',              //  👈  NEW
+    _id: '',
 
     resident: '',
     working: '',
@@ -29,7 +29,9 @@ export class PersonalBank implements OnInit, OnDestroy {
     countryOfIncorporation: '',
     natureOfBusiness: '',
     numberOfShareholders: 1,
-    shareholders: [{ fullName: '', nationality: '', dob: '', shareholding: 10 }],
+    shareholders: [
+      { fullName: '', nationality: '', dob: '', shareholding: 10 },
+    ],
   };
 
   constructor(
@@ -38,61 +40,59 @@ export class PersonalBank implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {}
 
- ngOnInit() {
-  // Retrieve the email from sessionStorage
-  const email = sessionStorage.getItem('email');  // Assuming 'userEmail' is stored in sessionStorage
-  
-  console.log('Email retrieved from session:', email);  // Log to check the value of the email
-  
-  if (email) {
-    // Fetch the onboarding details using the email
-    this.svc.getOnboardingDetailsByEmail(email).subscribe(
+  ngOnInit() {
+    // Retrieve the email from sessionStorage
+    const email = sessionStorage.getItem('email');
+
+    console.log('Email retrieved from session:', email);
+
+    if (email) {
+      // Fetch the onboarding details using the email
+      this.svc.getOnboardingDetailsByEmail(email).subscribe(
+        (data) => {
+          console.log('API Response:', data); // Log the entire response
+
+          this.formData._id = data.data._id || '';
+          console.log(data._id);
+
+          // Populate formData with the API response data
+          this.formData.email = email; // Assign email from sessionStorage
+          this.formData.resident = data.data.resident;
+          console.log('sss', data.data.resident);
+          this.formData.salary = data.data.salary || ''; // Handle null or empty salary
+          this.formData.working = data.data.working || ''; // Handle null or empty salary
+
+          this.formData.companyname = data.data.companyName || ''; // Handle null company name
+          this.formData.Bank = data.data.Bank || ''; // Handle null bank name
+
+          // Load saved form data from sessionStorage (if available)
+
+          // Log the data for debugging
+          console.log('Onboarding data fetched:', data);
+          console.log('Form data after setting:', this.formData); // Check if formData is populated
+        },
+        () => {
+          this.message = 'Failed to load onboarding details';
+        }
+      );
+    } else {
+      this.message = 'No email found in session';
+      console.error('No email found in session');
+    }
+
+    // Load nationality options
+    this.svc.getNationalities().subscribe(
       (data) => {
-                console.log('API Response:', data);  // Log the entire response
-
-                this.formData._id     = data.data._id || '';
-                console.log(data._id)
-
-        // Populate formData with the API response data
-        this.formData.email = email;  // Assign email from sessionStorage
-        this.formData.resident = data.data.resident;
-        console.log("sss",data.data.resident)
-        this.formData.salary = data.data.salary || '';  // Handle null or empty salary
-                this.formData.working = data.data.working || '';  // Handle null or empty salary
-
-        this.formData.companyname = data.data.companyName || '';  // Handle null company name
-        this.formData.Bank = data.data.Bank || '';  // Handle null bank name
-
-        // Load saved form data from sessionStorage (if available)
-       
-
-        // Log the data for debugging
-        console.log('Onboarding data fetched:', data);
-        console.log('Form data after setting:', this.formData);  // Check if formData is populated
+        this.nationalities = data.map((item: any) => ({
+          value: item.country,
+          label: item.country,
+        }));
       },
       () => {
-        this.message = 'Failed to load onboarding details';
+        this.message = 'Failed to load nationalities';
       }
     );
-  } else {
-    this.message = 'No email found in session';
-    console.error('No email found in session');
   }
-
-  // Load nationality options
-  this.svc.getNationalities().subscribe(
-    (data) => {
-      this.nationalities = data.map((item: any) => ({
-        value: item.country,
-        label: item.country,
-      }));
-    },
-    () => {
-      this.message = 'Failed to load nationalities';
-    }
-  );
-}
-
 
   toggleDarkMode() {
     this.isDark = !this.isDark;
@@ -115,8 +115,45 @@ export class PersonalBank implements OnInit, OnDestroy {
       this.formData.shareholders.splice(count);
     }
   }
+  validateForm() {
+    if (!this.formData.resident) {
+      this.toastr.error('Resident status is required');
+      return false;
+    }
+
+    if (!this.formData.working) {
+      this.toastr.error('Employment status is required');
+      return false;
+    }
+
+    if (this.formData.working === 'Salaried' && !this.formData.salary) {
+      this.toastr.error('Salary range is required for salaried individuals');
+      return false;
+    }
+
+    if (
+      this.formData.working === 'Self Employed' &&
+      !this.formData.companyname
+    ) {
+      this.toastr.error(
+        'Company name is required for self-employed individuals'
+      );
+      return false;
+    }
+
+    if (!this.formData.Bank) {
+      this.toastr.error('Bank account option is required');
+      return false;
+    }
+
+    return true;
+  }
 
   submitForm() {
+    if (!this.validateForm()) {
+      return;
+    }
+
     this.loading = true;
 
     // Save form data to sessionStorage before navigation
