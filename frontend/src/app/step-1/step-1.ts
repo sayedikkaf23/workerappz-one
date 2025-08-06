@@ -97,6 +97,7 @@ validateMobileNumberByDialCode(dialCode: string, number: string): boolean {
 
 submitForm() {
   const lettersOnly = /^[A-Za-z ]+$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // ---- First Name ----
   if (!this.formData.firstName?.trim()) {
@@ -142,6 +143,10 @@ submitForm() {
 
   if (!this.formData.email) {
     this.toastr.error('Email Address is required');
+    return;
+  }
+    if (!emailPattern.test(this.formData.email.trim())) {
+    this.toastr.error('Enter a valid email address');
     return;
   }
   if (!this.formData.nationality) {
