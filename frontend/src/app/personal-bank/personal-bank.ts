@@ -14,25 +14,24 @@ export class PersonalBank implements OnInit, OnDestroy {
   nationalities: { value: string; label: string }[] = [];
   message = '';
   loading = false;
-  formData: any = {
-    _id: '',
-
-    resident: '',
-    working: '',
-    salary: '',
-    companyname: '',
-    Bank: '',
-    email: '',
-    companyName: '',
-    companyWebsite: '',
-    nationality: '',
-    countryOfIncorporation: '',
-    natureOfBusiness: '',
-    numberOfShareholders: 1,
-    shareholders: [
-      { fullName: '', nationality: '', dob: '', shareholding: 10 },
-    ],
-  };
+formData: any = {
+  _id: '',
+  resident: '',
+  working: '',
+  salary: '',
+  companyname: '',
+Bank: '',
+  email: '',
+  companyName: '',
+  companyWebsite: '',
+  nationality: '',
+  countryOfIncorporation: '',
+  natureOfBusiness: '',
+  numberOfShareholders: 1,
+  shareholders: [
+    { fullName: '', nationality: '', dob: '', shareholding: 10 },
+  ],
+};
 
   constructor(
     private svc: OnboardingService,
@@ -57,13 +56,12 @@ export class PersonalBank implements OnInit, OnDestroy {
 
           // Populate formData with the API response data
           this.formData.email = email; // Assign email from sessionStorage
-          this.formData.resident = data.data.resident;
-          console.log('sss', data.data.resident);
-          this.formData.salary = data.data.salary || ''; // Handle null or empty salary
-          this.formData.working = data.data.working || ''; // Handle null or empty salary
+         this.formData.resident = data.data.resident || '';
+this.formData.working = data.data.working || '';
+this.formData.salary = data.data.salary || '';
+this.formData.companyname = data.data.companyName || '';
+this.formData.Bank = data.data.Bank || '';
 
-          this.formData.companyname = data.data.companyName || ''; // Handle null company name
-          this.formData.Bank = data.data.Bank || ''; // Handle null bank name
 
           // Load saved form data from sessionStorage (if available)
 

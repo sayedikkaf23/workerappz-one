@@ -29,6 +29,7 @@ export class Step3 implements OnInit, OnDestroy {
   { fullName: '', nationality: '', dob: '', shareholding: 10 }
 ]
 
+
   };
 
   constructor(
@@ -136,16 +137,23 @@ onShareholdersChange(event: Event) {
   const count = +(event.target as HTMLSelectElement).value;
   this.formData.numberOfShareholders = count;
 
-  this.formData.shareholders = []; // Reset array
-  for (let i = 0; i < count; i++) {
-    this.formData.shareholders.push({
-      fullName: '',
-      nationality: '',
-      dob: '',
-      shareholding: 10,
-    });
+  // If the new count is greater than current, add blank shareholders
+  if (count > this.formData.shareholders.length) {
+    for (let i = this.formData.shareholders.length; i < count; i++) {
+      this.formData.shareholders.push({
+        fullName: '',
+        nationality: '',
+        dob: '',
+        shareholding: 10,
+      });
+    }
+  } 
+  // If the new count is smaller, trim the array
+  else if (count < this.formData.shareholders.length) {
+    this.formData.shareholders = this.formData.shareholders.slice(0, count);
   }
 }
+
 
 
   validateForm() {
