@@ -14,24 +14,24 @@ export class PersonalBank implements OnInit, OnDestroy {
   nationalities: { value: string; label: string }[] = [];
   message = '';
   loading = false;
-  formData: any = {
-    _id: '',
-    resident: '',
-    working: '',
-    salary: '',
-    companyname: '',
-    personalBank: '',
-    email: '',
-    companyName: '',
-    companyWebsite: '',
-    nationality: '',
-    countryOfIncorporation: '',
-    natureOfBusiness: '',
-    numberOfShareholders: 1,
-    shareholders: [
-      { fullName: '', nationality: '', dob: '', shareholding: 10 },
-    ],
-  };
+formData: any = {
+  _id: '',
+  resident: '',
+  working: '',
+  salary: '',
+  companyname: '',
+personalBank: '',
+  email: '',
+  companyName: '',
+  companyWebsite: '',
+  nationality: '',
+  countryOfIncorporation: '',
+  natureOfBusiness: '',
+  numberOfShareholders: 1,
+  shareholders: [
+    { fullName: '', nationality: '', dob: '', shareholding: 10 },
+  ],
+};
 
   constructor(
     private svc: OnboardingService,
@@ -56,11 +56,12 @@ export class PersonalBank implements OnInit, OnDestroy {
 
           // Populate formData with the API response data
           this.formData.email = email; // Assign email from sessionStorage
-          this.formData.resident = data.data.resident || '';
-          this.formData.working = data.data.working || '';
-          this.formData.salary = data.data.salary || '';
-          this.formData.companyname = data.data.companyName || '';
-          this.formData.Bank = data.data.Bank || '';
+         this.formData.resident = data.data.resident || '';
+this.formData.working = data.data.working || '';
+this.formData.salary = data.data.salary || '';
+this.formData.companyname = data.data.companyName || '';
+this.formData.personalBank = data.data.personalBank || ''; // ✅ Correct binding
+
 
           // Load saved form data from sessionStorage (if available)
 
@@ -138,10 +139,11 @@ export class PersonalBank implements OnInit, OnDestroy {
       return false;
     }
 
-    if (!this.formData.Bank) {
-      this.toastr.error('Bank account option is required');
-      return false;
-    }
+    if (!this.formData.personalBank) {
+  this.toastr.error('Bank account option is required');
+  return false;
+}
+
 
     return true;
   }
@@ -150,11 +152,17 @@ export class PersonalBank implements OnInit, OnDestroy {
     if (!this.validateForm()) {
       return;
     }
+    const payload = {
+  ...this.formData,
+  requirements: 'personal', // enforce correct type
+  personalBank: this.formData.personalBank,
+};
+
 
     this.loading = true;
 
     // Save form data to sessionStorage before navigation
-    sessionStorage.setItem('onboarding-step3', JSON.stringify(this.formData));
+    sessionStorage.setItem('onboarding-step3', JSON.stringify(payload));
 
     this.svc.saveOrUpdateOnboarding(this.formData).subscribe(
       (res) => {

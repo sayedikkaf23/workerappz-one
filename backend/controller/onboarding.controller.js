@@ -77,6 +77,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
       user.numberOfShareholders =
         numberOfShareholders || user.numberOfShareholders;
       user.shareholders = shareholders || user.shareholders;
+user.personalBank = req.body.personalBank || user.personalBank;
 
       user.Companylicensed = Companylicensed || user.Companylicensed;
       user.Turnover = Turnover || user.Turnover;
@@ -98,6 +99,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
         lastName,
         mobileNumber,
         nationality,
+        personalBank,
         dob: formattedDob,
         resident,
         working,
@@ -107,6 +109,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
         companyWebsite,
         countryOfIncorporation,
         natureOfBusiness,
+        
         numberOfShareholders,
         shareholders,
         Companylicensed,

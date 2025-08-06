@@ -1,22 +1,26 @@
 const mongoose = require("mongoose");
 
-const fileSchema = new mongoose.Schema({
-  name: String,
-  type: String,
-  url: String,
-}, { _id: false });
+const fileSchema = new mongoose.Schema(
+  {
+    name: String,
+    type: String,
+    url: String,
+  },
+  { _id: false }
+);
 
 const onboardingSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
- mobileNumber: {
+  mobileNumber: {
     number: String,
     internationalNumber: String,
     nationalNumber: String,
     e164Number: String,
     countryCode: String,
-    dialCode: String
-  },  email: { type: String, unique: true, required: true },
+    dialCode: String,
+  },
+  email: { type: String, unique: true, required: true },
   nationality: String,
   dob: Date,
 
@@ -33,33 +37,33 @@ const onboardingSchema = new mongoose.Schema({
   natureOfBusiness: String,
   numberOfShareholders: Number,
 
- resident: {
-  type: String,
-},
-working: {
-  type: String,
-},
-salary: {
-  type: String,
-},
+  resident: {
+    type: String,
+  },
+  working: {
+    type: String,
+  },
+  salary: {
+    type: String,
+  },
+ personalBank: { type: String },
+  Bank: {
+    type: String,
+  },
 
-Bank: {
-  type: String,
-},
+  companyactivity: {
+    type: String,
+  },
+  companylocation: {
+    type: String,
+  },
+  Turnover: {
+    type: String,
+  },
 
-companyactivity: {
-  type: String,
-},
-companylocation: {
-  type: String,
-},
-Turnover: {
-  type: String,
-},
-
-Companylicensed: {
-  type: String,
-},
+  Companylicensed: {
+    type: String,
+  },
 
   shareholders: [
     {
@@ -70,7 +74,7 @@ Companylicensed: {
     },
   ],
 
-    // File uploads
+  // File uploads
   uploadedTradeLicense: [fileSchema],
   uploadedMoaAoa: [fileSchema],
   uploadedPassport: [fileSchema],
