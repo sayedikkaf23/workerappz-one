@@ -201,20 +201,26 @@
                       </div> -->
                       <div class="col-xl-6 col-12">
 
-                        <div class="form-field">
-                          <label class="form-label">How many shareholders does your company have?<span
-                              class="required">*</span></label>
-                          <select [(ngModel)]="formData.numberOfShareholders" (change)="onShareholdersChange($event)"
-                            name="numberOfShareholders" class="form-select">
-                            <option value="" disabled>
-                              Select Number of Shareholders
-                            </option>
-                            <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">
-                              {{ num }}
-                            </option>
+                   <div class="form-field">
+  <label class="form-label">
+    How many shareholders does your company have?<span class="required">*</span>
+  </label>
+  <select
+    [(ngModel)]="formData.numberOfShareholders"
+    (change)="onShareholdersChange($event)"
+    name="numberOfShareholders"
+    class="form-select"
+  >
+    <option [ngValue]="0" disabled>
+      Select Number of Shareholders
+    </option>
+    <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">
+      {{ num }}
+    </option>
+  </select>
+</div>
 
-                          </select>
-                        </div>
+
 
 
 
@@ -228,7 +234,7 @@
                   <h3>Shareholder Details</h3>
                 </div>
                 <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
-                 <div class=" col-12">
+                  <div class=" col-12">
                     <div class="card p-3 shareholder-card">
                       <div class="form-field">
                         <label class="form-label">Full Name<span class="required">*</span></label>
@@ -253,18 +259,19 @@
                         <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}"
                           class="form-control" placeholder="Enter %" />
                       </div>
-                       <button
-                      type="button"
-                      class="btn btn-danger btn-sm mt-2"
-                      (click)="removeShareholder(i)"
-                      *ngIf="formData.shareholders.length > 0"
-                    >
-                      Remove
-                    </button>
+                     <button
+  type="button"
+  class="btn btn-danger btn-sm mt-2"
+  (click)="removeShareholder(i)"
+  *ngIf="formData.shareholders.length > 1 || i === 0"
+>
+  Remove
+</button>
+
                     </div>
-                    
+
                   </div>
-                  
+
                 </ng-container>
               </div>
 

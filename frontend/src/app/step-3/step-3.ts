@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OnboardingService } from '../services/onboarding.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-step-3',
@@ -12,10 +12,11 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 export class Step3 implements OnInit, OnDestroy {
   isDark = true;
   nationalities: { value: string; label: string }[] = [];
-  businessCategories: { value: string; label: string }[] = []; // Store business categories
+  businessCategories: { value: string; label: string }[] = [];
 
   message = '';
   loading: boolean = false;
+
   formData = {
     _id: '',
     email: '',
@@ -25,11 +26,9 @@ export class Step3 implements OnInit, OnDestroy {
     companyactivity: '',
     Turnover: '',
     Bank: '',
-   shareholders: [
-  { fullName: '', nationality: '', dob: '', shareholding: 10 }
-]
-
-
+    shareholders: [
+      { fullName: '', nationality: '', dob: '', shareholding: 10 }
+    ]
   };
 
   constructor(
@@ -39,44 +38,28 @@ export class Step3 implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const email = sessionStorage.getItem('email'); // Assuming 'userEmail' is stored in sessionStorage
+    const email = sessionStorage.getItem('email');
 
     if (email) {
-      // Fetch the onboarding details using the email
       this.svc.getOnboardingDetailsByEmail(email).subscribe(
         (data) => {
-          console.log('API Response:', data); // Log the entire response
-
           this.formData._id = data.data._id || '';
-          console.log(data._id);
+          this.formData.email = email;
+          this.formData.companylocation = data.data.companylocation || '';
+          this.formData.Companylicensed = data.data.Companylicensed || '';
+          this.formData.companyactivity = data.data.companyactivity || '';
+          this.formData.Turnover = data.data.Turnover || '';
+          this.formData.Bank = data.data.Bank || '';
 
-          // // Populate formData with the API response data
-          this.formData.email = email; // Assign email from sessionStorage
-          this.formData.companylocation = data.data.companylocation;
-          this.formData.Companylicensed = data.data.Companylicensed;
-          this.formData.companyactivity = data.data.companyactivity;
-          this.formData.Turnover = data.data.Turnover;
-          this.formData.Bank = data.data.Bank;
-          // this.formData.shareholders = data.data.shareholders || [
-          //   { fullName: '', nationality: '', dob: '', shareholding: 10 },
-          // ];
-           if (data.data.shareholders && data.data.shareholders.length > 0) {
-          this.formData.shareholders = data.data.shareholders;
-          this.formData.numberOfShareholders = data.data.shareholders.length;
-        } else {
-          this.formData.shareholders = [];
-          this.formData.numberOfShareholders = 0;
-        }
-
-          // Log the data for debugging
-          console.log('Onboarding data fetched:', data);
-          console.log('Form data after setting:', this.formData); // Check if formData is populated
+          if (data.data.shareholders && data.data.shareholders.length > 0) {
+            this.formData.shareholders = data.data.shareholders;
+            this.formData.numberOfShareholders = data.data.shareholders.length;
+          }
         },
-        () => {
-          this.message = 'Failed to load onboarding details';
-        }
+        () => (this.message = 'Failed to load onboarding details')
       );
     }
+
     this.svc.getNationalities().subscribe({
       next: (data: any) => {
         this.nationalities = data.map((item: any) => ({
@@ -86,26 +69,17 @@ export class Step3 implements OnInit, OnDestroy {
       },
       error: () => (this.message = 'Failed to load nationalities'),
     });
+
     this.svc.getBusinessCategory().subscribe({
       next: (response: any) => {
-        console.log('Business Categories API Response:', response); // Log the response for debugging
-
-        // Map the data to get business categories
         this.businessCategories = response.data.map((item: any) => ({
-          value: item.name, // Use _id as value for selection
-          label: item.name, // Use name as label for display
+          value: item.name,
+          label: item.name,
         }));
-
-        // Log the categories for debugging
-        console.log('Business Categories:', this.businessCategories);
       },
-      error: () => {
-        this.message = 'Failed to load business categories';
-      },
+      error: () => (this.message = 'Failed to load business categories'),
     });
   }
-
-  
 
   toggleDarkMode() {
     this.isDark = !this.isDark;
@@ -118,14 +92,15 @@ export class Step3 implements OnInit, OnDestroy {
       dob: '',
       shareholding: 10,
     });
+    this.formData.numberOfShareholders = this.formData.shareholders.length;
   }
 
-  removeShareholder(index: number) {
-    if (this.formData.shareholders.length > 1) {
-      this.formData.shareholders.splice(index, 1);
-      this.formData.numberOfShareholders -= 1;
-    }
-  }
+ removeShareholder(index: number) {
+  this.formData.shareholders.splice(index, 1);
+  this.formData.numberOfShareholders = this.formData.shareholders.length;
+}
+
+
   allowOnlyLetters(e: KeyboardEvent) {
     const char = String.fromCharCode(e.keyCode || e.which);
     if (!/[A-Za-z ]/.test(char)) {
@@ -133,47 +108,35 @@ export class Step3 implements OnInit, OnDestroy {
     }
   }
 
-onShareholdersChange(event: Event) {
-  const count = +(event.target as HTMLSelectElement).value;
-  this.formData.numberOfShareholders = count;
+  onShareholdersChange(event: Event) {
+    const count = +(event.target as HTMLSelectElement).value;
+    this.formData.numberOfShareholders = count;
 
-  // If the new count is greater than current, add blank shareholders
-  if (count > this.formData.shareholders.length) {
-    for (let i = this.formData.shareholders.length; i < count; i++) {
-      this.formData.shareholders.push({
-        fullName: '',
-        nationality: '',
-        dob: '',
-        shareholding: 10,
-      });
+    if (count > this.formData.shareholders.length) {
+      for (let i = this.formData.shareholders.length; i < count; i++) {
+        this.formData.shareholders.push({
+          fullName: '',
+          nationality: '',
+          dob: '',
+          shareholding: 10,
+        });
+      }
+    } else {
+      this.formData.shareholders = this.formData.shareholders.slice(0, count);
     }
-  } 
-  // If the new count is smaller, trim the array
-  else if (count < this.formData.shareholders.length) {
-    this.formData.shareholders = this.formData.shareholders.slice(0, count);
   }
-}
-
-
 
   validateForm() {
-    // Validate email, company name, etc.
+    const onlyLetters = /^[A-Za-z ]+$/;
 
-    // Validate shareholders fields
     for (let i = 0; i < this.formData.shareholders.length; i++) {
-      const onlyLetters = /^[A-Za-z ]+$/; // place near top of method
-
       const shareholder = this.formData.shareholders[i];
-      // if (!shareholder.fullName) {
-      //   this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
-      //   return false;
-      // }
+
       if (!shareholder.fullName?.trim()) {
         this.toastr.error(`Shareholder ${i + 1} Full Name is required`);
         return false;
       }
 
-      /* 2️⃣ contains digits/symbols? */
       if (!onlyLetters.test(shareholder.fullName)) {
         this.toastr.error(
           `Shareholder ${i + 1} Full Name can contain only letters`
@@ -196,52 +159,39 @@ onShareholdersChange(event: Event) {
         return false;
       }
     }
-
-    return true; // Form is valid
+    return true;
   }
 
   getMaxDobDate(): string {
     const today = new Date();
-    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18)); // Subtract 18 years
-    return minAgeDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18));
+    return minAgeDate.toISOString().split('T')[0];
   }
-  
 
   submitForm() {
-    if (!this.validateForm()) {
-      return;
-    }
+    if (!this.validateForm()) return;
 
     const cached = this.svc.getCachedData() || {};
 
-    const formattedShareholders = this.formData.shareholders.map(
-      (shareholder) => {
-        const formattedDob = new Date(shareholder.dob)
-          .toISOString()
-          .split('T')[0]; // Format the date
-        return {
-          ...shareholder,
-          dob: formattedDob, // Use the formatted date
-        };
-      }
-    );
+    const formattedShareholders = this.formData.shareholders.map((sh) => ({
+      ...sh,
+      dob: new Date(sh.dob).toISOString().split('T')[0],
+    }));
+
     const payload = {
-      // ...cached,
       ...this.formData,
       email: cached.email || this.formData.email,
       shareholders: formattedShareholders,
     };
 
     this.loading = true;
-
     this.svc.saveOrUpdateOnboarding(payload).subscribe({
       next: (res) => {
         this.svc.setCachedData(res.data);
         this.loading = false;
         this.router.navigate(['/customer/step-4']);
       },
-      error: (err) => {
-        console.error('Error saving step 3:', err);
+      error: () => {
         this.loading = false;
         this.toastr.error('An error occurred while saving the data');
       },
@@ -254,7 +204,6 @@ onShareholdersChange(event: Event) {
   }
 
   ngOnDestroy() {
-    // Cache current state for back/next navigation
     this.svc.setCachedData(this.formData);
   }
 }
