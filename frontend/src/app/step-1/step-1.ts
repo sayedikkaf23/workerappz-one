@@ -76,6 +76,25 @@ allowOnlyLetters(e: KeyboardEvent) {
   }
 }
 
+validateMobileNumberByDialCode(dialCode: string, number: string): boolean {
+  // Remove spaces
+  const cleanedNumber = number.replace(/\s/g, '');
+
+  switch (dialCode) {
+    case '+971': // UAE
+      // Must be 9 digits (UAE mobile numbers typically start with 50, 52, 54, 55, 56, 58)
+      return /^5[024568]\d{7}$/.test(cleanedNumber);
+    case '+91': // India (example)
+      return /^[6-9]\d{9}$/.test(cleanedNumber);
+    case '+966': // Saudi Arabia (example)
+      return /^5\d{8}$/.test(cleanedNumber);
+    default:
+      // For unrecognized country, allow anything (or fail)
+      return true;
+  }
+}
+
+
 submitForm() {
   const lettersOnly = /^[A-Za-z ]+$/;
 
@@ -104,6 +123,23 @@ submitForm() {
     this.toastr.error('Mobile Number is required');
     return;
   }
+   const mobile: any = this.formData.mobileNumber;
+
+  if (!mobile || !mobile.dialCode || !mobile.number) {
+    this.toastr.error('Enter a valid mobile number.', 'Validation Error');
+    return;
+  }
+
+  const isValid = this.validateMobileNumberByDialCode(mobile.dialCode, mobile.number);
+
+  if (!isValid) {
+    this.toastr.error(
+      'Enter a valid mobile number for the selected country.',
+      'Validation Error'
+    );
+    return;
+  }
+
   if (!this.formData.email) {
     this.toastr.error('Email Address is required');
     return;
@@ -119,7 +155,7 @@ submitForm() {
   const cached = this.svc.getCachedData() || {};
 
   const payload = {
-    ...cached,
+    // ...cached,
     ...this.formData,
     dob: this.formatDate(this.formData.dob),
   };

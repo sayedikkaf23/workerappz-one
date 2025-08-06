@@ -35,3 +35,20 @@
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}
 }
+
+
+
+/* Only for screens >= 992px (above 991px) */
+@media (min-width: 992px) {
+  .shareholder-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .shareholder-card .form-field {
+    flex: 1 1 22%;
+    min-width: 150px;
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit , Renderer2} from '@angular/core';
 
 declare var $: any;
 declare var bootstrap: any;
@@ -12,6 +12,7 @@ declare var bootstrap: any;
 export class KycApproved {
 
    isDark = true;
+   constructor(private renderer: Renderer2){}
 toggleDarkMode() {
   this.isDark = !this.isDark;
   const wrapper = document.querySelector('.theme-wrapper');
@@ -49,9 +50,17 @@ toggleDarkMode() {
     });
   }
 
-  toggleSidebar() {
-  document.body.classList.toggle('sidebar-collapsed');
-}
+toggleSidebar(event: Event): void {
+    event.preventDefault(); // Prevent default link behavior
+
+    const hasClass = document.body.classList.contains('sidebar-collapsed');
+
+    if (hasClass) {
+      this.renderer.removeClass(document.body, 'sidebar-collapsed');
+    } else {
+      this.renderer.addClass(document.body, 'sidebar-collapsed');
+    }
+  }
 
 
   formatState(opt: any) {

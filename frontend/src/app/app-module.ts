@@ -51,6 +51,7 @@ import { Topup } from './topup/topup';
 import { Dashboards } from './dashboards/dashboards';
 import { PieChart } from './pie-chart/pie-chart';
 import { Loader } from './loader/loader';
+// import { Sidebar } from './sidebar/sidebar';
 import { AdminLogin } from './admin-login/admin-login';
 import { PersonalBank } from './personal-bank/personal-bank';
 import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
@@ -101,6 +102,7 @@ import { PersonalReviewOrder } from './personal-review-order/personal-review-ord
     Dashboards,
     PieChart,
     Loader,
+    //  Sidebar,
     AdminLogin,
     PersonalBank,
     PersonalReviewOrder,

@@ -1,8 +1,10 @@
 // step-2.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { OnboardingService } from '../services/onboarding.service';
 
+
+import { Router }               from '@angular/router';
+import { OnboardingService }    from '../services/onboarding.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-step-2',
   standalone: false,
@@ -16,13 +18,25 @@ export class Step2 implements OnInit {
   loading = false;
   isDark = true;
 
-  constructor(private svc: OnboardingService, private router: Router) {}
+  constructor(private svc: OnboardingService, private router: Router,    private toastr: ToastrService
+) {}
 
   ngOnInit() {
     // pull from cache if it exists
     this.cache = this.svc.getCachedData() || {};
-    if (this.cache.requirements) {
-      this.selectedRequirement = this.cache.requirements;
+    if (this.cache.email) {
+      this.svc.getOnboardingDetailsByEmail(this.cache.email).subscribe(
+      (response) => {
+        if (response.success) {
+          const data = response.data;
+          this.selectedRequirement = data.requirements;
+        }
+      },
+      (error) => {
+        console.error('Error fetching onboarding details:', error);
+        this.toastr.error(error.message || 'Failed to fetch onboarding details');
+      }
+    );
     }
   }
 
