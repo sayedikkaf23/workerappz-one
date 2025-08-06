@@ -195,9 +195,10 @@
                           </select>
                         </div>
                       </div> -->
-                      <div class="col-xl-6 col-12">
+                       <div class="col-xl-6 col-12">
+
                         <div class="form-field">
-                          <label class="form-label">How many shareholders does your company have?</label>
+                          <label class="form-label">How many shareholders does your company have?<span class="required">*</span></label>
                           <select [(ngModel)]="formData.numberOfShareholders" (change)="onShareholdersChange($event)"
                             name="numberOfShareholders" class="form-select">
                             <option value="" disabled>
@@ -209,52 +210,45 @@
 
                           </select>
                         </div>
+
+
+
                       </div>
                     </div>
                   </form>
                 </div>
               </div>
-              <div class="row g-xl-4 g-lg-3 gy-4">
-                <div class="col-12">
-                  <h3>Shareholder Details</h3>
-                </div>
-                <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
-                  <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                    <div class="card h-100">
-                      <div class="form-field">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" [(ngModel)]="shareholder.fullName" name="fullName{{ i }}"
-                          class="form-control" placeholder="Enter full name" pattern="[A-Za-z ]+" />
-                      </div>
-                      <div class="form-field">
-                        <label class="form-label">Nationality</label>
-                        <select class="form-select" [(ngModel)]="shareholder.nationality" name="nationality{{ i }}">
-                          <option value="" disabled>Select Nationality</option>
-                          <option *ngFor="let country of nationalities" [value]="country.value">
-                            {{ country.label }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="form-field">
-                        <label class="form-label">Date of Birth</label>
-                        <input type="date" id="dob-{{ i }}" [(ngModel)]="shareholder.dob" name="dob{{ i }}"
-                          [max]="getMaxDobDate()" (focus)="openDatePicker(i)" class="form-control" />
-                      </div>
-                      <div class="form-field">
-                        <label class="form-label">% Shareholding</label>
-                        <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}"
-                          class="form-control" placeholder="Enter %" />
-                      </div>
-                      <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeShareholder(i)"
-                        *ngIf="formData.shareholders.length > 1">
-                        Remove
-                      </button>
-                      <hr *ngIf="i !== formData.shareholders.length - 1" />
-                    </div>
-                    <!-- <button type="button" class="btn btn-secondary mt-2" (click)="addShareholder()">Add Shareholder</button> -->
-                  </div>
-                </ng-container>
-              </div>
+              <div class="row g-xl-4 g-lg-3 gy-4" *ngIf="formData.numberOfShareholders > 0">
+  <div class="col-12">
+    <h3>Shareholder Details</h3>
+  </div>
+  <ng-container *ngFor="let shareholder of formData.shareholders; let i = index">
+    <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+      <div class="card h-100">
+        <div class="form-field">
+          <label class="form-label">Full Name</label>
+          <input type="text" [(ngModel)]="shareholder.fullName" name="fullName{{ i }}" class="form-control" placeholder="Enter full name" pattern="[A-Za-z ]+" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Nationality</label>
+          <select class="form-select" [(ngModel)]="shareholder.nationality" name="nationality{{ i }}">
+            <option value="" disabled>Select Nationality</option>
+            <option *ngFor="let country of nationalities" [value]="country.value">{{ country.label }}</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" id="dob-{{ i }}" [(ngModel)]="shareholder.dob" name="dob{{ i }}" [max]="getMaxDobDate()" (focus)="openDatePicker(i)" class="form-control" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">% Shareholding</label>
+          <input type="number" [(ngModel)]="shareholder.shareholding" name="shareholding{{ i }}" class="form-control" placeholder="Enter %" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
             </div>
           </div>
         </div>

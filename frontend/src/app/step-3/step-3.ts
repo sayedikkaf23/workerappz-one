@@ -20,14 +20,15 @@ export class Step3 implements OnInit, OnDestroy {
     _id: '',
     email: '',
     companylocation: '',
-    numberOfShareholders: 1,
+    numberOfShareholders: 0,
     Companylicensed: '',
     companyactivity: '',
     Turnover: '',
     Bank: '',
-    shareholders: [
-      { fullName: '', nationality: '', dob: '', shareholding: 10 },
-    ],
+   shareholders: [
+  { fullName: '', nationality: '', dob: '', shareholding: 10 }
+]
+
   };
 
   constructor(
@@ -55,9 +56,16 @@ export class Step3 implements OnInit, OnDestroy {
           this.formData.companyactivity = data.data.companyactivity;
           this.formData.Turnover = data.data.Turnover;
           this.formData.Bank = data.data.Bank;
-          this.formData.shareholders = data.data.shareholders || [
-            { fullName: '', nationality: '', dob: '', shareholding: 10 },
-          ];
+          // this.formData.shareholders = data.data.shareholders || [
+          //   { fullName: '', nationality: '', dob: '', shareholding: 10 },
+          // ];
+           if (data.data.shareholders && data.data.shareholders.length > 0) {
+          this.formData.shareholders = data.data.shareholders;
+          this.formData.numberOfShareholders = data.data.shareholders.length;
+        } else {
+          this.formData.shareholders = [];
+          this.formData.numberOfShareholders = 0;
+        }
 
           // Log the data for debugging
           console.log('Onboarding data fetched:', data);
@@ -122,24 +130,21 @@ export class Step3 implements OnInit, OnDestroy {
     }
   }
 
-  onShareholdersChange(event: Event) {
-    const count = +(event.target as HTMLSelectElement).value;
-    this.formData.numberOfShareholders = count;
-    const currentLength = this.formData.shareholders.length;
+onShareholdersChange(event: Event) {
+  const count = +(event.target as HTMLSelectElement).value;
+  this.formData.numberOfShareholders = count;
 
-    if (count > currentLength) {
-      for (let i = currentLength; i < count; i++) {
-        this.formData.shareholders.push({
-          fullName: '',
-          nationality: '',
-          dob: '',
-          shareholding: 10,
-        });
-      }
-    } else if (count < currentLength) {
-      this.formData.shareholders.splice(count);
-    }
+  this.formData.shareholders = []; // Reset array
+  for (let i = 0; i < count; i++) {
+    this.formData.shareholders.push({
+      fullName: '',
+      nationality: '',
+      dob: '',
+      shareholding: 10,
+    });
   }
+}
+
 
   validateForm() {
     // Validate email, company name, etc.
@@ -190,6 +195,7 @@ export class Step3 implements OnInit, OnDestroy {
     const minAgeDate = new Date(today.setFullYear(today.getFullYear() - 18)); // Subtract 18 years
     return minAgeDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   }
+  
 
   submitForm() {
     if (!this.validateForm()) {
