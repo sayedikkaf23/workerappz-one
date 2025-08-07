@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 export class PrefundTransfer implements OnInit {
   searchTerm: string = '';
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;

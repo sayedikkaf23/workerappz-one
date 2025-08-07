@@ -67,7 +67,7 @@ export class Userrole implements OnInit {
   }
  
   goBack() {
-    this.router.navigate(['/user']);
+    this.router.navigate(['/admin/users']);
   }
  
   fetchRoles() {

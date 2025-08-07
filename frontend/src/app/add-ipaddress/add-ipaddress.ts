@@ -43,7 +43,7 @@ isLoading: boolean = false;
   }
   
   navigateToRoles() {
-    this.router.navigate(['/getip']);
+    this.router.navigate(['/admin/ip-address/list']);
   }
   // fetchPanterCodes() {
   //   this.adminService.getPanterCode().subscribe({

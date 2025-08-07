@@ -46,7 +46,7 @@ export class Roles {
   }
 
   goBack() {
-    this.router.navigate(['/usersrole']); // Change to the correct route
+    this.router.navigate(['/admin/roles/assign']); // Change to the correct route
   }
 
   onSubmit() {
@@ -59,27 +59,27 @@ export class Roles {
     // Start loader
     this.isLoading = true;
 
-    this.adminService.createRole(payload).subscribe(
-      (response) => {
-        const successMessage = `Role "${response.role_name}" created successfully!`;
-        this.toastr.success(response.message, 'Success');
-        this.roleName = '';
-        this.selectedPermissions = [];
-        this.status = false;
-        // Stop loader
-        this.isLoading = false;
-        this.router.navigate(['/usersrole']);
-      },
-      (error) => {
-        const errorMessage =
-          error?.error?.message ||
-          'An unexpected error occurred. Please try again.';
-        this.toastr.error(errorMessage, 'Error');
-        console.error('Error creating role:', error);
-        // Stop loader
-        this.isLoading = false;
-      }
-    );
+    // this.adminService.createRole(payload).subscribe(
+    //   (response) => {
+    //     const successMessage = `Role "${response.role_name}" created successfully!`;
+    //     this.toastr.success(response.message, 'Success');
+    //     this.roleName = '';
+    //     this.selectedPermissions = [];
+    //     this.status = false;
+    //     // Stop loader
+    //     this.isLoading = false;
+    //     this.router.navigate(['/usersrole']);
+    //   },
+    //   (error) => {
+    //     const errorMessage =
+    //       error?.error?.message ||
+    //       'An unexpected error occurred. Please try again.';
+    //     this.toastr.error(errorMessage, 'Error');
+    //     console.error('Error creating role:', error);
+    //     // Stop loader
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 
 }

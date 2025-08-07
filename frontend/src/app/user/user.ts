@@ -84,7 +84,7 @@ export class User implements OnInit {
 
   editUser(role: any) {
     console.log('Edit user:', role);
-    this.router.navigate(['/useredit'], { state: { userData: role } });
+    this.router.navigate(['/admin/users/edit'], { state: { userData: role } });
   }
   editRole(role: any) {
     this.router.navigate(['/edituser'], { state: { roleData: role } });
