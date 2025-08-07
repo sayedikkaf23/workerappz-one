@@ -33,6 +33,28 @@ export class Step1 implements OnInit {
   ) {}
 
   ngOnInit() {
+    
+     const email = sessionStorage.getItem('email');
+
+    if (email) {
+      this.svc.getOnboardingDetailsByEmail(email).subscribe(
+        (data) => {
+          // this.formData._id = data.data._id || '';
+          // this.formData.email = email;
+          // this.formData.companylocation = data.data.companylocation || '';
+          // this.formData.Companylicensed = data.data.Companylicensed || '';
+          // this.formData.companyactivity = data.data.companyactivity || '';
+          // this.formData.Turnover = data.data.Turnover || '';
+          // this.formData.Bank = data.data.Bank || '';
+
+          // if (data.data.shareholders && data.data.shareholders.length > 0) {
+          //   this.formData.shareholders = data.data.shareholders;
+          //   this.formData.numberOfShareholders = data.data.shareholders.length;
+          // }
+        },
+        () => (this.message = 'Failed to load onboarding details')
+      );
+    }
 
     const saved = this.svc.getCachedData();
     if (saved) {

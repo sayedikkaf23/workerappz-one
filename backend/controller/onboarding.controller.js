@@ -1,7 +1,7 @@
 const Onboarding = require("../models/onboarding.model");
 const transporter = require("../_config/email");
 const logOnboardingDb = require("../utils/onboardingLogger");
-const BusinessCategory = require('../models/BusinessCategory'); // adjust path if needed
+const BusinessCategory = require("../models/BusinessCategory"); // adjust path if needed
 
 exports.saveOrUpdateOnboardingDetails = async (req, res) => {
   const {
@@ -15,6 +15,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     working,
     salary,
     Bank,
+    personalBank,
     Companylicensed,
     Turnover,
     companylocation,
@@ -25,6 +26,7 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
     natureOfBusiness,
     numberOfShareholders,
     shareholders,
+    selectedService,
   } = req.body;
 
   try {
@@ -77,12 +79,13 @@ exports.saveOrUpdateOnboardingDetails = async (req, res) => {
       user.numberOfShareholders =
         numberOfShareholders || user.numberOfShareholders;
       user.shareholders = shareholders || user.shareholders;
-user.personalBank = req.body.personalBank || user.personalBank;
+      user.personalBank = req.body.personalBank || user.personalBank;
 
       user.Companylicensed = Companylicensed || user.Companylicensed;
       user.Turnover = Turnover || user.Turnover;
       user.companylocation = companylocation || user.companylocation;
       user.companyactivity = companyactivity || user.companyactivity;
+      user.requirements = selectedService || user.requirements;
 
       user.updatedAt = Date.now();
       if (working == "Self Employed") {
@@ -109,7 +112,7 @@ user.personalBank = req.body.personalBank || user.personalBank;
         companyWebsite,
         countryOfIncorporation,
         natureOfBusiness,
-        
+        requirements: selectedService,
         numberOfShareholders,
         shareholders,
         Companylicensed,
@@ -286,20 +289,18 @@ exports.addOrUpdateUploadedFiles = async (req, res) => {
 
     return res.status(500).json({ success: false, error: err.message });
   }
-
-  
 };
 
- exports.getAllBusinessCategories = async (req, res) => {
-    try {
-      const categories = await BusinessCategory.find({  }); 
-  
-      res.status(200).json({
-        message: `${categories.length} active categories found`,
-        data: categories
-      });
-    } catch (err) {
-      console.error('Error fetching categories:', err);
-      res.status(500).json({ message: 'Server error while fetching categories' });
-    }
-  };
+exports.getAllBusinessCategories = async (req, res) => {
+  try {
+    const categories = await BusinessCategory.find({});
+
+    res.status(200).json({
+      message: `${categories.length} active categories found`,
+      data: categories,
+    });
+  } catch (err) {
+    console.error("Error fetching categories:", err);
+    res.status(500).json({ message: "Server error while fetching categories" });
+  }
+};

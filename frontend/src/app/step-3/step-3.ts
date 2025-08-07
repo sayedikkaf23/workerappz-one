@@ -18,6 +18,7 @@ export class Step3 implements OnInit, OnDestroy {
   loading: boolean = false;
 
   formData = {
+    selectedService: 'business',
     _id: '',
     email: '',
     companylocation: '',
