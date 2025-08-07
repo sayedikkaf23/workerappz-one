@@ -79,7 +79,7 @@ const routes: Routes = [
   { path: 'admincategory', component: Admincategory },
   { path: 'adminwallet', component: Adminwallet },
   { path: 'admincard', component: Admincard },
-  { path: 'adminhome', component: Dashboards },
+  { path: 'admin/adminhome', component: Dashboards },
   { path: 'transferhistory', component: Transferhistory },
   { path: 'viewrole', component: ViewRole },
   { path: 'edituser', component: Edituser },
