@@ -15,7 +15,7 @@ import { Auth } from '../services/auth';
 export class CardActions implements OnInit {
   cards = [];
   filteredCards = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;

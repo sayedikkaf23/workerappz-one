@@ -17,7 +17,7 @@ export class BusinessUser implements OnInit {
   partnerCode: string = '';
   cards: any[] = [];
   filteredCards: any[] = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 6;
   totalPages: number = 1;
