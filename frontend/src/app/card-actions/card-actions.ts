@@ -41,7 +41,7 @@ export class CardActions implements OnInit {
     if (adminRole === 'administrator') {
       this.partnerCode = 'superadmin';
     }
-    this.fetchCards();
+    // this.fetchCards();
     // this.simulateLoading();
     // this.fetchPanterCodes();
   }

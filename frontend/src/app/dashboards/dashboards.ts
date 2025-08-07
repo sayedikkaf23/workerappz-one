@@ -13,7 +13,7 @@ export class Dashboards implements OnInit {
   vr_card_total: number = 0; // Default value
   purchase_bal: number = 0; // Default value
   py_card_total: number = 0; // Default v
-  loading: boolean = true;
+  loading: boolean = false;
   totalIndividualUsers: number = 0;
   totalBusinessUsers: number = 0;
   totalCards: number = 567; // Placeholder value
@@ -44,21 +44,21 @@ export class Dashboards implements OnInit {
     this.partnercode = localStorage.getItem('partnerCode');
     // this.adminId = localStorage.getItem('AdminID');
 
-    if (adminRole === 'Master') {
-      // Call another API if role is Master
-      this.fetchUserCountsPartnercode(this.partnercode);
-      this.fetchAdditionalMasterData(this.partnercode); // This is the additional method to call for Master role
-    } else if (adminRole === 'administrator') {
-      this.partnercode = 'superadmin';
-      this.fetchUserCountsPartnercode(this.partnercode);
-      this.fetchAdditionalMasterData(this.partnercode);
-    } else {
-      // Call these methods for roles other than Master
-      this.fetchCreditPrefundData();
-      this.fetchDebitPrefundData();
-      this.fetchUserCounts(this.partnercode);
-    }
-    this.loadPermissions(); // Call the function to load permissions on initialization
+    // if (adminRole === 'Master') {
+    //   // Call another API if role is Master
+    //   this.fetchUserCountsPartnercode(this.partnercode);
+    //   this.fetchAdditionalMasterData(this.partnercode); // This is the additional method to call for Master role
+    // } else if (adminRole === 'administrator') {
+    //   this.partnercode = 'superadmin';
+    //   this.fetchUserCountsPartnercode(this.partnercode);
+    //   this.fetchAdditionalMasterData(this.partnercode);
+    // } else {
+    //   // Call these methods for roles other than Master
+    //   this.fetchCreditPrefundData();
+    //   this.fetchDebitPrefundData();
+    //   this.fetchUserCounts(this.partnercode);
+    // }
+    // this.loadPermissions(); // Call the function to load permissions on initialization
   }
 
   fetchUserCounts(partnercode: any): void {

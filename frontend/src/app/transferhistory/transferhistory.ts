@@ -33,11 +33,11 @@ export class Transferhistory {
     const adminRole = localStorage.getItem('AdminRole');
     const partnerCode = localStorage.getItem('partnerCode');
 
-    if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
-      this.fetchTransactionHistory();
-    } else {
-      this.fetchTransactionHistoryByPartnerCode(partnerCode);
-    }
+    // if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
+    //   this.fetchTransactionHistory();
+    // } else {
+    //   this.fetchTransactionHistoryByPartnerCode(partnerCode);
+    // }
   }
 
   fetchTransactionHistory(): void {

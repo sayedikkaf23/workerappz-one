@@ -20,7 +20,7 @@ export class User implements OnInit {
   constructor(private router: Router, private adminService: Admin) {}
 
   ngOnInit(): void {
-    this.fetchAllClients();
+    // this.fetchAllClients();
   }
 
   // Method to fetch clients

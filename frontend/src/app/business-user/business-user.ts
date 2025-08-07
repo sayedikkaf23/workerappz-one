@@ -44,8 +44,8 @@ export class BusinessUser implements OnInit {
       
     }
 
-    this.simulateLoading();
-    this.fetchCards();
+    // this.simulateLoading();
+    // this.fetchCards();
 
   }
 

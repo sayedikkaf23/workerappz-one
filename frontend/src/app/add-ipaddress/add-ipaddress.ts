@@ -23,7 +23,7 @@ isLoading: boolean = false;
 ) {}
 
   ngOnInit(): void {
-    this.loadIpAddresses();
+    // this.loadIpAddresses();
   }
 
   loadIpAddresses(): void {

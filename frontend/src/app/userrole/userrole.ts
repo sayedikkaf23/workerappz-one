@@ -58,10 +58,10 @@ export class Userrole implements OnInit {
   ) {}
  
   ngOnInit() {
-    this.fetchRoles();
-    this.fetchPanterCodes();
-    // this.fetchMobileCountryCodes();
-    this. getAllowedgetAllowedNationalities();
+    // this.fetchRoles();
+    // this.fetchPanterCodes();
+    // // this.fetchMobileCountryCodes();
+    // this. getAllowedgetAllowedNationalities();
  
    
   }
@@ -175,21 +175,21 @@ parseRange(range: string): [number, number|null] {
     };
     this.isLoading = true; // Start loader
  
-    this.adminService.registerAdmin(adminData).subscribe({
-      next: (response) => {
-        this.toastr.success(response.message);
-        this.isLoading = false; // Stop loader
+    // this.adminService.registerAdmin(adminData).subscribe({
+    //   next: (response) => {
+    //     this.toastr.success(response.message);
+    //     this.isLoading = false; // Stop loader
  
-        this.router.navigate(['/user']);
-      },
-      error: (err) => {
-        console.error('Failed to register admin:', err);
-        const errorMsg = err.error?.message || 'An unknown error occurred';
-        this.toastr.error(errorMsg);
-        this.isLoading = false; // Stop loader
+    //     this.router.navigate(['/user']);
+    //   },
+    //   error: (err) => {
+    //     console.error('Failed to register admin:', err);
+    //     const errorMsg = err.error?.message || 'An unknown error occurred';
+    //     this.toastr.error(errorMsg);
+    //     this.isLoading = false; // Stop loader
  
-      }
-    });
+    //   }
+    // });
   }
   // parseRange(selectedRange: string): [any, any] {
   //   throw new Error('Method not implemented.');

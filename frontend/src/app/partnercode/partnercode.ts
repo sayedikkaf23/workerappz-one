@@ -22,7 +22,7 @@ export class Partnercode implements OnInit {
   ngOnInit(): void {
 
     
-    this.fetchPanterCodes(); // Fetch the Panter codes on initialization
+    // this.fetchPanterCodes(); // Fetch the Panter codes on initialization
   }
 
   // Method to fetch Panter codes

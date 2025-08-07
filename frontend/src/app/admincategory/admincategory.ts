@@ -23,7 +23,7 @@ export class Admincategory {
   constructor(private adminService: Admin) {}
 
   ngOnInit(): void {
-    this.loadCategories();
+    // this.loadCategories();
   }
 
   handleCategoryAdded(category: { name: string, amount: number }) {

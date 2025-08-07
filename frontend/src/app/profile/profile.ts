@@ -18,25 +18,25 @@ export class Profile implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.adminService.getActiveBusinessUsers().subscribe(
-      (response) => {
-        if (response && response.users && response.users.length > 0) {
-          const user = response.users[0]; // Extract the first user from the response
-          this.data = {
-            name: `${user.name.first} ${user.name.last}`,
-            email: user.email,
-            nationality: user.nationality,
-            phone: `${user.mobile.country_code}-${user.mobile.number}`,
-            address: user.address || 'Not provided', // Default value if address is null
-          };
-        } else {
-          console.warn('No active business users found.');
-        }
-      },
-      (error) => {
-        console.error('Error fetching active business users:', error);
-      }
-    );
+    // this.adminService.getActiveBusinessUsers().subscribe(
+    //   (response) => {
+    //     if (response && response.users && response.users.length > 0) {
+    //       const user = response.users[0]; // Extract the first user from the response
+    //       this.data = {
+    //         name: `${user.name.first} ${user.name.last}`,
+    //         email: user.email,
+    //         nationality: user.nationality,
+    //         phone: `${user.mobile.country_code}-${user.mobile.number}`,
+    //         address: user.address || 'Not provided', // Default value if address is null
+    //       };
+    //     } else {
+    //       console.warn('No active business users found.');
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching active business users:', error);
+    //   }
+    // );
   }
   
   saveChanges(): void {
