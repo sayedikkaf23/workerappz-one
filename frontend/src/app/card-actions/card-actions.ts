@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AdminService } from '../services/admin.service';
 import { Admin } from '../services/admin';
 // import { ViewUserModalComponent } from '../view-user-modal/view-user-modal.component';
 import { ToastrService } from 'ngx-toastr';
@@ -23,8 +24,10 @@ export class CardActions implements OnInit {
   partnerCode: string = ''; // Search term property
   fromDate: string = '';
   toDate: string = '';
+  users: any;
   constructor(
     private adminService: Admin,
+    private admin: AdminService,
     private dialog: MatDialog,
     private authService: Auth,
     private toastr: ToastrService
@@ -41,6 +44,17 @@ export class CardActions implements OnInit {
     if (adminRole === 'administrator') {
       this.partnerCode = 'superadmin';
     }
+
+     this.admin.getAllIndividualUsers().subscribe({
+      next: (res) => {
+        // If backend returns {count, data}
+        this.users = res.data || res;
+        console.log("RES: ",this.users);
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      }
+    });
     // this.fetchCards();
     // this.simulateLoading();
     // this.fetchPanterCodes();

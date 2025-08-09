@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Admin } from '../services/admin';
+import { AdminService } from '../services/admin.service';
 import { ViewBusinessUserModal } from '../view-business-user-modal/view-business-user-modal';
 import { ToastrService } from 'ngx-toastr';
 import { Auth } from '../services/auth';
@@ -21,9 +22,10 @@ export class BusinessUser implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 6;
   totalPages: number = 1;
-
+users: any;
   constructor(
     private adminService: Admin,
+    private admin: AdminService,
     private dialog: MatDialog,
     private authService: Auth,
     private toastr: ToastrService
@@ -43,7 +45,16 @@ export class BusinessUser implements OnInit {
    this.partnerCode = "superadmin"
       
     }
-
+  this.admin.getAllIndividualUsers().subscribe({
+      next: (res) => {
+        // If backend returns {count, data}
+        this.users = res.data || res;
+        console.log("RES: ",this.users);
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      }
+    });
     // this.simulateLoading();
     // this.fetchCards();
 

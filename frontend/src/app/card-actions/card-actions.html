@@ -66,14 +66,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let card of paginatedCards; let i = index">
+          <tr *ngFor="let user of users; let i = index">
             <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-            <td>dfghj</td>
+            <td>{{user.firstName}}</td>
             <!-- <td>{{ card.middleName }}</td> -->
-            <td>sdfgh</td>
-            <td>dfgh</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.email}}</td>
 
-            <td>34567</td>
+            <td>{{user.mobileNumber.number}}</td>
             <!-- <td>{{ card.cardNumber }}</td> -->
             <!-- <td>{{ card.proxyNumber }}</td> -->
             <!-- <td>{{ card.dateIssued | date:'yyyy-MM-dd' }}</td> -->
@@ -108,7 +108,7 @@
             <td>
 
               <div class="action-buttons">
-                <button class="action-button primary-button" (click)="openViewModal(card)">View Details</button>
+                <button class="action-button primary-button" (click)="openViewModal(user)">View Details</button>
               </div>
 
               <!-- <button class="action-button danger-button" (click)="deleteUser(card)">

@@ -34,4 +34,16 @@ export class AdminService {
   enableMFA(): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/mfa/enable`, {});
   }
+
+
+   getAllIndividualUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/getAllIndividualUsers`);
+    // API endpoint should match your Express route
+  }
+
+    
+  getAllBusinessUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/getAllBusinessUsers`);
+    // API endpoint should match your Express route
+  }
 }

@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
 const Admin = require("../models/admin");
+const onBoardings = require("../models/onboarding.model");
 const e = require("express");
-
+const logOnboardingDb = require("../utils/onboardingLogger");
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 // REGISTER
@@ -80,4 +81,49 @@ exports.verifyMFA = async (req, res) => {
   await admin.save();
 
   res.json({ message: "MFA verified successfully" });
+};
+exports.getAllIndividualUsers = async (req, res) => {
+  try {
+    // Base condition
+    const query = { requirements: "personal" };
+
+    // Fetch data
+    const users = await onBoardings.find(query).lean(); // lean() for faster response
+
+    // Handle no data case
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No personal onboarding data found" });
+    }
+
+    res.status(200).json({
+      count: users.length,
+      data: users
+    });
+  } catch (error) {
+    console.error("getAllIndividualUsers error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.getAllBusinessUsers = async (req, res) => {
+  try {
+    // Base condition
+    const query = { requirements: "business" };
+
+    // Fetch data
+    const users = await onBoardings.find(query).lean(); // lean() for faster response
+
+    // Handle no data case
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No business onboarding data found" });
+    }
+
+    res.status(200).json({
+      count: users.length,
+      data: users
+    });
+  } catch (error) {
+    console.error("getAllBusinessUsers error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
