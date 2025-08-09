@@ -5,7 +5,7 @@ import { Admin } from '../services/admin';
 // import { ViewUserModalComponent } from '../view-user-modal/view-user-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { Auth } from '../services/auth';
-// import * as XLSX from 'xlsx'; // Import XLSX for Excel export
+import * as XLSX from 'xlsx'; // Import XLSX for Excel export
 
 @Component({
   selector: 'app-card-actions',
@@ -14,8 +14,8 @@ import { Auth } from '../services/auth';
   styleUrl: './card-actions.css'
 })
 export class CardActions implements OnInit {
-  cards = [];
-  filteredCards = [];
+  cards:any[] = [];
+  filteredCards:any[] = [];
   isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -24,7 +24,7 @@ export class CardActions implements OnInit {
   partnerCode: string = ''; // Search term property
   fromDate: string = '';
   toDate: string = '';
-  users: any;
+  users = [];
   constructor(
     private adminService: Admin,
     private admin: AdminService,
@@ -50,6 +50,10 @@ export class CardActions implements OnInit {
         // If backend returns {count, data}
         this.users = res.data || res;
         console.log("RES: ",this.users);
+          this.filteredCards = [...this.users];
+        this.totalPages = Math.ceil(
+          this.filteredCards.length / this.itemsPerPage
+        );
       },
       error: (err) => {
         console.error('Error fetching users:', err);
@@ -90,32 +94,32 @@ export class CardActions implements OnInit {
 
 exportToExcel(): void {
   const data = this.filteredCards.map((card, index) => ({
-    // No: index + 1,
-    // FirstName: card.firstname,
-    // LastName: card.lastname,
-    // Email: card.email,
-    // Mobile: card.mobileNumber.internationalNumber,
+    No: index + 1,
+    FirstName: card.firstName,
+    LastName: card.lastName,
+    Email: card.email,
+    Mobile: card.mobileNumber.internationalNumber,
     // Pre_KYC: card.isApprove ? 'Approved' : 'Rejected',
     // Post_KYC: card.postKyc,
     // Subprogram: card.companyname || 'NA',
     // RegistrationDate: card.createdAt ? new Date(card.createdAt).toLocaleDateString() : 'NA', // Registration Date
   }));
 
-  // const ws = XLSX.utils.json_to_sheet(data);
-  // const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
 
   // Set column widths for the new fields
-  // ws['!cols'] = [
-  //   { wch: 5 }, // No.
-  //   { wch: 20 }, // FirstName
-  //   { wch: 20 }, // LastName
-  //   { wch: 30 }, // Email
-  //   { wch: 20 }, // Mobile
-  //   { wch: 12 }, // Pre_KYC
-  //   { wch: 12 }, // Post_KYC
-  //   { wch: 25 }, // PartnerName
-  //   { wch: 15 }, // RegistrationDate
-  // ];
+  ws['!cols'] = [
+    { wch: 5 }, // No.
+    { wch: 20 }, // FirstName
+    { wch: 20 }, // LastName
+    { wch: 30 }, // Email
+    { wch: 20 }, // Mobile
+    { wch: 12 }, // Pre_KYC
+    { wch: 12 }, // Post_KYC
+    { wch: 25 }, // PartnerName
+    { wch: 15 }, // RegistrationDate
+  ];
 
   // Optional: Apply some formatting to the "FirstName" column
   // data.forEach((_, i) => {
@@ -126,8 +130,8 @@ exportToExcel(): void {
   //     };
   // });
 
-  // XLSX.utils.book_append_sheet(wb, ws, 'Individual_User');
-  // XLSX.writeFile(wb, 'Individual_User.xlsx');
+  XLSX.utils.book_append_sheet(wb, ws, 'Individual_User');
+  XLSX.writeFile(wb, 'Individual_User.xlsx');
 }
 
 
@@ -207,25 +211,25 @@ exportToExcel(): void {
   onSearch() {
     this.searchTerm = this.searchTerm.trim();
     if (this.searchTerm) {
-      // this.filteredCards = this.cards.filter(
-      //   (card) =>
-      //     // card.firstname
-      //     //   .toLowerCase()
-      //     //   .includes(this.searchTerm.toLowerCase()) ||
-      //     // card.lastname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      //     // card.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      //     // card.mobileNumber.internationalNumber.includes(this.searchTerm) ||
-      //     // String(card.isApprove).toLowerCase().includes(this.searchTerm) || // Convert boolean to string
-      //     // String(card.postKyc).toLowerCase().includes(this.searchTerm) ||
-      //     // String(card.partnercode)
-      //     //   .toLowerCase()
-      //     //   .includes(this.searchTerm.toLowerCase()) ||
-      //     // this.getCompanyName(card.partnercode)
-      //     //   .toLowerCase()
-      //     //   .includes(this.searchTerm.toLowerCase()) // Search by company name
-      // );
+      this.filteredCards = this.users.filter(
+        (card:any) =>
+          card.firstName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          card.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          card.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          card.mobileNumber.internationalNumber.includes(this.searchTerm) 
+          // String(card.isApprove).toLowerCase().includes(this.searchTerm) || // Convert boolean to string
+          // String(card.postKyc).toLowerCase().includes(this.searchTerm) ||
+          // String(card.partnercode)
+          //   .toLowerCase()
+          //   .includes(this.searchTerm.toLowerCase()) ||
+          // this.getCompanyName(card.partnercode)
+          //   .toLowerCase()
+          //   .includes(this.searchTerm.toLowerCase()) // Search by company name
+      );
     } else {
-      this.filteredCards = this.cards;
+      this.filteredCards = this.users;
     }
     this.totalPages = Math.ceil(this.filteredCards.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to the first page after search

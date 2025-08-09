@@ -11,5 +11,5 @@ router.post("/login", admin.login);       // Admin login
 router.post("/mfa/enable", admin.enableMFA); // Generate QR & enable MFA
 router.post("/mfa/verify", admin.verifyMFA); // Verify MFA token
 router.get("/getAllIndividualUsers", admin.getAllIndividualUsers);
-router.get("/getAllBusinessUsers", admin.getAllIndividualUsers);
+router.get("/getAllBusinessUsers", admin.getAllBusinessUsers);
 module.exports = router;

@@ -45,14 +45,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of users; let i = index">
+                    <tr *ngFor="let user of paginatedCards; let i = index">
                         <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                         <td>{{ user.firstName }}{{ user.flastName }}</td> <!-- Displaying the user's full name -->
                         <td>{{ user.email }}</td>
                         <td>{{ user.mobileNumber.internationalNumber }}</td>
                         <td>{{ user.isApprove ? 'Approved' : 'Pending' }}</td>
-                        <td>{{ user.createdAt | date:'yyyy-MM-dd' }}</td>  <!-- ← new -->
-  <td>{{ user.createdAt | date:'HH:mm:ss' }}</td>    <!-- ← new -->
+                        <td>{{ (user.createdAt | date:'yyyy-MM-dd')  || 'NA'}}</td>  <!-- ← new -->
+  <td>{{ (user.createdAt | date:'HH:mm:ss')  || 'NA'}}</td>    <!-- ← new -->
                         <td>
                             <div class="action-buttons">
                                 <!-- Show Reject button if card status is true -->

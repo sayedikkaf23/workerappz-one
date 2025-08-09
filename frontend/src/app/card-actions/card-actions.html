@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users; let i = index">
+          <tr *ngFor="let user of paginatedCards; let i = index">
             <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
             <td>{{user.firstName}}</td>
             <!-- <td>{{ card.middleName }}</td> -->
