@@ -5,13 +5,19 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Admin {
- url = environment.apiUrl;
+  url = environment.apiUrl;
 
   constructor(private router: Router, private http: HttpClient) {}
 
+  getAllAdmins(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/admin/admins`, {});
+  }
+  getAdminById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/admins/${id}`, {});
+  }
   /**
    * Get transaction history from /transaction/history
    * @param email optional filter by 'from' or 'to'
@@ -292,7 +298,7 @@ export class Admin {
     );
   }
 
-    getCompanyNameByPartnerCode(partnerCode: any): Observable<any> {
+  getCompanyNameByPartnerCode(partnerCode: any): Observable<any> {
     return this.http.get<any>(
       `${this.url}/admin/getCompanyName/${partnerCode}`
     );
@@ -317,21 +323,23 @@ export class Admin {
   getAllIpAddresses(): Observable<any> {
     return this.http.get<any>(`${this.url}/macAddress/mac-addresses`);
   }
- addIpAddress(data: any): Observable<any> {
-  const headers = { 'Content-Type': 'application/json' };
-  return this.http.post<any>(`${this.url}/macAddress/mac-addresses`, data, { headers });
-}
-
+  addIpAddress(data: any): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.post<any>(`${this.url}/macAddress/mac-addresses`, data, {
+      headers,
+    });
+  }
 
   updateIpAddress(id: string, data: any): Observable<any> {
-    return this.http.put<any>(`${this.url}/macAddress/mac-addresses/${id}`, data);
+    return this.http.put<any>(
+      `${this.url}/macAddress/mac-addresses/${id}`,
+      data
+    );
   }
   deleteIpAddress(id: string): Observable<any> {
-  return this.http.delete(`${this.url}/macAddress/mac-addresses/${id}`);
-
-}
-verifyOTP(otp: string): Observable<any> {
+    return this.http.delete(`${this.url}/macAddress/mac-addresses/${id}`);
+  }
+  verifyOTP(otp: string): Observable<any> {
     return this.http.post(`${this.url}/admin/PostOtp`, { otp });
   }
-  
 }

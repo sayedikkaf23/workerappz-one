@@ -1,6 +1,7 @@
+// src/app/user/user.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Admin } from '../services/admin'; // Import the service
+import { Admin } from '../services/admin';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 
@@ -8,44 +9,48 @@ import * as XLSX from 'xlsx';
   selector: 'app-user',
   standalone: false,
   templateUrl: './user.html',
-  styleUrl: './user.css'
+  styleUrls: ['./user.css'], // <- plural
 })
 export class User implements OnInit {
-  // roles = [];
   roles: any[] = [];
   filteredRoles: any[] = [];
-  searchTerm: string = '';
-  // Other properties
+  searchTerm = '';
 
   constructor(private router: Router, private adminService: Admin) {}
 
   ngOnInit(): void {
-    this.fetchAllClients();
+    this.fetchAllAdmins();
   }
 
-  // Method to fetch clients
+  fetchAllAdmins() {
+    this.adminService.getAllAdmins().subscribe({
+      next: (admins) => {
+        console.log('Admins:', admins);
+        this.roles = [...admins].reverse();
+        this.filteredRoles = [...admins];
+      },
+      error: (err) => {
+        console.error('Error fetching admins:', err);
+      },
+    });
+  }
+
   fetchAllClients() {
-    this.adminService.getAllClients().subscribe(
-      (clients:any) => {
-        this.roles = clients.reverse();
+    this.adminService.getAllClients().subscribe({
+      next: (clients) => {
+        this.roles = [...clients].reverse();
         this.filteredRoles = [...clients];
       },
-      (error:any) => {
-        console.error('Error fetching clients:', error);
-      }
-    );
+      error: (err) => console.error('Error fetching clients:', err),
+    });
   }
 
   onSearch() {
     const term = this.searchTerm.trim().toLowerCase();
-
-    // if the box is empty, restore all rows
     if (!term) {
       this.filteredRoles = [...this.roles];
       return;
     }
-
-    // otherwise filter as before
     this.filteredRoles = this.roles.filter(
       (u) =>
         u.email?.toLowerCase().includes(term) ||
@@ -73,7 +78,7 @@ export class User implements OnInit {
     this.router.navigate(['/userrole']);
   }
 
-  toggleStatus(role:any) {
+  toggleStatus(role: any) {
     role.isActive = !role.isActive;
   }
 
@@ -83,9 +88,9 @@ export class User implements OnInit {
   }
 
   editUser(role: any) {
-    console.log('Edit user:', role);
     this.router.navigate(['/useredit'], { state: { userData: role } });
   }
+
   editRole(role: any) {
     this.router.navigate(['/edituser'], { state: { roleData: role } });
   }
@@ -95,8 +100,9 @@ export class User implements OnInit {
   }
 
   trackByRoleName(index: number, role: any) {
-    return role.name;
+    return role._id || role.email || index;
   }
+
   deleteRole(role: any): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -111,7 +117,6 @@ export class User implements OnInit {
         this.adminService.deleteClient(role._id).subscribe({
           next: () => {
             this.fetchAllClients();
-
             Swal.fire('Deleted!', 'The role has been deleted.', 'success');
           },
           error: (err) => {
