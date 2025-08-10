@@ -56,7 +56,8 @@ import { AdminLogin } from './admin-login/admin-login';
 import { PersonalBank } from './personal-bank/personal-bank';
 import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
 import { AddAdmin } from './add-admin/add-admin';
-
+import { ServiceForm } from './service-form/service-form';
+import { ViewService } from './view-service/view-service';
 @NgModule({
   declarations: [
     App,
@@ -108,6 +109,9 @@ import { AddAdmin } from './add-admin/add-admin';
     PersonalBank,
     PersonalReviewOrder,
     AddAdmin,
+    ServiceForm,
+    ViewService,
+    Users
   ],
   imports: [
     BrowserModule,

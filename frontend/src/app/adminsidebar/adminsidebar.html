@@ -75,6 +75,11 @@
             <i class="fas fa-users"></i> Admin
           </a>
         </li>
+        <li [ngClass]="{'active': isActive('/admin/services')}">
+          <a [routerLink]="['/admin/services']">
+            <i class="fas fa-users"></i> Service
+          </a>
+        </li>
         <!-- <li  [ngClass]="{'active': isActive('/admin/partner-code')}">
           <a [routerLink]="['/admin/partner-code']">
             <i class="fas fa-code"></i> Partner Code

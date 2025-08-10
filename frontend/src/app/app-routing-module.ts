@@ -39,6 +39,8 @@ import { Dashboards } from './dashboards/dashboards';
 import { PersonalBank } from './personal-bank/personal-bank';
 import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
 import { AddAdmin } from './add-admin/add-admin';
+import { ServiceForm } from './service-form/service-form';
+import { ViewService } from './view-service/view-service';
 
 const routes: Routes = [
   {
@@ -98,6 +100,10 @@ const routes: Routes = [
       // Wallet & Card
       { path: 'wallet', component: Adminwallet },
       { path: 'cards', component: Admincard },
+    { path: 'services', component: ViewService },
+{ path: 'services/new', component: ServiceForm },
+{ path: 'services/:id/edit', component: ServiceForm },
+
 
       // Topup
       { path: 'topup', component: Topup },

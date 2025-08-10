@@ -1,0 +1,115 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div class="user-page">
+  <div class="filter-export-buttons">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()"
+        name="searchTerm"
+      />
+      <button class="search-button" (click)="onSearch()">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+
+    <button class="export-button" (click)="exportToExcel()">
+      <i class="fas fa-file-export"></i> EXPORT
+    </button>
+
+<button (click)="goToCreate()">+ New Service</button>
+  </div>
+
+  <div class="results-info">
+    <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+    Displaying <strong>{{ filteredServices.length }}</strong> result(s)
+  </div>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Updated On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filteredServices; trackBy: trackById">
+        <td>{{ s.name }}</td>
+        <td>
+          <span [class.active]="s.active" [class.inactive]="!s.active">
+            {{ s.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td>{{ s.updatedAt | date: 'MM-dd-yyyy HH:mm' }}</td>
+        <td class="action-cell">
+          <div class="dropdown">
+            <button type="button" class="dropdown-toggle" (click)="toggleDropdown(s, $event)">⋮</button>
+            <ul class="dropdown-menu" [class.show]="s.showDropdown">
+              <li [routerLink]="['/admin/services', s._id, 'edit']" (click)="$event.stopPropagation()">Edit</li>
+              <li (click)="deleteService(s)">Delete</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="modal-backdrop" *ngIf="showCreateModal">
+  <div class="modal">
+    <h3>New Service</h3>
+
+    <div class="form-row">
+      <label>Name</label>
+      <input [(ngModel)]="newService.name" name="newServiceName" />
+    </div>
+
+    <div class="form-row">
+      <label>Status</label>
+      <select [(ngModel)]="newService.active" name="newServiceStatus">
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+    </div>
+
+    <div class="modal-actions">
+      <button (click)="saveNewService()" [disabled]="isLoading">
+        {{ isLoading ? 'Saving...' : 'Save' }}
+      </button>
+      <button class="secondary" (click)="closeCreateModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-backdrop" *ngIf="showEditModal">
+  <div class="modal">
+    <h3>Edit Service</h3>
+
+    <div class="form-row">
+      <label>Name</label>
+      <input [(ngModel)]="editServiceData!.name" name="editServiceName" />
+    </div>
+
+    <div class="form-row">
+      <label>Status</label>
+      <select [(ngModel)]="editServiceData!.active" name="editServiceStatus">
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+    </div>
+
+    <div class="modal-actions">
+      <button (click)="saveEditService()" [disabled]="isLoading">
+        {{ isLoading ? 'Updating...' : 'Update' }}
+      </button>
+      <button class="secondary" (click)="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
