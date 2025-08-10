@@ -7,51 +7,54 @@
 
 <div class="role-page" *ngIf="!isLoading">
   <div class="role-header">
-
-    <h2>Add Role</h2>
-
+    <h2>{{ isEdit ? 'Edit Role' : 'Add Role' }}</h2>
     <a class="back-button" (click)="goBack()">
-        <i class="fas fa-arrow-left"></i>
+      <i class="fas fa-arrow-left"></i>
     </a>
+  </div>
 
-</div>
-  
-    <form (ngSubmit)="onSubmit()">
-      <div>
-        <label for="roleName">Role Name</label>
-        <input type="text" id="roleName" [(ngModel)]="roleName" name="roleName" required>
-      </div>
-    
-      <div>
-        <label for="status">Status</label>
-        <select id="status" [(ngModel)]="status" name="status">
-          <option value="">Select Status</option>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
-        </select>
-      </div>
-    
-      <div>
-        <label>Permissions:</label>
-        <div class="permissions-list mt-1">
-          <div class="permission-item mb-2" *ngFor="let permission of allPermissions">
-           
-            <div class="checkbox-container">
-              <span class="permission-label">{{ permission }}</span>
-              <input 
-                type="checkbox" 
-                [value]="permission"
-                (change)="onPermissionChange($event)" 
-                [checked]="selectedPermissions.includes(permission)"
-              >
-            </div>
-           
+  <form (ngSubmit)="onSubmit()">
+    <!-- Role Name -->
+    <div>
+      <label for="roleName">Role Name <span class="required">*</span></label>
+      <input
+        type="text"
+        id="roleName"
+        [(ngModel)]="roleName"
+        name="roleName"
+        required
+      />
+    </div>
+
+    <!-- Status (bind real booleans) -->
+    <div>
+      <label for="status">Status <span class="required">*</span></label>
+      <select id="status" [(ngModel)]="status" name="status" required>
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Permissions -->
+    <div>
+      <label>Permissions:</label>
+      <div class="permissions-list mt-1">
+        <div class="permission-item mb-2" *ngFor="let permission of allPermissions">
+          <div class="checkbox-container">
+            <span class="permission-label">{{ permission }}</span>
+            <input
+              type="checkbox"
+              [value]="permission"
+              (change)="onPermissionChange($event)"
+              [checked]="selectedPermissions.includes(permission)"
+            />
           </div>
         </div>
       </div>
-      
-      
-    
-      <button type="submit">Submit</button>
-    </form>
+    </div>
+
+    <button type="submit" [disabled]="isLoading">
+      {{ isEdit ? (isLoading ? 'Updating...' : 'Update') : (isLoading ? 'Submitting...' : 'Submit') }}
+    </button>
+  </form>
 </div>

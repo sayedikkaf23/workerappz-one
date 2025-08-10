@@ -79,6 +79,7 @@ const routes: Routes = [
       { path: 'users/update', component: UserEdit },
       { path: 'users/roles', component: Users },
       { path: 'roles', component: Roles },
+      { path: 'roles/:id/edit', component: Roles },
       { path: 'roles/view', component: ViewRole },
       { path: 'roles/assign', component: Userrole },
             { path: 'add/admin', component: AddAdmin },

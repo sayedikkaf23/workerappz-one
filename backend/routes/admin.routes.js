@@ -12,7 +12,7 @@ router.post("/mfa/verify", admin.verifyMFA);
 
 router.post("/roles/create", admin.addRole);
 router.get("/roles", admin.getRoles);
-// router.get("/roles/details/:id", admin.getRoleById);
+router.get("/roles/details/:id", admin.getRoleById);
 router.put("/roles/update/:id", admin.updateRole);
 router.delete("/roles/remove/:id", admin.deleteRole);
 

@@ -1,1 +1,65 @@
-<p>view-role works!</p>
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div class="user-page">
+  <div class="filter-export-buttons">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()"
+        name="searchTerm"
+      />
+      <button class="search-button" (click)="onSearch()">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+
+    <button class="export-button">
+      <i class="fas fa-file-export"></i> EXPORT
+    </button>
+
+    <button (click)="goToCreate()">+ New Role</button>
+  </div>
+
+  <div class="results-info">
+    <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+    Displaying <strong>{{ filteredRoles.length }}</strong> result(s)
+  </div>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Permissions</th>
+        <th>Status</th>
+        <th>Updated On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let r of filteredRoles; trackBy: trackById">
+        <td>{{ r.role_name }}</td>
+        <td>{{ (r.permissions || []).join(', ') || '—' }}</td>
+        <td>
+          <span [class.active]="r.status" [class.inactive]="!r.status">
+            {{ r.status ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td>{{ r.updatedAt | date:'MM-dd-yyyy HH:mm' }}</td>
+
+        <td class="action-cell">
+          <div class="dropdown" [class.show]="r.showDropdown">
+            <button type="button" class="dropdown-toggle" (click)="toggleDropdown(r, $event)">⋮</button>
+            <ul class="dropdown-menu" [class.show]="r.showDropdown">
+              <li (click)="editRow(r, $event)">Edit</li>
+              <li (click)="deleteRow(r)">Delete</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

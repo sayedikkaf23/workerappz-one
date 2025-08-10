@@ -163,6 +163,25 @@ exports.updateRole = async (req, res) => {
   }
 };
 
+exports.getRoleById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find by ID and ensure not soft-deleted
+    const role = await Role.findOne({ _id: id, is_deleted: false }).lean();
+
+    if (!role) {
+      return res.status(404).json({ message: 'Role not found' });
+    }
+
+    res.status(200).json(role);
+  } catch (error) {
+    console.error('Error fetching role by id:', error);
+    // Handle invalid ObjectId too
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 // ✅ Soft Delete Role
 exports.deleteRole = async (req, res) => {
   try {
