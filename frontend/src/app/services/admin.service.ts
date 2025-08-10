@@ -2,6 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+
+// --- Types ---
+export interface ServiceItem {
+  _id: string;
+  name: string;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+export interface CreateServiceDto {
+  name: string;
+  active?: boolean; // default true if omitted
+}
+export interface UpdateServiceDto {
+  name?: string;
+  active?: boolean;
+}
+
 export interface Role {
   _id: string;
   role_name: string;
@@ -108,5 +126,23 @@ getAdminById(id: string): Observable<any> {
   deleteRole(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/admin/roles/remove/${id}`);
   }
+
+  listServices(): Observable<ServiceItem[]> {
+  return this.http.get<ServiceItem[]>(`${this.apiUrl}/service/list`);
+}
+createService(payload: CreateServiceDto): Observable<any> {
+  return this.http.post(`${this.apiUrl}/service/add`, payload);
+}
+updateService(id: string, payload: UpdateServiceDto): Observable<any> {
+  return this.http.put(`${this.apiUrl}/service/update/${id}`, payload);
+}
+deleteService(id: string): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/service/remove/${id}`);
+}
+// src/app/services/admin.service.ts
+getRoleById(id: string): Observable<Role> {
+  // adjust path if your roles router is mounted differently
+  return this.http.get<Role>(`${this.apiUrl}/admin/roles/details/${id}`);
+}
 
 }
