@@ -6,6 +6,7 @@ const path = require("path");
 const onboardingRoutes = require("./routes/onboarding.routes");
 const nationalities = require("./routes/nationality.routes");
 const admin=require('./routes/admin.routes')
+const service=require('./routes/service.route');
 
 
 // Load .env or .env.production based on NODE_ENV
@@ -23,6 +24,7 @@ app.use(cors());
 
 app.use("/api", onboardingRoutes);
 app.use("/admin", admin);
+app.use("/service", service);
 
 app.use("/nationalities", nationalities);
 

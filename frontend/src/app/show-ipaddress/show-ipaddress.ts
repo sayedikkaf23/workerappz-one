@@ -35,18 +35,18 @@ export class ShowIpaddress {
     };
 
     this.isLoading = true;
-    this.adminService.addIpAddress(payload).subscribe({
-      next: () => {
-        this.toastr.success('MAC Address added!');
-        this.isLoading = false;
-        this.router.navigate(['/addip']);  // adjust to your listing route
-      },
-      error: err => {
-        console.error(err);
-        this.toastr.error('Failed to add MAC Address');
-        this.isLoading = false;
-      }
-    });
+    // this.adminService.addIpAddress(payload).subscribe({
+    //   next: () => {
+    //     this.toastr.success('MAC Address added!');
+    //     this.isLoading = false;
+    //     this.router.navigate(['/admin/ip-address/add']);  // adjust to your listing route
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //     this.toastr.error('Failed to add MAC Address');
+    //     this.isLoading = false;
+    //   }
+    // });
   }
 
 }

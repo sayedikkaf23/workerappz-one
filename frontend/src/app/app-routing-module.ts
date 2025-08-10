@@ -38,6 +38,7 @@ import { Dashboard } from './services/dashboard';
 import { Dashboards } from './dashboards/dashboards';
 import { PersonalBank } from './personal-bank/personal-bank';
 import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
+import { AddAdmin } from './add-admin/add-admin';
 
 const routes: Routes = [
   {
@@ -62,33 +63,57 @@ const routes: Routes = [
 
   // admin
   { path: 'admin/login', component: AdminLogin },
-  { path: 'admin/admindashboard', component: AdminDashboard },
-  { path: 'usersrole', component: Users },
-  // { path: '', redirectTo: '/users/role', pathMatch: 'full' },
-  { path: 'roles', component: Roles },
-  { path: 'user', component: User },
-  { path: 'userrole', component: Userrole },
-  { path: 'partnercode', component: Partnercode },
-  { path: 'addpartnercode', component: AddPartnercode },
-  { path: 'editpartnercode', component: EditPartnercode },
-  { path: 'transferfund', component: Transferfund },
-  { path: 'prefundtransfer', component: PrefundTransfer },
+  // { path: 'admin/admindashboard', component: AdminDashboard },
+ {
+    path: 'admin',
+   children: [
+      // { path: 'login', component: AdminLogin },
+      { path: 'dashboard', component: AdminDashboard },
+      { path: 'home', component: Dashboards },
 
-  { path: 'topup', component: Topup },
-  { path: 'business-user', component: BusinessUser },
-  { path: 'admincategory', component: Admincategory },
-  { path: 'adminwallet', component: Adminwallet },
-  { path: 'admincard', component: Admincard },
-  { path: 'admin/adminhome', component: Dashboards },
-  { path: 'transferhistory', component: Transferhistory },
-  { path: 'viewrole', component: ViewRole },
-  { path: 'edituser', component: Edituser },
-  { path: 'useredit', component: UserEdit },
-  { path: 'mastertransfer', component: MasterTransfer },
-  { path: 'addip', component: AddIpaddress },
-  { path: 'getip', component: ShowIpaddress },
-  // { path: 'editip', component: EditIpaddressComponent },
-  { path: 'editip/:id', component: EditIpaddress },
+      // User & Roles
+      { path: 'admin', component: User },
+      { path: 'users/edit', component: Edituser },
+      { path: 'users/update', component: UserEdit },
+      { path: 'users/roles', component: Users },
+      { path: 'roles', component: Roles },
+      { path: 'roles/view', component: ViewRole },
+      { path: 'roles/assign', component: Userrole },
+            { path: 'add/admin', component: AddAdmin },
+              { path: 'admins/:id/edit', component: AddAdmin },
+
+
+
+      // Partner Codes
+      { path: 'partner-code', component: Partnercode },
+      { path: 'partner-code/add', component: AddPartnercode },
+      { path: 'partner-code/edit', component: EditPartnercode },
+
+      // Fund Transfer
+      { path: 'fund/transfer', component: Transferfund },
+      { path: 'fund/prefund-transfer', component: PrefundTransfer },
+      { path: 'fund/master-transfer', component: MasterTransfer },
+      { path: 'fund/transfer-history', component: Transferhistory },
+
+      // Wallet & Card
+      { path: 'wallet', component: Adminwallet },
+      { path: 'cards', component: Admincard },
+
+      // Topup
+      { path: 'topup', component: Topup },
+
+      // Business Users
+      { path: 'business-users', component: BusinessUser },
+
+      // Categories
+      { path: 'categories', component: Admincategory },
+
+      // IP Address Management
+      { path: 'ip-address/add', component: AddIpaddress },
+      { path: 'ip-address/list', component: ShowIpaddress },
+      { path: 'ip-address/edit/:id', component: EditIpaddress },
+    ],
+  },
 ];
 
 @NgModule({

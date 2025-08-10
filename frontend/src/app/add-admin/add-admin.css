@@ -1,0 +1,244 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+
+/* General container for the role page */
+.role-page {
+    margin-left: 350px; /* Adjust for sidebar */
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+  /* Scoped container */
+.dropdown-input-wrapper {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 5px; /* small gap between dropdown and input */
+}
+
+/* Prevent conflict from form[...], use your own class */
+.btn-custom {
+  font-weight: normal !important;
+  margin-top: 0px !important;
+}
+
+.btn-custom:hover {
+  background-color: #2980b9;
+}
+
+/* Style for the input field */
+.input-custom {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Ensure dropdown-menu shows properly */
+.dropdown-menu {
+  z-index: 1000;
+}
+
+  .dropdown-menu {
+    z-index: 1050;
+  }
+
+/* Title styling */
+.role-page h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 20px;
+    align-items: start;
+}
+
+/* Ensure two items per row for normal fields */
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label and input alignment */
+form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #34495e;
+    position: relative;
+}
+
+/* Red star for required fields */
+.required {
+    color: red;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* Full-width elements (for headings, etc.) */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Text input and select styling */
+form input[type="text"],
+form input[type="password"],
+form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus states for inputs */
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Permissions container styling */
+.permissions-container {
+    grid-column: span 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Permissions checkboxes alignment */
+.permissions-container div {
+    display: flex;
+    align-items: center;
+}
+
+.permissions-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Submit button styling */
+form button {
+    grid-column: span 2;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+form button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .role-page {
+      margin-left: 200px;
+      padding: 20px;
+    }
+
+    form {
+      grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+
+    form button {
+      grid-column: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .role-page {
+      margin-left: 0;
+      padding: 15px;
+    }
+
+    form button {
+      padding: 10px;
+      font-size: 14px;
+    }
+}
+.error {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #007bff; /* Change color if needed */
+    font-weight: bold;
+}
+
+.back-button:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+
+.full-width {
+    display: flex;
+    justify-content: space-between; /* Distribute space between h2 and button */
+  }
+
+  form .full-width { /* If it's specifically on the form's header */
+    flex-direction: row !important; /* !important is generally discouraged, but might be needed in this case */
+}
+
+/* Custom width for the input */
+.custom-form-control {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Optional styling for the input fields */
+.cus input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+/* Optional: add a hover effect for the dropdown */
+.cus:hover {
+  border-color: #007bff;
+}

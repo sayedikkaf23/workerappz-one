@@ -32,7 +32,7 @@ export class Topbar {
   }
 
   logout() {
-    this.router.navigate(['/adminlogin']);
+    this.router.navigate(['/admin/login']);
   }
 
 

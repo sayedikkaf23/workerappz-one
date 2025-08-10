@@ -55,6 +55,7 @@ import { Loader } from './loader/loader';
 import { AdminLogin } from './admin-login/admin-login';
 import { PersonalBank } from './personal-bank/personal-bank';
 import { PersonalReviewOrder } from './personal-review-order/personal-review-order';
+import { AddAdmin } from './add-admin/add-admin';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { PersonalReviewOrder } from './personal-review-order/personal-review-ord
     AdminLogin,
     PersonalBank,
     PersonalReviewOrder,
+    AddAdmin,
   ],
   imports: [
     BrowserModule,

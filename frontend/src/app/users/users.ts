@@ -19,7 +19,7 @@ export class Users implements OnInit {
 
   // Fetch roles on component initialization
   ngOnInit() {
-    this.fetchRoles();
+    // this.fetchRoles();
   }
 
    // Close the dropdown if clicked outside

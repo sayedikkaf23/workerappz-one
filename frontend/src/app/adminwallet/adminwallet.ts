@@ -33,11 +33,11 @@ export class Adminwallet implements OnInit {
   ngOnInit(): void {
     const adminRole = localStorage.getItem('AdminRole');
     const partnerCode = localStorage.getItem('partnerCode');
-    if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
-      this.loadwallet();
-    } else {
-      this.loadWalletByPartnerCode(partnerCode);
-    }
+    // if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
+    //   this.loadwallet();
+    // } else {
+    //   this.loadWalletByPartnerCode(partnerCode);
+    // }
   }
   loadwallet(): void {
     this.isLoading = true;

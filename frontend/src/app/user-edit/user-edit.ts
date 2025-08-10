@@ -97,10 +97,10 @@ export class UserEdit {
     ) {}
   
     ngOnInit() {
-      this.fetchRoles();
-      this.fetchPanterCodes();
-      // this.fetchMobileCountryCodes();
-      this.getAllowedgetAllowedNationalities();
+      // this.fetchRoles();
+      // this.fetchPanterCodes();
+      // // this.fetchMobileCountryCodes();
+      // this.getAllowedgetAllowedNationalities();
     
       this.user = history.state?.userData;
       console.log('Received user data:', this.user);
@@ -353,16 +353,16 @@ export class UserEdit {
     
     
       // Call the update API with only changed fields
-      this.adminService.updateAdmin(updatedData, this.originalUserData._id).subscribe({
-        next: (response) => {
-          this.toastr.success('Admin updated successfully!');
-          this.router.navigate(['/user']);
-        },
-        error: (err) => {
-          this.toastr.error('Failed to update admin. Please try again.');
-          console.error('Update failed:', err);
-        },
-      });
+      // this.adminService.updateAdmin(updatedData, this.originalUserData._id).subscribe({
+      //   next: (response) => {
+      //     this.toastr.success('Admin updated successfully!');
+      //     this.router.navigate(['/user']);
+      //   },
+      //   error: (err) => {
+      //     this.toastr.error('Failed to update admin. Please try again.');
+      //     console.error('Update failed:', err);
+      //   },
+      // });
     }
     
 }

@@ -22,7 +22,7 @@ export class Partnercode implements OnInit {
   ngOnInit(): void {
 
     
-    this.fetchPanterCodes(); // Fetch the Panter codes on initialization
+    // this.fetchPanterCodes(); // Fetch the Panter codes on initialization
   }
 
   // Method to fetch Panter codes
@@ -92,7 +92,7 @@ export class Partnercode implements OnInit {
 
 editCode(code: any) {
   console.log('Edit user:', code);
-  this.router.navigate(['/editpartnercode'], { state: { userData: code } });
+  this.router.navigate(['/admin/partner-code/edit'], { state: { userData: code } });
 }
 
 
@@ -109,7 +109,7 @@ editCode(code: any) {
   }
 
   navigateToRoles() {
-    this.router.navigate(['/addpartnercode']);
+    this.router.navigate(['admin/partner-code/add']);
   }
 
   trackByPanterCodeId(index: number, panterCode: any) {

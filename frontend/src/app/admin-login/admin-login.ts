@@ -67,7 +67,7 @@ export class AdminLogin {
       (response) => {
         this.loading = false;
         console.log('MFA verified:', response);
-        this.router.navigate(['/admin/adminhome']); // This will navigate to /admindashboard route
+        this.router.navigate(['/admin/home']); // This will navigate to /admindashboard route
       },
        (error) => {
         this.loading = false;

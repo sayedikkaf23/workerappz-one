@@ -1,7 +1,7 @@
 // src/app/user/user.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Admin } from '../services/admin';
+import { AdminService, CreateAdminDto, UpdateAdminDto } from '../services/admin.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 
@@ -9,39 +9,43 @@ import * as XLSX from 'xlsx';
   selector: 'app-user',
   standalone: false,
   templateUrl: './user.html',
-  styleUrls: ['./user.css'], // <- plural
+  styleUrls: ['./user.css'],
 })
 export class User implements OnInit {
   roles: any[] = [];
   filteredRoles: any[] = [];
   searchTerm = '';
 
-  constructor(private router: Router, private adminService: Admin) {}
+  // Modal state
+  showCreateModal = false;
+  showEditModal = false;
+
+  // Forms (template-driven via ngModel)
+  newAdmin: CreateAdminDto = {
+    email: '',
+    password: '',
+    roleid: '',
+    status: true,
+  };
+
+  editAdminData: any = null; // we’ll store the selected admin here
+
+  constructor(private router: Router, private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.fetchAllAdmins();
+    this.fetchAdmins();
   }
 
-  fetchAllAdmins() {
+  fetchAdmins(): void {
     this.adminService.getAllAdmins().subscribe({
       next: (admins) => {
-        console.log('Admins:', admins);
-        this.roles = [...admins].reverse();
-        this.filteredRoles = [...admins];
+        this.roles = admins || [];
+        this.filteredRoles = [...this.roles];
       },
       error: (err) => {
-        console.error('Error fetching admins:', err);
+        console.error('getAllAdmins error:', err);
+        Swal.fire('Error', 'Failed to load admins', 'error');
       },
-    });
-  }
-
-  fetchAllClients() {
-    this.adminService.getAllClients().subscribe({
-      next: (clients) => {
-        this.roles = [...clients].reverse();
-        this.filteredRoles = [...clients];
-      },
-      error: (err) => console.error('Error fetching clients:', err),
     });
   }
 
@@ -64,9 +68,9 @@ export class User implements OnInit {
       No: i + 1,
       Email: u.email,
       'Role Name': u.role?.role_name || 'N/A',
-      'Partner Code': u.partnerCode || 'N/A',
+      
       'Updated On': new Date(u.updatedAt).toLocaleString(),
-      'Wallet Balance': u.totalAmount,
+      
     }));
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
@@ -74,57 +78,114 @@ export class User implements OnInit {
     XLSX.writeFile(wb, 'users.xlsx');
   }
 
-  navigateToRoles() {
-    this.router.navigate(['/userrole']);
+  // ---- Open/close modals
+  openCreateModal() {
+    this.router.navigate(['/admin/add/admin']);
+  }
+  closeCreateModal() { this.showCreateModal = false; }
+
+  openEditModal(role: any) {
+    this.editAdminData = { ...role }; // shallow copy
+    this.showEditModal = true;
+  }
+  closeEditModal() { this.showEditModal = false; }
+
+  // ---- Create admin
+  saveNewAdmin() {
+    if (!this.newAdmin.email || !this.newAdmin.password) {
+      Swal.fire('Validation', 'Email and Password are required', 'warning');
+      return;
+    }
+    this.adminService.createAdmin(this.newAdmin).subscribe({
+      next: () => {
+        Swal.fire('Success', 'Admin created', 'success');
+        this.closeCreateModal();
+        this.fetchAdmins();
+      },
+      error: (err) => {
+        console.error('createAdmin error:', err);
+        Swal.fire('Error', err?.error?.message || 'Failed to create admin', 'error');
+      },
+    });
   }
 
-  toggleStatus(role: any) {
-    role.isActive = !role.isActive;
+  // ---- Update admin
+  saveEditAdmin() {
+    const id = this.editAdminData?._id || this.editAdminData?.id;
+    if (!id) return;
+
+    const payload: UpdateAdminDto = {
+      email: this.editAdminData.email,
+      
+      roleid: this.editAdminData.roleid || this.editAdminData.role?._id,
+      status: this.editAdminData.status,
+    };
+
+    this.adminService.updateAdmin(id, payload).subscribe({
+      next: () => {
+        Swal.fire('Updated', 'Admin updated successfully', 'success');
+        this.closeEditModal();
+        this.fetchAdmins();
+      },
+      error: (err) => {
+        console.error('updateAdmin error:', err);
+        Swal.fire('Error', err?.error?.message || 'Failed to update admin', 'error');
+      },
+    });
   }
+
+  // ---- Delete admin
+  deleteRole(role: any): void {
+    const id = role?._id || role?.id;
+    if (!id) return;
+
+    if (role.email === 'admin@gmail.com') {
+      Swal.fire('Not allowed', 'You cannot delete this admin', 'info');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This admin will be deleted.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adminService.deleteAdmin(id).subscribe({
+          next: () => {
+            Swal.fire('Deleted!', 'Admin deleted.', 'success');
+            this.fetchAdmins();
+          },
+          error: (err) => {
+            console.error('deleteAdmin error:', err);
+            Swal.fire('Error', err?.error?.message || 'Failed to delete admin', 'error');
+          },
+        });
+      }
+    });
+  }
+
+  // Existing helpers
+  toggleStatus(role: any) { role.isActive = !role.isActive; }
 
   toggleDropdown(role: any) {
     this.roles.forEach((r) => (r.showDropdown = false));
     role.showDropdown = !role.showDropdown;
   }
 
-  editUser(role: any) {
-    this.router.navigate(['/useredit'], { state: { userData: role } });
-  }
+ // user.ts
+editUser(role: any, e?: MouseEvent) {
+  e?.stopPropagation();
+  this.router.navigate(['/admin/admins', role._id, 'edit']);
+  role.showDropdown = false;
+}
 
-  editRole(role: any) {
-    this.router.navigate(['/edituser'], { state: { roleData: role } });
-  }
+  editRole(role: any) { this.openEditModal(role); }
 
-  viewRole(role: any) {
-    console.log('View role:', role);
-  }
+  viewRole(role: any) { console.log('View role:', role); }
 
   trackByRoleName(index: number, role: any) {
     return role._id || role.email || index;
-  }
-
-  deleteRole(role: any): void {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to delete this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.adminService.deleteClient(role._id).subscribe({
-          next: () => {
-            this.fetchAllClients();
-            Swal.fire('Deleted!', 'The role has been deleted.', 'success');
-          },
-          error: (err) => {
-            console.error('Error deleting the role:', err);
-            Swal.fire('Failed!', 'Failed to delete the role.', 'error');
-          },
-        });
-      }
-    });
   }
 }

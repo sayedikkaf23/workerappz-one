@@ -2,21 +2,43 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
 export interface Role {
   _id: string;
-  name: string;
-  permissions?: string[];
-  // add other fields your API returns
+  role_name: string;
+  permissions: string[];
+  status: boolean;
+  is_deleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export interface AdminUser {
-  _id: string;
-  email: string;
-  name?: string;
-  roles?: string[];
-  // add other fields your API returns
+export interface CreateRoleDto {
+  role_name: string;
+  permissions: string[]; // send array
+  status?: boolean;
 }
+
+export interface UpdateRoleDto {
+  role_name?: string;
+  permissions?: string[];
+  status?: boolean;
+}
+export interface CreateAdminDto {
+  email: string;
+  password: string;
+    roleid?: string;
+  status?: boolean;
+
+  
+}
+
+export interface UpdateAdminDto {
+  email?: string;
+  password?: string;   // <— add this
+  roleid?: string;
+  status?: boolean;
+}
+
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -24,7 +46,6 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  // ===== Auth / MFA you already had =====
   login(loginData: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/login`, loginData);
   }
@@ -37,34 +58,55 @@ export class AdminService {
     return this.http.post(`${this.apiUrl}/admin/mfa/enable`, {});
   }
 
-  // ===== Roles =====
-  /** GET /roles/details/:id */
-  getRoleById(id: string): Observable<Role> {
-    return this.http.get<Role>(`${this.apiUrl}/roles/details/${id}`);
+  getAllIndividualUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/getAllIndividualUsers`);
   }
 
-  /** PUT /roles/update/:id */
-  updateRole(id: string, data: Partial<Role>): Observable<Role> {
-    return this.http.put<Role>(`${this.apiUrl}/roles/update/${id}`, data);
+  getAllBusinessUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/getAllBusinessUsers`);
+  }
+  
+getAllAdmins(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/admin/admins`);
   }
 
-  /** DELETE /roles/remove/:id */
-  deleteRole(id: string): Observable<{ message?: string }> {
-    return this.http.delete<{ message?: string }>(`${this.apiUrl}/roles/remove/${id}`);
+  createAdmin(payload: CreateAdminDto): Observable<any> {
+    // If your backend uses /admin/register, change the URL below:
+    return this.http.post(`${this.apiUrl}/admin/register`, payload);
   }
 
-  // ===== Admins =====
-  /** GET /admins (optionally with pagination/search) */
-  getAllAdmins(opts?: { page?: number; limit?: number; search?: string }): Observable<AdminUser[]> {
-    let params = new HttpParams();
-    if (opts?.page)  params = params.set('page', String(opts.page));
-    if (opts?.limit) params = params.set('limit', String(opts.limit));
-    if (opts?.search) params = params.set('search', opts.search);
-    return this.http.get<AdminUser[]>(`${this.apiUrl}/admins`, { params });
+updateAdmin(id: string, payload: UpdateAdminDto): Observable<any> {
+  return this.http.put(`${this.apiUrl}/admin/admin/${id}`, payload); // or `/admin/${id}` if you cleaned routes
+}
+
+  deleteAdmin(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/admin/admin/${id}`);
+  }
+//   // src/app/services/admin.service.ts (add this)
+// getRoles(): Observable<any[]> {
+//   // adjust path if your API differs (e.g., /role, /api/roles, etc.)
+//   return this.http.get<any[]>(`${this.apiUrl}/admin/roles`);
+// }
+
+// admin.service.ts
+getAdminById(id: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/admin/admins/${id}`); // ensure backend route exists
+}
+
+ getRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.apiUrl}/admin/roles`);
   }
 
-  /** GET /admins/:id */
-  getAdminById(id: string): Observable<AdminUser> {
-    return this.http.get<AdminUser>(`${this.apiUrl}/admins/${id}`);
+  createRole(payload: CreateRoleDto): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/roles/create`, payload);
   }
+
+  updateRole(id: string, payload: UpdateRoleDto): Observable<any> {
+    return this.http.put(`${this.apiUrl}/admin/roles/update/${id}`, payload);
+  }
+
+  deleteRole(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/admin/roles/remove/${id}`);
+  }
+
 }

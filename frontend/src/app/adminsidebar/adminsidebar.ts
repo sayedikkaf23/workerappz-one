@@ -30,7 +30,7 @@ export class Adminsidebar {
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
   isDropdownOpen: boolean = false;
   sessionStorageKey = 'settingsDropdownOpen';
-  settingsRoutes = ['/usersrole', '/user', '/partnercode', '/topup', '/roles', '/viewrole', '/userrole', '/useredit', '/addpartnercode','/mastertransfer','/addip']; // Array of settings routes
+  settingsRoutes = ['/admin/users/roles', '/admin/users/edit','/admin/users', '/admin/partner-code', '/admin/topup', '/admin/roles', '/admin/roles/view', '/admin/roles/assign', '/admin/users/update', '/admin/partner-code/add','/admin/fund/master-transfer','/admin/ip-address/add', '/admin/ip-address/list', '/admin/ip-address/edit/:id']; // Array of settings routes
   
 
   ngOnInit() {
@@ -74,7 +74,7 @@ export class Adminsidebar {
   }
 
   logout() {
-    this.router.navigate(['/adminlogin']);
+    this.router.navigate(['/admin/login']);
   }
 
   isActive(route: string): boolean {
@@ -103,7 +103,7 @@ export class Adminsidebar {
       // );
     } else {
       console.error('No AdminID found in localStorage');
-      this.router.navigate(['/adminlogin']);
+      this.router.navigate(['/admin/login']);
     }
   }
 

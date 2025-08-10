@@ -45,30 +45,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let card of paginatedCards; let i = index">
+                    <tr *ngFor="let user of paginatedCards; let i = index">
                         <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-                        <td>{{ card.name }}</td> <!-- Displaying the user's full name -->
-                        <td>{{ card.email }}</td>
-                        <td>{{ card.mobileNumber.internationalNumber }}</td>
-                        <td>{{ card.isApprove ? 'Approved' : 'Pending' }}</td>
-                        <td>{{ card.createdAt | date:'yyyy-MM-dd' }}</td>  <!-- ← new -->
-  <td>{{ card.createdAt | date:'HH:mm:ss' }}</td>    <!-- ← new -->
+                        <td>{{ user.firstName }}{{ user.flastName }}</td> <!-- Displaying the user's full name -->
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.mobileNumber.internationalNumber }}</td>
+                        <td>{{ user.isApprove ? 'Approved' : 'Pending' }}</td>
+                        <td>{{ (user.createdAt | date:'yyyy-MM-dd')  || 'NA'}}</td>  <!-- ← new -->
+  <td>{{ (user.createdAt | date:'HH:mm:ss')  || 'NA'}}</td>    <!-- ← new -->
                         <td>
                             <div class="action-buttons">
                                 <!-- Show Reject button if card status is true -->
                                 <button 
                                   class="action-button reject-button" 
-                                  (click)="approve(card.email)" 
-                                  [disabled]="card.isApprove !== true" 
-                                  *ngIf="card.isApprove === true">Reject
+                                  (click)="approve(user.email)" 
+                                  [disabled]="user.isApprove !== true" 
+                                  *ngIf="user.isApprove === true">Reject
                                 </button>
                               
                                 <!-- Show Approve button if card status is false -->
                                 <button 
                                   class="action-button approve-button" 
-                                  (click)="approve(card.email)" 
-                                  [disabled]="card.isApprove !== false" 
-                                  *ngIf="card.isApprove === false">Approve
+                                  (click)="approve(user.email)" 
+                                  [disabled]="user.isApprove !== false" 
+                                  *ngIf="user.isApprove === false">Approve
                                 </button>
                               </div>
                         </td>
@@ -76,7 +76,7 @@
                             
                             <div class="action-buttons">
                                 <button class="action-button primary-button"
-                                    (click)="openBusinessViewModal(card)">View Details</button>
+                                    (click)="openBusinessViewModal(user)">View Details</button>
                             </div>
                         </td>
                     </tr>

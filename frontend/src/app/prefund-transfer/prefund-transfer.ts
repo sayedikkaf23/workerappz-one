@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 export class PrefundTransfer implements OnInit {
   searchTerm: string = '';
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
@@ -41,11 +41,11 @@ export class PrefundTransfer implements OnInit {
     const adminRole = localStorage.getItem('AdminRole');
     const partnerCode = localStorage.getItem('partnerCode');
 
-    if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
-      this.fetchTransactions();
-    } else {
-      this.fetchTransactions(partnerCode); // Load transactions for specific partner
-    }
+    // if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
+    //   this.fetchTransactions();
+    // } else {
+    //   this.fetchTransactions(partnerCode); // Load transactions for specific partner
+    // }
   }
 
   fetchTransactions(partnerCode?: any) {

@@ -28,11 +28,11 @@ export class Admincard implements OnInit {
     const adminRole = localStorage.getItem('AdminRole');
     const partnerCode = localStorage.getItem('partnerCode');
 
-    if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
-      this.loadUsers();
-    } else {
-      this.loadUsersByPartnerCode(partnerCode);
-    }
+    // if (!adminRole || adminRole === 'superadmin' || adminRole === 'administrator') {
+    //   this.loadUsers();
+    // } else {
+    //   this.loadUsersByPartnerCode(partnerCode);
+    // }
   }
 
   loadUsers(): void {

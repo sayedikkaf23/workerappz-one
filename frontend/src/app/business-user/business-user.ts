@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Admin } from '../services/admin';
+import { AdminService } from '../services/admin.service';
 import { ViewBusinessUserModal } from '../view-business-user-modal/view-business-user-modal';
 import { ToastrService } from 'ngx-toastr';
 import { Auth } from '../services/auth';
@@ -17,13 +18,14 @@ export class BusinessUser implements OnInit {
   partnerCode: string = '';
   cards: any[] = [];
   filteredCards: any[] = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 6;
   totalPages: number = 1;
-
+users: any[] = [];
   constructor(
     private adminService: Admin,
+    private admin: AdminService,
     private dialog: MatDialog,
     private authService: Auth,
     private toastr: ToastrService
@@ -43,9 +45,20 @@ export class BusinessUser implements OnInit {
    this.partnerCode = "superadmin"
       
     }
-
-    this.simulateLoading();
-    this.fetchCards();
+  this.admin.getAllBusinessUsers().subscribe({
+      next: (res) => {
+        // If backend returns {count, data}
+        this.users = res.data || res;
+         this.filteredCards = this.users; // Initialize filteredCards with the reversed array
+        this.totalPages = Math.ceil(this.filteredCards.length / this.itemsPerPage);
+        console.log("RES: ",this.users);
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      }
+    });
+    // this.simulateLoading();
+    // this.fetchCards();
 
   }
 
@@ -122,12 +135,12 @@ export class BusinessUser implements OnInit {
 exportToExcel() {
   const tableData = this.filteredCards.map((card, index) => ({
     No: index + 1,
-    Name: card.name,
+    Name: card.firstName + card.lastName,
     Email: card.email,
     Mobile: card.mobileNumber?.internationalNumber || '',
-    Status: card.isApprove ? 'Approved' : 'Pending',
-    Date: new Date(card.createdAt).toLocaleDateString(), // e.g., "2025-07-02"
-    Time: new Date(card.createdAt).toLocaleTimeString()  // e.g., "15:22:10"
+    // Status: card.isApprove ? 'Approved' : 'Pending',
+    // Date: new Date(card.createdAt).toLocaleDateString(), // e.g., "2025-07-02"
+    // Time: new Date(card.createdAt).toLocaleTimeString()  // e.g., "15:22:10"
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(tableData);
@@ -158,13 +171,15 @@ exportToExcel() {
   onSearch() {
     this.searchTerm = this.searchTerm.trim();
     if (this.searchTerm) {
-      this.filteredCards = this.cards.filter(card =>
-        card.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        card.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        card.mobileNumber.internationalNumber.includes(this.searchTerm)
+      this.filteredCards = this.users.filter(user =>
+        user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.mobileNumber.internationalNumber.includes(this.searchTerm) ||
+        user.mobileNumber.internationalNumber.includes(this.searchTerm) ||
+        user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) 
       );
     } else {
-      this.filteredCards = this.cards;
+      this.filteredCards = this.users;
     }
     this.totalPages = Math.ceil(this.filteredCards.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to the first page after search

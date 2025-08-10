@@ -31,12 +31,12 @@ export class MasterTransfer {
     
      this.partnerCode = localStorage.getItem('partnerCode') || '';
  
-     if (!this.adminRole || this.adminRole === 'superadmin' || this.adminRole === 'administrator') {
-       // this.loadUsers();
-       this.fetchAllClients();
-     } else {
-       this.loadUsersByPartnerCode(this.partnerCode); // Load wallets for specific partner
-     }
+    //  if (!this.adminRole || this.adminRole === 'superadmin' || this.adminRole === 'administrator') {
+    //    // this.loadUsers();
+    //    this.fetchAllClients();
+    //  } else {
+    //    this.loadUsersByPartnerCode(this.partnerCode); // Load wallets for specific partner
+    //  }
    }
  
    fetchAllClients() {
@@ -117,20 +117,20 @@ export class MasterTransfer {
      this.isLoading = true; // Show loading spinner
  
      // Call the topUp API directly
-     this.adminService.masterTopUp(payload).subscribe({
-       next: (response) => {
-         this.toastr.success('Top-up completed successfully!');
-         console.log('Top-up Success:', response);
-         this.isLoading = false; 
-         this.resetForm(); 
-       },
-       error: (error) => {
-         const errorMessage = error?.error?.details || error?.error?.error || 'Failed to complete top-up. Please try again.';
-         this.toastr.error(errorMessage);
-         console.error('Top-up Error:', error);
-         this.isLoading = false; 
-       },
-     });
+    //  this.adminService.masterTopUp(payload).subscribe({
+    //    next: (response) => {
+    //      this.toastr.success('Top-up completed successfully!');
+    //      console.log('Top-up Success:', response);
+    //      this.isLoading = false; 
+    //      this.resetForm(); 
+    //    },
+    //    error: (error) => {
+    //      const errorMessage = error?.error?.details || error?.error?.error || 'Failed to complete top-up. Please try again.';
+    //      this.toastr.error(errorMessage);
+    //      console.error('Top-up Error:', error);
+    //      this.isLoading = false; 
+    //    },
+    //  });
      
    }
  
