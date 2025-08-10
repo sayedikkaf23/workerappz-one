@@ -71,7 +71,7 @@ export class ViewRole implements OnInit {
 
   // navigate to add/edit
   goToCreate(): void {
-    this.router.navigate(['/admin/roles/new']);
+    this.router.navigate(['/admin/roles']);
   }
 
   editRow(r: RoleVM, e?: MouseEvent): void {

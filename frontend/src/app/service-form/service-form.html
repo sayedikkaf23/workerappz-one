@@ -2,29 +2,34 @@
 <app-topbar></app-topbar>
 
 <div class="role-page">
-  <form (ngSubmit)="onSubmit()">
-    <div class="full-width">
+   <div class="full-width header-row">
       <h2>{{ isEdit ? 'Edit Service' : 'New Service' }}</h2>
       <a class="back-button" (click)="goBack()">
         <i class="fas fa-arrow-left"></i>
       </a>
     </div>
 
-    <div>
-      <label for="name">Name <span class="required">*</span></label>
-      <input type="text" id="name" [(ngModel)]="name" name="name" required />
-    </div>
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+  
 
-    <div>
-      <label for="status">Status <span class="required">*</span></label>
-      <select id="status" [(ngModel)]="active" name="active" required>
-        <option [ngValue]="true">Active</option>
-        <option [ngValue]="false">Inactive</option>
-      </select>
-    </div>
+    
 
-    <button type="submit" [disabled]="isLoading">
-      {{ isEdit ? (isLoading ? 'Updating...' : 'Update') : (isLoading ? 'Submitting...' : 'Submit') }}
-    </button>
+   <div>
+        <label for="name">Name <span class="required">*</span></label>
+        <input type="text" id="name" [(ngModel)]="name" name="name" required />
+      </div>
+
+    <div >
+        <label for="status">Status <span class="required">*</span></label>
+        <select id="status" [(ngModel)]="active" name="active" required>
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+        </select>
+      </div>
+
+   <!-- <div class="form-actions"> -->
+      <button type="submit" [disabled]="isLoading">
+        {{ isEdit ? (isLoading ? 'Updating...' : 'Update') : (isLoading ? 'Submitting...' : 'Submit') }}
+      </button>
   </form>
 </div>

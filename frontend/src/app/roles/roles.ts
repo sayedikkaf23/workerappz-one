@@ -68,7 +68,7 @@ export class Roles implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.toastr.error(err?.error?.message || 'Failed to load role', 'Error');
-        this.router.navigate(['/roles']);
+        this.router.navigate(['admin/roles/view']);
       }
     });
   }
@@ -90,7 +90,7 @@ export class Roles implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/roles']); // adjust to your list route if different
+    this.router.navigate(['admin/roles/view']); // adjust to your list route if different
   }
 
   onSubmit() {
@@ -114,7 +114,7 @@ export class Roles implements OnInit {
         next: (res) => {
           this.isLoading = false;
           this.toastr.success(res?.message || 'Role updated successfully', 'Updated');
-          this.router.navigate(['/roles']);
+          this.router.navigate(['admin/roles/view']);
         },
         error: (err) => {
           this.isLoading = false;
@@ -133,7 +133,7 @@ export class Roles implements OnInit {
           this.selectedPermissions = [];
           this.status = true;
           // or go back to list
-          this.router.navigate(['/roles']);
+          this.router.navigate(['admin/roles/view']);
         },
         error: (err) => {
           this.isLoading = false;

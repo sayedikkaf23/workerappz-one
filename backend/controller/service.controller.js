@@ -44,6 +44,30 @@ exports.updateService = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+// Get Service by ID
+exports.getServiceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const service = await Service.findById(id);
+
+    if (!service) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    res.status(200).json(service);
+  } catch (error) {
+    console.error("Error fetching service by ID:", error);
+
+    // Handle invalid ObjectId errors
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid service ID format" });
+    }
+
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 
 // Delete Service
 exports.deleteService = async (req, res) => {

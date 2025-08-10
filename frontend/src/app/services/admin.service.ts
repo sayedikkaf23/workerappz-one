@@ -124,6 +124,11 @@ getAdminById(id: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/admin/roles/update/${id}`, payload);
   }
 
+  // Get Service by ID
+getServiceById(id: string): Observable<ServiceItem> {
+  return this.http.get<ServiceItem>(`${this.apiUrl}/service/details/${id}`);
+}
+
   deleteRole(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/admin/roles/remove/${id}`);
   }

@@ -35,32 +35,29 @@ export class ServiceForm implements OnInit {
     this.isEdit = !!this.id;
 
     if (this.isEdit && this.id) {
-      // Try to use data from router state first
       const state = history.state as { service?: ServiceItem };
       if (state?.service) {
         this.name = state.service.name;
         this.active = !!state.service.active;
       } else {
-        // Fallback: try to load by id (requires backend GET /service/:id)
         this.tryLoadById(this.id);
       }
     }
   }
 
   private tryLoadById(id: string) {
-    // If you have GET /service/:id, uncomment this and add method in AdminService
-    // this.isLoading = true;
-    // this.adminService.getServiceById(id).subscribe({
-    //   next: (svc) => {
-    //     this.name = svc?.name || '';
-    //     this.active = !!svc?.active;
-    //     this.isLoading = false;
-    //   },
-    //   error: () => {
-    //     this.isLoading = false;
-    //     Swal.fire('Error', 'Could not load service details', 'error');
-    //   },
-    // });
+    this.isLoading = true;
+    this.adminService.getServiceById(id).subscribe({
+      next: (svc) => {
+        this.name = svc?.name || '';
+        this.active = !!svc?.active;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        Swal.fire('Error', 'Could not load service details', 'error');
+      },
+    });
   }
 
   onSubmit(): void {
