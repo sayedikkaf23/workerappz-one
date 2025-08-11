@@ -249,3 +249,79 @@
 /* make sure sidebar doesn't clip flyouts */
 .sidebar { overflow: visible; }
 .sidebar-menu { overflow-x: visible; }
+
+
+/* let flyout overflow outside the sidebar */
+.sidebar { overflow: visible; }
+.sidebar-menu { overflow-x: visible; }
+
+/* first-level dropdown stays under the parent (Master) – you already have this */
+
+/* FLYOUT (second level for Global) */
+.sidebar-menu .dropdown.flyout { position: relative; }
+
+/* hidden by default */
+.sidebar-menu .dropdown.flyout > .flyout-menu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;             /* appear to the RIGHT of Global */
+  width: 240px;
+  background: #2f4e66;
+  border-left: 1px solid #1f2d3d;
+  box-shadow: 2px 0 8px rgba(0,0,0,.25);
+  z-index: 2000;
+}
+
+/* open on HOVER (desktop) */
+.sidebar-menu .dropdown.flyout:hover > .flyout-menu {
+  display: block;
+}
+
+/* open on CLICK (adds .open class from TS) */
+.sidebar-menu .dropdown.flyout.open > .flyout-menu {
+  display: block;
+}
+
+/* rotate caret when open */
+.sidebar-menu .dropdown.flyout .dropdown-icon.open { transform: rotate(90deg); }
+
+/* Mobile: stack under Global so it doesn't go off-screen */
+@media (max-width: 768px) {
+  .sidebar-menu .dropdown.flyout > .flyout-menu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+  }
+}
+/* sidebar menu: hide scrollbars */
+.sidebar-menu {
+  overflow-y: auto;
+  overflow-x: visible;
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE/Edge */
+}
+.sidebar-menu::-webkit-scrollbar {  /* Chrome/Safari */
+  width: 0;
+  height: 0;
+}
+.main-content { overflow-x: hidden; }
+
+/* flyout panel */
+.flyout-panel {
+  position: fixed;           /* sits above content */
+  background: #2f4e66;
+  color: #fff;
+  border-left: 1px solid #1f2d3d;
+  box-shadow: 2px 0 10px rgba(0,0,0,.25);
+  z-index: 2000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.flyout-menu { list-style: none; margin: 0; padding: 8px 0; }
+.flyout-menu li a { display: block; padding: 12px 16px; color: #fff; text-decoration: none; }
+.flyout-menu li a:hover, .flyout-menu li.active a { background: #3498db; }
+
+/* ensure nothing clips it */
+.sidebar { overflow: visible; }

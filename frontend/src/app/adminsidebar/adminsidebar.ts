@@ -16,8 +16,11 @@ export class Adminsidebar {
 
    permissions: string[] = [];
   isSuperAdmin: boolean = false;
-  isMasterOpen = false;
+isMasterOpen = false;
 isGlobalOpen = false;
+showGlobal = false;
+hoveringFlyout = false;
+globalStyle: any = { top: '0px', left: '0px', width: '260px' };
 
 masterRoutes = [
   '/admin/master/global/credit-limit',
@@ -35,8 +38,9 @@ masterRoutes = [
     this.loadPermissions(); // Call the function to load permissions on initialization
   }
 
+@ViewChild('sidebarMenu', { static: false }) sidebarMenu?: ElementRef;
 
-  @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
+  // @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
   sessionStorageKey = 'settingsDropdownOpen';
   settingsRoutes = ['/admin/users/roles', '/admin/users/edit','/admin/users', '/admin/partner-code', '/admin/topup', '/admin/roles', '/admin/roles/view', '/admin/roles/assign', '/admin/users/update', '/admin/partner-code/add','/admin/fund/master-transfer','/admin/ip-address/add', '/admin/ip-address/list', '/admin/ip-address/edit/:id']; // Array of settings routes
   
@@ -165,28 +169,66 @@ ngOnDestroy() {
   sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
 }
 
-toggleMaster(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
 
-  this.isMasterOpen = !this.isMasterOpen;
+openGlobal(e: Event) {
+  e.preventDefault(); e.stopPropagation();
 
-  // close Settings when Master opens
-  if (this.isMasterOpen) {
-    this.isDropdownOpen = false;
-    sessionStorage.setItem(this.sessionStorageKey, 'false');
+  const sidebar = document.querySelector('.sidebar') as HTMLElement;
+  const item   = (e.currentTarget as HTMLElement).closest('li') as HTMLElement;
+
+  const itemRect = item.getBoundingClientRect();
+  const sbRect   = sidebar.getBoundingClientRect();
+
+  const panelWidth = 260; // same as CSS width
+  const left = sbRect.right; // right next to sidebar
+
+  // Provisional top aligned to the item
+  let top = itemRect.top;
+
+  // Keep inside viewport
+  const viewportH = window.innerHeight;
+  const margin = 8;
+  const estimatedPanelH = 120; // quick safe default; updated next tick
+
+  if (top + estimatedPanelH + margin > viewportH) {
+    top = Math.max(margin, viewportH - estimatedPanelH - margin);
   }
 
-  // optional: collapse Global when closing Master
-  if (!this.isMasterOpen) this.isGlobalOpen = false;
+  this.globalStyle = { top: `${top}px`, left: `${left}px`, width: `${panelWidth}px` };
+  this.showGlobal = true;
 
-  this.ngZone.onStable.subscribe(() => this.scrollToBottom());
+  // Re-measure once it renders to clamp precisely
+  setTimeout(() => {
+    const panel = document.querySelector('.flyout-panel') as HTMLElement;
+    if (!panel) return;
+    const h = panel.getBoundingClientRect().height;
+    let t = itemRect.top;
+    if (t + h + margin > viewportH) t = Math.max(margin, viewportH - h - margin);
+    this.globalStyle = { top: `${t}px`, left: `${left}px`, width: `${panelWidth}px` };
+  });
+
+  // close on outside click
+  const onDoc = (ev: MouseEvent) => {
+    const panel = document.querySelector('.flyout-panel');
+    if (!panel || (!panel.contains(ev.target as Node) && !item.contains(ev.target as Node))) {
+      this.showGlobal = false;
+      document.removeEventListener('click', onDoc);
+    }
+  };
+  setTimeout(() => document.addEventListener('click', onDoc));
 }
 
-toggleGlobal(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
+closeGlobal() { this.showGlobal = false; }
 
+
+toggleMaster(e: Event) {
+  e.preventDefault(); e.stopPropagation();
+  this.isMasterOpen = !this.isMasterOpen;
+  if (this.isMasterOpen) this.isGlobalOpen = false; // optional
+}
+
+toggleGlobal(e: Event) {
+  e.preventDefault(); e.stopPropagation();
   this.isGlobalOpen = !this.isGlobalOpen;
 }
 }

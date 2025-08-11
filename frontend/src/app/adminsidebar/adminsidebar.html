@@ -20,28 +20,38 @@
   </a>
 
   <ul class="sidebar-menu dropdown-menu" *ngIf="isMasterOpen">
-    <!-- Global submenu (FLYOUT) -->
-    <li class="dropdown flyout" [ngClass]="{'active': isGlobalOpen}">
-      <a href="#" (click)="toggleGlobal($event)">
-        <i class="fas fa-globe"></i> Global
-        <i class="fas fa-caret-right dropdown-icon" [ngClass]="{'open': isGlobalOpen}"></i>
-      </a>
+    <!-- GLOBAL flyout -->
+   <!-- Global row (inside Master) -->
+<li class="dropdown flyout-trigger">
+  <a href="#" (click)="openGlobal($event)">
+    <i class="fas fa-globe"></i> Global
+    <i class="fas fa-caret-right dropdown-icon"></i>
+  </a>
+</li>
+<li class="dropdown flyout-trigger">
+  <a href="#" >
+    <i class="fas fa-globe"></i> Currency
+    <i class="fas fa-caret-right dropdown-icon"></i>
+  </a>
+</li>
 
-      <ul class="sidebar-menu dropdown-menu" *ngIf="isGlobalOpen">
-        <li [ngClass]="{'active': isActive('/admin/master/global/credit-limit')}">
-          <a [routerLink]="['/admin/master/global/credit-limit']">
-            <i class="fas fa-level-up-alt"></i> Global Credit Limit
-          </a>
-        </li>
-        <li [ngClass]="{'active': isActive('/admin/master/global/transaction-limit')}">
-          <a [routerLink]="['/admin/master/global/transaction-limit']">
-            <i class="fas fa-exchange-alt"></i> Global Transaction Limit
-          </a>
-        </li>
-      </ul>
+<!-- FIXED flyout panel -->
+<div class="flyout-panel" *ngIf="showGlobal" [ngStyle]="globalStyle"
+     (mouseenter)="hoveringFlyout=true"
+     (mouseleave)="closeGlobal()">
+  <ul class="flyout-menu">
+    <li [class.active]="isActive('/admin/master/global/credit-limit')">
+      <a [routerLink]="['/admin/master/global/credit-limit']">Global Credit Limit</a>
+    </li>
+    <li [class.active]="isActive('/admin/master/global/transaction-limit')">
+      <a [routerLink]="['/admin/master/global/transaction-limit']">Global Transaction Limit</a>
     </li>
   </ul>
+</div>
+
+  </ul>
 </li>
+
 
 
     <li *ngIf="hasPermission('Individual User')" [ngClass]="{'active': isActive('/admin/dashboard')}">
