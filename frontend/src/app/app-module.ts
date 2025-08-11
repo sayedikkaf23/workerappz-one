@@ -60,6 +60,8 @@ import { ServiceForm } from './service-form/service-form';
 import { ViewService } from './view-service/view-service';
 import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-global-credit-limit';
 import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
+import { CurrencyManagement } from './currency-management/currency-management';
+import { AddCurrencyModal } from './add-currency-modal/add-currency-modal';
 @NgModule({
   declarations: [
     App,
@@ -115,7 +117,9 @@ import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/
     ViewService,
     Users,
     MasterGlobalCreditLimit,
-    MasterGlobalTransactionLimit
+    MasterGlobalTransactionLimit,
+    CurrencyManagement,
+    AddCurrencyModal
   ],
   imports: [
     BrowserModule,
