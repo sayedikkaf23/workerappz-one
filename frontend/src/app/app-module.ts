@@ -127,6 +127,8 @@ import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/
     NgxIntlTelInputModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    // MasterGlobalTransactionLimit // Import here instead of declaring it
+
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

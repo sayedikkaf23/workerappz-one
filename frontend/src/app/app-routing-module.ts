@@ -67,14 +67,20 @@ const routes: Routes = [
   // admin
   { path: 'admin/login', component: AdminLogin },
   // { path: 'admin/admindashboard', component: AdminDashboard },
- {
+  {
     path: 'admin',
-   children: [
+    children: [
       // { path: 'login', component: AdminLogin },
       { path: 'dashboard', component: AdminDashboard },
       // app-routing.module.ts (inside the existing 'admin' children array)
-{ path: 'master/global/credit-limit', component: MasterGlobalCreditLimit },
-{ path: 'master/global/transaction-limit', component: MasterGlobalTransactionLimit },
+      {
+        path: 'master/global/credit-limit',
+        component: MasterGlobalCreditLimit,
+      },
+      {
+        path: 'master/global/transaction-limit',
+        component: MasterGlobalTransactionLimit,
+      },
 
       { path: 'home', component: Dashboards },
 
@@ -87,10 +93,8 @@ const routes: Routes = [
       { path: 'roles/:id/edit', component: Roles },
       { path: 'roles/view', component: ViewRole },
       { path: 'roles/assign', component: Userrole },
-            { path: 'add/admin', component: AddAdmin },
-              { path: 'admins/:id/edit', component: AddAdmin },
-
-
+      { path: 'add/admin', component: AddAdmin },
+      { path: 'admins/:id/edit', component: AddAdmin },
 
       // Partner Codes
       { path: 'partner-code', component: Partnercode },
@@ -106,10 +110,9 @@ const routes: Routes = [
       // Wallet & Card
       { path: 'wallet', component: Adminwallet },
       { path: 'cards', component: Admincard },
-    { path: 'services', component: ViewService },
-{ path: 'services/new', component: ServiceForm },
-{ path: 'services/:id/edit', component: ServiceForm },
-
+      { path: 'services', component: ViewService },
+      { path: 'services/new', component: ServiceForm },
+      { path: 'services/:id/edit', component: ServiceForm },
 
       // Topup
       { path: 'topup', component: Topup },

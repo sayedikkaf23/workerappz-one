@@ -1,1 +1,25 @@
-<p>master-global-credit-limit works!</p>
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div class="gcl-page">
+  <h1>Global Credit Limit Management</h1>
+
+  <div class="gcl-row">
+    <span class="gcl-label">Global Credit Limit (USD)</span>
+
+    <input
+      type="number"
+      class="form-control gcl-input"
+      placeholder="0000000.00"
+      formControlName="limit"
+      [ngClass]="{'is-invalid': form.get('limit')?.touched && form.get('limit')?.invalid}"
+      [readonly]="saving"
+    />
+
+    <button class="btn btn-primary gcl-btn" (click)="update()" [disabled]="saving || form.invalid">
+      {{ saving ? 'Updating…' : 'Update' }}
+    </button>
+  </div>
+
+  <div *ngIf="savedMsg" class="alert alert-success mt-3">{{ savedMsg }}</div>
+</div>
