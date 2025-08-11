@@ -15,7 +15,6 @@
     }
 }
 
-
 /* Action cell dropdown */
 .action-cell {
     position: relative;
@@ -36,6 +35,7 @@
     position: absolute;
     top: 100%;
     right: 0;
+    left: 0;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -60,6 +60,7 @@
 .dropdown-menu.show {
     display: block; /* Show dropdown when class "show" is added */
 }
+
 .user-page {
     margin-left: 290px; /* Space for sidebar */
     padding: 20px;
@@ -79,7 +80,6 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 20px;
 }
 
 .user-page button:hover {
@@ -209,7 +209,7 @@ input:checked + .slider:before {
 
 .search-button {
     padding: 8px 16px;
-    margin-top: 18px;
+    
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -285,40 +285,6 @@ input:checked + .slider:before {
     height: 50px;
     animation: spin 1s linear infinite;
 }
-/* wrap both controls in a single flex row */
-.filter-export-buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;       /* space between each item */
-  margin-bottom: 20px;
-}
-
-/* make the search box + button stick together */
-.search-container {
-  display: flex;
-  align-items: center;
-}
-
-.search-container input {
-  flex: 1;
-  min-width: 200px;
-}
-
-/* match the Export button to your SEARCH button style */
-.export-button {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.export-button:hover {
-  background-color: #0056b3;
-}
-
 
 /* Spin keyframe */
 @keyframes spin {
@@ -328,7 +294,7 @@ input:checked + .slider:before {
 
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
-
+    
 
     .user-table th, .user-table td {
         padding: 8px 10px;
@@ -350,8 +316,6 @@ input:checked + .slider:before {
         margin-left: 0; /* Remove margin on very small screens */
         padding: 10px;
     }
-
-    
 }
 
 @media (max-width: 768px) {
@@ -368,11 +332,41 @@ input:checked + .slider:before {
 
 @media (max-width: 991px) {
     .user-table{
-        display: block;
+        display: inline-table;
         overflow-x: auto;
     }
 }
 
+
+/* 1) Force a single, no-wrap flex line */
+.filter-export-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;       /* never wrap to a new line */
+  white-space: nowrap;     /* safeguard against inline wrapping */
+}
+
+/* 2) Kill any bottom-margins that might push the last button lower */
+.filter-export-buttons > * {
+  margin-bottom: 0 !important;
+}
+
+/* 3) Fix your input’s flex so it doesn’t hog all the space */
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  flex: 0 0 200px;         /* or whatever width you like */
+  min-width: 0;            /* allow shrink if container gets tight */
+}
+
+/* 4) Make sure your buttons also don’t shrink weirdly */
+.filter-export-buttons button {
+  flex: 0 0 auto;
+}
 
 .results-info {
   margin: 16px 0;
@@ -385,4 +379,80 @@ input:checked + .slider:before {
   color: #5d5959;
   /* color: #1e3a8a; dark blue */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+
+
+/* --- MOBILE FIXES (≤ 768px) --- */
+@media (max-width: 768px) {
+  /* Let the bar wrap to new lines and fill width */
+  .filter-export-buttons {
+    flex-wrap: wrap;         /* override the desktop nowrap */
+    gap: 8px;
+  }
+
+  /* Make the search row take a full line and flex properly */
+  .search-container {
+    flex: 1 1 100%;
+    width: 100%;
+    gap: 8px;
+  }
+  .search-container input {
+    flex: 1 1 auto;          /* was 0 0 200px; let it grow/shrink */
+    min-width: 0;            /* allow narrow screens */
+  }
+  .search-button {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Keep the other buttons compact and visible */
+  .filter-export-buttons .export-button,
+  .filter-export-buttons > button {
+    padding: 8px 10px;
+    font-size: 12px;
+    flex: 0 0 auto;          /* don’t stretch */
+    white-space: nowrap;
+  }
+
+  /* Reduce table padding and make it scrollable horizontally */
+  .user-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .user-table th, .user-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  /* Ensure dropdown isn’t clipped inside cells */
+  .action-cell { overflow: visible; }
+  .dropdown-menu {
+    right: 0;
+    left: auto;              /* avoid spanning full width */
+    min-width: 140px;
+    z-index: 2000;
+  }
+
+  /* Tighten page padding */
+  .user-page {
+    margin-left: 0;
+    padding: 12px;
+    margin-top: 80px;        /* adjust if topbar overlaps */
+  }
+
+  /* If the top-level layout still offsets content via .main-content, zero it */
+  .main-content { margin-left: 0; }
+}
+
+/* --- VERY SMALL PHONES (≤ 400px) --- */
+@media (max-width: 400px) {
+  .search-button,
+  .filter-export-buttons .export-button,
+  .filter-export-buttons > button {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
 }

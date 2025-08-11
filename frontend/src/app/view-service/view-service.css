@@ -380,3 +380,79 @@ input:checked + .slider:before {
   /* color: #1e3a8a; dark blue */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
+
+
+
+/* --- MOBILE FIXES (≤ 768px) --- */
+@media (max-width: 768px) {
+  /* Let the bar wrap to new lines and fill width */
+  .filter-export-buttons {
+    flex-wrap: wrap;         /* override the desktop nowrap */
+    gap: 8px;
+  }
+
+  /* Make the search row take a full line and flex properly */
+  .search-container {
+    flex: 1 1 100%;
+    width: 100%;
+    gap: 8px;
+  }
+  .search-container input {
+    flex: 1 1 auto;          /* was 0 0 200px; let it grow/shrink */
+    min-width: 0;            /* allow narrow screens */
+  }
+  .search-button {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Keep the other buttons compact and visible */
+  .filter-export-buttons .export-button,
+  .filter-export-buttons > button {
+    padding: 8px 10px;
+    font-size: 12px;
+    flex: 0 0 auto;          /* don’t stretch */
+    white-space: nowrap;
+  }
+
+  /* Reduce table padding and make it scrollable horizontally */
+  .user-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .user-table th, .user-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  /* Ensure dropdown isn’t clipped inside cells */
+  .action-cell { overflow: visible; }
+  .dropdown-menu {
+    right: 0;
+    left: auto;              /* avoid spanning full width */
+    min-width: 140px;
+    z-index: 2000;
+  }
+
+  /* Tighten page padding */
+  .user-page {
+    margin-left: 0;
+    padding: 12px;
+    margin-top: 80px;        /* adjust if topbar overlaps */
+  }
+
+  /* If the top-level layout still offsets content via .main-content, zero it */
+  .main-content { margin-left: 0; }
+}
+
+/* --- VERY SMALL PHONES (≤ 400px) --- */
+@media (max-width: 400px) {
+  .search-button,
+  .filter-export-buttons .export-button,
+  .filter-export-buttons > button {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}

@@ -68,21 +68,24 @@
         <i class="fas fa-caret-down dropdown-icon" [ngClass]="{'open': isDropdownOpen}"></i>
       </a>
       <ul class="sidebar-menu dropdown-menu" *ngIf="isDropdownOpen">
+         <li [ngClass]="{'active': isActive('/admin/admin')}">
+          <a [routerLink]="['/admin/admin']">
+            <i class="fas fa-users"></i> Admin
+          </a>
+        </li>
         <li [ngClass]="{'active': isActive('/admin/roles/assign')}">
           <a [routerLink]="['/admin/roles/view']">
             <i class="fas fa-id-card"></i> Roles
           </a>
         </li>
-        <li [ngClass]="{'active': isActive('/admin/admin')}">
-          <a [routerLink]="['/admin/admin']">
-            <i class="fas fa-users"></i> Admin
-          </a>
-        </li>
-        <li [ngClass]="{'active': isActive('/admin/services')}">
-          <a [routerLink]="['/admin/services']">
-            <i class="fas fa-users"></i> Service
-          </a>
-        </li>
+       
+     <li [ngClass]="{'active': isActive('/admin/services')}">
+  <a [routerLink]="['/admin/services']">
+    <i class="fas fa-briefcase"></i> Service
+  </a>
+</li>
+
+
         <!-- <li  [ngClass]="{'active': isActive('/admin/partner-code')}">
           <a [routerLink]="['/admin/partner-code']">
             <i class="fas fa-code"></i> Partner Code

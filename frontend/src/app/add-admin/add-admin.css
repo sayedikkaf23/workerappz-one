@@ -110,6 +110,7 @@ form label {
 /* Text input and select styling */
 form input[type="text"],
 form input[type="password"],
+form input[type="email"], 
 form select {
     padding: 10px;
     border: 1px solid #ccc;
