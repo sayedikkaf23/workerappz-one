@@ -30,10 +30,11 @@
         <input id="fromDate" type="date" [(ngModel)]="fromDate" />
         <label for="toDate">To:</label>
         <input id="toDate" type="date" [(ngModel)]="toDate" />
-        <button class="filter-button" (click)="applyDateFilter()">
+       
+      </div>
+       <button class="filter-button" (click)="applyDateFilter()">
           <i class="fas fa-filter"></i> Filter by Date
         </button>
-      </div>
 
       <button class="export-button" (click)="exportToExcel()">
         <i class="fas fa-file-export"></i> EXPORT
