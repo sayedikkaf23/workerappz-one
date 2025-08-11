@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import your real service
-// import { Admin } from '../services/admin';
+import { LimitService, CreditLimitDto } from '../services/limit';  // Import the service
 
 @Component({
   selector: 'app-master-global-credit-limit',
@@ -10,41 +9,59 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   standalone: false
 })
 export class MasterGlobalCreditLimit implements OnInit {
-  form!: FormGroup;
-  saving = false;
-  savedMsg = '';
+  form!: FormGroup;  // Form to hold the input values
+  saving = false;  // Track the saving state
+  savedMsg = '';  // Track the success message
 
   constructor(
-    private fb: FormBuilder,
-    // private admin: Admin
+    private fb: FormBuilder,  // FormBuilder to manage reactive forms
+    private limitService: LimitService  // Service to interact with the backend API
   ) {}
 
   ngOnInit(): void {
+    // Initialize the form with validation
     this.form = this.fb.group({
-      limit: [null, [Validators.required, Validators.min(0)]]
+      limit: [null, [Validators.required, Validators.min(0)]]  // Limit should be required and greater than 0
     });
 
-    // TODO: load current value from API
-    // this.admin.getGlobalCreditLimit().subscribe(v => this.form.patchValue({ limit: v }));
+    // Load the current credit limit from the API
+    this.loadCreditLimit();
   }
 
+  // Method to load the current credit limit
+  loadCreditLimit(): void {
+    this.limitService.getCreditLimit().subscribe(
+      (data: CreditLimitDto) => {
+        // Patch the form with the current limit value
+        this.form.patchValue({
+          limit: data.limit
+        });
+      },
+      (error) => {
+        console.error('Error fetching credit limit:', error);
+      }
+    );
+  }
+
+  // Method to update the global credit limit
   update(): void {
-    if (this.form.invalid) return;
-    this.saving = true;
-    this.savedMsg = '';
+    if (this.form.invalid) return;  // Don't submit if the form is invalid
 
-    const payload = { limit: +this.form.value.limit };
+    this.saving = true;  // Set saving state to true while the request is in progress
+    this.savedMsg = '';  // Reset the saved message
 
-    // TODO: replace with real API call
-    setTimeout(() => {
-      this.saving = false;
-      this.savedMsg = 'Global credit limit updated successfully.';
-    }, 700);
+    const payload = { limit: +this.form.value.limit };  // Get the limit value from the form
 
-    // Example real call:
-    // this.admin.updateGlobalCreditLimit(payload).subscribe({
-    //   next: () => { this.saving = false; this.savedMsg = 'Updated successfully.'; },
-    //   error: () => { this.saving = false; this.savedMsg = 'Update failed. Try again.'; }
-    // });
+    // Call the service to update the credit limit
+    this.limitService.updateCreditLimit(payload).subscribe(
+      (response) => {
+        this.saving = false;  // Set saving state to false after the request completes
+        this.savedMsg = 'Global credit limit updated successfully.';  // Set the success message
+      },
+      (error) => {
+        this.saving = false;  // Set saving state to false if an error occurs
+        this.savedMsg = 'Error updating credit limit. Please try again.';  // Set the error message
+      }
+    );
   }
 }

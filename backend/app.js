@@ -7,6 +7,7 @@ const onboardingRoutes = require("./routes/onboarding.routes");
 const nationalities = require("./routes/nationality.routes");
 const admin=require('./routes/admin.routes')
 const service=require('./routes/service.route');
+const limitRoutes = require('./routes/limit.routes');
 
 
 // Load .env or .env.production based on NODE_ENV
@@ -25,6 +26,8 @@ app.use(cors());
 app.use("/api", onboardingRoutes);
 app.use("/admin", admin);
 app.use("/service", service);
+app.use("/limit", limitRoutes); // Use the limit routes
+// Add other routes as needed
 
 app.use("/nationalities", nationalities);
 

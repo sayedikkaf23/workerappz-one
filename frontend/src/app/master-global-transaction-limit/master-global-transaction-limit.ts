@@ -1,26 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LimitService, TransactionLimitDto } from '../services/limit';  // Import the service
+
 @Component({
   selector: 'app-master-global-transaction-limit',
-  standalone: false,
   templateUrl: './master-global-transaction-limit.html',
-  styleUrl: './master-global-transaction-limit.css'
+  styleUrls: ['./master-global-transaction-limit.css'],
+  standalone: false
 })
-export class MasterGlobalTransactionLimit {
- form!: FormGroup;
+export class MasterGlobalTransactionLimit implements OnInit {
+form!: FormGroup;
   saving = false;
   savedMsg = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private limitService: LimitService
+  ) {}
 
   ngOnInit(): void {
+    // Initialize the form group
     this.form = this.fb.group({
       cashLimit: [null, [Validators.required, Validators.min(0)]],
       bankLimit: [null, [Validators.required, Validators.min(0)]]
     });
 
-    // Load existing values (replace with API call)
-    // this.form.patchValue({ cashLimit: 5000000, bankLimit: 5000000 });
+    // Load current limits from the API
+    this.loadTransactionLimits();
+  }
+
+  loadTransactionLimits(): void {
+    this.limitService.getTransactionLimit().subscribe(
+      (data: TransactionLimitDto) => {
+        console.log('Fetched data from API:', data);
+        this.form.patchValue({
+          cashLimit: data.cashLimit,
+          bankLimit: data.bankLimit
+        });
+        console.log('Form Value After patchValue:', this.form.value);
+      },
+      (error) => {
+        console.error('Error fetching transaction limits:', error);
+      }
+    );
   }
 
   update(): void {
@@ -34,10 +56,15 @@ export class MasterGlobalTransactionLimit {
       bankLimit: +this.form.value.bankLimit
     };
 
-    // Simulate API call
-    setTimeout(() => {
-      this.saving = false;
-      this.savedMsg = 'Transaction limits updated successfully.';
-    }, 700);
+    this.limitService.updateTransactionLimit(payload).subscribe(
+      (response) => {
+        this.saving = false;
+        this.savedMsg = 'Transaction limits updated successfully.';
+      },
+      (error) => {
+        this.saving = false;
+        this.savedMsg = 'Error updating transaction limits. Please try again.';
+      }
+    );
   }
 }

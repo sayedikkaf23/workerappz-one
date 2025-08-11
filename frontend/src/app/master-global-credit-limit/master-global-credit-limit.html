@@ -4,22 +4,26 @@
 <div class="gcl-page">
   <h1>Global Credit Limit Management</h1>
 
-  <div class="gcl-row">
-    <span class="gcl-label">Global Credit Limit (USD)</span>
+  <!-- Form bound to formGroup -->
+  <form [formGroup]="form">
+    <div class="gcl-row">
+      <span class="gcl-label">Global Credit Limit (USD)</span>
 
-    <input
-      type="number"
-      class="form-control gcl-input"
-      placeholder="0000000.00"
-      formControlName="limit"
-      [ngClass]="{'is-invalid': form.get('limit')?.touched && form.get('limit')?.invalid}"
-      [readonly]="saving"
-    />
+      <input
+        type="number"
+        class="form-control gcl-input"
+        placeholder="0000000.00"
+        formControlName="limit"
+        [ngClass]="{'is-invalid': form.get('limit')?.touched && form.get('limit')?.invalid}"
+        [readonly]="saving"
+      />
 
-    <button class="btn btn-primary gcl-btn" (click)="update()" [disabled]="saving || form.invalid">
-      {{ saving ? 'Updating…' : 'Update' }}
-    </button>
-  </div>
+      <button class="btn btn-primary gcl-btn" (click)="update()" [disabled]="saving || form.invalid">
+        {{ saving ? 'Updating…' : 'Update' }}
+      </button>
+    </div>
+  </form>
 
+  <!-- Success message after the limit is updated -->
   <div *ngIf="savedMsg" class="alert alert-success mt-3">{{ savedMsg }}</div>
 </div>

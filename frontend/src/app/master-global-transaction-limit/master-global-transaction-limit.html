@@ -4,41 +4,46 @@
 <div class="transaction-limit-page">
   <h1>Global Transaction Limit Management</h1>
 
-  <div class="input-group">
-    <label for="cashLimit">Cash</label>
-    <div class="input-field">
-      <input
-        type="number"
-        id="cashLimit"
-        class="form-control"
-        placeholder="0000000.00"
-        formControlName="cashLimit"
-        [ngClass]="{'is-invalid': form.get('cashLimit')?.touched && form.get('cashLimit')?.invalid}"
-        [readonly]="saving"
-      />
-      <span class="currency-text">USD</span>
+  <!-- Bind form controls to the FormGroup using formGroup -->
+  <form [formGroup]="form">
+    
+    <div class="input-group">
+      <label for="cashLimit">Cash</label>
+      <div class="input-field">
+        <input
+          type="number"
+          id="cashLimit"
+          class="form-control"
+          placeholder="0000000.00"
+          formControlName="cashLimit"  
+          [ngClass]="{'is-invalid': form.get('cashLimit')?.touched && form.get('cashLimit')?.invalid}"
+          [readonly]="saving"
+        />
+        <span class="currency-text">USD</span>
+      </div>
     </div>
-  </div>
 
-  <div class="input-group">
-    <label for="bankLimit">Bank</label>
-    <div class="input-field">
-      <input
-        type="number"
-        id="bankLimit"
-        class="form-control"
-        placeholder="0000000.00"
-        formControlName="bankLimit"
-        [ngClass]="{'is-invalid': form.get('bankLimit')?.touched && form.get('bankLimit')?.invalid}"
-        [readonly]="saving"
-      />
-      <span class="currency-text">USD</span>
+    <div class="input-group">
+      <label for="bankLimit">Bank</label>
+      <div class="input-field">
+        <input
+          type="number"
+          id="bankLimit"
+          class="form-control"
+          placeholder="0000000.00"
+          formControlName="bankLimit" 
+          [ngClass]="{'is-invalid': form.get('bankLimit')?.touched && form.get('bankLimit')?.invalid}"
+          [readonly]="saving"
+        />
+        <span class="currency-text">USD</span>
+      </div>
     </div>
-  </div>
 
-  <button class="btn btn-primary" (click)="update()" [disabled]="saving || form.invalid">
-    {{ saving ? 'Updating…' : 'Update' }}
-  </button>
+    <button class="btn btn-primary" (click)="update()" [disabled]="saving || form.invalid">
+      {{ saving ? 'Updating…' : 'Update' }}
+    </button>
+
+  </form>
 
   <div *ngIf="savedMsg" class="alert alert-success mt-3">{{ savedMsg }}</div>
 </div>
