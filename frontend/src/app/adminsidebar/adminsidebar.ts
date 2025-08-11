@@ -12,8 +12,17 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './adminsidebar.css'
 })
 export class Adminsidebar {
+    isDropdownOpen: boolean = false;
+
    permissions: string[] = [];
   isSuperAdmin: boolean = false;
+  isMasterOpen = false;
+isGlobalOpen = false;
+
+masterRoutes = [
+  '/admin/master/global/credit-limit',
+  '/admin/master/global/transaction-limit',
+];
 
   constructor(
     private router: Router,
@@ -28,7 +37,6 @@ export class Adminsidebar {
 
 
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
-  isDropdownOpen: boolean = false;
   sessionStorageKey = 'settingsDropdownOpen';
   settingsRoutes = ['/admin/users/roles', '/admin/users/edit','/admin/users', '/admin/partner-code', '/admin/topup', '/admin/roles', '/admin/roles/view', '/admin/roles/assign', '/admin/users/update', '/admin/partner-code/add','/admin/fund/master-transfer','/admin/ip-address/add', '/admin/ip-address/list', '/admin/ip-address/edit/:id']; // Array of settings routes
   
@@ -37,34 +45,41 @@ export class Adminsidebar {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-  ngOnInit() {
-    const storedState = sessionStorage.getItem(this.sessionStorageKey);
-    this.isDropdownOpen = storedState === 'true';
+ ngOnInit() {
+  const storedSettings = sessionStorage.getItem(this.sessionStorageKey);
+  this.isDropdownOpen = storedSettings === 'true';
 
-    // Subscribe to router events to close dropdown on navigation
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (!this.settingsRoutes.includes(this.router.url)) { // Check if not a settings route
-          this.isDropdownOpen = false;
-          sessionStorage.setItem(this.sessionStorageKey, 'false'); // Update sessionStorage
-        }
+  this.isMasterOpen = sessionStorage.getItem('masterOpen') === 'true';
+  this.isGlobalOpen = sessionStorage.getItem('globalOpen') === 'true';
+
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      // close Settings when leaving its routes
+      if (!this.settingsRoutes.includes(this.router.url)) {
+        this.isDropdownOpen = false;
+        sessionStorage.setItem(this.sessionStorageKey, 'false');
       }
-    });
-  }
+      // close Master when leaving its routes
+      if (!this.masterRoutes.includes(this.router.url)) {
+        this.isMasterOpen = false;
+        this.isGlobalOpen = false;
+        sessionStorage.setItem('masterOpen', 'false');
+        sessionStorage.setItem('globalOpen', 'false');
+      }
+    }
+  });
+}
+
+ngOnDestroy() {
+  sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
+  sessionStorage.setItem('masterOpen', String(this.isMasterOpen));
+  sessionStorage.setItem('globalOpen', String(this.isGlobalOpen));
+}
 
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
 
-  toggleDropdown(event: Event) {
-    event.preventDefault();
-    this.isDropdownOpen = !this.isDropdownOpen;
-    sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
-
-    this.ngZone.onStable.subscribe(() => {
-      this.scrollToBottom();
-    });
-  }
 
   scrollToBottom() {
     if (this.isDropdownOpen && this.sidebarMenu) {
@@ -73,9 +88,7 @@ export class Adminsidebar {
     }
   }
 
-  ngOnDestroy() {
-    sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
-  }
+ 
 
   logout() {
     this.router.navigate(['/admin/login']);
@@ -137,4 +150,43 @@ export class Adminsidebar {
       }
     });
   }
+
+  toggleDropdown(event: Event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  this.isDropdownOpen = !this.isDropdownOpen;
+
+  // close Master/Global when Settings opens
+  if (this.isDropdownOpen) {
+    this.isMasterOpen = false;
+    this.isGlobalOpen = false;
+  }
+  sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
+}
+
+toggleMaster(event: Event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  this.isMasterOpen = !this.isMasterOpen;
+
+  // close Settings when Master opens
+  if (this.isMasterOpen) {
+    this.isDropdownOpen = false;
+    sessionStorage.setItem(this.sessionStorageKey, 'false');
+  }
+
+  // optional: collapse Global when closing Master
+  if (!this.isMasterOpen) this.isGlobalOpen = false;
+
+  this.ngZone.onStable.subscribe(() => this.scrollToBottom());
+}
+
+toggleGlobal(event: Event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  this.isGlobalOpen = !this.isGlobalOpen;
+}
 }

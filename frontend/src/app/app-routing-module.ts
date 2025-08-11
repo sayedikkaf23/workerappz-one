@@ -41,7 +41,8 @@ import { PersonalReviewOrder } from './personal-review-order/personal-review-ord
 import { AddAdmin } from './add-admin/add-admin';
 import { ServiceForm } from './service-form/service-form';
 import { ViewService } from './view-service/view-service';
-
+import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-global-credit-limit';
+import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
 const routes: Routes = [
   {
     path: '',
@@ -71,6 +72,10 @@ const routes: Routes = [
    children: [
       // { path: 'login', component: AdminLogin },
       { path: 'dashboard', component: AdminDashboard },
+      // app-routing.module.ts (inside the existing 'admin' children array)
+{ path: 'master/global/credit-limit', component: MasterGlobalCreditLimit },
+{ path: 'master/global/transaction-limit', component: MasterGlobalTransactionLimit },
+
       { path: 'home', component: Dashboards },
 
       // User & Roles

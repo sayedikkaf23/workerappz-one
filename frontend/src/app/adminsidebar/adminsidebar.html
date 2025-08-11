@@ -10,6 +10,40 @@
       </a>
     </li>
 
+
+     
+
+<li *ngIf="hasPermission('Master')" class="dropdown" [ngClass]="{'active': isMasterOpen}">
+  <a href="#" (click)="toggleMaster($event)">
+    <i class="fas fa-database"></i> Master
+    <i class="fas fa-caret-down dropdown-icon" [ngClass]="{'open': isMasterOpen}"></i>
+  </a>
+
+  <ul class="sidebar-menu dropdown-menu" *ngIf="isMasterOpen">
+    <!-- Global submenu (FLYOUT) -->
+    <li class="dropdown flyout" [ngClass]="{'active': isGlobalOpen}">
+      <a href="#" (click)="toggleGlobal($event)">
+        <i class="fas fa-globe"></i> Global
+        <i class="fas fa-caret-right dropdown-icon" [ngClass]="{'open': isGlobalOpen}"></i>
+      </a>
+
+      <ul class="sidebar-menu dropdown-menu" *ngIf="isGlobalOpen">
+        <li [ngClass]="{'active': isActive('/admin/master/global/credit-limit')}">
+          <a [routerLink]="['/admin/master/global/credit-limit']">
+            <i class="fas fa-level-up-alt"></i> Global Credit Limit
+          </a>
+        </li>
+        <li [ngClass]="{'active': isActive('/admin/master/global/transaction-limit')}">
+          <a [routerLink]="['/admin/master/global/transaction-limit']">
+            <i class="fas fa-exchange-alt"></i> Global Transaction Limit
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+
     <li *ngIf="hasPermission('Individual User')" [ngClass]="{'active': isActive('/admin/dashboard')}">
       <a [routerLink]="['/admin/dashboard']">
         <i class="fas fa-users"></i> Individual Users

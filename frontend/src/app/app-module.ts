@@ -58,6 +58,8 @@ import { PersonalReviewOrder } from './personal-review-order/personal-review-ord
 import { AddAdmin } from './add-admin/add-admin';
 import { ServiceForm } from './service-form/service-form';
 import { ViewService } from './view-service/view-service';
+import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-global-credit-limit';
+import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
 @NgModule({
   declarations: [
     App,
@@ -111,7 +113,9 @@ import { ViewService } from './view-service/view-service';
     AddAdmin,
     ServiceForm,
     ViewService,
-    Users
+    Users,
+    MasterGlobalCreditLimit,
+    MasterGlobalTransactionLimit
   ],
   imports: [
     BrowserModule,

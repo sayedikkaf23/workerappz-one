@@ -242,3 +242,10 @@
     display: block;
   }
 }
+/* keep default hidden; only show via *ngIf or active class */
+.sidebar-menu .dropdown .dropdown-menu { display: none; }
+.sidebar-menu .dropdown.active > .dropdown-menu { display: block; }
+
+/* make sure sidebar doesn't clip flyouts */
+.sidebar { overflow: visible; }
+.sidebar-menu { overflow-x: visible; }
