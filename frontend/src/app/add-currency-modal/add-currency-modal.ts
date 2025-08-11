@@ -30,9 +30,21 @@ export class AddCurrencyModal {
   @Output() modalClosed = new EventEmitter<void>();
 
   onSubmit() {
-    if (this.currencyName && this.currencyCode != null) {
-      // this.categoryAdded.emit({ name: this.categoryName, amount: this.defaultAmount });
+     if (!this.currencyName || !this.currencyName.trim()) {
+    this.toastr.warning('Please enter the currency name', 'Validation');
+    return;
+  }
 
+  if (!this.currencyCode || !this.currencyCode.trim()) {
+    this.toastr.warning('Please enter the currency code', 'Validation');
+    return;
+  }
+
+  if (this.scale === null || this.scale === undefined || isNaN(Number(this.scale))) {
+    this.toastr.warning('Please enter a valid scale value', 'Validation');
+    return;
+  }
+ 
 
       
     const createCurrencyData = {
@@ -58,7 +70,7 @@ export class AddCurrencyModal {
       }
     );
      
-    }
+    
   }
 
   onClose() {

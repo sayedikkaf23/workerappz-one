@@ -92,5 +92,6 @@
   }
 
   .custom input[type = checkbox]{
-    width: 30%;
+
+    margin-top: 4px;
   }
