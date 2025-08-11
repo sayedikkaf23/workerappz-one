@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core'; // 👈 make su
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminService, Role } from '../services/admin.service';
+import * as XLSX from 'xlsx';                           // 👈 add this
 
 type RoleVM = Role & { showDropdown?: boolean };
 
@@ -30,6 +31,20 @@ export class ViewRole implements OnInit {
     row.showDropdown = !row.showDropdown;
   }
 
+
+    exportToExcel(): void {
+    const data = this.filteredRoles.map((r, i) => ({
+      No: i + 1,
+      Role: r.role_name,
+      Permissions: (r.permissions || []).join(', '),
+      Status: r.status ? 'Active' : 'Inactive',
+      'Updated On': r.updatedAt ? new Date(r.updatedAt).toLocaleString() : '',
+    }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Roles');
+    XLSX.writeFile(wb, 'roles.xlsx');
+  }
   // API: list
   fetchRoles(): void {
     this.isLoading = true;
