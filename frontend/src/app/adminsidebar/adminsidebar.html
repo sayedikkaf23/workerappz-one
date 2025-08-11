@@ -1,4 +1,7 @@
-<aside class="sidebar" style="margin: 0;">
+<button class="sidebar-toggle" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+  <i class="fas fa-bars"></i>
+</button>
+<aside class="sidebar"  [ngClass]="{'open': isSidebarOpen}" style="margin: 0;">
   <!-- Sidebar Menu -->
   <ul class="sidebar-menu" #sidebarMenu>
     <li *ngIf="hasPermission('Dashboard')" [ngClass]="{'active': isActive('/admin/home')}">

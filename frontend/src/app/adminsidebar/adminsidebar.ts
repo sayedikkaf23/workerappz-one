@@ -32,7 +32,11 @@ export class Adminsidebar {
   sessionStorageKey = 'settingsDropdownOpen';
   settingsRoutes = ['/admin/users/roles', '/admin/users/edit','/admin/users', '/admin/partner-code', '/admin/topup', '/admin/roles', '/admin/roles/view', '/admin/roles/assign', '/admin/users/update', '/admin/partner-code/add','/admin/fund/master-transfer','/admin/ip-address/add', '/admin/ip-address/list', '/admin/ip-address/edit/:id']; // Array of settings routes
   
+  isSidebarOpen = false;
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
   ngOnInit() {
     const storedState = sessionStorage.getItem(this.sessionStorageKey);
     this.isDropdownOpen = storedState === 'true';

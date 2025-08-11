@@ -126,6 +126,7 @@
   .logo-img {
     height: 107px;
     max-width: 107px;
+    margin-left: 60px;
   }
 
   .menu-toggle {
