@@ -21,6 +21,10 @@ isGlobalOpen = false;
 showGlobal = false;
 hoveringFlyout = false;
 globalStyle: any = { top: '0px', left: '0px', width: '260px' };
+activeFlyout: string | null = null;
+flyoutStyle: any = {};
+showFlyout = false;
+flyoutItems: { label: string; link: string }[] = [];
 
 masterRoutes = [
   '/admin/master/global/credit-limit',
@@ -169,6 +173,34 @@ ngOnDestroy() {
   sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
 }
 
+openFlyout(event: Event, name: string, items: { label: string; link: string }[]) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  // set active and menu content
+  this.activeFlyout = name;
+  this.flyoutItems = items;
+  this.showFlyout = true;
+
+  // position next to clicked item
+  const item = (event.currentTarget as HTMLElement).closest('li') as HTMLElement;
+  const rect = item.getBoundingClientRect();
+  const sidebarRect = document.querySelector('.sidebar')!.getBoundingClientRect();
+  const left = sidebarRect.right;
+  let top = rect.top;
+
+  const margin = 8;
+  const panelHeight = items.length * 44 + 16;
+  if (top + panelHeight + margin > window.innerHeight) {
+    top = Math.max(margin, window.innerHeight - panelHeight - margin);
+  }
+  this.flyoutStyle = { top: `${top}px`, left: `${left}px`, width: '240px' };
+}
+
+closeFlyout() {
+  this.showFlyout = false;
+  this.activeFlyout = null;
+}
 
 openGlobal(e: Event) {
   e.preventDefault(); e.stopPropagation();
