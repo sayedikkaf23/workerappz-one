@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LimitService, CreditLimitDto } from '../services/limit';  // Import the service
-
+import { LimitService, CreditLimitDto, TransactionLimitDto } from '../services/limit';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-master-global-credit-limit',
   templateUrl: './master-global-credit-limit.html',
@@ -9,59 +9,91 @@ import { LimitService, CreditLimitDto } from '../services/limit';  // Import the
   standalone: false
 })
 export class MasterGlobalCreditLimit implements OnInit {
-  form!: FormGroup;  // Form to hold the input values
-  saving = false;  // Track the saving state
-  savedMsg = '';  // Track the success message
+  form!: FormGroup;
+  savingCredit = false;
+  savingTxn = false;
 
   constructor(
-    private fb: FormBuilder,  // FormBuilder to manage reactive forms
-    private limitService: LimitService  // Service to interact with the backend API
+    private fb: FormBuilder,
+    private limitService: LimitService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    // Initialize the form with validation
+    // One form with nested groups for both sections
     this.form = this.fb.group({
-      limit: [null, [Validators.required, Validators.min(0)]]  // Limit should be required and greater than 0
+      credit: this.fb.group({
+        limit: [null, [Validators.required, Validators.min(0)]]
+      }),
+      transaction: this.fb.group({
+        cashLimit: [null, [Validators.required, Validators.min(0)]],
+        bankLimit: [null, [Validators.required, Validators.min(0)]]
+      })
     });
 
-    // Load the current credit limit from the API
-    this.loadCreditLimit();
+    this.loadAll();
   }
 
-  // Method to load the current credit limit
-  loadCreditLimit(): void {
-    this.limitService.getCreditLimit().subscribe(
-      (data: CreditLimitDto) => {
-        // Patch the form with the current limit value
-        this.form.patchValue({
-          limit: data.limit
+  // Load both in one go
+  loadAll(): void {
+    // Credit
+    this.limitService.getCreditLimit().subscribe({
+      next: (data: CreditLimitDto) => {
+        this.form.get('credit')?.patchValue({ limit: data?.limit ?? 0 });
+      },
+      error: () => this.toastr.error('Failed to fetch credit limit')
+    });
+
+    // Transaction
+    this.limitService.getTransactionLimit().subscribe({
+      next: (data: TransactionLimitDto) => {
+        this.form.get('transaction')?.patchValue({
+          cashLimit: data?.cashLimit ?? 0,
+          bankLimit: data?.bankLimit ?? 0
         });
       },
-      (error) => {
-        console.error('Error fetching credit limit:', error);
-      }
-    );
+      error: () => this.toastr.error('Failed to fetch transaction limits')
+    });
   }
 
-  // Method to update the global credit limit
-  update(): void {
-    if (this.form.invalid) return;  // Don't submit if the form is invalid
+  updateCredit(): void {
+    const grp = this.form.get('credit') as FormGroup;
+    if (!grp || grp.invalid) return;
 
-    this.saving = true;  // Set saving state to true while the request is in progress
-    this.savedMsg = '';  // Reset the saved message
+    this.savingCredit = true;
+    const payload: CreditLimitDto = { limit: +grp.value.limit };
 
-    const payload = { limit: +this.form.value.limit };  // Get the limit value from the form
-
-    // Call the service to update the credit limit
-    this.limitService.updateCreditLimit(payload).subscribe(
-      (response) => {
-        this.saving = false;  // Set saving state to false after the request completes
-        this.savedMsg = 'Global credit limit updated successfully.';  // Set the success message
+    this.limitService.updateCreditLimit(payload).subscribe({
+      next: () => {
+        this.savingCredit = false;
+        this.toastr.success('Credit limit updated');
       },
-      (error) => {
-        this.saving = false;  // Set saving state to false if an error occurs
-        this.savedMsg = 'Error updating credit limit. Please try again.';  // Set the error message
+      error: () => {
+        this.savingCredit = false;
+        this.toastr.error('Error updating credit limit');
       }
-    );
+    });
+  }
+
+  updateTransaction(): void {
+    const grp = this.form.get('transaction') as FormGroup;
+    if (!grp || grp.invalid) return;
+
+    this.savingTxn = true;
+    const payload: TransactionLimitDto = {
+      cashLimit: +grp.value.cashLimit,
+      bankLimit: +grp.value.bankLimit
+    };
+
+    this.limitService.updateTransactionLimit(payload).subscribe({
+      next: () => {
+        this.savingTxn = false;
+        this.toastr.success('Transaction limits updated');
+      },
+      error: () => {
+        this.savingTxn = false;
+        this.toastr.error('Error updating transaction limits');
+      }
+    });
   }
 }

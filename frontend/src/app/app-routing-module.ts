@@ -43,6 +43,7 @@ import { ServiceForm } from './service-form/service-form';
 import { ViewService } from './view-service/view-service';
 import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-global-credit-limit';
 import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
+import { CurrencyManagement } from './currency-management/currency-management';
 const routes: Routes = [
   {
     path: '',
@@ -127,6 +128,8 @@ const routes: Routes = [
       { path: 'ip-address/add', component: AddIpaddress },
       { path: 'ip-address/list', component: ShowIpaddress },
       { path: 'ip-address/edit/:id', component: EditIpaddress },
+
+      { path: 'currency-management', component: CurrencyManagement },
     ],
   },
 ];

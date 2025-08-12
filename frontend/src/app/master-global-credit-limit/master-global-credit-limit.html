@@ -1,29 +1,47 @@
+
 <app-adminsidebar></app-adminsidebar>
 <app-topbar></app-topbar>
+<div class="limits-wrap">
+  <h1>GLOBAL LIMITS</h1>
 
-<div class="gcl-page">
-  <h1>Global Credit Limit Management</h1>
+  <form [formGroup]="form" class="limits-grid">
+    <!-- Credit limit card -->
+    <section class="card" formGroupName="credit">
+      <h2>Global Credit Limit</h2>
 
-  <!-- Form bound to formGroup -->
-  <form [formGroup]="form">
-    <div class="gcl-row">
-      <span class="gcl-label">Global Credit Limit (USD)</span>
+      <div class="form-row">
+        <span class="pill">Credit Limit (USD)</span>
+      </div>
 
-      <input
-        type="number"
-        class="form-control gcl-input"
-        placeholder="0000000.00"
-        formControlName="limit"
-        [ngClass]="{'is-invalid': form.get('limit')?.touched && form.get('limit')?.invalid}"
-        [readonly]="saving"
-      />
+      <div class="field">
+        <input type="number" formControlName="limit" placeholder="0" />
+        <span class="suffix">USD</span>
+      </div>
 
-      <button class="btn btn-primary gcl-btn" (click)="update()" [disabled]="saving || form.invalid">
-        {{ saving ? 'Updating…' : 'Update' }}
+      <button class="btn" type="button" (click)="updateCredit()" [disabled]="savingCredit || form.get('credit')?.invalid">
+        {{ savingCredit ? 'Saving…' : 'Update' }}
       </button>
-    </div>
-  </form>
+    </section>
 
-  <!-- Success message after the limit is updated -->
-  <div *ngIf="savedMsg" class="alert alert-success mt-3">{{ savedMsg }}</div>
+    <!-- Transaction limits card -->
+    <section class="card" formGroupName="transaction">
+      <h2>Global Transaction Limit</h2>
+
+      <label class="label">Cash</label>
+      <div class="field">
+        <input type="number" formControlName="cashLimit" placeholder="0" />
+        <span class="suffix">USD</span>
+      </div>
+
+      <label class="label">Bank</label>
+      <div class="field">
+        <input type="number" formControlName="bankLimit" placeholder="0" />
+        <span class="suffix">USD</span>
+      </div>
+
+      <button class="btn" type="button" (click)="updateTransaction()" [disabled]="savingTxn || form.get('transaction')?.invalid">
+        {{ savingTxn ? 'Saving…' : 'Update' }}
+      </button>
+    </section>
+  </form>
 </div>

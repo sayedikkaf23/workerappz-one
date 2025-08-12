@@ -24,6 +24,9 @@ router.delete("/admin/:id", admin.deleteAdmin);
 
 router.get("/getAllIndividualUsers", admin.getAllIndividualUsers);
 router.get("/getAllBusinessUsers", admin.getAllBusinessUsers);
+router.get("/get-currencies", admin.getAllCurrencies);
+
+router.post("/add-currency", admin.createCurrency);
 
 
 module.exports = router;

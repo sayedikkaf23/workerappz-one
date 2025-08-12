@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
 const Admin = require("../models/admin");
+const Currency = require("../models/currency");
 const onBoardings = require("../models/onboarding.model");
 const e = require("express");
 const Role = require("../models/roles");
@@ -349,5 +350,59 @@ exports.updateAdmin = async (req, res) => {
   } catch (err) {
     console.error('Error updating admin:', err);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.getAllCurrencies = async (req, res) => {
+  try {
+    const currencies = await Currency.find();
+    res.status(200).json({
+      success: true,
+      data: currencies
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch currencies",
+      error: err.message
+    });
+  }
+};
+
+// CREATE new currency
+exports.createCurrency = async (req, res) => {
+  try {
+    const { name, code, isActive, auth, scale } = req.body;
+
+    // Optional: Prevent duplicate codes
+    const existing = await Currency.findOne({ code });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: "Currency code already exists"
+      });
+    }
+
+    const currency = new Currency({
+      name,
+      code,
+      isActive,
+      auth,
+      scale
+    });
+
+    await currency.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Currency created successfully",
+      data: currency
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to create currency",
+      error: err.message
+    });
   }
 };

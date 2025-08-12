@@ -150,5 +150,13 @@ getRoleById(id: string): Observable<Role> {
   // adjust path if your roles router is mounted differently
   return this.http.get<Role>(`${this.apiUrl}/admin/roles/details/${id}`);
 }
+  getCurrencies(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/admin/get-currencies`);
+  }
+
+  // Create new currency
+  createCurrency(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/admin/add-currency`, data);
+  }
 
 }

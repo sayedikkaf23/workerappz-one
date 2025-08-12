@@ -1,0 +1,34 @@
+<!-- Add Currency Modal -->
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Add Currency</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="currencyName">Currency Name:</label>
+          <input type="text" id="currencyName" [(ngModel)]="currencyName" name="currencyName" required />
+        </div>
+        <div class="form-group">
+          <label for="currencyCode">Code:</label>
+          <input type="text" id="currencyCode" [(ngModel)]="currencyCode" name="currencyCode" required />
+        </div>
+         <div class="form-group">
+          <label for="scale">Scale:</label>
+          <input type="number" id="scale" [(ngModel)]="scale" name="scale" required />
+        </div>
+         <div class="form-group custom">
+          <input type="checkbox" id="isActive" [(ngModel)]="isActive" name="isActive" required style="width:18px;height:18px;vertical-align:middle;" />
+          <label for="isActive" style="margin-left:6px;vertical-align:middle;">isActive</label>
+        </div>
+         <div class="form-group custom">
+          <input type="checkbox" id="isSettlement" [(ngModel)]="isSettlement" name="isSettlement" required style="width:16px;height:16px;vertical-align:middle;" />
+          <label for="isSettlement" style="margin-left:6px;vertical-align:middle;">isSettlementCurr</label>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="action-button approve-button">Add</button>
+            <button type="button" class="action-button reject-button" (click)="onClose()">Cancel</button>
+          </div>
+          
+      </form>
+    </div>
+  </div>
+  

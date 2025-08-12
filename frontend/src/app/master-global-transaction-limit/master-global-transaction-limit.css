@@ -49,7 +49,7 @@
 /* Update button: even smaller */
 button {
   min-width: 100px;     /* Reduced min-width */
-  padding: 6px 15px;    /* Further reduced padding */
+  /* padding: 6px 15px;    Further reduced padding */
   font-size: 12px;      /* Smaller font size */
   background-color: #3498db;
   color: white;
