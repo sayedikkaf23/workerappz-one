@@ -20,6 +20,7 @@ dotenv.config({ path: path.resolve(__dirname, envFile) });
 const app = express();
 
 app.use(express.json());
+
 app.use(cors());
 
 

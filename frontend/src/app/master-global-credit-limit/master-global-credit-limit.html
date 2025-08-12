@@ -12,11 +12,11 @@
       <div class="form-row">
         <span class="pill">Credit Limit (USD)</span>
       </div>
-
       <div class="field">
-        <input type="number" formControlName="limit" placeholder="0" />
-        <span class="suffix">USD</span>
-      </div>
+  <input type="number" formControlName="limit" placeholder="0" />
+  <span class="suffix">USD</span>
+</div>
+
 
       <button class="btn" type="button" (click)="updateCredit()" [disabled]="savingCredit || form.get('credit')?.invalid">
         {{ savingCredit ? 'Saving…' : 'Update' }}
