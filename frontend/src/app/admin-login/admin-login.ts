@@ -12,13 +12,17 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 export class AdminLogin {
   isDark = true;
   email: string = '';
+  auth_Code: string = '';
   password: string = '';
   token: string = '';
   mfaRequired: boolean = false;
   loading: boolean = false; // Loading state for the login button
 
-  constructor(private adminService: AdminService, private router: Router,    private toastr: ToastrService // Inject ToastrService
-) {}
+  constructor(
+    private adminService: AdminService,
+    private router: Router,
+    private toastr: ToastrService // Inject ToastrService
+  ) {}
 
   // Toggle Dark Mode
   toggleDarkMode() {
@@ -35,47 +39,57 @@ export class AdminLogin {
 
   onLoginSubmit() {
     this.loading = true;
-    const loginData = { email: this.email, password: this.password };
+    const loginData = {
+      email: this.email,
+      password: this.password,
+      auth_Code: this.auth_Code,
+    };
 
-    if (!this.mfaRequired) {
+    if (loginData) {
       this.adminService.login(loginData).subscribe(
         (response) => {
           this.loading = false;
-          if (response.mfaRequired) {
-            this.mfaRequired = true;
-            
-          } else {
-            console.log('Login successful:', response);
+          const token = response?.data?.resData?.token;
+
+          if (token) {
+            sessionStorage.setItem('token', token);
           }
+          this.router.navigate(['/admin/home']); // This will navigate to /admindashboard route
         },
         (error) => {
           this.loading = false;
-          const errorMessage =
-            error?.error?.message || error?.message || 'Login failed. Please try again.';
-          this.toastr.error(errorMessage);
+         const serverMessage =
+    // your sample: { message, error: { resData } }
+    error?.error?.error?.resData ||
+    // sometimes backend may send { resData } directly
+    error?.error?.resData ||
+    // or { message: '...' }
+    error?.error?.message ||
+    // final fallbacks
+    error?.statusText ||
+    'Login failed. Please try again.';
+          this.toastr.error(serverMessage);
           console.error('Login failed:', error);
         }
       );
-    } else {
-      this.verifyMFA();
     }
   }
 
-  verifyMFA() {
-    this.loading = true;
-    this.adminService.verifyMFA(this.token, this.email).subscribe(
-      (response) => {
-        this.loading = false;
-        console.log('MFA verified:', response);
-        this.router.navigate(['/admin/home']); // This will navigate to /admindashboard route
-      },
-       (error) => {
-        this.loading = false;
-        const errorMessage =
-          error?.error?.message || error?.message || 'MFA verification failed.';
-        this.toastr.error(errorMessage);
-        console.error('MFA verification failed:', error);
-      }
-    );
-  }
+  // verifyMFA() {
+  //   this.loading = true;
+  //   this.adminService.verifyMFA(this.token, this.email).subscribe(
+  //     (response) => {
+  //       this.loading = false;
+  //       console.log('MFA verified:', response);
+  //       this.router.navigate(['/admin/home']); // This will navigate to /admindashboard route
+  //     },
+  //      (error) => {
+  //       this.loading = false;
+  //       const errorMessage =
+  //         error?.error?.message || error?.message || 'MFA verification failed.';
+  //       this.toastr.error(errorMessage);
+  //       console.error('MFA verification failed:', error);
+  //     }
+  //   );
+  // }
 }

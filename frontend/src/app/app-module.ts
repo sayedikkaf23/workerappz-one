@@ -62,6 +62,8 @@ import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-glo
 import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
 import { CurrencyManagement } from './currency-management/currency-management';
 import { AddCurrencyModal } from './add-currency-modal/add-currency-modal';
+import { CommonModule, DatePipe } from '@angular/common';
+
 @NgModule({
   declarations: [
     App,
@@ -122,6 +124,7 @@ import { AddCurrencyModal } from './add-currency-modal/add-currency-modal';
     AddCurrencyModal
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     NgSelectModule,

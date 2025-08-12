@@ -64,11 +64,11 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  login(loginData: { email: string; password: string }): Observable<any> {
+  login(loginData: { email: string; password: string,auth_Code:string}): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/login`, loginData);
   }
 
-  verifyMFA(token: string, email: string): Observable<any> {
+  verifyMFA(token: string, email: string ): Observable<any> {
     return this.http.post(`${this.apiUrl}/admin/mfa/verify`, { token, email });
   }
 

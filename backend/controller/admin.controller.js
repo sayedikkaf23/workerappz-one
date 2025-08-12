@@ -7,6 +7,8 @@ const Currency = require("../models/currency");
 const onBoardings = require("../models/onboarding.model");
 const e = require("express");
 const Role = require("../models/roles");
+const axios = require('axios');
+
 
 const logOnboardingDb = require("../utils/onboardingLogger");
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
@@ -43,22 +45,77 @@ exports.register = async (req, res) => {
   }
 };
 
-// LOGIN
+// // LOGIN
+// exports.login = async (req, res) => {
+//   const { email, password } = req.body;
+//   const admin = await Admin.findOne({ email });
+//   if (!admin) return res.status(400).json({ message: "Invalid credentials" });
+
+//   const isMatch = await bcrypt.compare(password, admin.password);
+//   if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+//   if (admin.mfaEnabled) {
+//     return res.json({ mfaRequired: true, email });
+//   }
+
+//   const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
+//   res.json({ token });
+// };
+
+
+
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  const admin = await Admin.findOne({ email });
-  if (!admin) return res.status(400).json({ message: "Invalid credentials" });
+  const { email, password, auth_Code } = req.body;
+  console.log("Login attempt with Email:", req.body);
 
-  const isMatch = await bcrypt.compare(password, admin.password);
-  if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+  try {
+    const response = await axios.post(
+      `${process.env.BaseURL}/api/master/SuperAdminLogin`,
+      {
+        Email:email,
+        Password:password,
+        auth_Code
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
-  if (admin.mfaEnabled) {
-    return res.json({ mfaRequired: true, email });
+    res.status(200).json({
+      message: "Login success",
+      data: response.data
+    });
+
+  } catch (error) {
+    if (error.response) {
+      res.status(error.response.status || 400).json({
+        message: "Login failed",
+        error: error.response.data
+      });
+    } else {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error.message
+      });
+    }
   }
-
-  const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
-  res.json({ token });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ENABLE MFA (Generate QR)
 exports.enableMFA = async (req, res) => {

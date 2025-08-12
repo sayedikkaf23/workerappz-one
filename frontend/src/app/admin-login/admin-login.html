@@ -18,8 +18,8 @@
         </div>
 
         <!-- MFA Token field, only visible if MFA is required -->
-        <div *ngIf="mfaRequired" class="form-field">
-          <input type="text" [(ngModel)]="token" name="token" class="form-control" placeholder="6-digit code from Microsoft Authenticator" maxlength="6" required />
+        <div  class="form-field">
+          <input type="text" [(ngModel)]="auth_Code" name="auth_Code" class="form-control" placeholder="6-digit code from Microsoft Authenticator" maxlength="6" required />
         </div>
 
         <div class="row align-items-center justify-content-between">

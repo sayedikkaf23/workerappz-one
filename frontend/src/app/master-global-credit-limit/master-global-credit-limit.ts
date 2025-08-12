@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LimitService, CreditLimitDto } from '../services/limit';  // Import the service
 import { ToastrService } from 'ngx-toastr';
-import { LimitService, CreditLimitDto, TransactionLimitDto } from '../services/limit';
-import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-master-global-credit-limit',
@@ -12,70 +10,67 @@ import { catchError } from 'rxjs/operators';
   standalone: false
 })
 export class MasterGlobalCreditLimit implements OnInit {
-  form!: FormGroup;
-  saving = false;
+  form!: FormGroup;  // Form to hold the input values
+  saving = false;  // Track the saving state
+  savedMsg = '';  // Track the success message
 
   constructor(
-    private fb: FormBuilder,
-    private limitService: LimitService,
-    private toastr: ToastrService
+    private fb: FormBuilder,  // FormBuilder to manage reactive forms
+    private limitService: LimitService , // Service to interact with the backend API,
+    private toastr: ToastrService,
+
   ) {}
 
   ngOnInit(): void {
+    // Initialize the form with validation
     this.form = this.fb.group({
-      creditLimit: [null, [Validators.required, Validators.min(0)]],
-      cashLimit:   [null, [Validators.required, Validators.min(0)]],
-      bankLimit:   [null, [Validators.required, Validators.min(0)]],
-      walletLimit: [null, [Validators.required, Validators.min(0)]], // new
+      limit: [null, [Validators.required, Validators.min(0)]]  // Limit should be required and greater than 0
     });
 
-    this.loadAll();
+    // Load the current credit limit from the API
+    this.loadCreditLimit();
   }
 
-  loadAll(): void {
-    forkJoin({
-      credit: this.limitService.getCreditLimit().pipe(catchError(() => of({ limit: 0 } as CreditLimitDto))),
-      txn:    this.limitService.getTransactionLimit().pipe(catchError(() => of({ cashLimit: 0, bankLimit: 0, walletLimit: 0 } as any))),
-      // If you already have a dedicated wallet endpoint, also include it here and map to walletLimit.
-    }).subscribe(({ credit, txn }: any) => {
-      this.form.patchValue({
-        creditLimit: credit?.limit ?? 0,
-        cashLimit:   txn?.cashLimit ?? 0,
-        bankLimit:   txn?.bankLimit ?? 0,
-        walletLimit: txn?.walletLimit ?? 0, // fallback to 0 if API doesn't yet return it
-      });
-    }, _ => this.toastr.error('Failed to fetch limits'));
+  // Method to load the current credit limit
+  loadCreditLimit(): void {
+    this.limitService.getCreditLimit().subscribe(
+      (data: CreditLimitDto) => {
+        // Patch the form with the current limit value
+        this.form.patchValue({
+          limit: data.limit
+        });
+      },
+      (error) => {
+        this.toastr.error('Error fetching credit limit. Please try again later.');  // Show error toast
+
+        console.error('Error fetching credit limit:', error);
+      }
+    );
   }
 
-  saveAll(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+  // Method to update the global credit limit
+  update(): void {
+    if (this.form.invalid) return;  // Don't submit if the form is invalid
 
-    const v = this.form.value;
+    this.saving = true;  // Set saving state to true while the request is in progress
+    this.savedMsg = '';  // Reset the saved message
 
-    this.saving = true;
+    const payload = { limit: +this.form.value.limit };  // Get the limit value from the form
 
-    // Option A: your backend accepts walletLimit in the same transaction payload
-    const txnPayload: TransactionLimitDto & { walletLimit?: number } = {
-      cashLimit: +v.cashLimit,
-      bankLimit: +v.bankLimit,
-      walletLimit: +v.walletLimit
-    };
+    // Call the service to update the credit limit
+    this.limitService.updateCreditLimit(payload).subscribe(
+      (response) => {
+        this.saving = false;  // Set saving state to false after the request completes
+        // this.savedMsg = 'Global credit limit updated successfully.';  // Set the success message
+                this.toastr.success('Credit limit updated successfully.');  // Show success toast
 
-    const creditReq = this.limitService.updateCreditLimit({ limit: +v.creditLimit });
-    const txnReq    = this.limitService.updateTransactionLimit(txnPayload as any);
+      },
+      (error) => {
+        this.saving = false;  // Set saving state to false if an error occurs
+        // this.savedMsg = 'Error updating credit limit. Please try again.';  // Set the error message
+        this.toastr.error('Error updating credit limit. Please try again.');  // Show error toast
 
-    // If your API has a separate wallet endpoint, replace txnReq with forkJoin of txn + wallet.
-    forkJoin([creditReq, txnReq])
-      .pipe(catchError(err => { this.toastr.error('Save failed'); throw err; }))
-      .subscribe({
-        next: () => {
-          this.saving = false;
-          this.toastr.success('Limits updated');
-        },
-        error: () => { this.saving = false; }
-      });
+      }
+    );
   }
 }
