@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LimitService, CreditLimitDto, TransactionLimitDto } from '../services/limit';
 import { ToastrService } from 'ngx-toastr';
+import { LimitService, CreditLimitDto, TransactionLimitDto } from '../services/limit';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 @Component({
   selector: 'app-master-global-credit-limit',
   templateUrl: './master-global-credit-limit.html',
@@ -10,8 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MasterGlobalCreditLimit implements OnInit {
   form!: FormGroup;
-  savingCredit = false;
-  savingTxn = false;
+  saving = false;
 
   constructor(
     private fb: FormBuilder,
@@ -20,80 +22,60 @@ export class MasterGlobalCreditLimit implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // One form with nested groups for both sections
     this.form = this.fb.group({
-      credit: this.fb.group({
-        limit: [null, [Validators.required, Validators.min(0)]]
-      }),
-      transaction: this.fb.group({
-        cashLimit: [null, [Validators.required, Validators.min(0)]],
-        bankLimit: [null, [Validators.required, Validators.min(0)]]
-      })
+      creditLimit: [null, [Validators.required, Validators.min(0)]],
+      cashLimit:   [null, [Validators.required, Validators.min(0)]],
+      bankLimit:   [null, [Validators.required, Validators.min(0)]],
+      walletLimit: [null, [Validators.required, Validators.min(0)]], // new
     });
 
     this.loadAll();
   }
 
-  // Load both in one go
   loadAll(): void {
-    // Credit
-    this.limitService.getCreditLimit().subscribe({
-      next: (data: CreditLimitDto) => {
-        this.form.get('credit')?.patchValue({ limit: data?.limit ?? 0 });
-      },
-      error: () => this.toastr.error('Failed to fetch credit limit')
-    });
-
-    // Transaction
-    this.limitService.getTransactionLimit().subscribe({
-      next: (data: TransactionLimitDto) => {
-        this.form.get('transaction')?.patchValue({
-          cashLimit: data?.cashLimit ?? 0,
-          bankLimit: data?.bankLimit ?? 0
-        });
-      },
-      error: () => this.toastr.error('Failed to fetch transaction limits')
-    });
+    forkJoin({
+      credit: this.limitService.getCreditLimit().pipe(catchError(() => of({ limit: 0 } as CreditLimitDto))),
+      txn:    this.limitService.getTransactionLimit().pipe(catchError(() => of({ cashLimit: 0, bankLimit: 0, walletLimit: 0 } as any))),
+      // If you already have a dedicated wallet endpoint, also include it here and map to walletLimit.
+    }).subscribe(({ credit, txn }: any) => {
+      this.form.patchValue({
+        creditLimit: credit?.limit ?? 0,
+        cashLimit:   txn?.cashLimit ?? 0,
+        bankLimit:   txn?.bankLimit ?? 0,
+        walletLimit: txn?.walletLimit ?? 0, // fallback to 0 if API doesn't yet return it
+      });
+    }, _ => this.toastr.error('Failed to fetch limits'));
   }
 
-  updateCredit(): void {
-    const grp = this.form.get('credit') as FormGroup;
-    if (!grp || grp.invalid) return;
+  saveAll(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-    this.savingCredit = true;
-    const payload: CreditLimitDto = { limit: +grp.value.limit };
+    const v = this.form.value;
 
-    this.limitService.updateCreditLimit(payload).subscribe({
-      next: () => {
-        this.savingCredit = false;
-        this.toastr.success('Credit limit updated');
-      },
-      error: () => {
-        this.savingCredit = false;
-        this.toastr.error('Error updating credit limit');
-      }
-    });
-  }
+    this.saving = true;
 
-  updateTransaction(): void {
-    const grp = this.form.get('transaction') as FormGroup;
-    if (!grp || grp.invalid) return;
-
-    this.savingTxn = true;
-    const payload: TransactionLimitDto = {
-      cashLimit: +grp.value.cashLimit,
-      bankLimit: +grp.value.bankLimit
+    // Option A: your backend accepts walletLimit in the same transaction payload
+    const txnPayload: TransactionLimitDto & { walletLimit?: number } = {
+      cashLimit: +v.cashLimit,
+      bankLimit: +v.bankLimit,
+      walletLimit: +v.walletLimit
     };
 
-    this.limitService.updateTransactionLimit(payload).subscribe({
-      next: () => {
-        this.savingTxn = false;
-        this.toastr.success('Transaction limits updated');
-      },
-      error: () => {
-        this.savingTxn = false;
-        this.toastr.error('Error updating transaction limits');
-      }
-    });
+    const creditReq = this.limitService.updateCreditLimit({ limit: +v.creditLimit });
+    const txnReq    = this.limitService.updateTransactionLimit(txnPayload as any);
+
+    // If your API has a separate wallet endpoint, replace txnReq with forkJoin of txn + wallet.
+    forkJoin([creditReq, txnReq])
+      .pipe(catchError(err => { this.toastr.error('Save failed'); throw err; }))
+      .subscribe({
+        next: () => {
+          this.saving = false;
+          this.toastr.success('Limits updated');
+        },
+        error: () => { this.saving = false; }
+      });
   }
 }

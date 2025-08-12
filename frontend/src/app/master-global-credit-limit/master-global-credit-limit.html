@@ -1,47 +1,74 @@
-
 <app-adminsidebar></app-adminsidebar>
 <app-topbar></app-topbar>
+
+
+
 <div class="limits-wrap">
   <h1>GLOBAL LIMITS</h1>
 
-  <form [formGroup]="form" class="limits-grid">
-    <!-- Credit limit card -->
-    <section class="card" formGroupName="credit">
-      <h2>Global Credit Limit</h2>
+  <form [formGroup]="form" (ngSubmit)="saveAll()">
+    <div class="card one-card">
+      <!-- <h2 class="pill">Set Limits</h2> -->
 
-      <div class="form-row">
-        <span class="pill">Credit Limit (USD)</span>
-      </div>
+      <!-- CREDIT LIMIT -->
+      <label class="label" for="creditLimit">Credit Limit</label>
       <div class="field">
-  <input type="number" formControlName="limit" placeholder="0" />
-  <span class="suffix">USD</span>
-</div>
-
-
-      <button class="btn" type="button" (click)="updateCredit()" [disabled]="savingCredit || form.get('credit')?.invalid">
-        {{ savingCredit ? 'Saving…' : 'Update' }}
-      </button>
-    </section>
-
-    <!-- Transaction limits card -->
-    <section class="card" formGroupName="transaction">
-      <h2>Global Transaction Limit</h2>
-
-      <label class="label">Cash</label>
-      <div class="field">
-        <input type="number" formControlName="cashLimit" placeholder="0" />
+        <input
+          id="creditLimit"
+          type="number"
+          formControlName="creditLimit"
+          placeholder="0.00"
+          [class.is-invalid]="form.get('creditLimit')?.touched && form.get('creditLimit')?.invalid"
+          [readonly]="saving"
+        />
         <span class="suffix">USD</span>
       </div>
 
-      <label class="label">Bank</label>
+      <!-- CASH LIMIT -->
+      <label class="label" for="cashLimit">Cash Limit</label>
       <div class="field">
-        <input type="number" formControlName="bankLimit" placeholder="0" />
+        <input
+          id="cashLimit"
+          type="number"
+          formControlName="cashLimit"
+          placeholder="0.00"
+          [class.is-invalid]="form.get('cashLimit')?.touched && form.get('cashLimit')?.invalid"
+          [readonly]="saving"
+        />
         <span class="suffix">USD</span>
       </div>
 
-      <button class="btn" type="button" (click)="updateTransaction()" [disabled]="savingTxn || form.get('transaction')?.invalid">
-        {{ savingTxn ? 'Saving…' : 'Update' }}
+      <!-- BANK LIMIT -->
+      <label class="label" for="bankLimit">Bank Limit</label>
+      <div class="field">
+        <input
+          id="bankLimit"
+          type="number"
+          formControlName="bankLimit"
+          placeholder="0.00"
+          [class.is-invalid]="form.get('bankLimit')?.touched && form.get('bankLimit')?.invalid"
+          [readonly]="saving"
+        />
+        <span class="suffix">USD</span>
+      </div>
+
+      <!-- WALLET LIMIT -->
+      <label class="label" for="walletLimit">Wallet Limit</label>
+      <div class="field">
+        <input
+          id="walletLimit"
+          type="number"
+          formControlName="walletLimit"
+          placeholder="0.00"
+          [class.is-invalid]="form.get('walletLimit')?.touched && form.get('walletLimit')?.invalid"
+          [readonly]="saving"
+        />
+        <span class="suffix">USD</span>
+      </div>
+
+      <button class="btn" type="submit" [disabled]="saving || form.invalid">
+        {{ saving ? 'Saving…' : 'Save' }}
       </button>
-    </section>
+    </div>
   </form>
 </div>
