@@ -1,74 +1,59 @@
 <app-adminsidebar></app-adminsidebar>
 <app-topbar></app-topbar>
 
-
-
 <div class="limits-wrap">
-  <h1>GLOBAL LIMITS</h1>
+  <div class="card one-card">
+    <div class="card-head">
+      <div class="card-title">
+        <h1>Global Limits</h1>
+      </div>
+    </div>
 
-  <form [formGroup]="form" (ngSubmit)="saveAll()">
-    <div class="card one-card">
-      <!-- <h2 class="pill">Set Limits</h2> -->
-
+    <form class="form-grid">
       <!-- CREDIT LIMIT -->
-      <label class="label" for="creditLimit">Credit Limit</label>
-      <div class="field">
-        <input
-          id="creditLimit"
-          type="number"
-          formControlName="creditLimit"
-          placeholder="0.00"
-          [class.is-invalid]="form.get('creditLimit')?.touched && form.get('creditLimit')?.invalid"
-          [readonly]="saving"
-        />
-        <span class="suffix">USD</span>
+      <div class="form-item">
+        <label class="label" for="creditLimit">Credit Limit</label>
+        <div class="field">
+          <input id="creditLimit" type="number" placeholder="0.00" />
+          <span class="suffix">USD</span>
+        </div>
+        <!-- <small class="help">Max total credit allowed.</small> -->
       </div>
 
       <!-- CASH LIMIT -->
-      <label class="label" for="cashLimit">Cash Limit</label>
-      <div class="field">
-        <input
-          id="cashLimit"
-          type="number"
-          formControlName="cashLimit"
-          placeholder="0.00"
-          [class.is-invalid]="form.get('cashLimit')?.touched && form.get('cashLimit')?.invalid"
-          [readonly]="saving"
-        />
-        <span class="suffix">USD</span>
+      <div class="form-item">
+        <label class="label" for="cashLimit">Cash Limit</label>
+        <div class="field">
+          <input id="cashLimit" type="number" placeholder="0.00" />
+          <span class="suffix">USD</span>
+        </div>
+        <!-- <small class="help">Per-day cash movement cap.</small> -->
       </div>
 
       <!-- BANK LIMIT -->
-      <label class="label" for="bankLimit">Bank Limit</label>
-      <div class="field">
-        <input
-          id="bankLimit"
-          type="number"
-          formControlName="bankLimit"
-          placeholder="0.00"
-          [class.is-invalid]="form.get('bankLimit')?.touched && form.get('bankLimit')?.invalid"
-          [readonly]="saving"
-        />
-        <span class="suffix">USD</span>
+      <div class="form-item">
+        <label class="label" for="bankLimit">Bank Limit</label>
+        <div class="field">
+          <input id="bankLimit" type="number" placeholder="0.00" />
+          <span class="suffix">USD</span>
+        </div>
+        <!-- <small class="help">Transfers via bank/ACH.</small> -->
       </div>
 
       <!-- WALLET LIMIT -->
-      <label class="label" for="walletLimit">Wallet Limit</label>
-      <div class="field">
-        <input
-          id="walletLimit"
-          type="number"
-          formControlName="walletLimit"
-          placeholder="0.00"
-          [class.is-invalid]="form.get('walletLimit')?.touched && form.get('walletLimit')?.invalid"
-          [readonly]="saving"
-        />
-        <span class="suffix">USD</span>
+      <div class="form-item">
+        <label class="label" for="walletLimit">Wallet Limit</label>
+        <div class="field">
+          <input id="walletLimit" type="number" placeholder="0.00" />
+          <span class="suffix">USD</span>
+        </div>
+        <!-- <small class="help">Wallet balance ceiling.</small> -->
       </div>
 
-      <button class="btn" type="submit" [disabled]="saving || form.invalid">
-        {{ saving ? 'Saving…' : 'Save' }}
-      </button>
-    </div>
-  </form>
+      <!-- Save button -->
+      <div class="save-btn-wrap">
+        <button class="btn primary" type="button">Save</button>
+      </div>
+    </form>
+  </div>
 </div>
