@@ -2,16 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
-// --- Types ---
-export interface TransactionLimitDto {
-  cashLimit: number;
-  bankLimit: number;
-}
 
-export interface CreditLimitDto {
-  limit: number;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -20,23 +13,51 @@ export class LimitService {
 
   constructor(private http: HttpClient) {}
 
+    getCreditLimit(): Observable<any> {
+  const token = sessionStorage.getItem('token'); // or localStorage if that's where you store it
+
+  return this.http.get<any>(`${this.apiUrl}/limit/credit-limit`, {
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+  });
+}
+
   // Fetch Global Transaction Limit
-  getTransactionLimit(): Observable<TransactionLimitDto> {
-    return this.http.get<TransactionLimitDto>(`${this.apiUrl}/limit/transaction-limit`);
-  }
+// globalTransactionLimit(payload: any) {
+//   const token = sessionStorage.getItem('token'); // or localStorage if you store it there
 
-  // Update Global Transaction Limit
-  updateTransactionLimit(payload: TransactionLimitDto): Observable<any> {
-    return this.http.put(`${this.apiUrl}/limit/transaction-limit`, payload);
-  }
+//   return this.http.post(`${this.apiUrl}/limit/transaction-limit`, payload, {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${token}`
+//     })
+//   });
+// }
 
-  getCreditLimit(): Observable<CreditLimitDto> {
-    return this.http.get<CreditLimitDto>(`${this.apiUrl}/limit/credit-limit`);
-  }
+ updateTransactionLimit(payload: any): Observable<any> {
+  const token = sessionStorage.getItem('token'); // or localStorage if stored there
+
+  return this.http.put(`${this.apiUrl}/limit/transaction-limit`, payload, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    })
+  });
+}
+
+
 
   // Update Global Credit Limit
-  updateCreditLimit(payload: CreditLimitDto): Observable<any> {
-    return this.http.put(`${this.apiUrl}/limit/credit-limit`, payload);
-  }
+  // globalCreditLimit(payload: any): Observable<any> {
+  // const token = sessionStorage.getItem('token'); // or localStorage.getItem('token')
+
+  // return this.http.post(`${this.apiUrl}/limit/credit-limit`, payload, {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${token}`
+  //   })
+  // });
 }
+
 

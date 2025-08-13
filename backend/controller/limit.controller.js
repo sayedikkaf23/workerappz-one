@@ -13,8 +13,10 @@ const BASE_URL =
  */
 exports.getCreditLimit = async (req, res) => {
   try {
-    const token = getToken(req);
-    if (!token) return res.status(401).json({ message: 'Missing API token' });
+   const token = req.headers['authorization']?.replace(/^Bearer\s+/i, '');
+    if (!token) {
+      return res.status(401).json({ message: 'Missing API token' });
+    }
 
     const { data } = await axios.get(`${BASE_URL}/api/master/GetGlobalCredit`, {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
@@ -35,8 +37,11 @@ exports.getCreditLimit = async (req, res) => {
  */
 exports.updateCreditLimit = async (req, res) => {
   try {
-    const token = getToken(req);
-    if (!token) return res.status(401).json({ message: 'Missing API token' });
+    const token = req.headers['authorization']?.replace(/^Bearer\s+/i, '');
+    if (!token) {
+      return res.status(401).json({ message: 'Missing API token' });
+    }
+
 
     const { creditLimit, enteredBy } = req.body || {};
     if (creditLimit == null || !enteredBy) {
@@ -73,8 +78,11 @@ exports.updateCreditLimit = async (req, res) => {
  */
 exports.globalTransactionLimit = async (req, res) => {
   try {
-    const token = getToken(req);
-    if (!token) return res.status(401).json({ message: 'Missing API token' });
+    const token = req.headers['authorization']?.replace(/^Bearer\s+/i, '');
+    if (!token) {
+      return res.status(401).json({ message: 'Missing API token' });
+    }
+
 
     const cash = req.body.cash ?? req.body.cashLimit;
     const bank = req.body.bank ?? req.body.bankLimit;
@@ -117,8 +125,11 @@ exports.globalTransactionLimit = async (req, res) => {
  */
 exports.updateTransactionLimit = async (req, res) => {
   try {
-    const token = getToken(req);
-    if (!token) return res.status(401).json({ message: 'Missing API token' });
+     const token = req.headers['authorization']?.replace(/^Bearer\s+/i, '');
+    if (!token) {
+      return res.status(401).json({ message: 'Missing API token' });
+    }
+
 
     const {
       id,
@@ -148,8 +159,8 @@ exports.updateTransactionLimit = async (req, res) => {
       transactionLimitInUSD_Bank: Number(transactionLimitInUSD_Bank),
       wallet: Number(wallet)
     };
-
-    const { data, status } = await axios.put(
+console.log(payload)
+    const { data, status } = await axios.patch(
       `${BASE_URL}/api/master/UpdateGlobalLimit`,
       payload,
       {
@@ -161,6 +172,7 @@ exports.updateTransactionLimit = async (req, res) => {
         timeout: 15000
       }
     );
+    console.log(data)
 
     return res.status(status || 200).json(data);
   } catch (error) {

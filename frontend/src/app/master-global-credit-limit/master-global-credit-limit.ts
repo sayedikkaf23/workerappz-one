@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LimitService, CreditLimitDto } from '../services/limit';  // Import the service
+import { LimitService } from '../services/limit'; // Import the service to interact with the backend API
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -20,57 +20,51 @@ export class MasterGlobalCreditLimit implements OnInit {
     private toastr: ToastrService,
 
   ) {}
+ngOnInit(): void {
+  this.form = this.fb.group({
+    id: [null],
+    creditLimitInUSD: [null, [Validators.required, Validators.min(0)]],
+    transactionLimitInUSD: [null, [Validators.required, Validators.min(0)]],
+    transactionLimitInUSD_Bank: [null, [Validators.required, Validators.min(0)]],
+    wallet: [null, [Validators.required, Validators.min(0)]]
+  });
 
-  ngOnInit(): void {
-    // Initialize the form with validation
-    this.form = this.fb.group({
-      limit: [null, [Validators.required, Validators.min(0)]]  // Limit should be required and greater than 0
-    });
+  this.loadTransactionLimit();
+}
 
-    // Load the current credit limit from the API
-    this.loadCreditLimit();
-  }
+loadTransactionLimit(): void {
+  this.limitService.getCreditLimit().subscribe(
+    (data) => {
+      this.form.patchValue({
+        id: data.resData[0].id,
+        
+        creditLimitInUSD: data.resData[0].creditLimitInUSD,
+        transactionLimitInUSD: data.resData[0].transactionLimitInUSD,
+        transactionLimitInUSD_Bank: data.resData[0].transactionLimitInUSD_Bank,
+        wallet: data.resData[0].wallet
+      });
+    },
+    (error) => {
+      this.toastr.error('Error fetching transaction limit.');
+      console.error('Error:', error);
+    }
+  );
+}
 
-  // Method to load the current credit limit
-  loadCreditLimit(): void {
-    this.limitService.getCreditLimit().subscribe(
-      (data: CreditLimitDto) => {
-        // Patch the form with the current limit value
-        this.form.patchValue({
-          limit: data.limit
-        });
-      },
-      (error) => {
-        this.toastr.error('Error fetching credit limit. Please try again later.');  // Show error toast
+update(): void {
+  if (this.form.invalid) return;
 
-        console.error('Error fetching credit limit:', error);
-      }
-    );
-  }
-
-  // Method to update the global credit limit
-  update(): void {
-    if (this.form.invalid) return;  // Don't submit if the form is invalid
-
-    this.saving = true;  // Set saving state to true while the request is in progress
-    this.savedMsg = '';  // Reset the saved message
-
-    const payload = { limit: +this.form.value.limit };  // Get the limit value from the form
-
-    // Call the service to update the credit limit
-    this.limitService.updateCreditLimit(payload).subscribe(
-      (response) => {
-        this.saving = false;  // Set saving state to false after the request completes
-        // this.savedMsg = 'Global credit limit updated successfully.';  // Set the success message
-                this.toastr.success('Credit limit updated successfully.');  // Show success toast
-
-      },
-      (error) => {
-        this.saving = false;  // Set saving state to false if an error occurs
-        // this.savedMsg = 'Error updating credit limit. Please try again.';  // Set the error message
-        this.toastr.error('Error updating credit limit. Please try again.');  // Show error toast
-
-      }
-    );
-  }
+  this.saving = true;
+  this.limitService.updateTransactionLimit(this.form.value).subscribe(
+    () => {
+      this.saving = false;
+      this.toastr.success('Transaction limit updated successfully.');
+    },
+    (error) => {
+      this.saving = false;
+      this.toastr.error('Error updating transaction limit.');
+      console.error('Error:', error);
+    }
+  );
+}
 }

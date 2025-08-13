@@ -9,51 +9,51 @@
       </div>
     </div>
 
-    <form class="form-grid">
-      <!-- CREDIT LIMIT -->
-      <div class="form-item">
-        <label class="label" for="creditLimit">Credit Limit</label>
-        <div class="field">
-          <input id="creditLimit" type="number" placeholder="0.00" />
-          <span class="suffix">USD</span>
-        </div>
-        <!-- <small class="help">Max total credit allowed.</small> -->
-      </div>
+ <form class="form-grid" [formGroup]="form">
+  <input type="hidden" formControlName="id">
 
-      <!-- CASH LIMIT -->
-      <div class="form-item">
-        <label class="label" for="cashLimit">Cash Limit</label>
-        <div class="field">
-          <input id="cashLimit" type="number" placeholder="0.00" />
-          <span class="suffix">USD</span>
-        </div>
-        <!-- <small class="help">Per-day cash movement cap.</small> -->
-      </div>
+  <!-- Credit Limit -->
+  <div class="form-item">
+    <label for="creditLimit">Credit Limit</label>
+    <div class="field">
+      <input id="creditLimit" type="number" formControlName="creditLimitInUSD" placeholder="0.00">
+      <span class="suffix">USD</span>
+    </div>
+  </div>
 
-      <!-- BANK LIMIT -->
-      <div class="form-item">
-        <label class="label" for="bankLimit">Bank Limit</label>
-        <div class="field">
-          <input id="bankLimit" type="number" placeholder="0.00" />
-          <span class="suffix">USD</span>
-        </div>
-        <!-- <small class="help">Transfers via bank/ACH.</small> -->
-      </div>
+  <!-- Cash Limit -->
+  <div class="form-item">
+    <label for="cashLimit">Cash Limit</label>
+    <div class="field">
+      <input id="cashLimit" type="number" formControlName="transactionLimitInUSD" placeholder="0.00">
+      <span class="suffix">USD</span>
+    </div>
+  </div>
 
-      <!-- WALLET LIMIT -->
-      <div class="form-item">
-        <label class="label" for="walletLimit">Wallet Limit</label>
-        <div class="field">
-          <input id="walletLimit" type="number" placeholder="0.00" />
-          <span class="suffix">USD</span>
-        </div>
-        <!-- <small class="help">Wallet balance ceiling.</small> -->
-      </div>
+  <!-- Bank Limit -->
+  <div class="form-item">
+    <label for="bankLimit">Bank Limit</label>
+    <div class="field">
+      <input id="bankLimit" type="number" formControlName="transactionLimitInUSD_Bank" placeholder="0.00">
+      <span class="suffix">USD</span>
+    </div>
+  </div>
 
-      <!-- Save button -->
-      <div class="save-btn-wrap">
-        <button class="btn primary" type="button">Save</button>
-      </div>
-    </form>
+  <!-- Wallet Limit -->
+  <div class="form-item">
+    <label for="walletLimit">Wallet Limit</label>
+    <div class="field">
+      <input id="walletLimit" type="number" formControlName="wallet" placeholder="0.00">
+      <span class="suffix">USD</span>
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <div class="save-btn-wrap">
+    <button class="btn primary" type="button" (click)="update()">Save</button>
+  </div>
+</form>
+
+
   </div>
 </div>
