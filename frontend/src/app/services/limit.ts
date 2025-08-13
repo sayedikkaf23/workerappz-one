@@ -5,9 +5,8 @@ import { environment } from '../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
+
 export class LimitService {
   private apiUrl = environment.apiUrl; // Ensure this URL points to your backend API
 
@@ -17,9 +16,8 @@ export class LimitService {
   const token = sessionStorage.getItem('token'); // or localStorage if that's where you store it
 
   return this.http.get<any>(`${this.apiUrl}/limit/credit-limit`, {
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    })
+          headers: { 'Content-Type': 'application/json' }
+
   });
 }
 
@@ -39,10 +37,8 @@ export class LimitService {
   const token = sessionStorage.getItem('token'); // or localStorage if stored there
 
   return this.http.put(`${this.apiUrl}/limit/transaction-limit`, payload, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    })
+          headers: { 'Content-Type': 'application/json' }
+
   });
 }
 

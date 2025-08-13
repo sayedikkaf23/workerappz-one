@@ -2,6 +2,7 @@
 const axios = require("axios");
 
 const BASE_URL = process.env.BaseURL;
+const GlobalLimit = require("../models/GlobalLimit");
 
 /**
  * 1) GET /limit/credit-limit
@@ -168,6 +169,7 @@ exports.updateTransactionLimit = async (req, res) => {
     );
     console.log(data);
 
+
     return res.status(status || 200).json(data);
   } catch (error) {
     if (error.response)
@@ -190,6 +192,7 @@ exports.getCreditLimit = async (req, res) => {
       timeout: 10000,
     });
 
+   
     return res.status(200).json(data);
   } catch (error) {
     if (error.response)

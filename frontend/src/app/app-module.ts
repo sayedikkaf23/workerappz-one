@@ -64,6 +64,9 @@ import { CurrencyManagement } from './currency-management/currency-management';
 import { AddCurrencyModal } from './add-currency-modal/add-currency-modal';
 import { CommonModule, DatePipe } from '@angular/common';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
+
 @NgModule({
   declarations: [
     App,
@@ -137,7 +140,8 @@ import { CommonModule, DatePipe } from '@angular/common';
     // MasterGlobalTransactionLimit // Import here instead of declaring it
 
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [provideBrowserGlobalErrorListeners(),  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+],
   bootstrap: [App],
 })
 export class AppModule {}

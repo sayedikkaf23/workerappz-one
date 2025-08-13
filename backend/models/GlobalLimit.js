@@ -7,7 +7,6 @@ const globalLimitSchema = new mongoose.Schema({
   transactionLimitInUSD: Number,
   transactionLimitInUSD_Bank: Number,
   wallet: Number,
-  source: { type: String, enum: ['get', 'update'] }, // where it came from
   createdAt: { type: Date, default: Date.now }
 });
 
