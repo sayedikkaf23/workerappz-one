@@ -35,17 +35,26 @@ ngOnInit(): void {
 loadTransactionLimit(): void {
   this.limitService.getCreditLimit().subscribe(
     (data) => {
+      // Handle "logical" errors that come with HTTP 200
+      if (data?.resCode && data.resCode !== 200) {
+        this.toastr.error(data?.resMessage || 'Something went wrong.');
+        return;
+      }
+
+      this.toastr.success(data?.resMessage || 'Loaded.');
+      const row = data?.resData?.[0] || {};
       this.form.patchValue({
-        id: data.resData[0].id,
-        
-        creditLimitInUSD: data.resData[0].creditLimitInUSD,
-        transactionLimitInUSD: data.resData[0].transactionLimitInUSD,
-        transactionLimitInUSD_Bank: data.resData[0].transactionLimitInUSD_Bank,
-        wallet: data.resData[0].wallet
+        id: row?.id ?? null,
+        creditLimitInUSD: row?.creditLimitInUSD ?? null,
+        transactionLimitInUSD: row?.transactionLimitInUSD ?? null,
+        transactionLimitInUSD_Bank: row?.transactionLimitInUSD_Bank ?? null,
+        wallet: row?.wallet ?? null,
       });
     },
     (error) => {
-      this.toastr.error('Error fetching transaction limit.');
+      this.toastr.error(
+        error?.error?.resMessage || error?.message || 'Error fetching transaction limit.'
+      );
       console.error('Error:', error);
     }
   );
@@ -56,13 +65,22 @@ update(): void {
 
   this.saving = true;
   this.limitService.updateTransactionLimit(this.form.value).subscribe(
-    () => {
+    (data) => {
       this.saving = false;
-      this.toastr.success('Transaction limit updated successfully.');
+
+      // Handle "logical" errors that come with HTTP 200
+      if (data?.resCode && data.resCode !== 200) {
+        this.toastr.error(data?.resMessage || 'Update failed.');
+        return;
+      }
+
+      this.toastr.success(data?.resMessage || 'Updated.');
     },
     (error) => {
       this.saving = false;
-      this.toastr.error('Error updating transaction limit.');
+      this.toastr.error(
+        error?.error?.resMessage || error?.message || 'Error updating transaction limit.'
+      );
       console.error('Error:', error);
     }
   );
