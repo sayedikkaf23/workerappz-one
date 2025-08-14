@@ -82,16 +82,15 @@ export class MasterGlobalCreditLimit implements OnInit {
       .pipe(finalize(() => (this.saving = false)))
       .subscribe(
         (data) => {
-          // Handle “logical” errors returned with 200
-          if (data?.resCode && data.resCode !== 200) {
-            this.toastr.error(data?.resMessage || 'Update failed.');
-            return;
-          }
+          // // Handle “logical” errors returned with 200
+          // if (data?.resCode && data.resCode !== 200) {
+          //   this.toastr.error(data?.resMessage || 'Update failed.');
+          //   return;
+          // }
 
           // Use dynamic message if provided; else show your exact fallback text
-          this.toastr.success(
-            data?.resMessage || 'Global Limits Updated successfully - Toaster!'
-          );
+                this.toastr.success('Global Limits Updated successfully');
+
         },
         (error) => {
           this.toastr.error(
