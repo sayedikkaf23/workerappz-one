@@ -59,7 +59,7 @@ export class MasterGlobalCreditLimit implements OnInit {
           });
 
           // show backend message if present, else a simple “Loaded.”
-          this.toastr.success(data?.resMessage || 'Loaded.');
+          // this.toastr.success(data?.resMessage || 'Loaded.');
         },
         (error) => {
           this.toastr.error(

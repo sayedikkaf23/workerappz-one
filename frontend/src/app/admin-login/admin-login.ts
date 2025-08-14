@@ -19,6 +19,10 @@ export class AdminLogin {
   password: string = '';
   token: string = '';
   mfaRequired: boolean = false;
+    rememberMe = false;
+
+     showPassword = false;
+
 
   constructor(
     private adminService: AdminService,
@@ -26,6 +30,10 @@ export class AdminLogin {
     private toastr: ToastrService // Inject ToastrService
   ) {}
 
+  
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
   // Toggle Dark Mode
   toggleDarkMode() {
     this.isDark = !this.isDark;
@@ -39,7 +47,12 @@ export class AdminLogin {
     }
   }
 
-  onLoginSubmit() {
+  onLoginSubmit(loginForm: any) {
+     if (!this.rememberMe) {
+    // Trigger Angular form "submitted" state so <small> shows
+    loginForm.control.markAllAsTouched();
+    return;
+  }
     this.loading = true;
     const loginData = {
       email: this.email,

@@ -28,3 +28,19 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.remember-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #b91c1c; /* dark red */
+}
+
+.remember-error i {
+  margin-right: 4px;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+
