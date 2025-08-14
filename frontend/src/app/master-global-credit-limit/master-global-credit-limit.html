@@ -1,6 +1,9 @@
 <app-adminsidebar></app-adminsidebar>
 <app-topbar></app-topbar>
-
+<div class="overlay" *ngIf="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading</div>
+</div>
 <div class="limits-wrap">
   <div class="card one-card">
     <div class="card-head">

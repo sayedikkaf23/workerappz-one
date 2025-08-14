@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdminService } from '../services/admin.service'; // Import AdminService
 import { Router } from '@angular/router'; // Import Router
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,12 +12,13 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 })
 export class AdminLogin {
   isDark = true;
+  loading = false;  // for initial GET
+
   email: string = '';
   auth_Code: string = '';
   password: string = '';
   token: string = '';
   mfaRequired: boolean = false;
-  loading: boolean = false; // Loading state for the login button
 
   constructor(
     private adminService: AdminService,
