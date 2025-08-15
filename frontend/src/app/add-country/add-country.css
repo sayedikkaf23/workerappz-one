@@ -1,0 +1,495 @@
+
+
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+
+/* General container for the role page */
+.role-page {
+    margin-left: 300px; /* Adjust for sidebar */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+  /* Scoped container */
+.dropdown-input-wrapper {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 5px; /* small gap between dropdown and input */
+}
+
+/* Prevent conflict from form[...], use your own class */
+.btn-custom {
+  padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #2980b9;
+}
+
+/* Style for the input field */
+.input-custom {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Ensure dropdown-menu shows properly */
+.dropdown-menu {
+  z-index: 1000;
+}
+
+  .dropdown-menu {
+    z-index: 1050;
+  }
+
+/* Title styling */
+.role-page h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* === Responsive Form Layout === */
+form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Medium screens: 3 columns */
+@media (max-width: 1200px) {
+  form {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Small screens: 2 columns */
+@media (max-width: 900px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 600px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* Label Styling */
+form label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #34495e;
+  margin-bottom: 8px;
+  white-space: normal; /* allow wrapping */
+  word-break: break-word; /* break long words if needed */
+  line-height: 1.4;
+}
+
+/* Input & Select Styling */
+form input[type="text"],
+form input[type="password"],
+form input[type="number"],
+form input[type="date"],
+form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+   align-self: start;
+    /* height: auto; */
+}
+
+/* Focus States */
+form input:focus,
+form select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Full-width Header Section */
+.full-width {
+  grid-column: 1 / -1; /* span all columns */
+}
+
+/* Responsive Button Sizing */
+form button {
+  grid-column: 1 / -1; /* make button full width on smaller screens */
+}
+
+/* Small Screen Adjustments */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr; /* single column for mobile */
+  }
+}
+
+
+/* Permissions container styling */
+.permissions-container {
+    grid-column: span 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Permissions checkboxes alignment */
+.permissions-container div {
+    display: flex;
+    align-items: center;
+}
+
+.permissions-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Submit button styling */
+form button {
+    grid-column: span 2;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+form button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .role-page {
+      margin-left: 10px;
+      padding: 20px;
+    }
+
+    form {
+      grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+
+    form button {
+      grid-column: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .role-page {
+      margin-left: 0;
+      padding: 15px;
+    }
+
+    form button {
+      padding: 10px;
+      font-size: 14px;
+    }
+}
+.error {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #007bff; /* Change color if needed */
+    font-weight: bold;
+}
+
+.back-button:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+
+.full-width {
+    display: flex;
+    justify-content: space-between; /* Distribute space between h2 and button */
+  }
+
+  form .full-width { /* If it's specifically on the form's header */
+    flex-direction: row !important; /* !important is generally discouraged, but might be needed in this case */
+}
+
+/* Custom width for the input */
+.custom-form-control {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Optional styling for the input fields */
+.cus input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+/* Optional: add a hover effect for the dropdown */
+.cus:hover {
+  border-color: #007bff;
+}
+.currency-heading {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+      margin-top: 30px;
+    color: #333;
+    text-align: center;
+}
+/* --- Custom Currency Section Styles --- */
+.currency-section {
+  padding: 18px 18px 10px 18px;
+  background: #f7fafd;
+  border: 1.5px solid #cce1f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+  max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.currency-row {
+  display: flex !important;
+  flex-direction: row !important;
+      align-items: stretch;
+    gap: 2rem;
+  margin-bottom: 16px;
+  background: none;
+          border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.currency-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+  margin-bottom: 9px;
+}
+
+.currency-row label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #2c3e50;
+  font-size: 13px;
+   white-space: normal; /* allow wrapping */
+  word-break: break-word; 
+}
+
+.currency-row select,
+.currency-row input[type="number"] {
+  padding: 7px 10px;
+  border: 1px solid #b5c9d6;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  min-width: 80px;
+  margin-bottom: 0;
+   width: 100%;
+  min-width: 0;
+}
+
+.currency-row .threshold-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+   width: 100%;
+  min-width: 0;
+}
+
+.currency-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+      justify-content: center;
+}
+.btn-add,
+.btn-remove {
+    background: #007bff;
+    border: none;
+    background: none;
+    border: none;
+    color: #007bff;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    height: 28px;
+    width: 28px;
+    box-shadow: none;
+    outline: none;
+    vertical-align: middle;
+}
+
+.btn-add::before {
+    content: "+";
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+    display: inline-block;
+    line-height: 1;
+}
+
+.btn-add:hover::before {
+    color: #0056b3;
+}
+
+
+/* New style for centering the add button */
+.btn-add-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/* Make .btn-add appear on the next line below .currency-row */
+.currency-row + .btn-add {
+    display: block;
+    margin-top: 8px;
+    margin-left: 0;
+}
+
+    .btn-remove {
+        color: #dc3545;
+    }
+
+    .btn-remove::before {
+        content: "×";
+        font-size: 22px;
+        font-weight: bold;
+        color: #dc3545;
+        display: inline-block;
+        line-height: 1;
+    }
+
+    .btn-remove:hover::before {
+        color: #a71d2a;
+    }
+
+@media (max-width: 900px) {
+  .currency-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  .currency-actions {
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+/* Prevent global form styles from affecting currency section */
+.currency-section input,
+.currency-section select {
+  box-shadow: none !important;
+  background: #fff !important;
+  border: 1px solid #b5c9d6 !important;
+  font-size: 14px !important;
+  padding: 7px 10px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Custom style for isAsian checkbox alignment */
+.is-asian-checkbox-group {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px;
+  margin-top: 28px;
+    margin-bottom: 8px;
+    margin-left: 6px;
+}
+.is-asian-checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3498db;
+  margin: 0;
+}
+.is-asian-checkbox-group label {
+  margin-bottom: 0;
+  margin-left: 10px;
+  /* font-size: 15px;
+  font-weight: 500;
+  color: #34495e;
+  cursor: pointer; */
+}
+
+/* Center the add button below the currency rows */
+.btn-add-row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+

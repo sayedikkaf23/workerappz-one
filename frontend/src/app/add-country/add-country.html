@@ -1,0 +1,151 @@
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</div>
+<div class="role-page" *ngIf="!isLoading">
+<form>
+    <div class="full-width">
+        <h2>Country Details</h2>
+ 
+        <a class="back-button" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i>
+    </a>
+    </div>
+ 
+    <div>
+        <label for="name">Name<span class="required">*</span></label>
+        <input type="text" id="name" [(ngModel)]="name" name="name" required placeholder="Enter country name">
+    </div>
+ 
+    <div>
+        <label for="countryShortname">Country Shortname<span class="required">*</span></label>
+        <input type="text" id="countryShortname" [(ngModel)]="countryShortname" name="countryShortname" required placeholder="Enter country shortname">
+    </div>
+ 
+    <!-- Select Local Currency -->
+    <div>
+        <label for="localCurrency">Select Local Currency</label>
+        <select id="localCurrency" [(ngModel)]="localCurrency" name="localCurrency">
+            <option value="" disabled selected>Select local currency</option>
+            <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+        </select>
+    </div>
+
+    <!-- Allowed International Transaction Type -->
+    <div>
+        <label for="allowedInternationalType">Allowed International Transaction Type</label>
+        <select id="allowedInternationalType" [(ngModel)]="allowedInternationalType" name="allowedInternationalType">
+            <option value="" disabled selected>Select transaction type</option>
+           
+            <option *ngFor="let currency of transactionTypes" [value]="currency">{{ currency }}</option>
+        </select>
+    </div>
+
+    <!-- Allowed Domestic Transaction Type -->
+    <div>
+        <label for="allowedDomesticType">Allowed Domestic Transaction Type</label>
+        <select id="allowedDomesticType" [(ngModel)]="allowedDomesticType" name="allowedDomesticType">
+            <option value="" disabled selected>Select transaction type</option>
+            <option *ngFor="let currency of transactionTypes" [value]="currency">{{ currency }}</option>
+        </select>
+    </div>
+
+    <!-- Total Inbound Threshold -->
+    <div>
+        <label for="totalInboundThreshold">Total Inbound Threshold Per Year Per Person</label>
+        <input type="number" id="totalInboundThreshold" [(ngModel)]="totalInboundThreshold" name="totalInboundThreshold" placeholder="Enter total inbound threshold">
+    </div>
+
+    <!-- Maximum Transactions Per Year -->
+    <div>
+        <label for="maxTransactionsPerYear">Maximum Transactions Per Year Per Person to One Beneficiary</label>
+        <input type="number" id="maxTransactionsPerYear" [(ngModel)]="maxTransactionsPerYear" name="maxTransactionsPerYear" placeholder="Enter max transactions per year">
+    </div>
+
+    <!-- Transaction Year Start Date -->
+    <div>
+        <label for="transactionYearStart">Transaction Year Start Date</label>
+        <input type="date" id="transactionYearStart" [(ngModel)]="transactionYearStart" name="transactionYearStart" placeholder="Select start date">
+    </div>
+
+    <!-- Transaction Year End Date -->
+    <div>
+        <label for="transactionYearEnd">Transaction Year End Date</label>
+        <input type="date" id="transactionYearEnd" [(ngModel)]="transactionYearEnd" name="transactionYearEnd" placeholder="Select end date">
+    </div>
+    
+    <div>
+        <label for="outboundThresholdPerMonth">OutboundThreshold PerMonthTransaction (In Amount)</label>
+        <input type="number" id="outboundThresholdPerMonth" [(ngModel)]="outboundThresholdPerMonth" name="outboundThresholdPerMonth" placeholder="Enter Amount">
+    </div>
+
+    <div>
+        <label for="outboundThresholdPerDay">OutboundThreshold PerDayTransaction (In Amount)</label>
+        <input type="number" id="outboundThresholdPerDay" [(ngModel)]="outboundThresholdPerDay" name="outboundThresholdPerDay" placeholder="Enter Amount">
+    </div>
+
+    <div class="is-asian-checkbox-group">
+        <input type="checkbox" id="isAsian" [(ngModel)]="isAsian" name="isAsian">
+        <label for="isAsian">IsAsian</label>
+    </div>
+ 
+   
+</form>
+ <h3 class="currency-heading">Add Currency</h3>
+  <div class="currency-section"> 
+    <div *ngFor="let item of currencyConfigs; let i = index" class="currency-row">
+
+       
+        <div class="currency-field">
+        <label for="currency-{{i}}">Select Currency</label>
+        <select id="currency-{{i}}" [(ngModel)]="item.currency" name="currency-{{i}}">
+            <option value="" disabled selected>Select code</option>
+            <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+        </select>
+        </div>
+
+       
+        <div class="currency-field">
+        <label>Outbound Threshold Per Transaction</label>
+        <div class="threshold-inputs">
+            <input type="number" placeholder="Cash" [(ngModel)]="item.outboundCash" name="outboundCash-{{i}}">
+            <input type="number" placeholder="Bank" [(ngModel)]="item.outboundBank" name="outboundBank-{{i}}">
+            <input type="number" placeholder="Wallet" [(ngModel)]="item.outboundWallet" name="outboundWallet-{{i}}">
+        </div>
+        </div>
+
+ 
+        <div class="currency-field">
+        <label for="outboundIdThreshold-{{i}}">Outbound ID Requirement Threshold</label>
+        <input type="number" id="outboundIdThreshold-{{i}}" [(ngModel)]="item.outboundIdThreshold" name="outboundIdThreshold-{{i}}" placeholder="Enter Amount" >
+        </div>
+
+       
+        <div class="currency-actions">
+        
+        <button type="button" class="btn-remove" (click)="removeCurrencyConfig(i)" *ngIf="currencyConfigs.length > 1"></button>
+        </div>
+        <!-- <button type="button" class="btn-add" (click)="addCurrencyConfig()" *ngIf="i === currencyConfigs.length - 1"></button> -->
+
+    </div>
+      <!-- The Add button is now outside the loop and centered -->
+    <div class="btn-add-container">
+        <button type="button" class="btn-add" (click)="addCurrencyConfig()"></button>
+    </div>
+    </div>
+      <button class="btn-custom" (click)="onSubmit()">Submit</button>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

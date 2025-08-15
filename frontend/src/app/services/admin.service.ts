@@ -61,7 +61,7 @@ export interface UpdateAdminDto {
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private apiUrl = environment.apiUrl;
-
+  private countryUrl = 'http://onedev.workerappz.com:802/api/master/country/Getdetails';
   constructor(private http: HttpClient) {}
 
   login(loginData: { email: string; password: string,auth_Code:string}): Observable<any> {
@@ -157,6 +157,10 @@ getRoleById(id: string): Observable<Role> {
   // Create new currency
   createCurrency(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/admin/add-currency`, data);
+  }
+
+   getCountryDetails(countryId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/admin/get-country?CountryID=${countryId}`);
   }
 
 }

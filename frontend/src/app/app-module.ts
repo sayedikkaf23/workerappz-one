@@ -62,6 +62,9 @@ import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-glo
 import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
 import { CurrencyManagement } from './currency-management/currency-management';
 import { AddCurrencyModal } from './add-currency-modal/add-currency-modal';
+import { CountryManagement } from './country-management/country-management';
+import { AddCountry } from './add-country/add-country';
+import { UpdateCountry } from './update-country/update-country';
 import { CommonModule, DatePipe } from '@angular/common';
 
 @NgModule({
@@ -121,7 +124,10 @@ import { CommonModule, DatePipe } from '@angular/common';
     MasterGlobalCreditLimit,
     MasterGlobalTransactionLimit,
     CurrencyManagement,
-    AddCurrencyModal
+    AddCurrencyModal,
+    CountryManagement,
+    AddCountry,
+    UpdateCountry
   ],
   imports: [
     CommonModule,
