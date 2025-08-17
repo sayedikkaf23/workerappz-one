@@ -1,0 +1,85 @@
+<!-- Loader HTML -->
+<app-adminsidebar></app-adminsidebar>
+<app-topbar></app-topbar>
+
+<div *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading" class="main-content">
+    <!-- Cards Actions Section -->
+    <div class="cards-actions">
+        <div class="user-section">
+            <h2><i class="fa-solid fa-earth-americas"></i>Country Management</h2>
+        </div>
+
+        <div class="filter-export-buttons">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" >
+                <button class="search-button" (click)="filterCountries()">
+                    <i class="fas fa-search"></i> SEARCH
+                </button>
+            </div>
+            <button class="export-button" (click)="exportToExcel()">
+                <i class="fas fa-file-export"></i> EXPORT
+            </button>
+            <button class="export-button" (click)="openAddCountry()">
+                <i class="fas fa-plus"></i> ADD COUNTRY
+            </button>
+
+            
+        </div>
+
+
+        <div class="results-info">
+  <i class="fas fa-info-circle" style="margin-right: 6px;"></i>
+  Displaying <strong>{{ filteredCategories.length }}</strong> result(s) for the: <strong>All Time</strong>
+</div>
+
+        <!-- Cards Data Table -->
+        <div class="table-container">
+            <table class="cards-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>CCY</th>
+                        <th>Intl Trans Type</th>
+                        <th>Trans Start Date</th>
+                        <th>Trans End Date</th>
+                          <th>IsAsian</th>
+                           <th>Active</th>
+                        <th>Auth</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of paginatedCategories">
+                        <td>{{category.countryShortName}}</td>
+                        <td>{{category.countryName}}</td>
+                       
+                        <td>{{category.ccy}}</td>
+                        <td>{{category.intlTransType}}</td>
+                        <td>{{category.transactionEndDate}}</td>
+                        <td>{{category.transactionStartDate}}</td>
+                        <td>{{category.isAsian}}</td>
+                         <td>{{category.active}}</td>
+                        <td>{{category.auth}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button class="pagination-button back-button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i> BACK
+            </button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button class="pagination-button next-button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+                NEXT <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

@@ -44,6 +44,9 @@ import { ViewService } from './view-service/view-service';
 import { MasterGlobalCreditLimit } from './master-global-credit-limit/master-global-credit-limit';
 import { MasterGlobalTransactionLimit } from './master-global-transaction-limit/master-global-transaction-limit';
 import { CurrencyManagement } from './currency-management/currency-management';
+import { CountryManagement } from './country-management/country-management';
+import { AddCountry } from './add-country/add-country';
+import { UpdateCountry } from './update-country/update-country';
 const routes: Routes = [
   {
     path: '',
@@ -130,6 +133,11 @@ const routes: Routes = [
       { path: 'ip-address/edit/:id', component: EditIpaddress },
 
       { path: 'currency-management', component: CurrencyManagement },
+
+     //MASTER  // Country Management
+      { path: 'master/country', component: CountryManagement},
+      { path: 'master/country/add', component: AddCountry},
+      { path: 'master/country/edit:id', component: UpdateCountry},
     ],
   },
 ];

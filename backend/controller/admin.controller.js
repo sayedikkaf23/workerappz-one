@@ -8,8 +8,6 @@ const onBoardings = require("../models/onboarding.model");
 const e = require("express");
 const Role = require("../models/roles");
 const axios = require('axios');
-
-
 const logOnboardingDb = require("../utils/onboardingLogger");
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
@@ -423,6 +421,20 @@ exports.getAllCurrencies = async (req, res) => {
       message: "Failed to fetch currencies",
       error: err.message
     });
+  }
+};
+
+exports.getCountryById = async (req, res) => {
+ try {
+    const { CountryID } = req.query;
+    console.log('CountryID:', CountryID);
+    const dotNetUrl = `http://onedev.workerappz.com:802/api/master/country/Getdetails?CountryID=${CountryID}`;
+
+    const response = await axios.get(dotNetUrl);
+    res.json(response.data); // Send data back to Angular
+  } catch (error) {
+    console.error('Error calling .NET API:', error.message);
+    res.status(500).json({ error: 'Failed to fetch country details' });
   }
 };
 
