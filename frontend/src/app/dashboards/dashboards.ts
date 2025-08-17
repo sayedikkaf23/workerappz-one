@@ -39,6 +39,7 @@ export class Dashboards implements OnInit {
     private adminService: Admin
   ) {}
 
+
   ngOnInit(): void {
     const adminRole = localStorage.getItem('AdminRole');
     this.partnercode = localStorage.getItem('partnerCode');
@@ -60,6 +61,20 @@ export class Dashboards implements OnInit {
     // }
     // this.loadPermissions(); // Call the function to load permissions on initialization
   }
+
+  open = {
+  pages: false,
+  Global: false
+};
+
+toggleMenu(menu: 'pages' | 'Global') {
+  this.open[menu] = !this.open[menu];
+}
+
+debug() {
+  console.log('Debug clicked');
+}
+
 
   fetchUserCounts(partnercode: any): void {
     this.dashboardService

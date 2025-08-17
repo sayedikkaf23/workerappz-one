@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { Router, ActivatedRoute , NavigationEnd} from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Admin } from '../services/admin';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
 import { Profile } from '../profile/profile';
@@ -9,27 +9,30 @@ import { ChangeDetectorRef } from '@angular/core';
   selector: 'app-adminsidebar',
   standalone: false,
   templateUrl: './adminsidebar.html',
-  styleUrl: './adminsidebar.css'
+  styleUrl: './adminsidebar.css',
 })
 export class Adminsidebar {
-    isDropdownOpen: boolean = false;
+  isDropdownOpen: boolean = false;
 
-   permissions: string[] = [];
+  permissions: string[] = [];
   isSuperAdmin: boolean = false;
-isMasterOpen = false;
-isGlobalOpen = false;
-showGlobal = false;
-hoveringFlyout = false;
-globalStyle: any = { top: '0px', left: '0px', width: '260px' };
-activeFlyout: string | null = null;
-flyoutStyle: any = {};
-showFlyout = false;
-flyoutItems: { label: string; link: string }[] = [];
+  isMasterOpen = false;
+  isGlobalOpen = false;
+  showGlobal = false;
+  hoveringFlyout = false;
+  globalStyle: any = { top: '0px', left: '0px', width: '260px' };
+  activeFlyout: string | null = null;
+  flyoutStyle: any = {};
+  showFlyout = false;
+  flyoutItems: { label: string; link: string }[] = [];
 
-masterRoutes = [
-  '/admin/master/global/credit-limit',
-  '/admin/master/global/transaction-limit','/admin/master/country', '/admin/master/country/add', '/admin/master/country/edit/:id'
-];
+  masterRoutes = [
+    '/admin/master/global/credit-limit',
+    '/admin/master/global/transaction-limit',
+    '/admin/master/country',
+    '/admin/master/country/add',
+    '/admin/master/country/edit/:id',
+  ];
 
   constructor(
     private router: Router,
@@ -42,51 +45,65 @@ masterRoutes = [
     this.loadPermissions(); // Call the function to load permissions on initialization
   }
 
-@ViewChild('sidebarMenu', { static: false }) sidebarMenu?: ElementRef;
+  @ViewChild('sidebarMenu', { static: false }) sidebarMenu?: ElementRef;
 
   // @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
   sessionStorageKey = 'settingsDropdownOpen';
-  settingsRoutes = ['/admin/users/roles', '/admin/users/edit','/admin/users', '/admin/partner-code', '/admin/topup', '/admin/roles', '/admin/roles/view', '/admin/roles/assign', '/admin/users/update', '/admin/partner-code/add','/admin/fund/master-transfer','/admin/ip-address/add', '/admin/ip-address/list', '/admin/ip-address/edit/:id']; // Array of settings routes
+  settingsRoutes = [
+    '/admin/users/roles',
+    '/admin/users/edit',
+    '/admin/users',
+    '/admin/partner-code',
+    '/admin/topup',
+    '/admin/roles',
+    '/admin/roles/view',
+    '/admin/roles/assign',
+    '/admin/users/update',
+    '/admin/partner-code/add',
+    '/admin/fund/master-transfer',
+    '/admin/ip-address/add',
+    '/admin/ip-address/list',
+    '/admin/ip-address/edit/:id',
+  ]; // Array of settings routes
   isSidebarOpen = false;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
- ngOnInit() {
-  const storedSettings = sessionStorage.getItem(this.sessionStorageKey);
-  this.isDropdownOpen = storedSettings === 'true';
+  ngOnInit() {
+    const storedSettings = sessionStorage.getItem(this.sessionStorageKey);
+    this.isDropdownOpen = storedSettings === 'true';
 
-  this.isMasterOpen = sessionStorage.getItem('masterOpen') === 'true';
-  this.isGlobalOpen = sessionStorage.getItem('globalOpen') === 'true';
+    this.isMasterOpen = sessionStorage.getItem('masterOpen') === 'true';
+    this.isGlobalOpen = sessionStorage.getItem('globalOpen') === 'true';
 
-  this.router.events.subscribe(event => {
-    if (event instanceof NavigationEnd) {
-      // close Settings when leaving its routes
-      if (!this.settingsRoutes.includes(this.router.url)) {
-        this.isDropdownOpen = false;
-        sessionStorage.setItem(this.sessionStorageKey, 'false');
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // close Settings when leaving its routes
+        if (!this.settingsRoutes.includes(this.router.url)) {
+          this.isDropdownOpen = false;
+          sessionStorage.setItem(this.sessionStorageKey, 'false');
+        }
+        // close Master when leaving its routes
+        if (!this.masterRoutes.includes(this.router.url)) {
+          this.isMasterOpen = false;
+          this.isGlobalOpen = false;
+          sessionStorage.setItem('masterOpen', 'false');
+          sessionStorage.setItem('globalOpen', 'false');
+        }
       }
-      // close Master when leaving its routes
-      if (!this.masterRoutes.includes(this.router.url)) {
-        this.isMasterOpen = false;
-        this.isGlobalOpen = false;
-        sessionStorage.setItem('masterOpen', 'false');
-        sessionStorage.setItem('globalOpen', 'false');
-      }
-    }
-  });
-}
+    });
+  }
 
-ngOnDestroy() {
-  sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
-  sessionStorage.setItem('masterOpen', String(this.isMasterOpen));
-  sessionStorage.setItem('globalOpen', String(this.isGlobalOpen));
-}
+  ngOnDestroy() {
+    sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
+    sessionStorage.setItem('masterOpen', String(this.isMasterOpen));
+    sessionStorage.setItem('globalOpen', String(this.isGlobalOpen));
+  }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
-
 
   scrollToBottom() {
     if (this.isDropdownOpen && this.sidebarMenu) {
@@ -95,8 +112,18 @@ ngOnDestroy() {
     }
   }
 
- 
+  open = {
+    pages: false,
+    Global: false,
+  };
 
+  toggleMenu(menu: 'pages' | 'Global') {
+    this.open[menu] = !this.open[menu];
+  }
+
+  debug() {
+    console.log('Debug clicked');
+  }
   logout() {
     this.router.navigate(['/admin/login']);
   }
@@ -114,7 +141,7 @@ ngOnDestroy() {
       //   (response) => {
       //     if (response && response.partnerCode) {
       //       if (response.partnerCode === 'superadmin') {
-              this.isSuperAdmin = true;
+      this.isSuperAdmin = true;
       //       } else if (response.role && response.role.permissions) {
       //         this.permissions = response.role.permissions;
       //       }
@@ -159,107 +186,132 @@ ngOnDestroy() {
   }
 
   toggleDropdown(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-  this.isDropdownOpen = !this.isDropdownOpen;
+    this.isDropdownOpen = !this.isDropdownOpen;
 
-  // close Master/Global when Settings opens
-  if (this.isDropdownOpen) {
-    this.isMasterOpen = false;
-    this.isGlobalOpen = false;
-  }
-  sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
-}
-
-openFlyout(event: Event, name: string, items: { label: string; link: string }[]) {
-  event.preventDefault();
-  event.stopPropagation();
-
-  // set active and menu content
-  this.activeFlyout = name;
-  this.flyoutItems = items;
-  this.showFlyout = true;
-
-  // position next to clicked item
-  const item = (event.currentTarget as HTMLElement).closest('li') as HTMLElement;
-  const rect = item.getBoundingClientRect();
-  const sidebarRect = document.querySelector('.sidebar')!.getBoundingClientRect();
-  const left = sidebarRect.right;
-  let top = rect.top;
-
-  const margin = 8;
-  const panelHeight = items.length * 44 + 16;
-  if (top + panelHeight + margin > window.innerHeight) {
-    top = Math.max(margin, window.innerHeight - panelHeight - margin);
-  }
-  this.flyoutStyle = { top: `${top}px`, left: `${left}px`, width: '240px' };
-}
-
-closeFlyout() {
-  this.showFlyout = false;
-  this.activeFlyout = null;
-}
-
-openGlobal(e: Event) {
-  e.preventDefault(); e.stopPropagation();
-
-  const sidebar = document.querySelector('.sidebar') as HTMLElement;
-  const item   = (e.currentTarget as HTMLElement).closest('li') as HTMLElement;
-
-  const itemRect = item.getBoundingClientRect();
-  const sbRect   = sidebar.getBoundingClientRect();
-
-  const panelWidth = 260; // same as CSS width
-  const left = sbRect.right; // right next to sidebar
-
-  // Provisional top aligned to the item
-  let top = itemRect.top;
-
-  // Keep inside viewport
-  const viewportH = window.innerHeight;
-  const margin = 8;
-  const estimatedPanelH = 120; // quick safe default; updated next tick
-
-  if (top + estimatedPanelH + margin > viewportH) {
-    top = Math.max(margin, viewportH - estimatedPanelH - margin);
-  }
-
-  this.globalStyle = { top: `${top}px`, left: `${left}px`, width: `${panelWidth}px` };
-  this.showGlobal = true;
-
-  // Re-measure once it renders to clamp precisely
-  setTimeout(() => {
-    const panel = document.querySelector('.flyout-panel') as HTMLElement;
-    if (!panel) return;
-    const h = panel.getBoundingClientRect().height;
-    let t = itemRect.top;
-    if (t + h + margin > viewportH) t = Math.max(margin, viewportH - h - margin);
-    this.globalStyle = { top: `${t}px`, left: `${left}px`, width: `${panelWidth}px` };
-  });
-
-  // close on outside click
-  const onDoc = (ev: MouseEvent) => {
-    const panel = document.querySelector('.flyout-panel');
-    if (!panel || (!panel.contains(ev.target as Node) && !item.contains(ev.target as Node))) {
-      this.showGlobal = false;
-      document.removeEventListener('click', onDoc);
+    // close Master/Global when Settings opens
+    if (this.isDropdownOpen) {
+      this.isMasterOpen = false;
+      this.isGlobalOpen = false;
     }
-  };
-  setTimeout(() => document.addEventListener('click', onDoc));
-}
+    sessionStorage.setItem(this.sessionStorageKey, String(this.isDropdownOpen));
+  }
 
-closeGlobal() { this.showGlobal = false; }
+  openFlyout(
+    event: Event,
+    name: string,
+    items: { label: string; link: string }[]
+  ) {
+    event.preventDefault();
+    event.stopPropagation();
 
+    // set active and menu content
+    this.activeFlyout = name;
+    this.flyoutItems = items;
+    this.showFlyout = true;
 
-toggleMaster(e: Event) {
-  e.preventDefault(); e.stopPropagation();
-  this.isMasterOpen = !this.isMasterOpen;
-  if (this.isMasterOpen) this.isGlobalOpen = false; // optional
-}
+    // position next to clicked item
+    const item = (event.currentTarget as HTMLElement).closest(
+      'li'
+    ) as HTMLElement;
+    const rect = item.getBoundingClientRect();
+    const sidebarRect = document
+      .querySelector('.sidebar')!
+      .getBoundingClientRect();
+    const left = sidebarRect.right;
+    let top = rect.top;
 
-toggleGlobal(e: Event) {
-  e.preventDefault(); e.stopPropagation();
-  this.isGlobalOpen = !this.isGlobalOpen;
-}
+    const margin = 8;
+    const panelHeight = items.length * 44 + 16;
+    if (top + panelHeight + margin > window.innerHeight) {
+      top = Math.max(margin, window.innerHeight - panelHeight - margin);
+    }
+    this.flyoutStyle = { top: `${top}px`, left: `${left}px`, width: '240px' };
+  }
+
+  closeFlyout() {
+    this.showFlyout = false;
+    this.activeFlyout = null;
+  }
+
+  openGlobal(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    const item = (e.currentTarget as HTMLElement).closest('li') as HTMLElement;
+
+    const itemRect = item.getBoundingClientRect();
+    const sbRect = sidebar.getBoundingClientRect();
+
+    const panelWidth = 260; // same as CSS width
+    const left = sbRect.right; // right next to sidebar
+
+    // Provisional top aligned to the item
+    let top = itemRect.top;
+
+    // Keep inside viewport
+    const viewportH = window.innerHeight;
+    const margin = 8;
+    const estimatedPanelH = 120; // quick safe default; updated next tick
+
+    if (top + estimatedPanelH + margin > viewportH) {
+      top = Math.max(margin, viewportH - estimatedPanelH - margin);
+    }
+
+    this.globalStyle = {
+      top: `${top}px`,
+      left: `${left}px`,
+      width: `${panelWidth}px`,
+    };
+    this.showGlobal = true;
+
+    // Re-measure once it renders to clamp precisely
+    setTimeout(() => {
+      const panel = document.querySelector('.flyout-panel') as HTMLElement;
+      if (!panel) return;
+      const h = panel.getBoundingClientRect().height;
+      let t = itemRect.top;
+      if (t + h + margin > viewportH)
+        t = Math.max(margin, viewportH - h - margin);
+      this.globalStyle = {
+        top: `${t}px`,
+        left: `${left}px`,
+        width: `${panelWidth}px`,
+      };
+    });
+
+    // close on outside click
+    const onDoc = (ev: MouseEvent) => {
+      const panel = document.querySelector('.flyout-panel');
+      if (
+        !panel ||
+        (!panel.contains(ev.target as Node) &&
+          !item.contains(ev.target as Node))
+      ) {
+        this.showGlobal = false;
+        document.removeEventListener('click', onDoc);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', onDoc));
+  }
+
+  closeGlobal() {
+    this.showGlobal = false;
+  }
+
+  toggleMaster(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.isMasterOpen = !this.isMasterOpen;
+    if (this.isMasterOpen) this.isGlobalOpen = false; // optional
+  }
+
+  toggleGlobal(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.isGlobalOpen = !this.isGlobalOpen;
+  }
 }
