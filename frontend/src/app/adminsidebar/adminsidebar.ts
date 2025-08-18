@@ -128,10 +128,14 @@ export class Adminsidebar {
     this.router.navigate(['/admin/login']);
   }
 
-  isActive(route: string): boolean {
-    // Implement logic to check if the route is active
-    return this.router.url === route;
+  isActive(routeArray: string[]): boolean {
+    return routeArray.some(r => this.router.url.startsWith(r));
   }
+
+  // isActive(route: string): boolean {
+  //   // Implement logic to check if the route is active
+  //   return this.router.url === route;
+  // }
 
   // Load permissions from the API using the AdminService
   loadPermissions(): void {

@@ -1,0 +1,17 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  padding-right: 50px; /* space for suffix */
+}
+
+.input-wrapper .suffix {
+  position: absolute;
+  right: 12px;
+  color: #b3afaf;
+  font-weight: 500;
+  pointer-events: none;
+}
