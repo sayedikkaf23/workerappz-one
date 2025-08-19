@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Dashboard } from '../services/dashboard';
 import { Admin } from '../services/admin';
 
+
 @Component({
   selector: 'app-dashboards',
   standalone: false,

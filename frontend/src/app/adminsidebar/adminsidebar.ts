@@ -325,4 +325,7 @@ export class Adminsidebar {
     this.auth.logout();
     this.router.navigate(['/admin/login'], { replaceUrl: true });
   }
+  isActivePrefix(prefix: string): boolean {
+  return this.router.url.startsWith(prefix);
+}
 }
