@@ -1,3 +1,8 @@
+
+<div class="overlay" *ngIf="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading</div>
+</div>
 <div class="dark-active theme-wrapper p-0">
   <div class="login-page">
     <a class="logo">
@@ -9,7 +14,7 @@
       <p>Send. Spend. Exchange. All in ONE.</p>
     </div>
     <div class="form-box">
-      <form (submit)="onLoginSubmit()">
+      <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
         <div class="form-field">
           <input type="text" class="form-control" [(ngModel)]="email" name="email" id="email" placeholder="Enter email address" required />
         </div>
@@ -23,16 +28,27 @@
         </div>
 
         <div class="row align-items-center justify-content-between">
-          <div class="col-auto">
-            <div class="form-check mb-0">
-              <input type="checkbox" class="form-check-input" id="keeplogged" />
-              <label class="form-check-label" for="keeplogged">Remember me</label>
-            </div>
-          </div>
-          <!-- <div class="col-auto">
-            <a href="#" class="link"><u>Forgot Password?</u></a>
-          </div> -->
-        </div>
+    <div class="col-auto">
+      <div class="form-check mb-0">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="keeplogged"
+      name="rememberMe"
+      [(ngModel)]="rememberMe"
+      required
+    />
+    <label class="form-check-label" for="keeplogged">Remember me</label>
+  </div>
+
+  <!-- inline error only -->
+  <small class="remember-error" *ngIf="loginForm.submitted && !rememberMe">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    You must check “Remember me” to continue.
+  </small>
+
+    </div>
+  </div>
         <button type="submit" class="btn w-100" [disabled]="loading">
           {{ mfaRequired ? 'Login' : 'Login' }}
         </button>

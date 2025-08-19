@@ -67,7 +67,8 @@ import { AddCountry } from './add-country/add-country';
 import { UpdateCountry } from './update-country/update-country';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     // MasterGlobalTransactionLimit // Import here instead of declaring it
 
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [provideBrowserGlobalErrorListeners(),{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [App],
 })
 export class AppModule {}

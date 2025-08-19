@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdminService } from '../services/admin.service'; // Import AdminService
 import { Router } from '@angular/router'; // Import Router
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,12 +12,17 @@ import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 })
 export class AdminLogin {
   isDark = true;
+  loading = false;  // for initial GET
+
   email: string = '';
   auth_Code: string = '';
   password: string = '';
   token: string = '';
   mfaRequired: boolean = false;
-  loading: boolean = false; // Loading state for the login button
+    rememberMe = false;
+
+     showPassword = false;
+
 
   constructor(
     private adminService: AdminService,
@@ -24,6 +30,10 @@ export class AdminLogin {
     private toastr: ToastrService // Inject ToastrService
   ) {}
 
+  
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
   // Toggle Dark Mode
   toggleDarkMode() {
     this.isDark = !this.isDark;
@@ -37,7 +47,12 @@ export class AdminLogin {
     }
   }
 
-  onLoginSubmit() {
+  onLoginSubmit(loginForm: any) {
+     if (!this.rememberMe) {
+    // Trigger Angular form "submitted" state so <small> shows
+    loginForm.control.markAllAsTouched();
+    return;
+  }
     this.loading = true;
     const loginData = {
       email: this.email,
