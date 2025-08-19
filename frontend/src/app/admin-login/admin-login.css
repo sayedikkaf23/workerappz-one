@@ -1,0 +1,10 @@
+.remember-error {
+  margin-top: .25rem;          /* small gap under the field */
+  font-size: .8125rem;         /* ~13px */
+  line-height: 1.2;
+  color: var(--bs-danger, #dc3545);
+  display: flex;               /* allows an optional icon */
+  align-items: center;
+  gap: .375rem;                /* space between icon and text */
+  animation: err-in .2s ease-out;
+}
