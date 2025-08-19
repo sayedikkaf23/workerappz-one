@@ -1,173 +1,142 @@
-<button class="sidebar-toggle" (click)="toggleSidebar()" aria-label="Toggle sidebar">
-  <i class="fas fa-bars"></i>
-</button>
-<aside class="sidebar"  [ngClass]="{'open': isSidebarOpen}" style="margin: 0;">
-  <!-- Sidebar Menu -->
-  <ul class="sidebar-menu" #sidebarMenu>
-    <li *ngIf="hasPermission('Dashboard')" [ngClass]="{'active': isActive('/admin/home')}">
-      <a [routerLink]="['/admin/home']">
-        <i class="fas fa-home"></i> Dashboard
-      </a>
-    </li>
+  <aside class="app-sidebar sticky" id="sidebar">
 
+    <!-- Start::main-sidebar-header -->
+    <div class="main-sidebar-header">
+        <a href="index.html" class="header-logo">
+            <img src="assets/images/logo.png" alt="logo" class="desktop-logo">
+            <img src="assets/images/light-logo-img.png" alt="logo" class="toggle-logo">
+            <img src="assets/images/logo.png" alt="logo" class="desktop-dark">
+            <img src="assets/images/logo.png" alt="logo" class="toggle-dark">
+        </a>
+    </div>
+    <!-- End::main-sidebar-header -->
 
-     
-<li *ngIf="hasPermission('Master')" class="dropdown" [class.active]="isMasterOpen">
-  <a href="#" (click)="toggleMaster($event)">
-    <i class="fas fa-database"></i> Master
-    <i class="fas fa-caret-down dropdown-icon" [class.open]="isMasterOpen"></i>
+    <!-- Start::main-sidebar -->
+    <div class="main-sidebar" id="sidebar-scroll">
+
+        <!-- Start::nav -->
+        <nav class="main-menu-container nav nav-pills flex-column sub-open">
+            <div class="slide-left" id="slide-left">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
+                    viewBox="0 0 24 24">
+                    <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
+                </svg>
+            </div>
+            <ul class="main-menu">
+                <!-- Start::slide__category -->
+                <li class="slide__category"><span class="category-name">Main</span></li>
+                <!-- End::slide__category -->
+
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="index.html" class="side-menu__item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px"
+                            viewBox="0 0 24 24" width="24px" fill="#000000">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path
+                                d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+                        </svg>
+                        <span class="side-menu__label">Dashboard</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                <li class="slide__category"><span class="category-name">MASTER</span></li>
+                <!-- End::slide__category -->
+<li class="slide has-sub" 
+    [class.open]="open.pages || isActive(['/admin/master/global'])">
+
+  <a class="side-menu__item" (click)="toggleMenu('pages')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="side-menu__icon">
+      <path d="M0 0h24v24H0V0z" fill="none"></path>
+      <path
+        d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27zM12 16l7.36-5.73L21 9l-9-7-9 7 
+        1.63-1.27L12 16zm0-11.47L17.74 9 12 13.47 6.26 9 12 4.53z"></path>
+    </svg>
+    <span class="side-menu__label">MASTER</span>
+    <i class="fe fe-chevron-right side-menu__angle"></i>
   </a>
 
-  <ul class="sidebar-menu dropdown-menu" *ngIf="isMasterOpen">
-    <!-- Global -->
-    <li class="dropdown flyout-trigger"
-        [class.active]="activeFlyout === 'global'">
-      <a href="#" (click)="openFlyout($event, 'global', [
-        { label: 'GLOBAL LIMITS', link: '/admin/master/global/credit-limit' },
-      ])">
-        <i class="fas fa-globe"></i> Global
-        <i class="fas fa-caret-right dropdown-icon"></i>
+  <!-- First submenu -->
+  <ul class="slide-menu child1" [style.display]="open.pages || isActive(['/admin/master/global']) ? 'block' : 'none'">
+    <li class="slide has-sub"
+        [class.open]="open.Global || isActive(['/admin/master/global/credit-limit'])">
+
+      <a class="side-menu__item" (click)="toggleMenu('Global')">
+        Global
+        <i class="fe fe-chevron-right side-menu__angle"></i>
       </a>
-    </li>
 
-
-    <!-- Currency -->
-   
-<li class="dropdown flyout-trigger">
-  <a  [routerLink]="['/admin/currency-management']" >
-    <i class="fas fa-coins"></i> Currency
-    <i class="fas fa-caret-right dropdown-icon"></i>
-  </a>
-</li>
-
-<li class="dropdown flyout-trigger">
-  <a  [routerLink]="['/admin/master/country']" >
-    <i class="fa-solid fa-earth-americas"></i> Country
-    <i class="fas fa-caret-right dropdown-icon"></i>
-  </a>
-</li>
-    <!-- Add more sub-modules here -->
-  </ul>
-</li>
-
-<!-- FIXED flyout panel -->
-<div class="flyout-panel" *ngIf="showFlyout" [ngStyle]="flyoutStyle"
-     (mouseenter)="hoveringFlyout = true"
-     (mouseleave)="closeFlyout()">
-  <ul class="flyout-menu">
-    <li *ngFor="let item of flyoutItems" [class.active]="isActive(item.link)">
-      <a [routerLink]="[item.link]">{{ item.label }}</a>
-    </li>
-  </ul>
-</div>
-
-
-
-    <li *ngIf="hasPermission('Individual User')" [ngClass]="{'active': isActive('/admin/dashboard')}">
-      <a [routerLink]="['/admin/dashboard']">
-        <i class="fas fa-users"></i> Individual Users
-      </a>
-    </li>
-
-    <li *ngIf="hasPermission('Business User')" [ngClass]="{'active': isActive('/admin/business-users')}">
-      <a [routerLink]="['/admin/business-users']">
-        <i class="fas fa-building"></i> Business User
-      </a>
-    </li>
-
-    <li *ngIf="hasPermission('Category')" [ngClass]="{'active': isActive('/admin/categories')}">
-      <a [routerLink]="['/admin/categories']">
-        <i class="fas fa-id-card"></i> Category
-      </a>
-    </li>
-
-    <li *ngIf="hasPermission('Wallet')" [ngClass]="{'active': isActive('/admin/wallet')}">
-      <a [routerLink]="['/admin/wallet']">
-        <i class="fas fa-wallet"></i> Wallet
-      </a>
-    </li>
-
-    <!-- <li *ngIf="hasPermission('Virtual Wallet')" [ngClass]="{'active': isActive('/virtualwallet')}">
-      <a [routerLink]="['/virtualwallet']">
-        <i class="fas fa-wallet"></i> Virtual Wallet
-      </a>
-    </li> -->
-    <li *ngIf="hasPermission('Customer Transfer Fund')" [ngClass]="{'active': isActive('/admin/fund/transfer')}">
-      <a [routerLink]="['/admin/fund/transfer']">
-        <i class="fas fa-credit-card"></i> Customer Transfer Fund
-      </a>
-    </li>
-    <li *ngIf="hasPermission('Card')" [ngClass]="{'active': isActive('/admin/cards')}">
-      <a [routerLink]="['/admin/cards']">
-        <i class="fas fa-door-closed"></i> Card
-      </a>
-    </li>
-
-    <li *ngIf="hasPermission('Transfer History')" [ngClass]="{'active': isActive('/admin/fund/transfer-history')}">
-      <a [routerLink]="['/admin/fund/transfer-history']">
-        <i class="fas fa-credit-card"></i> Transfer History
-      </a>
-    </li>
-    <li *ngIf="hasPermission('Customer Purchase Transaction History')" [ngClass]="{'active': isActive('/prefundtransfer')}">
-      <a [routerLink]="['/admin/fund/prefund-transfer']">
-        <i class="fas fa-list-alt"></i>Customer Purchase Transaction History
-      </a>
-    </li>
-
-
-    <li *ngIf="hasPermission('Settings')" class="dropdown" [ngClass]="{'active': isDropdownOpen}">
-      <a href="#" (click)="toggleDropdown($event)">
-        <i class="fas fa-cog"></i> Settings
-        <i class="fas fa-caret-down dropdown-icon" [ngClass]="{'open': isDropdownOpen}"></i>
-      </a>
-      <ul class="sidebar-menu dropdown-menu" *ngIf="isDropdownOpen">
-         <li [ngClass]="{'active': isActive('/admin/admin')}">
-          <a [routerLink]="['/admin/admin']">
-            <i class="fas fa-users"></i> Admin
-          </a>
+      <!-- Second submenu -->
+      <ul class="slide-menu child2" [style.display]="open.Global || isActive(['/admin/master/global/credit-limit']) ? 'block' : 'none'">
+        <li class="slide">
+          <a
+            [routerLink]="['/admin/master/global/credit-limit']"
+            routerLinkActive="active"
+            class="side-menu__item"
+            (click)="$event.stopPropagation()"
+          >Global</a>
         </li>
-        <li [ngClass]="{'active': isActive('/admin/roles/assign')}">
-          <a [routerLink]="['/admin/roles/view']">
-            <i class="fas fa-id-card"></i> Roles
-          </a>
-        </li>
-       
-     <li [ngClass]="{'active': isActive('/admin/services')}">
-  <a [routerLink]="['/admin/services']">
-    <i class="fas fa-briefcase"></i> Service
-  </a>
-</li>
-
-
-        <!-- <li  [ngClass]="{'active': isActive('/admin/partner-code')}">
-          <a [routerLink]="['/admin/partner-code']">
-            <i class="fas fa-code"></i> Partner Code
-          </a>
-        </li>
-        <li  [ngClass]="{'active': isActive('/admin/topup')}">
-          <a [routerLink]="['/admin/topup']">
-            <i class="fas fa-wallet"></i>Master Top up
-          </a>
-        </li>
-        <li  [ngClass]="{'active': isActive('/admin/fund/master-transfer')}">
-          <a [routerLink]="['/admin/fund/master-transfer']">
-            <i class="fas fa-wallet"></i>Master to Master Transfer
-          </a>
-        </li>
-          <li  [ngClass]="{'active': isActive('/admin/ip-address/add')}">
-          <a [routerLink]="['/admin/ip-address/add']">
-            <i class="fas fa-wallet"></i>Add Mac Address
-          </a>
-        </li> -->
       </ul>
     </li>
   </ul>
+</li>
 
-  <!-- Sidebar Footer -->
-  <div class="sidebar-footer">
-    <!-- <a class="profile" (click)="openProfile()"><i class="fas fa-user"></i> Profile</a> -->
-    <a (click)="logout()" class="logout">
-      <i class="fas fa-sign-out-alt"></i> Logout
-    </a>
-  </div>
+
+
+                <li class="slide__category"><span class="category-name">Logout</span></li>
+
+
+  <li class="slide">
+                    <a  class="side-menu__item" (click)="onLogout($event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon"
+                            viewBox="0 -960 960 960" fill="#000000">
+                            <path
+                                d="M679-466 466-679l213-213 213 213-213 213Zm-559-72v-301h301v301H120Zm418 418v-301h301v301H538Zm-418 0v-301h301v301H120Zm60-478h181v-181H180v181Zm502 51 129-129-129-129-129 129 129 129Zm-84 367h181v-181H598v181Zm-418 0h181v-181H180v181Zm181-418Zm192-78ZM361-361Zm237 0Z" />
+                        </svg>
+                        <span class="side-menu__label" >Logout</span>
+                    </a>
+                </li>
+
+                <!-- End::slide -->
+
+
+                  <!-- Start::slide -->
+              
+                <!-- End::slide -->
+
+
+
+
+                <!-- Start::slide -->
+               
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+              
+                <!-- End::slide -->
+
+              
+                <!-- End::slide -->
+
+               
+                <!-- End::slide -->
+                
+                <!-- Start::slide -->
+              
+                <!-- End::slide -->
+
+            </ul>
+            <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
+                    </path>
+                </svg></div>
+        </nav>
+        <!-- End::nav -->
+
+    </div>
+    <!-- End::main-sidebar -->
+
 </aside>

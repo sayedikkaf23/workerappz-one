@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
-import { LimitService } from '../services/limit';
+import { LimitService } from '../services/limit'; // Import the service to interact with the backend API
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,93 +10,61 @@ import { ToastrService } from 'ngx-toastr';
   standalone: false
 })
 export class MasterGlobalCreditLimit implements OnInit {
-  form!: FormGroup;
-
-  // loaders
-  loading = false;  // for initial GET
-  saving  = false;  // for UPDATE
+  form!: FormGroup;  // Form to hold the input values
+  saving = false;  // Track the saving state
+  savedMsg = '';  // Track the success message
 
   constructor(
-    private fb: FormBuilder,
-    private limitService: LimitService,
+    private fb: FormBuilder,  // FormBuilder to manage reactive forms
+    private limitService: LimitService , // Service to interact with the backend API,
     private toastr: ToastrService,
+
   ) {}
+ngOnInit(): void {
+  this.form = this.fb.group({
+    id: [null],
+    creditLimitInUSD: [null, [Validators.required, Validators.min(0)]],
+    transactionLimitInUSD: [null, [Validators.required, Validators.min(0)]],
+    transactionLimitInUSD_Bank: [null, [Validators.required, Validators.min(0)]],
+    wallet: [null, [Validators.required, Validators.min(0)]]
+  });
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      id: [null],
-      creditLimitInUSD: [null, [Validators.required, Validators.min(0)]],
-      transactionLimitInUSD: [null, [Validators.required, Validators.min(0)]],
-      transactionLimitInUSD_Bank: [null, [Validators.required, Validators.min(0)]],
-      wallet: [null, [Validators.required, Validators.min(0)]],
-      // if you truly need “Remember me should be Mandatory”, make it required:
-      // rememberMe: [true, [Validators.requiredTrue]]
-    });
+  this.loadTransactionLimit();
+}
 
-    this.loadTransactionLimit();
-  }
-
-  loadTransactionLimit(): void {
-    this.loading = true;
-    this.limitService.getCreditLimit()
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        (data) => {
-          // Handle “logical” errors returned with 200
-          if (data?.resCode && data.resCode !== 200) {
-            this.toastr.error(data?.resMessage || 'Something went wrong.');
-            return;
-          }
-
-          const row = data?.resData?.[0] || {};
-          this.form.patchValue({
-            id: row?.id ?? null,
-            creditLimitInUSD: row?.creditLimitInUSD ?? null,
-            transactionLimitInUSD: row?.transactionLimitInUSD ?? null,
-            transactionLimitInUSD_Bank: row?.transactionLimitInUSD_Bank ?? null,
-            wallet: row?.wallet ?? null,
-          });
-
-          // show backend message if present, else a simple “Loaded.”
-          // this.toastr.success(data?.resMessage || 'Loaded.');
-        },
-        (error) => {
-          this.toastr.error(
-            error?.error?.resMessage || error?.error?.message || error?.message || 'Error fetching transaction limit.'
-          );
-          console.error('GET error:', error);
-        }
-      );
-  }
-
-  update(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      this.toastr.warning('Please fill all required fields.');
-      return;
+loadTransactionLimit(): void {
+  this.limitService.getCreditLimit().subscribe(
+    (data) => {
+      this.form.patchValue({
+        id: data.resData[0].id,
+        
+        creditLimitInUSD: data.resData[0].creditLimitInUSD,
+        transactionLimitInUSD: data.resData[0].transactionLimitInUSD,
+        transactionLimitInUSD_Bank: data.resData[0].transactionLimitInUSD_Bank,
+        wallet: data.resData[0].wallet
+      });
+    },
+    (error) => {
+      this.toastr.error('Error fetching transaction limit.');
+      console.error('Error:', error);
     }
+  );
+}
 
-    this.saving = true;
-    this.limitService.updateTransactionLimit(this.form.value)
-      .pipe(finalize(() => (this.saving = false)))
-      .subscribe(
-        (data) => {
-          // // Handle “logical” errors returned with 200
-          // if (data?.resCode && data.resCode !== 200) {
-          //   this.toastr.error(data?.resMessage || 'Update failed.');
-          //   return;
-          // }
+update(): void {
+  if (this.form.invalid) return;
 
-          // Use dynamic message if provided; else show your exact fallback text
-                this.toastr.success('Global Limits Updated successfully');
-
-        },
-        (error) => {
-          this.toastr.error(
-            error?.error?.resMessage || error?.error?.message || error?.message || 'Error updating transaction limit.'
-          );
-          console.error('UPDATE error:', error);
-        }
-      );
-  }
+  this.saving = true;
+  this.limitService.updateTransactionLimit(this.form.value).subscribe(
+    () => {
+      this.saving = false;
+      this.toastr.success('Transaction limit updated successfully.');
+    },
+    (error) => {
+      this.saving = false;
+      this.toastr.error('Error updating transaction limit.');
+      console.error('Error:', error);
+    }
+  );
+}
 }
