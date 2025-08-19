@@ -1,0 +1,71 @@
+  .css-legend { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .css-legend .legend-item { display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#6c757d; }
+  .css-legend .swatch { width:12px; height:12px; border-radius:3px; display:inline-block; }
+
+  /* Chart variables */
+  .css-chart {
+    --group-gap: 16px;   /* space between month groups */
+    --bar-width: 14px;   /* width of each bar */
+    --bar-gap: 10px;     /* space between bars inside a group */
+    --chart-h: 320px;    /* chart height */
+    --grid-step: 48px;   /* distance between horizontal grid lines */
+  }
+
+  /* Chart area */
+  .css-grid {
+    position: relative;
+    height: var(--chart-h);
+    display: flex;
+    align-items: flex-end;
+    gap: var(--group-gap);
+    padding: 8px 12px 36px 12px;
+    border-left: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    background-image:
+      repeating-linear-gradient(
+        to top,
+        rgba(0,0,0,0.06) 0,
+        rgba(0,0,0,0.06) 1px,
+        transparent 1px,
+        transparent var(--grid-step)
+      );
+  }
+
+  /* Month group (holds 3 bars + label) */
+  .group {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: var(--bar-gap);
+    min-width: calc((var(--bar-width) * 3) + (var(--bar-gap) * 2));
+    justify-content: center;
+  }
+
+  /* Bars */
+  .bar {
+    width: var(--bar-width);
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: height .35s ease;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.06) inset;
+  }
+
+  /* Value bubble on hover */
+  .bar::after {
+    content: attr(data-v);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    font-size: 11px; padding: 2px 6px;
+    background: rgba(33,37,41,.85); color:#fff; border-radius: 10px;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .15s ease, transform .15s ease;
+  }
+  .bar:hover::after { opacity:1; transform: translateX(-50%) translateY(0); }
+
+  /* X-axis labels */
+  .label {
+    position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color:#6c757d; white-space: nowrap;
+  }

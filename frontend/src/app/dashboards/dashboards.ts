@@ -2,7 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Dashboard } from '../services/dashboard';
 import { Admin } from '../services/admin';
+import {
+  ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ApexStroke,
+  ApexPlotOptions, ApexLegend, ApexGrid, ApexYAxis, ApexFill
+} from 'ng-apexcharts';
 
+
+type Series = { name: string; color: string; data: number[] };
+
+interface OrderRow {
+  orderNo: string;
+  productName: string;
+  productImg: string;
+  rating: number;
+  ratingCount: number;
+  customer: string;
+  quantity: number;
+  status:
+    | 'Shipped'
+    | 'Cancelled'
+    | 'Under Process'
+    | 'Pending';
+  price: string;
+  orderedDate: string;
+}
 
 @Component({
   selector: 'app-dashboards',
@@ -63,6 +86,109 @@ export class Dashboards implements OnInit {
     // this.loadPermissions(); // Call the function to load permissions on initialization
   }
 
+   // KPI snapshot (you can bind these)
+  kpis = {
+    totalOrders: 45,
+    totalPackage: 10,
+    totalPayments: 60,
+    subscriptions: 10,
+    salesByUnit: { total: 12897, activeSales: 3274, progressPct: 50 },
+    totalRevenue: 8889
+  };
+
+  // CSS-only bar chart data
+  categories = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  series: Series[] = [
+    { name: 'Online',    color: '#0a2a43', data: [45, 55, 57, 56, 60, 58, 62, 59, 63] },
+    { name: 'Offline',   color: '#00a7a7', data: [75, 85,100, 98, 88,105, 90,115, 92] },
+    { name: 'Marketing', color: '#c4a968', data: [35, 40, 36, 27, 42, 45, 48, 50, 38] },
+  ];
+  private get maxValue(): number {
+    return Math.max(...this.series.flatMap(s => s.data));
+  }
+  heightPct(v: number): string {
+    const pct = (v / this.maxValue) * 100;
+    return pct.toFixed(2) + '%';
+  }
+
+  // Product sales table
+  rows: OrderRow[] = [
+    {
+      orderNo: '1537890',
+      productName: 'A semi minimal chair',
+      productImg: 'assets/images/shop/1.png',
+      rating: 5.0,
+      ratingCount: 90,
+      customer: 'Simon Cowall',
+      quantity: 1,
+      status: 'Shipped',
+      price: '$4320.29',
+      orderedDate: '25 Mar 2022'
+    },
+    {
+      orderNo: '1539078',
+      productName: 'Two type of watch sets',
+      productImg: 'assets/images/shop/2.png',
+      rating: 3.0,
+      ratingCount: 50,
+      customer: 'Meisha Kerr',
+      quantity: 2,
+      status: 'Cancelled',
+      price: '$6745.99',
+      orderedDate: '25 Mar 2022'
+    },
+    {
+      orderNo: '1539832',
+      productName: 'Mony layer headphones',
+      productImg: 'assets/images/shop/4.png',
+      rating: 4.5,
+      ratingCount: 65,
+      customer: 'Jessica',
+      quantity: 1,
+      status: 'Under Process',
+      price: '$1176.89',
+      orderedDate: '27 Feb 2022'
+    },
+    {
+      orderNo: '1538267',
+      productName: 'Sportive coloured shoes',
+      productImg: 'assets/images/shop/3.png',
+      rating: 2.5,
+      ratingCount: 15,
+      customer: 'Jason Stathman',
+      quantity: 1,
+      status: 'Pending',
+      price: '$1867.29',
+      orderedDate: '2 Apr 2022'
+    },
+    {
+      orderNo: '1537890B',
+      productName: 'Vayon black shades',
+      productImg: 'assets/images/shop/7.png',
+      rating: 3.5,
+      ratingCount: 36,
+      customer: 'Khabib Hussain',
+      quantity: 1,
+      status: 'Shipped',
+      price: '$2439.99',
+      orderedDate: '8 Apr 2022'
+    }
+  ];
+
+  // Action handlers
+  onViewDetails(): void {
+    // open modal / navigate
+    console.log('View details clicked');
+  }
+  openOrder(id: string): void {
+    console.log('Open order', id);
+  }
+  onEdit(row: OrderRow): void {
+    console.log('Edit', row);
+  }
+  onDelete(row: OrderRow): void {
+    console.log('Delete', row);
+  }
   open = {
   pages: false,
   Global: false
