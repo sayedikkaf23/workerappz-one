@@ -4,6 +4,7 @@ import { Admin } from '../services/admin';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
 import { Profile } from '../profile/profile';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-adminsidebar',
@@ -40,7 +41,8 @@ export class Adminsidebar {
     private adminService: Admin,
     private dialog: MatDialog, // Inject MatDialog here
     private ngZone: NgZone,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private auth: AuthService
   ) {
     this.loadPermissions(); // Call the function to load permissions on initialization
   }
@@ -70,6 +72,7 @@ export class Adminsidebar {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+
   ngOnInit() {
     const storedSettings = sessionStorage.getItem(this.sessionStorageKey);
     this.isDropdownOpen = storedSettings === 'true';
@@ -124,12 +127,9 @@ export class Adminsidebar {
   debug() {
     console.log('Debug clicked');
   }
-  logout() {
-    this.router.navigate(['/admin/login']);
-  }
 
   isActive(routeArray: string[]): boolean {
-    return routeArray.some(r => this.router.url.startsWith(r));
+    return routeArray.some((r) => this.router.url.startsWith(r));
   }
 
   // isActive(route: string): boolean {
@@ -317,5 +317,12 @@ export class Adminsidebar {
     e.preventDefault();
     e.stopPropagation();
     this.isGlobalOpen = !this.isGlobalOpen;
+  }
+
+  // logout
+  onLogout(event?: Event) {
+    event?.preventDefault();
+    this.auth.logout();
+    this.router.navigate(['/admin/login'], { replaceUrl: true });
   }
 }
