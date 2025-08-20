@@ -43,33 +43,28 @@
 
                 <!-- Start::slide__category -->
                 <li class="slide__category"><span class="category-name">MASTER</span></li>
-                <!-- End::slide__category -->
-<li class="slide has-sub" 
-    [class.open]="open.pages || isActive(['/admin/master/global'])">
+<li class="slide has-sub"
+    [class.open]="open.pages || (!suppress.pages && isActive(['/admin/master']))">
 
   <a class="side-menu__item" (click)="toggleMenu('pages')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="side-menu__icon">
-      <path d="M0 0h24v24H0V0z" fill="none"></path>
-      <path
-        d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27zM12 16l7.36-5.73L21 9l-9-7-9 7 
-        1.63-1.27L12 16zm0-11.47L17.74 9 12 13.47 6.26 9 12 4.53z"></path>
-    </svg>
+    <!-- icon -->
     <span class="side-menu__label">MASTER</span>
     <i class="fe fe-chevron-right side-menu__angle"></i>
   </a>
 
-  <!-- First submenu -->
-  <ul class="slide-menu child1" [style.display]="open.pages || isActive(['/admin/master/global']) ? 'block' : 'none'">
+  <ul class="slide-menu child1"
+      [style.display]="(open.pages || (!suppress.pages && isActive(['/admin/master']))) ? 'block' : 'none'">
+
     <li class="slide has-sub"
-        [class.open]="open.Global || isActive(['/admin/master/global/credit-limit'])">
+        [class.open]="open.Global || (!suppress.Global && isActive(['/admin/master/global']))">
 
       <a class="side-menu__item" (click)="toggleMenu('Global')">
         Global
         <i class="fe fe-chevron-right side-menu__angle"></i>
       </a>
 
-      <!-- Second submenu -->
-      <ul class="slide-menu child2" [style.display]="open.Global || isActive(['/admin/master/global/credit-limit']) ? 'block' : 'none'">
+      <ul class="slide-menu child2"
+          [style.display]="(open.Global || (!suppress.Global && isActive(['/admin/master/global']))) ? 'block' : 'none'">
         <li class="slide">
           <a
             [routerLink]="['/admin/master/global/credit-limit']"
@@ -83,14 +78,12 @@
   </ul>
 </li>
 
-
-
 <!-- Start::slide__category -->
 <li class="slide__category"><span class="category-name">Settings</span></li>
 <!-- End::slide__category -->
 
 <li class="slide has-sub"
-    [class.open]="open.Settings || isActive(['/admin/settings','/admin/settings/role','/admin/settings/admin','/admin/settings/service','/admin/settings/agent-code'])">
+    [class.open]="open.Settings || (!suppress.Settings && isActive(['/admin/settings']))">
   <a class="side-menu__item" (click)="toggleMenu('Settings')">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="side-menu__icon">
       <path d="M0 0h24v24H0V0z" fill="none"></path>
@@ -101,7 +94,7 @@
   </a>
 
   <ul class="slide-menu child1"
-      [style.display]="open.Settings || isActive(['/admin/settings','/admin/settings/role','/admin/settings/admin','/admin/settings/service','/admin/settings/agent-code']) ? 'block' : 'none'">
+       [style.display]="(open.Settings || (!suppress.Settings && isActive(['/admin/settings']))) ? 'block' : 'none'">
     <li class="slide">
       <a [routerLink]="['/admin/settings/role']" routerLinkActive="active"
          class="side-menu__item" (click)="$event.stopPropagation()">Role</a>

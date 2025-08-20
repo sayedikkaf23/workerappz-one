@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
 import { Profile } from '../profile/profile';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-adminsidebar',
   standalone: false,
@@ -34,7 +34,17 @@ export class Adminsidebar {
     '/admin/master/country/add',
     '/admin/master/country/edit/:id',
   ];
+open: any = {
+  pages: false,    // MASTER
+  Global: false,   // MASTER > Global
+  Settings: false,
+};
 
+suppress: any = {
+  pages: false,
+  Global: false,
+  Settings: false,
+};
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -42,13 +52,44 @@ export class Adminsidebar {
     private dialog: MatDialog, // Inject MatDialog here
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
-    private auth: AuthService
+    private auth: AuthService,
+    
   ) {
-    this.loadPermissions(); // Call the function to load permissions on initialization
+this.router.events
+    .pipe(filter(e => e instanceof NavigationEnd))
+    .subscribe(() => {
+      if (!this.suppress.Settings) {
+        this.open.Settings = this.isActive(['/admin/settings']) || this.open.Settings;
+      }
+      if (!this.suppress.pages) {
+        this.open.pages = this.isActive(['/admin/master']) || this.open.pages;
+      }
+      if (!this.suppress.Global) {
+        this.open.Global = this.isActive(['/admin/master/global']) || this.open.Global;
+      }
+    });
+    
   }
+  
 
   @ViewChild('sidebarMenu', { static: false }) sidebarMenu?: ElementRef;
+toggleMenu(key: 'pages'|'Global'|'Settings') {
+  const next = !this.open[key];
+  this.open[key] = next;
+  // if user closes manually, suppress auto-open; if opens, clear suppress
+  this.suppress[key] = !next;
+}
 
+isActive(paths: string[]): boolean {
+  return paths.some(p =>
+    this.router.isActive(p, {
+      paths: 'subset',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    })
+  );
+}
   // @ViewChild('sidebarMenu') sidebarMenu: ElementRef | undefined;
   sessionStorageKey = 'settingsDropdownOpen';
   settingsRoutes = [
@@ -72,6 +113,8 @@ export class Adminsidebar {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+  
+
 
   ngOnInit() {
     const storedSettings = sessionStorage.getItem(this.sessionStorageKey);
@@ -115,20 +158,20 @@ export class Adminsidebar {
     }
   }
 
-open: any = {
-  pages: false,
-  Global: false,
-  Settings: false,
-};
+// open: any = {
+//   pages: false,
+//   Global: false,
+//   Settings: false,
+// };
 
-toggleMenu(key: 'pages'|'Global'|'Settings') {
-  this.open[key] = !this.open[key];
-}
+// toggleMenu(key: 'pages'|'Global'|'Settings') {
+//   this.open[key] = !this.open[key];
+// }
 
 
-isActive(paths: string[]): boolean {
-  return paths.some(p => this.router.isActive(p, { paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }));
-}
+// isActive(paths: string[]): boolean {
+//   return paths.some(p => this.router.isActive(p, { paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }));
+// }
 
   debug() {
     console.log('Debug clicked');
