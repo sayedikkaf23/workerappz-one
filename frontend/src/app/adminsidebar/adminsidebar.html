@@ -85,6 +85,65 @@
 
 
 
+
+    <li class="slide__category"><span class="category-name">Settings</span></li>
+                <!-- End::slide__category -->
+<li class="slide has-sub" 
+    >
+
+ 
+
+  <!-- First submenu -->
+  <ul class="slide-menu child1" [style.display]="open.pages || isActive(['/admin/master/global']) ? 'block' : 'none'">
+    <li class="slide has-sub"
+        [class.open]="open.Global || isActive(['/admin/master/global/credit-limit'])">
+
+      <a class="side-menu__item" (click)="toggleMenu('Global')">
+        Settings
+        <i class="fe fe-chevron-right side-menu__angle"></i>
+      </a>
+
+      <!-- Second submenu -->
+      <ul class="slide-menu child2" [style.display]="open.Global || isActive(['/admin/master/global/credit-limit']) ? 'block' : 'none'">
+        <li class="slide">
+          <a
+            [routerLink]="['/admin/master/global/credit-limit']"
+            routerLinkActive="active"
+            class="side-menu__item"
+            (click)="$event.stopPropagation()"
+          >Role</a>
+        </li>
+         <li class="slide">
+          <a
+            [routerLink]="['/admin/master/global/credit-limit']"
+            routerLinkActive="active"
+            class="side-menu__item"
+            (click)="$event.stopPropagation()"
+          >Admin</a>
+        </li>
+          <li class="slide">
+          <a
+            [routerLink]="['/admin/master/global/credit-limit']"
+            routerLinkActive="active"
+            class="side-menu__item"
+            (click)="$event.stopPropagation()"
+          >Service</a>
+        </li>
+         <li class="slide">
+          <a
+            [routerLink]="['/admin/master/global/credit-limit']"
+            routerLinkActive="active"
+            class="side-menu__item"
+            (click)="$event.stopPropagation()"
+          >Agent Code</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+
+
                 <li class="slide__category"><span class="category-name">Logout</span></li>
 
 
