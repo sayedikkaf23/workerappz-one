@@ -1,15 +1,15 @@
 <body class="app sidebar-mini">
-    <app-topbar></app-topbar>
-  
- <div class="page-header d-flex align-items-center justify-content-between border-bottom "  style="margin-top: 60px;">
-                    <h1 class="page-title">Dashboard</h1>
-                    <div>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Master</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Global</li>
-                        </ol>
-                    </div>
-                </div>
+  <app-topbar></app-topbar>
+
+  <div class="page-header d-flex align-items-center justify-content-between border-bottom " style="margin-top: 60px;">
+    <h1 class="page-title">Dashboard</h1>
+    <div>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">Master</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Global</li>
+      </ol>
+    </div>
+  </div>
 
   <app-adminsidebar></app-adminsidebar>
 
@@ -28,53 +28,57 @@
             </div>
             <div class="card-body">
               <div class="p-5">
-               <form [formGroup]="form">
-  <div class="row gy-4">
+                <form [formGroup]="form">
+                  <div class="row gy-4">
 
-    <!-- Credit Limit -->
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-      <label for="creditLimit" class="form-label">Credit Limit</label>
-      <div class="input-wrapper">
-        <input id="creditLimit" type="number" formControlName="creditLimitInUSD" placeholder="0.00" class="form-control">
-        <span class="suffix">USD</span>
-      </div>
-    </div>
+                    <!-- Credit Limit -->
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                      <label for="creditLimit" class="form-label">Credit Limit</label>
+                      <div class="input-wrapper">
+                        <input id="creditLimit" type="number" formControlName="creditLimitInUSD" placeholder="0.00"
+                          class="form-control">
+                        <span class="suffix">USD</span>
+                      </div>
+                    </div>
 
-    <!-- Cash Limit -->
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-      <label for="cashLimit" class="form-label">Cash Limit</label>
-      <div class="input-wrapper">
-        <input id="cashLimit" type="number" formControlName="transactionLimitInUSD" placeholder="0.00" class="form-control">
-        <span class="suffix">USD</span>
-      </div>
-    </div>
+                    <!-- Cash Limit -->
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                      <label for="cashLimit" class="form-label">Cash Limit</label>
+                      <div class="input-wrapper">
+                        <input id="cashLimit" type="number" formControlName="transactionLimitInUSD" placeholder="0.00"
+                          class="form-control">
+                        <span class="suffix">USD</span>
+                      </div>
+                    </div>
 
-    <!-- Bank Limit -->
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-      <label for="bankLimit" class="form-label">Bank Limit</label>
-      <div class="input-wrapper">
-        <input id="bankLimit" type="number" formControlName="transactionLimitInUSD_Bank" placeholder="0.00" class="form-control">
-        <span class="suffix">USD</span>
-      </div>
-    </div>
+                    <!-- Bank Limit -->
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                      <label for="bankLimit" class="form-label">Bank Limit</label>
+                      <div class="input-wrapper">
+                        <input id="bankLimit" type="number" formControlName="transactionLimitInUSD_Bank"
+                          placeholder="0.00" class="form-control">
+                        <span class="suffix">USD</span>
+                      </div>
+                    </div>
 
-    <!-- Wallet Limit -->
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-      <label for="walletLimit" class="form-label">Wallet Limit</label>
-      <div class="input-wrapper">
-        <input id="walletLimit" type="number" formControlName="wallet" placeholder="0.00" class="form-control">
-        <span class="suffix">USD</span>
-      </div>
-    </div>
+                    <!-- Wallet Limit -->
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                      <label for="walletLimit" class="form-label">Wallet Limit</label>
+                      <div class="input-wrapper">
+                        <input id="walletLimit" type="number" formControlName="wallet" placeholder="0.00"
+                          class="form-control">
+                        <span class="suffix">USD</span>
+                      </div>
+                    </div>
 
-    <!-- Save Button -->
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 d-flex align-items-end">
-      <button type="button" class="btn btn-primary w-100" (click)="update()">Save</button>
-    </div>
+                    <!-- Save Button -->
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 d-flex align-items-end">
+                      <button type="button" class="btn btn-primary w-100" (click)="update()">Save</button>
+                    </div>
 
-  </div>
-</form>
- 
+                  </div>
+                </form>
+
               </div>
             </div>
           </div>
@@ -83,6 +87,5 @@
     </div>
   </div>
 
-  
-</body>
 
+</body>

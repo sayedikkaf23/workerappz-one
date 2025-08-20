@@ -69,6 +69,10 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { Role } from './role/role';
+import { Admin } from './admin/admin';
+import { Service } from './service/service';
+import { AgentCode } from './agent-code/agent-code';
 
 @NgModule({
   declarations: [
@@ -130,7 +134,11 @@ import { AuthInterceptor } from './services/auth.interceptor';
     AddCurrencyModal,
     CountryManagement,
     AddCountry,
-    UpdateCountry
+    UpdateCountry,
+    Role,
+    Admin,
+    Service,
+    AgentCode
   ],
   imports: [
     CommonModule,

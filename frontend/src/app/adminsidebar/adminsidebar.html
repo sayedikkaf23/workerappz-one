@@ -85,63 +85,41 @@
 
 
 
+<!-- Start::slide__category -->
+<li class="slide__category"><span class="category-name">Settings</span></li>
+<!-- End::slide__category -->
 
-    <li class="slide__category"><span class="category-name">Settings</span></li>
-                <!-- End::slide__category -->
-<li class="slide has-sub" 
-    >
+<li class="slide has-sub"
+    [class.open]="open.Settings || isActive(['/admin/settings','/admin/settings/role','/admin/settings/admin','/admin/settings/service','/admin/settings/agent-code'])">
+  <a class="side-menu__item" (click)="toggleMenu('Settings')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="side-menu__icon">
+      <path d="M0 0h24v24H0V0z" fill="none"></path>
+      <path d="M19.14,12.94a7.07,7.07,0,0,0,.05-.94,7.07,7.07,0,0,0-.05-.94l2.03-1.58a.5.5,0,0,0,.12-.64l-1.92-3.32a.5.5,0,0,0-.6-.22l-2.39,1a7.28,7.28,0,0,0-1.63-.95l-.36-2.54A.5.5,0,0,0,12.3,2H9.7a.5.5,0,0,0-.5.42L8.84,4.96a7.28,7.28,0,0,0-1.63.95l-2.39-1a.5.5,0,0,0-.6.22L2.3,8.45a.5.5,0,0,0,.12.64L4.45,10.67a7.07,7.07,0,0,0-.05.94,7.07,7.07,0,0,0,.05.94L2.42,14.13a.5.5,0,0,0-.12.64l1.92,3.32a.5.5,0,0,0,.6.22l2.39-1a7.28,7.28,0,0,0,1.63.95l.36,2.54a.5.5,0,0,0,.5.42h2.6a.5.5,0,0,0,.5-.42l.36-2.54a7.28,7.28,0,0,0,1.63-.95l2.39,1a.5.5,0,0,0,.6-.22l1.92-3.32a.5.5,0,0,0-.12-.64ZM12,15.5A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"></path>
+    </svg>
+    <span class="side-menu__label">Settings</span>
+    <i class="fe fe-chevron-right side-menu__angle"></i>
+  </a>
 
- 
-
-  <!-- First submenu -->
-  <ul class="slide-menu child1" [style.display]="open.pages || isActive(['/admin/master/global']) ? 'block' : 'none'">
-    <li class="slide has-sub"
-        [class.open]="open.Global || isActive(['/admin/master/global/credit-limit'])">
-
-      <a class="side-menu__item" (click)="toggleMenu('Global')">
-        Settings
-        <i class="fe fe-chevron-right side-menu__angle"></i>
-      </a>
-
-      <!-- Second submenu -->
-      <ul class="slide-menu child2" [style.display]="open.Global || isActive(['/admin/master/global/credit-limit']) ? 'block' : 'none'">
-        <li class="slide">
-          <a
-            [routerLink]="['/admin/master/global/credit-limit']"
-            routerLinkActive="active"
-            class="side-menu__item"
-            (click)="$event.stopPropagation()"
-          >Role</a>
-        </li>
-         <li class="slide">
-          <a
-            [routerLink]="['/admin/master/global/credit-limit']"
-            routerLinkActive="active"
-            class="side-menu__item"
-            (click)="$event.stopPropagation()"
-          >Admin</a>
-        </li>
-          <li class="slide">
-          <a
-            [routerLink]="['/admin/master/global/credit-limit']"
-            routerLinkActive="active"
-            class="side-menu__item"
-            (click)="$event.stopPropagation()"
-          >Service</a>
-        </li>
-         <li class="slide">
-          <a
-            [routerLink]="['/admin/master/global/credit-limit']"
-            routerLinkActive="active"
-            class="side-menu__item"
-            (click)="$event.stopPropagation()"
-          >Agent Code</a>
-        </li>
-      </ul>
+  <ul class="slide-menu child1"
+      [style.display]="open.Settings || isActive(['/admin/settings','/admin/settings/role','/admin/settings/admin','/admin/settings/service','/admin/settings/agent-code']) ? 'block' : 'none'">
+    <li class="slide">
+      <a [routerLink]="['/admin/settings/role']" routerLinkActive="active"
+         class="side-menu__item" (click)="$event.stopPropagation()">Role</a>
+    </li>
+    <li class="slide">
+      <a [routerLink]="['/admin/settings/admin']" routerLinkActive="active"
+         class="side-menu__item" (click)="$event.stopPropagation()">Admin</a>
+    </li>
+    <li class="slide">
+      <a [routerLink]="['/admin/settings/service']" routerLinkActive="active"
+         class="side-menu__item" (click)="$event.stopPropagation()">Service</a>
+    </li>
+    <li class="slide">
+      <a [routerLink]="['/admin/settings/agent-code']" routerLinkActive="active"
+         class="side-menu__item" (click)="$event.stopPropagation()">Agent Code</a>
     </li>
   </ul>
 </li>
-
 
 
                 <li class="slide__category"><span class="category-name">Logout</span></li>

@@ -47,6 +47,10 @@ import { CurrencyManagement } from './currency-management/currency-management';
 import { CountryManagement } from './country-management/country-management';
 import { AddCountry } from './add-country/add-country';
 import { UpdateCountry } from './update-country/update-country';
+import { Role } from './role/role';
+import { AgentCode } from './agent-code/agent-code';
+import { Admin } from './admin/admin';
+import { Service } from './service/service';
 const routes: Routes = [
   {
     path: '',
@@ -76,6 +80,16 @@ const routes: Routes = [
     children: [
       // { path: 'login', component: AdminLogin },
       { path: 'dashboard', component: AdminDashboard },
+       {
+        path: 'settings',
+        children: [
+          { path: '', redirectTo: 'role', pathMatch: 'full' },
+          { path: 'role', component: Role },
+          { path: 'admin', component: Admin },
+          { path: 'service', component: Service },
+          { path: 'agent-code', component: AgentCode },
+        ],
+      },
       // app-routing.module.ts (inside the existing 'admin' children array)
       {
         path: 'master/global/credit-limit',

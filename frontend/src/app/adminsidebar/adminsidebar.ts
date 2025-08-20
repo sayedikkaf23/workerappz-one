@@ -115,22 +115,28 @@ export class Adminsidebar {
     }
   }
 
-  open = {
-    pages: false,
-    Global: false,
-  };
+open: any = {
+  pages: false,
+  Global: false,
+  Settings: false,
+};
 
-  toggleMenu(menu: 'pages' | 'Global') {
-    this.open[menu] = !this.open[menu];
-  }
+toggleMenu(key: 'pages'|'Global'|'Settings') {
+  this.open[key] = !this.open[key];
+}
+
+
+isActive(paths: string[]): boolean {
+  return paths.some(p => this.router.isActive(p, { paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }));
+}
 
   debug() {
     console.log('Debug clicked');
   }
 
-  isActive(routeArray: string[]): boolean {
-    return routeArray.some((r) => this.router.url.startsWith(r));
-  }
+  // isActive(routeArray: string[]): boolean {
+  //   return routeArray.some((r) => this.router.url.startsWith(r));
+  // }
 
   // isActive(route: string): boolean {
   //   // Implement logic to check if the route is active
