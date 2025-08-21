@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AdminService } from '../services/admin.service';
+
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -24,7 +25,7 @@ export class CurrencyManagement {
   ngOnInit(): void {
     this.loadCurrencies();
   }
-
+  
   handleCategoryAdded(currency: { currencyName: string,isActive:boolean, isSettlement:boolean , currencyCode: string, scale: number }) {
     console.log('Currency added:', currency);
     this.showAddCurrencyModal = false;

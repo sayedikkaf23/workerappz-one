@@ -24,12 +24,16 @@ export class Topbar {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  toggleSidebar(): void {
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebar) {
-      sidebar.classList.toggle('open');
-    }
+    toggleSidebar() {
+    const htmlEl = document.documentElement;
+  htmlEl.setAttribute('data-vertical-style', 'overlay'); // make sure it's present
+  if (htmlEl.getAttribute('data-toggled') === 'icon-overlay-close') {
+    htmlEl.removeAttribute('data-toggled');
+  } else {
+    htmlEl.setAttribute('data-toggled', 'icon-overlay-close');
   }
+  }
+
 
   logout() {
     this.router.navigate(['/admin/login']);

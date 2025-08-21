@@ -1,0 +1,27 @@
+<!-- Add Permission Modal -->
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Add Country Permission</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="permission">Permission:</label>
+          <input type="text" id="permission" [(ngModel)]="permission" name="permission" required placeholder="Enter currency name" />
+        </div>
+        <div class="form-group">
+          <label for="sendCountryName">Country Name:</label>
+          <input type="text" id="sendCountryName" [(ngModel)]="sendCountryName" name="sendCountryName" required placeholder="Enter currency name" />
+        </div>
+       <div class="form-group">
+          <label for="receiveCountryName">Receive Country Name:</label>
+          <input type="text" id="countryName" [(ngModel)]="receiveCountryName" name="receiveCountryName" required placeholder="Enter currency name" />
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary mb-1">Add</button>
+            <button type="button" class="btn btn-secondary mb-1" (click)="onClose()">Cancel</button>
+          </div>
+          
+      </form>
+    </div>
+  </div>
+  

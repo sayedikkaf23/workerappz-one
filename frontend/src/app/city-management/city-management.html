@@ -11,24 +11,28 @@
     <!-- Cards Actions Section -->
     <div class="cards-actions">
         <div class="user-section">
-            <h2><i class="fa-solid fa-earth-americas"></i>Country Management</h2>
+            <h2><i class="fas fa-coins"></i>City Management</h2>
         </div>
 
         <div class="filter-export-buttons">
             <div class="search-container">
                 <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" >
-                <button class="btn btn-primary mb-1" (click)="filterCountries()">
+                <button class="btn btn-primary mb-1" (click)="filterCurrencies()">
                     <i class="fas fa-search"></i> SEARCH
                 </button>
             </div>
             <button class="btn btn-primary mb-1" (click)="exportToExcel()">
                 <i class="fas fa-file-export"></i> EXPORT
             </button>
-            <button class="btn btn-info btn-raised-shadow mb-1" (click)="openAddCountry()">
-                <i class="fas fa-plus"></i> ADD COUNTRY
+            <button class="btn btn-info btn-raised-shadow mb-1" (click)="showAddCityModal = true">
+                <i class="fas fa-plus"></i> ADD CITY
             </button>
 
-            
+            <!-- Add Category Modal -->
+            <app-add-city-modal *ngIf="showAddCityModal"
+                                    (cityAdded)="handleCategoryAdded($event)"
+                                    (modalClosed)="showAddCityModal = false">
+            </app-add-city-modal>
         </div>
 
 
@@ -42,38 +46,28 @@
             <table class="cards-table">
                 <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Name</th>
-                        <th>CCY</th>
-                        <th>Intl Trans Type</th>
-                        <th>Trans Start Date</th>
-                        <th>Trans End Date</th>
-                          <th>IsAsian</th>
-                           <th>Active</th>
-                        <th>Auth</th>
+                        <th>Country Name</th>
+                        <th>City Name</th>
+                      
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let category of paginatedCategories">
-                        <td>{{category.countryShortName}}</td>
-                        <td>{{category.countryName}}</td>
+                        <td>{{category.name || 'NA'}}</td>
+                        <td>{{category.code || 'NA'}}</td>
                        
-                        <td>{{category.ccy}}</td>
-                        <td>{{category.intlTransType}}</td>
-                        <td>{{category.transactionEndDate}}</td>
-                        <td>{{category.transactionStartDate}}</td>
-                        <td>{{category.isAsian}}</td>
-                         <td>{{category.active}}</td>
-                        <td>{{category.auth}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- <div class="card-body">
+                                    <div #gridContainer></div>
+         </div> -->
         
         <!-- Pagination Controls -->
         <div class="pagination">
-            <button class="btn btn-primary btn-sm mb-1" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+            <button class="btn btn-primary btn-sm mb-1"(click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
                 <i class="fas fa-chevron-left"></i> BACK
             </button>
             <span>Page {{ currentPage }} of {{ totalPages }}</span>
