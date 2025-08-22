@@ -1467,298 +1467,294 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
                                 <!-- Analytics Card -->
                                 <div class="col-xxl-12 col-xl-12">
-                                       
-<!-- Charts Row: two cards side-by-side -->
-<div class="row g-3">
-  <!-- Graph 1 -->
-  <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
-    <div class="card h-100">
-      <div class="card-header justify-content-between">
-        <h6 class="card-title flex-grow-1 text-truncate me-3">Monthly Orders Analytics</h6>
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary-light btn-sm" data-bs-toggle="dropdown">
-            View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
-          </button>
-          <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">Today</button></li>
-            <li><button class="dropdown-item" type="button">This Week</button></li>
-            <li><button class="dropdown-item" type="button">Last Week</button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="css-legend mb-3">
-          <span class="legend-item" *ngFor="let s of series1">
-            <i class="swatch" [style.background]="s.color"></i>{{ s.name }}
-          </span>
-        </div>
-        <div class="css-chart">
-          <div class="css-grid">
-            <div class="group" *ngFor="let c of categories1; let i = index">
-              <div class="bar" *ngFor="let s of series1"
-                   [style.height]="heightPct(s.data[i], max1)"
-                   [style.background]="s.color"
-                   [attr.data-v]="s.data[i]"
-                   [attr.title]="s.name + ': ' + s.data[i]"></div>
-              <div class="label">{{ c }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Graph 2 -->
-  <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
-    <div class="card h-100">
-      <div class="card-header justify-content-between">
-        <h6 class="card-title flex-grow-1 text-truncate me-3">Revenue Analytics</h6>
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary-light btn-sm" data-bs-toggle="dropdown">
-            View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
-          </button>
-          <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">Today</button></li>
-            <li><button class="dropdown-item" type="button">This Week</button></li>
-            <li><button class="dropdown-item" type="button">Last Week</button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="css-legend mb-3">
-          <span class="legend-item" *ngFor="let s of series2">
-            <i class="swatch" [style.background]="s.color"></i>{{ s.name }}
-          </span>
-        </div>
-        <div class="css-chart">
-          <div class="css-grid">
-            <div class="group" *ngFor="let c of categories2; let i = index">
-              <div class="bar" *ngFor="let s of series2"
-                   [style.height]="heightPct(s.data[i], max2)"
-                   [style.background]="s.color"
-                   [attr.data-v]="s.data[i]"
-                   [attr.title]="s.name + ': ' + s.data[i]"></div>
-              <div class="label">{{ c }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                                    <!-- Charts Row: two cards side-by-side -->
+                                    <div class="row g-3">
+                                        <!-- Graph 1 -->
+                                        <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
+                                            <div class="card h-100">
+                                                <div class="card-header justify-content-between">
+                                                    <h6 class="card-title flex-grow-1 text-truncate me-3">Monthly Orders
+                                                        Analytics</h6>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-primary-light btn-sm"
+                                                            data-bs-toggle="dropdown">
+                                                            View All<i
+                                                                class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><button class="dropdown-item"
+                                                                    type="button">Today</button></li>
+                                                            <li><button class="dropdown-item" type="button">This
+                                                                    Week</button></li>
+                                                            <li><button class="dropdown-item" type="button">Last
+                                                                    Week</button></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="css-legend mb-3">
+                                                        <span class="legend-item" *ngFor="let s of series1">
+                                                            <i class="swatch" [style.background]="s.color"></i>{{ s.name
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="css-chart">
+                                                        <div class="css-grid">
+                                                            <div class="group"
+                                                                *ngFor="let c of categories1; let i = index">
+                                                                <div class="bar" *ngFor="let s of series1"
+                                                                    [style.height]="heightPct(s.data[i], max1)"
+                                                                    [style.background]="s.color"
+                                                                    [attr.data-v]="s.data[i]"
+                                                                    [attr.title]="s.name + ': ' + s.data[i]"></div>
+                                                                <div class="label">{{ c }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-<!-- Agent Details -->
-<div class="row mt-4">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header d-flex align-items-center justify-content-between">
-        <h3 class="card-title mb-0">Agent Details</h3>
-        <button class="btn btn-sm btn-primary" (click)="refreshAgents()">
+                                        <!-- Graph 2 -->
+                                        <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
+                                            <div class="card h-100">
+                                                <div class="card-header justify-content-between">
+                                                    <h6 class="card-title flex-grow-1 text-truncate me-3">Revenue
+                                                        Analytics</h6>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-primary-light btn-sm"
+                                                            data-bs-toggle="dropdown">
+                                                            View All<i
+                                                                class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><button class="dropdown-item"
+                                                                    type="button">Today</button></li>
+                                                            <li><button class="dropdown-item" type="button">This
+                                                                    Week</button></li>
+                                                            <li><button class="dropdown-item" type="button">Last
+                                                                    Week</button></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="css-legend mb-3">
+                                                        <span class="legend-item" *ngFor="let s of series2">
+                                                            <i class="swatch" [style.background]="s.color"></i>{{ s.name
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="css-chart">
+                                                        <div class="css-grid">
+                                                            <div class="group"
+                                                                *ngFor="let c of categories2; let i = index">
+                                                                <div class="bar" *ngFor="let s of series2"
+                                                                    [style.height]="heightPct(s.data[i], max2)"
+                                                                    [style.background]="s.color"
+                                                                    [attr.data-v]="s.data[i]"
+                                                                    [attr.title]="s.name + ': ' + s.data[i]"></div>
+                                                                <div class="label">{{ c }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Agent Details -->
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div
+                                                    class="card-header d-flex align-items-center justify-content-between">
+                                                    <h3 class="card-title mb-0">Agent Details</h3>
+                                                    <!-- <button class="btn btn-sm btn-primary" (click)="refreshAgents()">
           <i class="ri-refresh-line me-1"></i>Refresh
-        </button>
-      </div>
+        </button> -->
+                                                    <div class="input-group input-group-sm search-pill w-auto">
+                                                        <span class="input-group-text bg-transparent border-0 pe-0">
+                                                            <i class="ri-search-line text-muted"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control border-0 shadow-none"
+                                                            [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()"
+                                                            placeholder="Search agents, IDs, status..." />
 
-      <div class="card-body pt-3">
-        <div class="table-responsive">
-          <table class="table table-bordered text-nowrap mb-0">
-            <thead class="border-top">
-              <tr>
-                <th>#</th>
-                <th>Agent Id</th>
-                <th>Agent Name</th>
-                <th>Agent Balance</th>
-                <th>Agent Limit</th>
-                <th>Agent Debit Balance</th>
-                <th>Status</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+                                                    </div>
+                                                </div>
 
-            <tbody>
-              <!-- use pagedAgents + page-aware index -->
-              <tr *ngFor="let a of pagedAgents; let i = index">
-                <td>{{ (i + 1) + (currentPage - 1) * pageSize }}</td>
-                <td class="fw-semibold">{{ a.id }}</td>
-                <td>{{ a.name }}</td>
-                <td>{{ a.balance | currency:'USD':'symbol':'1.0-2' }}</td>
-                <td>{{ a.limit | currency:'USD':'symbol':'1.0-2' }}</td>
-                <td>{{ a.debitBalance | currency:'USD':'symbol':'1.0-2' }}</td>
+                                                <div class="card-body pt-3">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered text-nowrap mb-0">
+                                                            <thead class="border-top">
+                                                                <tr>
+                                                                    <!-- <th>#</th> -->
+                                                                    <th>Agent Id</th>
+                                                                    <th>Agent Name</th>
+                                                                    <th>Agent Balance</th>
+                                                                    <th>Agent Limit</th>
+                                                                    <th>Agent Debit Balance</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created at</th>
+                                                                    <th>Updated at</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
 
-                <td class="text-center">
-                  <div class="form-check form-switch d-inline-flex align-items-center">
-                    <input class="form-check-input" type="checkbox"
-                           [checked]="a.status === 'Active'"
-                           (change)="toggleStatus(a, $event.target.checked)">
-                    <span class="ms-2 badge"
+                                                            <tbody>
+                                                                <!-- use pagedAgents + page-aware index -->
+                                                                <tr *ngFor="let a of pagedAgents; let i = index">
+                                                                    <!-- <td>{{ (i + 1) + (currentPage - 1) * pageSize }}</td> -->
+                                                                    <td class="fw-semibold">{{ a.id }}</td>
+                                                                    <td>{{ a.name }}</td>
+                                                                    <td>{{ a.balance | currency:'USD':'symbol':'1.0-2'
+                                                                        }}</td>
+                                                                    <td>{{ a.limit | currency:'USD':'symbol':'1.0-2' }}
+                                                                    </td>
+                                                                    <td>{{ a.debitBalance |
+                                                                        currency:'USD':'symbol':'1.0-2' }}</td>
+
+                                                                    <td class="text-center">
+                                                                        <div
+                                                                            class="form-check form-switch d-inline-flex align-items-center">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox"
+                                                                                [checked]="a.status === 'Active'"
+                                                                                (change)="toggleStatus(a, $event.target.checked)">
+                                                                            <!-- <span class="ms-2 badge"
                           [ngClass]="a.status === 'Active' ? 'bg-success' : 'bg-secondary'">
                       {{ a.status }}
-                    </span>
-                  </div>
-                </td>
+                    </span> -->
+                                                                        </div>
+                                                                    </td>
 
-                <td><span>{{ a.createdAt | date:'medium' }}</span></td>
-                <td><span>{{ a.updatedAt | date:'medium' }}</span></td>
+                                                                    <td><span>{{ a.createdAt | date:'medium' }}</span>
+                                                                    </td>
+                                                                    <td><span>{{ a.updatedAt | date:'medium' }}</span>
+                                                                    </td>
 
-                <td>
-                  <div class="hstack gap-2">
-                    <button class="btn btn-icon btn-sm btn-info-light"
-                            title="Transfer Balance"
-                            (click)="openTransfer(a)">
-                      <i class="ri-exchange-line"></i>
-                    </button>
+                                                                    <td>
+                                                                        <div class="hstack gap-2">
+                                                                            <button
+                                                                                class="btn btn-icon btn-sm btn-info-light"
+                                                                                title="Transfer Balance"
+                                                                                (click)="openTransfer(a)">
+                                                                                <i class="ri-exchange-line"></i>
+                                                                            </button>
 
-                    <button class="btn btn-icon btn-sm btn-secondary-light"
-                            title="Download Report"
-                            (click)="downloadReports(a)">
-                      <i class="ri-download-2-line"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                                                                            <button
+                                                                                class="btn btn-icon btn-sm btn-secondary-light"
+                                                                                title="Download Report"
+                                                                                (click)="downloadReports(a)">
+                                                                                <i class="ri-download-2-line"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
 
-              <tr *ngIf="!agents?.length">
-                <td colspan="10" class="text-center text-muted py-4">
-                  No agents found.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                                                                <tr *ngIf="!agents?.length">
+                                                                    <td colspan="10"
+                                                                        class="text-center text-muted py-4">
+                                                                        No agents found.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
 
-      <!-- pagination footer with icons -->
-      <div class="card-footer d-flex align-items-center justify-content-between">
-        <div class="small text-muted">
-          Showing {{ rangeFrom }}–{{ rangeTo }} of {{ agents.length }}
-        </div>
-        <ul class="pagination pagination-sm mb-0">
-          <li class="page-item" [class.disabled]="currentPage === 1">
-            <button class="page-link" (click)="firstPage()" [disabled]="currentPage === 1" aria-label="First">
-              <i class="ri-skip-left-line"></i>
-            </button>
-          </li>
-          <li class="page-item" [class.disabled]="currentPage === 1">
-            <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1" aria-label="Previous">
-              <i class="ri-arrow-left-s-line"></i>
-            </button>
-          </li>
-          <li class="page-item" [class.disabled]="currentPage === totalPages">
-            <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages" aria-label="Next">
-              <i class="ri-arrow-right-s-line"></i>
-            </button>
-          </li>
-          <li class="page-item" [class.disabled]="currentPage === totalPages">
-            <button class="page-link" (click)="lastPage()" [disabled]="currentPage === totalPages" aria-label="Last">
-              <i class="ri-skip-right-line"></i>
-            </button>
-          </li>
-        </ul>
-      </div>
+                                                <div
+                                                    class="card-footer d-flex align-items-center justify-content-between">
+                                                    <div class="small text-muted">
+                                                        Showing {{ rangeFrom }}–{{ rangeTo }} of {{ agents.length }}
+                                                    </div>
 
-    </div>
-  </div>
-</div>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <button class="icon-btn" (click)="firstPage()"
+                                                            [disabled]="currentPage === 1" aria-label="First">
+                                                            <i class="ri-skip-left-line"></i>
+                                                        </button>
+                                                        <button class="icon-btn" (click)="prevPage()"
+                                                            [disabled]="currentPage === 1" aria-label="Previous">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
 
+                                                        <!-- Page count -->
+                                                        <span class="page-indicator">{{ currentPage }} / {{ totalPages
+                                                            }}</span>
 
-<!-- Transfer Balance Modal -->
-<div class="modal fade show" tabindex="-1"
-     style="display:block; background:rgba(0,0,0,.5);" *ngIf="showTransferModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title">Transfer Balance</h6>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeTransfer()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-12">
-            <label class="form-label">Agent</label>
-            <input type="text" class="form-control"
-                   [value]="transferAgent?.id + ' - ' + transferAgent?.name" disabled>
-          </div>
-          <div class="col-6">
-            <label class="form-label">Current Balance</label>
-            <input type="text" class="form-control"
-                   [value]="transferAgent?.balance | currency:'USD'" disabled>
-          </div>
-          <div class="col-6">
-            <label class="form-label">Amount</label>
-            <input type="number" class="form-control" [(ngModel)]="transferForm.amount" min="1" />
-          </div>
-          <div class="col-12">
-            <label class="form-label">Remark (optional)</label>
-            <input type="text" class="form-control" [(ngModel)]="transferForm.remark" maxlength="120" />
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-light" (click)="closeTransfer()">Cancel</button>
-        <button class="btn btn-primary" (click)="submitTransfer()">Transfer</button>
-      </div>
-    </div>
-  </div>
-</div>
+                                                        <button class="icon-btn" (click)="nextPage()"
+                                                            [disabled]="currentPage === totalPages" aria-label="Next">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                        <button class="icon-btn" (click)="lastPage()"
+                                                            [disabled]="currentPage === totalPages" aria-label="Last">
+                                                            <i class="ri-skip-right-line"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
 
 
-<!-- Edit Agent Modal (Angular-controlled, no Bootstrap JS required) -->
-<div class="modal fade show" tabindex="-1" style="display:block; background:rgba(0,0,0,.5);" *ngIf="showEditModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title">Edit Agent</h6>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeEdit()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-12">
-            <label class="form-label">Agent Id</label>
-            <input type="text" class="form-control" [value]="editingAgent?.id" disabled>
-          </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-          <div class="col-12">
-            <label class="form-label">Agent Name</label>
-            <input type="text" class="form-control" [(ngModel)]="editForm.name" placeholder="Enter name">
-          </div>
 
-          <div class="col-6">
-            <label class="form-label">Limit</label>
-            <input type="number" class="form-control" [(ngModel)]="editForm.limit">
-          </div>
+                                    <!-- Transfer Balance Modal -->
+                                    <div class="modal fade show" tabindex="-1"
+                                        style="display:block; background:rgba(0,0,0,.5);" *ngIf="showTransferModal">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title">Transfer Balance</h6>
+                                                    <button type="button" class="btn-close" aria-label="Close"
+                                                        (click)="closeTransfer()"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row g-3">
+                                                        <div class="col-12">
+                                                            <label class="form-label">Agent</label>
+                                                            <input type="text" class="form-control"
+                                                                [value]="transferAgent?.id + ' - ' + transferAgent?.name"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-label">Current Balance</label>
+                                                            <input type="text" class="form-control"
+                                                                [value]="transferAgent?.balance | currency:'USD'"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-label">Amount</label>
+                                                            <input type="number" class="form-control"
+                                                                [(ngModel)]="transferForm.amount" min="1" />
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label class="form-label">Remark (optional)</label>
+                                                            <input type="text" class="form-control"
+                                                                [(ngModel)]="transferForm.remark" maxlength="120" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-light"
+                                                        (click)="closeTransfer()">Cancel</button>
+                                                    <button class="btn btn-primary"
+                                                        (click)="submitTransfer()">Transfer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-          <div class="col-6">
-            <label class="form-label">Balance</label>
-            <input type="number" class="form-control" [(ngModel)]="editForm.balance">
-          </div>
 
-          <div class="col-6">
-            <label class="form-label">Debit Balance</label>
-            <input type="number" class="form-control" [(ngModel)]="editForm.debitBalance">
-          </div>
 
-          <div class="col-6">
-            <label class="form-label">Status</label>
-            <select class="form-select" [(ngModel)]="editForm.status">
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-light" (click)="closeEdit()">Cancel</button>
-        <button class="btn btn-primary" (click)="saveEdit()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

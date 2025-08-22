@@ -653,14 +653,15 @@ footer p{
 }
 
 .login-page .form-box{
-    width: 470px;
+    width: 495px;
     max-width: 100%;
-    padding: 40px;
+    padding: 50px;
     background: var(--secondary);
     border-radius: 20px;
     color: var(--white);
     border: 1px solid #F0F5F8;
     box-shadow: 0px 4px 14px 0px #0000000D;
+    margin-bottom: 85px;
 }
 .theme-wrapper.dark-active  .login-page .form-box {
     background: #022C51;

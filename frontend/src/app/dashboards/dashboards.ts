@@ -183,6 +183,117 @@ export class Dashboards implements OnInit {
       status: 'Active',
       createdAt: new Date('2025-06-11T14:10:00'),
       updatedAt: new Date('2025-08-19T16:22:00')
+    },
+     {
+      id: 'AG-1001',
+      name: 'Alice Johnson',
+      balance: 1200,
+      limit: 5000,
+      debitBalance: 200,
+      status: 'Active',
+      createdAt: new Date('2025-08-01T10:23:00'),
+      updatedAt: new Date('2025-08-20T12:05:00')
+    },
+    {
+      id: 'AG-1002',
+      name: 'Bob Smith',
+      balance: 350,
+      limit: 2000,
+      debitBalance: 50,
+      status: 'Inactive',
+      createdAt: new Date('2025-07-12T09:00:00'),
+      updatedAt: new Date('2025-08-18T08:30:00')
+    },
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
+    },
+     {
+      id: 'AG-1001',
+      name: 'Alice Johnson',
+      balance: 1200,
+      limit: 5000,
+      debitBalance: 200,
+      status: 'Active',
+      createdAt: new Date('2025-08-01T10:23:00'),
+      updatedAt: new Date('2025-08-20T12:05:00')
+    },
+    {
+      id: 'AG-1002',
+      name: 'Bob Smith',
+      balance: 350,
+      limit: 2000,
+      debitBalance: 50,
+      status: 'Inactive',
+      createdAt: new Date('2025-07-12T09:00:00'),
+      updatedAt: new Date('2025-08-18T08:30:00')
+    },
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
+    }, {
+      id: 'AG-1001',
+      name: 'Alice Johnson',
+      balance: 1200,
+      limit: 5000,
+      debitBalance: 200,
+      status: 'Active',
+      createdAt: new Date('2025-08-01T10:23:00'),
+      updatedAt: new Date('2025-08-20T12:05:00')
+    },
+    {
+      id: 'AG-1002',
+      name: 'Bob Smith',
+      balance: 350,
+      limit: 2000,
+      debitBalance: 50,
+      status: 'Inactive',
+      createdAt: new Date('2025-07-12T09:00:00'),
+      updatedAt: new Date('2025-08-18T08:30:00')
+    },
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
+    }
+    ,
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
+    }
+    ,
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
     }
   ];
 
@@ -272,33 +383,62 @@ saveEdit() {
   this.toastr.info('Dummy save (no-op)', 'Edit Agent');
   this.closeEdit();
 }
-// ===== Pagination (icons only) =====
-pageSize = 2;
+
+
+
+
+// Filtered view of agents based on searchQuery
+get filteredAgents(): Agent[] {
+  const q = (this.searchQuery || '').trim().toLowerCase();
+  if (!q) return this.agents;
+  return this.agents.filter(a => {
+    const hay = [
+      a.id,
+      a.name,
+      a.status,
+      a.balance,
+      a.limit,
+      a.debitBalance,
+      a.createdAt,
+      a.updatedAt,
+    ].map(v => ('' + v).toLowerCase());
+    return hay.some(v => v.includes(q));
+  });
+}
+
+// Re-clamp when filter changes
+onSearchChange(): void {
+  this.currentPage = 1;
+  this.clampPage();
+}
+
+// ---- Pagination (use filteredAgents) ----
+pageSize = 10;               // adjust as you like
 currentPage = 1;
 
 get totalPages(): number {
-  return Math.max(1, Math.ceil(this.agents.length / this.pageSize));
+  return Math.max(1, Math.ceil(this.filteredAgents.length / this.pageSize));
 }
 get pagedAgents(): Agent[] {
   const start = (this.currentPage - 1) * this.pageSize;
-  return this.agents.slice(start, start + this.pageSize);
+  return this.filteredAgents.slice(start, start + this.pageSize);
 }
 get rangeFrom(): number {
-  return this.agents.length ? (this.currentPage - 1) * this.pageSize + 1 : 0;
+  return this.filteredAgents.length ? (this.currentPage - 1) * this.pageSize + 1 : 0;
 }
 get rangeTo(): number {
-  return Math.min(this.currentPage * this.pageSize, this.agents.length);
+  return Math.min(this.currentPage * this.pageSize, this.filteredAgents.length);
 }
 
-firstPage() { this.currentPage = 1; }
-prevPage()  { if (this.currentPage > 1) this.currentPage--; }
-nextPage()  { if (this.currentPage < this.totalPages) this.currentPage++; }
-lastPage()  { this.currentPage = this.totalPages; }
+firstPage(){ this.currentPage = 1; }
+prevPage(){ if (this.currentPage > 1) this.currentPage--; }
+nextPage(){ if (this.currentPage < this.totalPages) this.currentPage++; }
+lastPage(){ this.currentPage = this.totalPages; }
+
 private clampPage() {
   if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
   if (this.currentPage < 1) this.currentPage = 1;
 }
-
 
 }
 
