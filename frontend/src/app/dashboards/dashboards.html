@@ -1355,11 +1355,13 @@
 
                     <!-- Start::Row-1 -->
                     <div class="row">
-                        <div class="col-xxl-9">
+                        <!-- Full width instead of col-xxl-9 -->
+                        <div class="col-xxl-12">
                             <div class="row">
                                 <div class="col-xxl-12 col-xl-12">
                                     <div class="row">
-                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xxl-6">
+                                        <!-- Card 1 -->
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
@@ -1379,7 +1381,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xxl-6">
+
+                                        <!-- Card 2 -->
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
@@ -1399,7 +1403,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xxl-6">
+
+                                        <!-- Card 3 -->
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start">
@@ -1419,12 +1425,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xxl-6">
+
+                                        <!-- Card 4 -->
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-start flex-wrap gap-1">
                                                         <div class="flex-grow-1">
-                                                            <p class="mb-0">Subscriptions </p>
+                                                            <p class="mb-0">Subscriptions</p>
                                                             <span class="fs-5">10</span>
                                                             <span class="fs-12 text-success ms-1"><i
                                                                     class="ti ti-trending-up mx-1"></i>0.5%</span>
@@ -1439,7 +1447,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                        <!-- Revenue Card -->
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                             <div class="card overflow-hidden">
                                                 <div class="card-body p-0">
                                                     <div class="px-3 pt-3">
@@ -1458,310 +1467,307 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-                                <div class="col-xxl-7 col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header justify-content-between">
-                                            <h6 class="card-title flex-grow-1 text-truncate me-3">Monthly Orders
-                                                Analytics</h6>
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-primary-light btn-sm"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    View All<i
-                                                        class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><button class="dropdown-item" type="button">Today</button></li>
-                                                    <li><button class="dropdown-item" type="button">This Week</button>
-                                                    </li>
-                                                    <li><button class="dropdown-item" type="button">Last Week</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
 
-                                        <div class="card-body">
-                                            <!-- Legend -->
-                                            <div class="css-legend mb-3">
-                                                <span class="legend-item" *ngFor="let s of series">
-                                                    <i class="swatch" [style.background]="s.color"></i>{{ s.name }}
-                                                </span>
-                                            </div>
+                                <!-- Analytics Card -->
+                                <div class="col-xxl-12 col-xl-12">
+                                       
+<!-- Charts Row: two cards side-by-side -->
+<div class="row g-3">
+  <!-- Graph 1 -->
+  <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
+    <div class="card h-100">
+      <div class="card-header justify-content-between">
+        <h6 class="card-title flex-grow-1 text-truncate me-3">Monthly Orders Analytics</h6>
+        <div class="dropdown">
+          <button type="button" class="btn btn-primary-light btn-sm" data-bs-toggle="dropdown">
+            View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">Today</button></li>
+            <li><button class="dropdown-item" type="button">This Week</button></li>
+            <li><button class="dropdown-item" type="button">Last Week</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="css-legend mb-3">
+          <span class="legend-item" *ngFor="let s of series1">
+            <i class="swatch" [style.background]="s.color"></i>{{ s.name }}
+          </span>
+        </div>
+        <div class="css-chart">
+          <div class="css-grid">
+            <div class="group" *ngFor="let c of categories1; let i = index">
+              <div class="bar" *ngFor="let s of series1"
+                   [style.height]="heightPct(s.data[i], max1)"
+                   [style.background]="s.color"
+                   [attr.data-v]="s.data[i]"
+                   [attr.title]="s.name + ': ' + s.data[i]"></div>
+              <div class="label">{{ c }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                                            <!-- PURE CSS BAR CHART -->
-                                            <div class="css-chart">
-                                                <div class="css-grid">
-                                                    <div class="group" *ngFor="let c of categories; let i = index">
-                                                        <div class="bar" *ngFor="let s of series"
-                                                            [style.height]="heightPct(s.data[i])"
-                                                            [style.background]="s.color" [attr.data-v]="s.data[i]"
-                                                            [attr.title]="s.name + ': ' + s.data[i]">
-                                                        </div>
-                                                        <div class="label">{{ c }}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- /chart -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <!-- Graph 2 -->
+  <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
+    <div class="card h-100">
+      <div class="card-header justify-content-between">
+        <h6 class="card-title flex-grow-1 text-truncate me-3">Revenue Analytics</h6>
+        <div class="dropdown">
+          <button type="button" class="btn btn-primary-light btn-sm" data-bs-toggle="dropdown">
+            View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">Today</button></li>
+            <li><button class="dropdown-item" type="button">This Week</button></li>
+            <li><button class="dropdown-item" type="button">Last Week</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="css-legend mb-3">
+          <span class="legend-item" *ngFor="let s of series2">
+            <i class="swatch" [style.background]="s.color"></i>{{ s.name }}
+          </span>
+        </div>
+        <div class="css-chart">
+          <div class="css-grid">
+            <div class="group" *ngFor="let c of categories2; let i = index">
+              <div class="bar" *ngFor="let s of series2"
+                   [style.height]="heightPct(s.data[i], max2)"
+                   [style.background]="s.color"
+                   [attr.data-v]="s.data[i]"
+                   [attr.title]="s.name + ': ' + s.data[i]"></div>
+              <div class="label">{{ c }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                        <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title mb-0">Product Sales</h3>
-                                </div>
-                                <div class="card-body pt-4">
-                                    <div class="grid-margin">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered text-nowrap mb-0">
-                                                <thead class="border-top">
-                                                    <tr>
-                                                        <th class="wp-5 border-bottom-0 my-auto text-center">
-                                                            <input class="form-check-input check-all" type="checkbox"
-                                                                value="" id="checkebox-sm">
-                                                        </th>
-                                                        <th class="border-bottom-0">Order no</th>
-                                                        <th class="border-bottom-0">Product</th>
-                                                        <th class="border-bottom-0">Ratings</th>
-                                                        <th class="border-bottom-0">Customer</th>
-                                                        <th class="border-bottom-0 text-center">Quantity</th>
-                                                        <th class="border-bottom-0">Status</th>
-                                                        <th class="border-bottom-0">Price</th>
-                                                        <th class="border-bottom-0">Ordered date</th>
-                                                        <th class="border-bottom-0">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="border-bottom user-list">
-                                                        <td class="user-checkbox text-center">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                checked="">
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold"><a class="text-dark"
-                                                                href="#">#1537890</a>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="avatar avatar-sm avatar-radius me-2">
-                                                                    <img src="../assets/images/shop/1.png"
-                                                                        class="avatar-radius" alt="product">
-                                                                </span>
-                                                                A semi minimal chair
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-semibold fs-15">
-                                                            5.0 <span class="text-muted fw-normal fs-12">(90 Mem)</span>
-                                                            <i class="fa fa-star text-warning fs-12"></i>
-                                                        </td>
-                                                        <td class="fs-14">
-                                                            <a class="text-dark" href="javascript:void(0);">Simon
-                                                                Cowall</a>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td><span
-                                                                class="badge badge-sm bg-success-transparent text-success fw-normal fs-11">Shipped</span>
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold">$4320.29</td>
-                                                        <td>
-                                                            <span class="me-2">25 Mar 2022</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="hstack gap-2 fs-1">
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-info-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-edit-line"></i></a>
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-danger-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-delete-bin-7-line"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="border-bottom user-list">
-                                                        <td class="user-checkbox text-center">
-                                                            <input class="form-check-input" type="checkbox" value="">
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold text-success"><a class="text-dark"
-                                                                href="#">#1539078</a></td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="avatar avatar-sm avatar-radius me-2">
-                                                                    <img src="../assets/images/shop/2.png"
-                                                                        class="avatar-radius" alt="product">
-                                                                </span>
-                                                                Two type of watch sets
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-semibold fs-15">
-                                                            3.0 <span class="text-muted fw-normal fs-12">(50 Mem)</span>
-                                                            <i class="fa fa-star text-warning fs-12"></i>
-                                                        </td>
-                                                        <td class="fs-14">
-                                                            <a class="text-dark" href="javascript:void(0);">Meisha
-                                                                Kerr</a>
-                                                        </td>
-                                                        <td class="text-center">2</td>
-                                                        <td><span
-                                                                class="badge badge-sm bg-danger-transparent text-danger fw-normal fs-11">Cancelled</span>
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold">$6745.99</td>
-                                                        <td>
-                                                            <span class="me-2">25 Mar 2022</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="hstack gap-2 fs-1">
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-info-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-edit-line"></i></a>
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-danger-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-delete-bin-7-line"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="border-bottom user-list">
-                                                        <td class="user-checkbox text-center">
-                                                            <input class="form-check-input" type="checkbox" value="">
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold"><a class="text-dark"
-                                                                href="#">#1539832</a></td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="avatar avatar-sm avatar-radius me-2">
-                                                                    <img src="../assets/images/shop/4.png"
-                                                                        class="avatar-radius" alt="product">
-                                                                </span>
-                                                                Mony layer headphones
+<!-- Agent Details -->
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h3 class="card-title mb-0">Agent Details</h3>
+        <button class="btn btn-sm btn-primary" (click)="refreshAgents()">
+          <i class="ri-refresh-line me-1"></i>Refresh
+        </button>
+      </div>
 
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-semibold fs-15">
-                                                            4.5 <span class="text-muted fw-normal fs-12">(65 Mem)</span>
-                                                            <i class="fa fa-star text-warning fs-12"></i>
-                                                        </td>
-                                                        <td class="fs-14">
-                                                            <a class="text-dark" href="javascript:void(0);">Jessica</a>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td><span
-                                                                class="badge badge-sm bg-info-transparent text-info fw-normal fs-11">Under
-                                                                Process</span>
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold">$1176.89</td>
-                                                        <td>
-                                                            <span class="me-2">27 Feb 2022</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="hstack gap-2 fs-1">
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-info-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-edit-line"></i></a>
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-danger-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-delete-bin-7-line"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="border-bottom user-list">
-                                                        <td class="user-checkbox text-center">
-                                                            <input class="form-check-input" type="checkbox" value="">
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold"><a class="text-dark"
-                                                                href="#">#1538267</a></td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="avatar avatar-sm avatar-radius me-2">
-                                                                    <img src="../assets/images/shop/3.png"
-                                                                        class="avatar-radius" alt="product">
-                                                                </span>
-                                                                Sportive coloured shoes
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-semibold fs-15">
-                                                            2.5 <span class="text-muted fw-normal fs-12">(15 Mem)</span>
-                                                            <i class="fa fa-star text-warning fs-12"></i>
-                                                        </td>
-                                                        <td class="fs-14">
-                                                            <a class="text-dark" href="javascript:void(0);">Jason
-                                                                Stathman</a>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td><span
-                                                                class="badge badge-sm bg-warning-transparent text-warning fw-normal fs-11">Pending</span>
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold">$1867.29</td>
-                                                        <td>
-                                                            <span class="me-2">2 Apr 2022</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="hstack gap-2 fs-1">
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-info-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-edit-line"></i></a>
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-danger-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-delete-bin-7-line"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    <tr class="border-bottom user-list">
-                                                        <td class="user-checkbox text-center">
-                                                            <input class="form-check-input" type="checkbox" value="">
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold"><a class="text-dark"
-                                                                href="#">#1537890</a></td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="avatar avatar-sm avatar-radius me-2">
-                                                                    <img src="../assets/images/shop/7.png"
-                                                                        class="avatar-radius" alt="product">
-                                                                </span>
-                                                                Vayon black shades
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-semibold fs-15">
-                                                            3.5 <span class="text-muted fw-normal fs-12">(36 Mem)</span>
-                                                            <i class="fa fa-star text-warning fs-12"></i>
-                                                        </td>
-                                                        <td class="fs-14">
-                                                            <a class="text-dark" href="javascript:void(0);">Khabib
-                                                                Hussain</a>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td><span
-                                                                class="badge badge-sm bg-success-transparent text-success fw-normal fs-11">Shipped</span>
-                                                        </td>
-                                                        <td class="fs-14 fw-semibold">$2439.99</td>
-                                                        <td>
-                                                            <span class="me-2">8 Apr 2022</span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="hstack gap-2 fs-1">
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-info-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-edit-line"></i></a>
-                                                                <a aria-label="anchor" href="javascript:void(0);"
-                                                                    class="btn btn-icon btn-sm btn-danger-light btn-wave waves-effect waves-light">
-                                                                    <i class="ri-delete-bin-7-line"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+      <div class="card-body pt-3">
+        <div class="table-responsive">
+          <table class="table table-bordered text-nowrap mb-0">
+            <thead class="border-top">
+              <tr>
+                <th>#</th>
+                <th>Agent Id</th>
+                <th>Agent Name</th>
+                <th>Agent Balance</th>
+                <th>Agent Limit</th>
+                <th>Agent Debit Balance</th>
+                <th>Status</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- use pagedAgents + page-aware index -->
+              <tr *ngFor="let a of pagedAgents; let i = index">
+                <td>{{ (i + 1) + (currentPage - 1) * pageSize }}</td>
+                <td class="fw-semibold">{{ a.id }}</td>
+                <td>{{ a.name }}</td>
+                <td>{{ a.balance | currency:'USD':'symbol':'1.0-2' }}</td>
+                <td>{{ a.limit | currency:'USD':'symbol':'1.0-2' }}</td>
+                <td>{{ a.debitBalance | currency:'USD':'symbol':'1.0-2' }}</td>
+
+                <td class="text-center">
+                  <div class="form-check form-switch d-inline-flex align-items-center">
+                    <input class="form-check-input" type="checkbox"
+                           [checked]="a.status === 'Active'"
+                           (change)="toggleStatus(a, $event.target.checked)">
+                    <span class="ms-2 badge"
+                          [ngClass]="a.status === 'Active' ? 'bg-success' : 'bg-secondary'">
+                      {{ a.status }}
+                    </span>
+                  </div>
+                </td>
+
+                <td><span>{{ a.createdAt | date:'medium' }}</span></td>
+                <td><span>{{ a.updatedAt | date:'medium' }}</span></td>
+
+                <td>
+                  <div class="hstack gap-2">
+                    <button class="btn btn-icon btn-sm btn-info-light"
+                            title="Transfer Balance"
+                            (click)="openTransfer(a)">
+                      <i class="ri-exchange-line"></i>
+                    </button>
+
+                    <button class="btn btn-icon btn-sm btn-secondary-light"
+                            title="Download Report"
+                            (click)="downloadReports(a)">
+                      <i class="ri-download-2-line"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr *ngIf="!agents?.length">
+                <td colspan="10" class="text-center text-muted py-4">
+                  No agents found.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- pagination footer with icons -->
+      <div class="card-footer d-flex align-items-center justify-content-between">
+        <div class="small text-muted">
+          Showing {{ rangeFrom }}–{{ rangeTo }} of {{ agents.length }}
+        </div>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="firstPage()" [disabled]="currentPage === 1" aria-label="First">
+              <i class="ri-skip-left-line"></i>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1" aria-label="Previous">
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages" aria-label="Next">
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="lastPage()" [disabled]="currentPage === totalPages" aria-label="Last">
+              <i class="ri-skip-right-line"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Transfer Balance Modal -->
+<div class="modal fade show" tabindex="-1"
+     style="display:block; background:rgba(0,0,0,.5);" *ngIf="showTransferModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Transfer Balance</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeTransfer()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Agent</label>
+            <input type="text" class="form-control"
+                   [value]="transferAgent?.id + ' - ' + transferAgent?.name" disabled>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Current Balance</label>
+            <input type="text" class="form-control"
+                   [value]="transferAgent?.balance | currency:'USD'" disabled>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Amount</label>
+            <input type="number" class="form-control" [(ngModel)]="transferForm.amount" min="1" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Remark (optional)</label>
+            <input type="text" class="form-control" [(ngModel)]="transferForm.remark" maxlength="120" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-light" (click)="closeTransfer()">Cancel</button>
+        <button class="btn btn-primary" (click)="submitTransfer()">Transfer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit Agent Modal (Angular-controlled, no Bootstrap JS required) -->
+<div class="modal fade show" tabindex="-1" style="display:block; background:rgba(0,0,0,.5);" *ngIf="showEditModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Edit Agent</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeEdit()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Agent Id</label>
+            <input type="text" class="form-control" [value]="editingAgent?.id" disabled>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Agent Name</label>
+            <input type="text" class="form-control" [(ngModel)]="editForm.name" placeholder="Enter name">
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Limit</label>
+            <input type="number" class="form-control" [(ngModel)]="editForm.limit">
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Balance</label>
+            <input type="number" class="form-control" [(ngModel)]="editForm.balance">
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Debit Balance</label>
+            <input type="number" class="form-control" [(ngModel)]="editForm.debitBalance">
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" [(ngModel)]="editForm.status">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-light" (click)="closeEdit()">Cancel</button>
+        <button class="btn btn-primary" (click)="saveEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- End::Row-1 -->
 
                 </div>

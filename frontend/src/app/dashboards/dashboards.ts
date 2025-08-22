@@ -7,7 +7,6 @@ import {
   ApexPlotOptions, ApexLegend, ApexGrid, ApexYAxis, ApexFill
 } from 'ng-apexcharts';
 
-
 type Series = { name: string; color: string; data: number[] };
 
 interface OrderRow {
@@ -18,13 +17,20 @@ interface OrderRow {
   ratingCount: number;
   customer: string;
   quantity: number;
-  status:
-    | 'Shipped'
-    | 'Cancelled'
-    | 'Under Process'
-    | 'Pending';
+  status: 'Shipped' | 'Cancelled' | 'Under Process' | 'Pending';
   price: string;
   orderedDate: string;
+}
+
+interface Agent {
+  id: string;
+  name: string;
+  balance: number;
+  limit: number;
+  debitBalance: number;
+  status: 'Active' | 'Inactive';
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }
 
 @Component({
@@ -34,28 +40,9 @@ interface OrderRow {
   styleUrl: './dashboards.css'
 })
 export class Dashboards implements OnInit {
-  vr_card_total: number = 0; // Default value
-  purchase_bal: number = 0; // Default value
-  py_card_total: number = 0; // Default v
+
   loading: boolean = false;
-  totalIndividualUsers: number = 0;
-  totalBusinessUsers: number = 0;
-  totalCards: number = 567; // Placeholder value
-  maxUsers: number = 1000; // Example maximum value for calculation
-  maxCards: number = 1000; // Example maximum value for calculation
-  creditPrefundCredit: any = null;
-  creditPrefundBalance: any = null;
-  credit: any;
-  partnercode: any;
-  totalAmount: any;
-  adminId: string ='';
-  totalWallet: number = 0;
-  totalMaster: number = 0;
-  masterDetails: any[] = [];
-  rowsPerPage: number = 10;
   searchQuery: string = '';
-  // rowsPerPage: number = 10;
-  currentPage: number = 1;
 
   constructor(
     private dashboardService: Dashboard,
@@ -63,30 +50,9 @@ export class Dashboards implements OnInit {
     private adminService: Admin
   ) {}
 
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    const adminRole = localStorage.getItem('AdminRole');
-    this.partnercode = localStorage.getItem('partnerCode');
-    // this.adminId = localStorage.getItem('AdminID');
-
-    // if (adminRole === 'Master') {
-    //   // Call another API if role is Master
-    //   this.fetchUserCountsPartnercode(this.partnercode);
-    //   this.fetchAdditionalMasterData(this.partnercode); // This is the additional method to call for Master role
-    // } else if (adminRole === 'administrator') {
-    //   this.partnercode = 'superadmin';
-    //   this.fetchUserCountsPartnercode(this.partnercode);
-    //   this.fetchAdditionalMasterData(this.partnercode);
-    // } else {
-    //   // Call these methods for roles other than Master
-    //   this.fetchCreditPrefundData();
-    //   this.fetchDebitPrefundData();
-    //   this.fetchUserCounts(this.partnercode);
-    // }
-    // this.loadPermissions(); // Call the function to load permissions on initialization
-  }
-
-   // KPI snapshot (you can bind these)
+  // KPI snapshot
   kpis = {
     totalOrders: 45,
     totalPackage: 10,
@@ -96,22 +62,33 @@ export class Dashboards implements OnInit {
     totalRevenue: 8889
   };
 
-  // CSS-only bar chart data
-  categories = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  series: Series[] = [
+  // Charts data (two side-by-side)
+  categories1 = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+  series1: Series[] = [
     { name: 'Online',    color: '#0a2a43', data: [45, 55, 57, 56, 60, 58, 62, 59, 63] },
     { name: 'Offline',   color: '#00a7a7', data: [75, 85,100, 98, 88,105, 90,115, 92] },
     { name: 'Marketing', color: '#c4a968', data: [35, 40, 36, 27, 42, 45, 48, 50, 38] },
   ];
-  private get maxValue(): number {
-    return Math.max(...this.series.flatMap(s => s.data));
+
+  categories2 = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+  series2: Series[] = [
+    { name: 'North',  color: '#4f46e5', data: [30, 42, 39, 45, 50, 47, 52, 55, 58] },
+    { name: 'South',  color: '#16a34a', data: [22, 28, 35, 33, 41, 46, 44, 49, 53] },
+    { name: 'West',   color: '#f97316', data: [18, 25, 29, 31, 34, 38, 40, 42, 45] },
+  ];
+
+  private getMax(series: Series[]): number {
+    return Math.max(...series.flatMap(s => s.data));
   }
-  heightPct(v: number): string {
-    const pct = (v / this.maxValue) * 100;
+  get max1(): number { return this.getMax(this.series1); }
+  get max2(): number { return this.getMax(this.series2); }
+
+  heightPct(v: number, max: number): string {
+    const pct = (v / max) * 100;
     return pct.toFixed(2) + '%';
   }
 
-  // Product sales table
+  // Product sales table (dummy)
   rows: OrderRow[] = [
     {
       orderNo: '1537890',
@@ -175,209 +152,153 @@ export class Dashboards implements OnInit {
     }
   ];
 
-  // Action handlers
-  onViewDetails(): void {
-    // open modal / navigate
-    console.log('View details clicked');
-  }
-  openOrder(id: string): void {
-    console.log('Open order', id);
-  }
-  onEdit(row: OrderRow): void {
-    console.log('Edit', row);
-  }
-  onDelete(row: OrderRow): void {
-    console.log('Delete', row);
-  }
-  open = {
-  pages: false,
-  Global: false
-};
+  // Agent Details (dummy)
+  agents: Agent[] = [
+    {
+      id: 'AG-1001',
+      name: 'Alice Johnson',
+      balance: 1200,
+      limit: 5000,
+      debitBalance: 200,
+      status: 'Active',
+      createdAt: new Date('2025-08-01T10:23:00'),
+      updatedAt: new Date('2025-08-20T12:05:00')
+    },
+    {
+      id: 'AG-1002',
+      name: 'Bob Smith',
+      balance: 350,
+      limit: 2000,
+      debitBalance: 50,
+      status: 'Inactive',
+      createdAt: new Date('2025-07-12T09:00:00'),
+      updatedAt: new Date('2025-08-18T08:30:00')
+    },
+    {
+      id: 'AG-1003',
+      name: 'Charlie Davis',
+      balance: 780,
+      limit: 3000,
+      debitBalance: 120,
+      status: 'Active',
+      createdAt: new Date('2025-06-11T14:10:00'),
+      updatedAt: new Date('2025-08-19T16:22:00')
+    }
+  ];
 
-toggleMenu(menu: 'pages' | 'Global') {
-  this.open[menu] = !this.open[menu];
+  // Transfer modal state
+  showTransferModal = false;
+  transferAgent: Agent | null = null;
+  transferForm: { amount?: number; remark?: string } = {};
+
+  // Agent actions (dummy)
+  refreshAgents(): void {
+    this.agents = [...this.agents];
+    this.toastr.info('Refreshed', 'Agents');
+  }
+
+  toggleStatus(a: Agent, on: boolean) {
+    a.status = on ? 'Active' : 'Inactive';
+    a.updatedAt = new Date();
+    this.toastr.info(`Status set to ${a.status}`, a.id);
+  }
+
+  openTransfer(a: Agent) {
+    this.transferAgent = { ...a };
+    this.transferForm = {};
+    this.showTransferModal = true;
+  }
+
+  closeTransfer() {
+    this.showTransferModal = false;
+    this.transferAgent = null;
+    this.transferForm = {};
+  }
+
+  submitTransfer() {
+    if (!this.transferAgent) return;
+    const amt = Number(this.transferForm.amount || 0);
+    if (isNaN(amt) || amt <= 0) {
+      this.toastr.error('Enter a valid amount', 'Transfer');
+      return;
+    }
+    if (amt > this.transferAgent.balance) {
+      this.toastr.warning('Amount exceeds current balance', 'Transfer');
+      return;
+    }
+    const idx = this.agents.findIndex(x => x.id === this.transferAgent!.id);
+    if (idx > -1) {
+      this.agents[idx] = {
+        ...this.agents[idx],
+        balance: this.agents[idx].balance - amt,
+        updatedAt: new Date()
+      };
+    }
+    this.toastr.success('Transfer queued', this.transferAgent.id);
+    this.closeTransfer();
+  }
+
+  downloadReports(a: Agent) {
+    this.toastr.success('Report download started', a.id);
+  }
+
+  // (Existing sample handlers)
+  onViewDetails(): void { console.log('View details clicked'); }
+  openOrder(id: string): void { console.log('Open order', id); }
+  onEdit(row: OrderRow): void { console.log('Edit', row); }
+  onDelete(row: OrderRow): void { console.log('Delete', row); }
+
+  open = { pages: false, Global: false };
+  toggleMenu(menu: 'pages' | 'Global') { this.open[menu] = !this.open[menu]; }
+  debug() { console.log('Debug clicked'); }
+  // --- legacy edit modal shims (dummy) ---
+showEditModal = false;
+editingAgent: any = null;
+editForm: any = {};
+
+openEdit(a: any) {
+  this.editingAgent = { ...a };
+  this.editForm = {};
+  this.showEditModal = true;
 }
 
-debug() {
-  console.log('Debug clicked');
+closeEdit() {
+  this.showEditModal = false;
+  this.editingAgent = null;
+  this.editForm = {};
+}
+
+saveEdit() {
+  this.toastr.info('Dummy save (no-op)', 'Edit Agent');
+  this.closeEdit();
+}
+// ===== Pagination (icons only) =====
+pageSize = 2;
+currentPage = 1;
+
+get totalPages(): number {
+  return Math.max(1, Math.ceil(this.agents.length / this.pageSize));
+}
+get pagedAgents(): Agent[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.agents.slice(start, start + this.pageSize);
+}
+get rangeFrom(): number {
+  return this.agents.length ? (this.currentPage - 1) * this.pageSize + 1 : 0;
+}
+get rangeTo(): number {
+  return Math.min(this.currentPage * this.pageSize, this.agents.length);
+}
+
+firstPage() { this.currentPage = 1; }
+prevPage()  { if (this.currentPage > 1) this.currentPage--; }
+nextPage()  { if (this.currentPage < this.totalPages) this.currentPage++; }
+lastPage()  { this.currentPage = this.totalPages; }
+private clampPage() {
+  if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+  if (this.currentPage < 1) this.currentPage = 1;
 }
 
 
-  fetchUserCounts(partnercode: any): void {
-    this.dashboardService
-      .getAllIndividualAndBusinessUsers(partnercode)
-      .subscribe(
-        (response) => {
-          this.totalIndividualUsers = response.individualUserCount || 0;
-          this.totalBusinessUsers = response.businessUserCount || 0;
-          this.vr_card_total = response.vr_card_total;
-          this.py_card_total = response.py_card_total;
-          // You can also set `this.totalCards` if needed
-          // ← add these:
-          this.totalWallet = response.totalWallet || 0;
-          this.totalMaster = response.totalMaster || 0;
-          this.masterDetails = response.masterDetails || [];
-          this.loading = false;
-        },
-        (error) => {
-          this.toastr.error('Error fetching user counts', 'Error');
-          console.error('Error fetching user counts:', error);
-          this.loading = false;
-        }
-      );
-  }
-  fetchUserCountsPartnercode(partnerCode: any): void {
-    this.dashboardService.fetchUserCountsPartnercode(partnerCode).subscribe(
-      (response) => {
-        this.totalIndividualUsers = response.individualUserCount || 0;
-        this.totalBusinessUsers = response.businessUserCount || 0;
-        // You can also set `this.totalCards` if needed
-
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error('Error fetching user counts', 'Error');
-        console.error('Error fetching user counts:', error);
-        this.loading = false;
-      }
-    );
-  }
-
-  getProgressBarWidth(value: number, max: number): string {
-    const percentage = (value / max) * 100;
-    return `${percentage}%`;
-  }
-
-  fetchCreditPrefundData(): void {
-    // Call the first endpoint for Credit Prefund Credit
-    this.dashboardService.getCreditPrefundCredit().subscribe(
-      (response) => {
-        this.creditPrefundCredit = response;
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error('Error fetching Credit Prefund Credit', 'Error');
-        console.error('Error fetching Credit Prefund Credit:', error);
-        this.loading = false;
-      }
-    );
-  }
-  fetchDebitPrefundData(): void {
-    // Call the first endpoint for Credit Prefund Credit
-    this.dashboardService.getCreditPrefundBalance().subscribe(
-      (response) => {
-        this.creditPrefundBalance = response;
-        this.loading = false;
-      },
-      (error) => {
-        this.toastr.error('Error fetching Credit Prefund Credit', 'Error');
-        console.error('Error fetching Credit Prefund Credit:', error);
-        this.loading = false;
-      }
-    );
-  }
-
-  fetchAdditionalMasterData(partnerCode: string): void {
-    this.dashboardService
-      .getAdditionalMasterData(partnerCode, this.adminId)
-      .subscribe(
-        (response) => {
-          const financialDetails = response.financialDetails;
-          // this.creditPrefundBalance = financialDetails.debit;
-          console.log(financialDetails);
-          this.credit = financialDetails.totalAmount;
-          this.totalAmount = financialDetails.debit;
-
-          console.log(
-            this.credit,
-            this.totalAmount,
-            ' this.creditPrefundBalance'
-          );
-          this.loading = false;
-        },
-        (error) => {
-          this.toastr.error('Error fetching financial details', 'Error');
-          console.error('Error fetching financial details:', error);
-          this.loading = false;
-        }
-      );
-  }
-  loadPermissions(): void {
-    const adminId = localStorage.getItem('AdminID');
-    if (adminId) {
-      this.adminService.Premisson(adminId).subscribe(
-        (response) => {
-          if (
-            response &&
-            response.vr_card_total !== undefined &&
-            response.py_card_total !== undefined
-          ) {
-            if (this.partnercode === 'superadmin') {
-              console.log('superadmin');
-
-              this.vr_card_total = response.totalUserCardCount;
-              this.py_card_total = response.totalPyCardCount;
-              this.purchase_bal = response.totalPurchase;
-            } else {
-              this.vr_card_total = response.vr_card_total;
-              this.py_card_total = response.py_card_total;
-              this.purchase_bal = response.totalPurchase;
-            }
-
-            const adminRole = localStorage.getItem('AdminRole');
-            if (
-              this.partnercode?.toLowerCase() === 'superadmin' &&
-              adminRole?.toLowerCase() === 'administrator'
-            ) {
-              this.credit = response.totalAmount;
-              this.totalAmount = response.debit;
-            }
-          }
-        },
-        (error) => {
-          console.error('Error loading admin permissions', error);
-        }
-      );
-    } else {
-      console.error('No AdminID found in localStorage');
-    }
-  }
-
-  get filteredMasterDetails() {
-    return this.masterDetails.filter(
-      (master: any) =>
-        master.partnerName
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
-        (master.totalAmount &&
-          master.totalAmount
-            .toString()
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()))
-    );
-  }
-
-  get totalPages() {
-    return Math.ceil(this.filteredMasterDetails.length / this.rowsPerPage);
-  }
-
-  get filteredAndPagedMasterDetails() {
-    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
-    const endIndex = this.currentPage * this.rowsPerPage;
-    return this.filteredMasterDetails.slice(startIndex, endIndex);
-  }
-
-  changePage(page: number) {
-    if (page > 0 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
-  pageNumbers() {
-    const pages = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pages.push(i);
-    }
-    return pages;
-  }
 }
+
