@@ -31,6 +31,7 @@ interface Agent {
   status: 'Active' | 'Inactive';
   createdAt: Date;
   updatedAt: Date;
+  downloadReports?: boolean; // ← add this
 }
 
 @Component({
@@ -233,6 +234,33 @@ export class Dashboards implements OnInit {
   downloadReports(a: Agent) {
     this.toastr.success('Report download started', a.id);
   }
+
+  toggleDownloadReports(a: Agent, to: boolean) {
+  const prev = !!a.downloadReports;
+  a.downloadReports = to; // optimistic UI
+
+  const payload = {
+    agentId: Number(a.id),
+    agent_Type: 'PayIN',          // mandatory
+    Download_Reports: to          // backend expects this exact key
+  };
+
+  this.adminService.updateAgent(payload).subscribe({
+    next: (r) => {
+      if (r?.resCode === 200 && r?.resData === true) {
+        this.toastr.success(r?.resMessage || 'Updated Download_Reports', `Agent ${a.id}`);
+      } else {
+        a.downloadReports = prev; // rollback
+        this.toastr.warning(r?.resMessage || 'Update failed', `Agent ${a.id}`);
+      }
+    },
+    error: () => {
+      a.downloadReports = prev;   // rollback
+      this.toastr.error('Failed to update Download_Reports', `Agent ${a.id}`);
+    }
+  });
+}
+
 
   // (Existing sample handlers)
   onViewDetails(): void { console.log('View details clicked'); }

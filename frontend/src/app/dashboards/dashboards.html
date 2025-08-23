@@ -1649,12 +1649,13 @@
                                                                                 <i class="ri-exchange-line"></i>
                                                                             </button>
 
-                                                                            <button
-                                                                                class="btn btn-icon btn-sm btn-secondary-light"
-                                                                                title="Download Report"
-                                                                                (click)="downloadReports(a)">
-                                                                                <i class="ri-download-2-line"></i>
-                                                                            </button>
+                                                                          <button
+  class="btn btn-icon btn-sm btn-secondary-light"
+  [title]="a.downloadReports ? 'Disable Download Reports' : 'Enable Download Reports'"
+  (click)="toggleDownloadReports(a, !a.downloadReports)">
+  <i class="ri-download-2-line"></i>
+</button>
+
                                                                         </div>
                                                                     </td>
                                                                 </tr>
