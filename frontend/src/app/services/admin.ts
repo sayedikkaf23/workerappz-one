@@ -1,14 +1,26 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
+
+export interface UpdateAgentPayload {
+  agentId: number;
+  agent_Type?: string;
+  isActive?: boolean;
+  // …include other optional fields when you need them
+}
 
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class Admin {
-  url = environment.apiUrl;
+  private url = environment.apiUrl; // Ensure this URL points to your backend API
+
+  // url = environment.apiUrl;
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -342,4 +354,26 @@ export class Admin {
   verifyOTP(otp: string): Observable<any> {
     return this.http.post(`${this.url}/admin/PostOtp`, { otp });
   }
+
+  getAgentList(pageNumber = 1, pageSize = 10): Observable<any> {
+    const token = sessionStorage.getItem('token');
+
+    return this.http.get<any>(`${this.url}/admin/getAgentList`, {
+      params: {
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+      },
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+  }
+
+   updateAgent(payload: any): Observable<any> {
+  const token = sessionStorage.getItem('token');
+  return this.http.patch<any>(`${this.url}/admin/updateAgent`, payload, {
+    headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
+  });
+}
+
 }

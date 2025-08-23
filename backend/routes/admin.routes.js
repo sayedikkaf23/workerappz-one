@@ -30,4 +30,16 @@ router.get("/get-country", admin.getCountryById);
 router.post("/add-currency", admin.createCurrency);
 
 
+// agent
+router.get("/getAgentList", admin.getAgentList);
+// routes/admin.js
+router.patch("/updateAgent", admin.updateAgent);
+
+
+
+
+
+
+
+
 module.exports = router;

@@ -29,8 +29,8 @@ interface Agent {
   limit: number;
   debitBalance: number;
   status: 'Active' | 'Inactive';
-  createdAt: string | Date;
-  updatedAt: string | Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @Component({
@@ -40,9 +40,8 @@ interface Agent {
   styleUrl: './dashboards.css'
 })
 export class Dashboards implements OnInit {
-
-  loading: boolean = false;
   searchQuery: string = '';
+
 
   constructor(
     private dashboardService: Dashboard,
@@ -50,7 +49,10 @@ export class Dashboards implements OnInit {
     private adminService: Admin
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+        this.fetchAgents();
+
+  }
 
   // KPI snapshot
   kpis = {
@@ -152,150 +154,7 @@ export class Dashboards implements OnInit {
     }
   ];
 
-  // Agent Details (dummy)
-  agents: Agent[] = [
-    {
-      id: 'AG-1001',
-      name: 'Alice Johnson',
-      balance: 1200,
-      limit: 5000,
-      debitBalance: 200,
-      status: 'Active',
-      createdAt: new Date('2025-08-01T10:23:00'),
-      updatedAt: new Date('2025-08-20T12:05:00')
-    },
-    {
-      id: 'AG-1002',
-      name: 'Bob Smith',
-      balance: 350,
-      limit: 2000,
-      debitBalance: 50,
-      status: 'Inactive',
-      createdAt: new Date('2025-07-12T09:00:00'),
-      updatedAt: new Date('2025-08-18T08:30:00')
-    },
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    },
-     {
-      id: 'AG-1001',
-      name: 'Alice Johnson',
-      balance: 1200,
-      limit: 5000,
-      debitBalance: 200,
-      status: 'Active',
-      createdAt: new Date('2025-08-01T10:23:00'),
-      updatedAt: new Date('2025-08-20T12:05:00')
-    },
-    {
-      id: 'AG-1002',
-      name: 'Bob Smith',
-      balance: 350,
-      limit: 2000,
-      debitBalance: 50,
-      status: 'Inactive',
-      createdAt: new Date('2025-07-12T09:00:00'),
-      updatedAt: new Date('2025-08-18T08:30:00')
-    },
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    },
-     {
-      id: 'AG-1001',
-      name: 'Alice Johnson',
-      balance: 1200,
-      limit: 5000,
-      debitBalance: 200,
-      status: 'Active',
-      createdAt: new Date('2025-08-01T10:23:00'),
-      updatedAt: new Date('2025-08-20T12:05:00')
-    },
-    {
-      id: 'AG-1002',
-      name: 'Bob Smith',
-      balance: 350,
-      limit: 2000,
-      debitBalance: 50,
-      status: 'Inactive',
-      createdAt: new Date('2025-07-12T09:00:00'),
-      updatedAt: new Date('2025-08-18T08:30:00')
-    },
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    }, {
-      id: 'AG-1001',
-      name: 'Alice Johnson',
-      balance: 1200,
-      limit: 5000,
-      debitBalance: 200,
-      status: 'Active',
-      createdAt: new Date('2025-08-01T10:23:00'),
-      updatedAt: new Date('2025-08-20T12:05:00')
-    },
-    {
-      id: 'AG-1002',
-      name: 'Bob Smith',
-      balance: 350,
-      limit: 2000,
-      debitBalance: 50,
-      status: 'Inactive',
-      createdAt: new Date('2025-07-12T09:00:00'),
-      updatedAt: new Date('2025-08-18T08:30:00')
-    },
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    }
-    ,
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    }
-    ,
-    {
-      id: 'AG-1003',
-      name: 'Charlie Davis',
-      balance: 780,
-      limit: 3000,
-      debitBalance: 120,
-      status: 'Active',
-      createdAt: new Date('2025-06-11T14:10:00'),
-      updatedAt: new Date('2025-08-19T16:22:00')
-    }
-  ];
+
 
   // Transfer modal state
   showTransferModal = false;
@@ -309,10 +168,32 @@ export class Dashboards implements OnInit {
   }
 
   toggleStatus(a: Agent, on: boolean) {
-    a.status = on ? 'Active' : 'Inactive';
-    a.updatedAt = new Date();
-    this.toastr.info(`Status set to ${a.status}`, a.id);
-  }
+  const previous = a.status;
+  a.status = on ? 'Active' : 'Inactive';
+
+  const payload: any = {
+    agentId: Number(a.id),
+    agent_Type: 'PayIN',   // 🔴 mandatory field
+    isActive: on
+  };
+
+  this.adminService.updateAgent(payload).subscribe({
+    next: (r) => {
+      if (r?.resCode === 200 && r?.resData === true) {
+        this.toastr.success(r?.resMessage || 'Update Success!', `Agent ${a.id}`);
+      } else {
+        a.status = previous; // rollback
+        this.toastr.warning(r?.resMessage || 'Update failed', `Agent ${a.id}`);
+      }
+    },
+    error: () => {
+      a.status = previous; // rollback
+      this.toastr.error('Failed to update agent', `Agent ${a.id}`);
+    },
+  });
+}
+
+
 
   openTransfer(a: Agent) {
     this.transferAgent = { ...a };
@@ -380,9 +261,33 @@ closeEdit() {
 }
 
 saveEdit() {
-  this.toastr.info('Dummy save (no-op)', 'Edit Agent');
-  this.closeEdit();
+  if (!this.editingAgent) return;
+
+  const payload: any = {
+    agentId: Number(this.editingAgent.id),
+    agent_Type: 'PayIN',   // 🔴 mandatory field
+    isActive: this.editingAgent.status === 'Active',
+    // add other fields from form if needed
+    // agent_Name: this.editForm.agent_Name,
+    // email: this.editForm.email,
+    // ...
+  };
+
+  this.adminService.updateAgent(payload).subscribe({
+    next: (r) => {
+      if (r?.resCode === 200 && r?.resData) {
+        this.toastr.success(r?.resMessage || 'Update Success!', `Agent ${payload.agentId}`);
+        this.closeEdit();
+        this.fetchAgents();
+      } else {
+        this.toastr.warning(r?.resMessage || 'Update failed', `Agent ${payload.agentId}`);
+      }
+    },
+    error: () => this.toastr.error('Failed to update agent', 'Error'),
+  });
 }
+
+
 
 
 
@@ -412,9 +317,7 @@ onSearchChange(): void {
   this.clampPage();
 }
 
-// ---- Pagination (use filteredAgents) ----
-pageSize = 10;               // adjust as you like
-currentPage = 1;
+
 
 get totalPages(): number {
   return Math.max(1, Math.ceil(this.filteredAgents.length / this.pageSize));
@@ -430,15 +333,48 @@ get rangeTo(): number {
   return Math.min(this.currentPage * this.pageSize, this.filteredAgents.length);
 }
 
-firstPage(){ this.currentPage = 1; }
-prevPage(){ if (this.currentPage > 1) this.currentPage--; }
-nextPage(){ if (this.currentPage < this.totalPages) this.currentPage++; }
-lastPage(){ this.currentPage = this.totalPages; }
-
 private clampPage() {
   if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
   if (this.currentPage < 1) this.currentPage = 1;
 }
+totalAgents = 0;         // from API: res.resData.total
+currentPage = 1;
+pageSize = 10;
+agents: Agent[] = [];
+loading = false;
+
+fetchAgents(): void {
+  this.loading = true;
+this.adminService.getAgentList(this.currentPage, this.pageSize).subscribe({
+  next: (res) => {
+    // If the proxy had to wrap raw text, res.raw would exist — defensive check:
+    const dataRoot = res?.resData?.data || res?.raw?.resData?.data || [];
+    this.agents = dataRoot.map((a: any) => ({
+      id: a.agent_ID,
+      name: a.agent_Name,
+      balance: a.balanceCreditLimitInUSD,
+      limit: a.creditLimitInUSD,
+      debitBalance: a.agent_Debit_Balance,
+      status: a.status ? 'Active' : 'Inactive',
+      createdAt: new Date(a.createdOn),
+      updatedAt: new Date(a.updatedOn),
+    }));
+    this.totalAgents = Number(res?.resData?.total ?? this.agents.length);
+  },
+  error: () => this.toastr.error('Failed to load agents', 'Error'),
+});
 
 }
 
+// hook your pager to server-side pages
+firstPage(){ this.currentPage = 1; this.fetchAgents(); }
+prevPage(){ if (this.currentPage > 1){ this.currentPage--; this.fetchAgents(); } }
+nextPage(){ this.currentPage++; this.fetchAgents(); }
+lastPage(){ 
+  // if API doesn’t return total pages, you can’t jump to last reliably.
+  // Option 1: keep a `totalPages` from backend. If you have it:
+  // this.currentPage = this.totalPages; this.fetchAgents();
+}
+
+
+}

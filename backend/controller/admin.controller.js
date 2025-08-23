@@ -474,4 +474,100 @@ exports.createCurrency = async (req, res) => {
       error: err.message
     });
   }
+
+
+  
+};
+
+const BASE_URL = process.env.BaseURL;
+
+// agent
+// agent.js
+exports.getAgentList = async (req, res) => {
+  try {
+    const token = req.headers["authorization"]?.replace(/^Bearer\s+/i, "");
+    if (!token) {
+      return res.status(401).json({ message: "Missing API token" });
+    }
+
+    // prepare body for pagination
+    const body = {
+      pageNumber: 1,   // or pass from req.query / req.body if you want dynamic
+      pageSize: 10
+    };
+
+    let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: `${BASE_URL}/api/master/Agent/AgentDetailList`,
+  headers: { 
+    'Authorization': `bearer ${token}`, 
+    'Content-Type': 'application/json'
+  },
+  data : body
+};
+
+   axios.request(config)
+.then((response) => {
+  // console.log(JSON.stringify(response.data));
+      return res.status(200).json(response.data);
+
+})
+.catch((error) => {
+  console.log(error);
+});
+
+  } catch (error) {
+    if (error.response) {
+      return res
+        .status(error.response.status || 400)
+        .json(error.response.data);
+    }
+    return res.status(500).json({
+      message: "Error fetching Agent list",
+      detail: error.message
+    });
+  }
+};
+
+// agent.js (controller)
+
+// Update Agent
+exports.updateAgent = async (req, res) => {
+  try {
+    const token = req.headers["authorization"]?.replace(/^Bearer\s+/i, "");
+    if (!token) {
+      return res.status(401).json({ message: "Missing API token" });
+    }
+
+    // The body you send from client (agentId, agent_Type, isActive, etc.)
+    const body = req.body;
+
+    let config = {
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/api/master/Agent/Agentdetails/Update`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      data: body,
+    };
+
+    const response = await axios.request(config);
+
+    return res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Update Agent Error:", error?.response?.data || error.message);
+
+    if (error.response) {
+      return res
+        .status(error.response.status || 400)
+        .json(error.response.data);
+    }
+    return res.status(500).json({
+      message: "Error updating agent",
+      detail: error.message,
+    });
+  }
 };
