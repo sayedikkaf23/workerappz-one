@@ -370,7 +370,7 @@ export class Admin {
   }
 
    updateAgent(payload: any): Observable<any> {
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('token') || '';
   return this.http.patch<any>(`${this.url}/admin/updateAgent`, payload, {
     headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
   });

@@ -6,6 +6,8 @@ import {
   ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ApexStroke,
   ApexPlotOptions, ApexLegend, ApexGrid, ApexYAxis, ApexFill
 } from 'ng-apexcharts';
+import * as XLSX from 'xlsx';
+
 
 type Series = { name: string; color: string; data: number[] };
 
@@ -404,5 +406,44 @@ lastPage(){
   // this.currentPage = this.totalPages; this.fetchAgents();
 }
 
+private agentToRow(a: Agent) {
+  return {
+    'Agent Id': a.id,
+    'Agent Name': a.name,
+    'Balance (USD)': a.balance,
+    'Limit (USD)': a.limit,
+    'Debit Balance (USD)': a.debitBalance,
+    'Status': a.status,
+    'Created At': this.formatDateForExcel(a.createdAt),
+    'Updated At': this.formatDateForExcel(a.updatedAt)
+  };
+}
+
+private formatDateForExcel(d: Date | string): string {
+  if (!d) return '';
+  const dt = d instanceof Date ? d : new Date(d);
+  return dt.toISOString().replace('T', ' ').slice(0, 19);
+}
+
+exportAgentToExcel(a: Agent): void {
+  try {
+    const row = this.agentToRow(a);
+    const ws = XLSX.utils.json_to_sheet([row]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Agent Report');
+
+    const filename = `Agent_${a.id}_${this.timestamp()}.xlsx`;
+    XLSX.writeFile(wb, filename);
+    this.toastr.success('Excel generated', filename);
+  } catch {
+    this.toastr.error('Failed to generate Excel', 'Download Report');
+  }
+}
+
+private timestamp(): string {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
 
 }
