@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-country',
@@ -31,13 +32,13 @@ isLoading = false;
   outboundThresholdPerMonth: number | null = null;
   outboundThresholdPerDay: number | null = null;
   isAsian = false;
-
+  constructor(private router: Router) {}
   onSubmit(){
     
   }
 
   goBack(){
-
+  this.router.navigate(['/admin/master/country']);
   }
   currencyConfigs = [
   {

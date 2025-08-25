@@ -5,27 +5,27 @@
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="currencyName">Currency Name:</label>
-          <input type="text" id="currencyName" [(ngModel)]="currencyName" name="currencyName" required />
+          <input type="text" id="currencyName" [(ngModel)]="currencyName" name="currencyName" required placeholder="Enter currency name" />
         </div>
         <div class="form-group">
           <label for="currencyCode">Code:</label>
-          <input type="text" id="currencyCode" [(ngModel)]="currencyCode" name="currencyCode" required />
+          <input type="text" id="currencyCode" [(ngModel)]="currencyCode" name="currencyCode" required placeholder="Enter currency code"/>
         </div>
          <div class="form-group">
           <label for="scale">Scale:</label>
-          <input type="number" id="scale" [(ngModel)]="scale" name="scale" required />
+          <input type="number" class="form-control-sm" id="scale" [(ngModel)]="scale" name="scale" required placeholder="Enter number"/>
         </div>
          <div class="form-group custom">
-          <input type="checkbox" id="isActive" [(ngModel)]="isActive" name="isActive" required style="width:18px;height:18px;vertical-align:middle;" />
+          <input type="checkbox" id="isActive" class="form-check-input ms-2" [(ngModel)]="isActive" name="isActive" required style="width:18px;height:18px;vertical-align:middle;" />
           <label for="isActive" style="margin-left:6px;vertical-align:middle;">isActive</label>
         </div>
          <div class="form-group custom">
-          <input type="checkbox" id="isSettlement" [(ngModel)]="isSettlement" name="isSettlement" required style="width:16px;height:16px;vertical-align:middle;" />
+          <input type="checkbox" id="isSettlement" class="form-check-input ms-2" [(ngModel)]="isSettlement" name="isSettlement" required style="width:16px;height:16px;vertical-align:middle;" />
           <label for="isSettlement" style="margin-left:6px;vertical-align:middle;">isSettlementCurr</label>
         </div>
         <div class="form-actions">
-            <button type="submit" class="action-button approve-button">Add</button>
-            <button type="button" class="action-button reject-button" (click)="onClose()">Cancel</button>
+            <button type="submit" class="btn btn-primary mb-1">Add</button>
+            <button type="button" class="btn btn-secondary mb-1" (click)="onClose()">Cancel</button>
           </div>
           
       </form>

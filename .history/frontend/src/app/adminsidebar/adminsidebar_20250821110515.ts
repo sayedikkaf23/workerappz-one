@@ -158,15 +158,14 @@ isActive(paths: string[]): boolean {
     }
   }
 
+<<<<<<< Updated upstream
 // open: any = {
 //   pages: false,
 //   Global: false,
-    Currency: false,
-    Country: false
 //   Settings: false,
 // };
 
-// toggleMenu(key: 'pages'|'Global' | 'Currency' | 'Country'|'Settings') {
+// toggleMenu(key: 'pages'|'Global'|'Settings') {
 //   this.open[key] = !this.open[key];
 // }
 
@@ -174,6 +173,18 @@ isActive(paths: string[]): boolean {
 // isActive(paths: string[]): boolean {
 //   return paths.some(p => this.router.isActive(p, { paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }));
 // }
+=======
+  open = {
+    pages: false,
+    Global: false,
+    Currency: false,
+    Country: false
+  };
+
+  toggleMenu(menu: 'pages' | 'Global' | 'Currency' | 'Country') {
+    this.open[menu] = !this.open[menu];
+  }
+>>>>>>> Stashed changes
 
   debug() {
     console.log('Debug clicked');

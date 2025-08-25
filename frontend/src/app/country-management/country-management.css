@@ -95,7 +95,7 @@
   }
   
   .user-section h2 i {
-    color: #007bff; /* Color for the icon (blue shade) */
+    color: rgb(0, 165, 162);  /* Color for the icon (blue shade) */
     margin-right: 10px; /* Space between the icon and the text */
     font-size: 28px; /* Slightly larger icon size */
   }

@@ -1,0 +1,97 @@
+@import '../../assets/admin/css/style.css';
+@import '../../assets/admin/css/bootstrap.min.css';
+@import '../../assets/admin/css/responsive.css';
+@import '../../assets/admin/css/select2.min.css';
+@import '../../assets/admin/css/simplebar.min.css';
+
+.main-content {
+        margin-left: 250px;
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0px;
+    }
+}
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  /* Styles for form actions container */
+.form-actions {
+    display: flex;
+    justify-content: space-between; /* Align buttons to opposite sides */
+    margin-top: 20px; /* Adjust margin as needed */
+  }
+  
+  /* Base styling for action buttons */
+  .action-button {
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 4px; /* Optional: rounded corners */
+    font-size: 16px; /* Adjust font size as needed */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+  
+  /* Styling for approve button */
+  .approve-button {
+    background-color: #007bff; /* Adjust color as needed */
+    color: #fff; /* Text color */
+  }
+  
+  /* Styling for reject button */
+  .reject-button {
+    background-color: #dc3545; /* Example: red for cancel button */
+    color: #fff; /* Text color */
+  }
+  
+  .custom{
+    display: flex;
+  }
+
+  .custom input[type = checkbox]{
+
+    margin-top: 4px;
+  }

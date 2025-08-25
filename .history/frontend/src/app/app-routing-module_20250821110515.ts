@@ -47,13 +47,16 @@ import { CurrencyManagement } from './currency-management/currency-management';
 import { CountryManagement } from './country-management/country-management';
 import { AddCountry } from './add-country/add-country';
 import { UpdateCountry } from './update-country/update-country';
-import { ModeOfPayment } from './mode-of-payment/mode-of-payment';
-import { PermissionList } from './permission-list/permission-list';
-import { CityManagement } from './city-management/city-management';
+<<<<<<< Updated upstream
 import { Role } from './role/role';
 import { AgentCode } from './agent-code/agent-code';
 import { Admin } from './admin/admin';
 import { Service } from './service/service';
+=======
+import { ModeOfPayment } from './mode-of-payment/mode-of-payment';
+import { PermissionList } from './permission-list/permission-list';
+import { CityManagement } from './city-management/city-management';
+>>>>>>> Stashed changes
 const routes: Routes = [
   {
     path: '',

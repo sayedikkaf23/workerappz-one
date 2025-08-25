@@ -146,7 +146,7 @@ import { AddLocationModal } from './add-location-modal/add-location-modal';
     Role,
     Admin,
     Service,
-    AgentCode,
+    AgentCode
     ModeOfPayment,
     AddModeModal,
     PermissionList,

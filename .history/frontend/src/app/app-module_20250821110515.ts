@@ -66,6 +66,7 @@ import { CountryManagement } from './country-management/country-management';
 import { AddCountry } from './add-country/add-country';
 import { UpdateCountry } from './update-country/update-country';
 import { CommonModule, DatePipe } from '@angular/common';
+<<<<<<< Updated upstream
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
@@ -73,6 +74,7 @@ import { Role } from './role/role';
 import { Admin } from './admin/admin';
 import { Service } from './service/service';
 import { AgentCode } from './agent-code/agent-code';
+=======
 import { ModeOfPayment } from './mode-of-payment/mode-of-payment';
 import { AddModeModal } from './add-mode-modal/add-mode-modal';
 import { PermissionList } from './permission-list/permission-list';
@@ -81,6 +83,7 @@ import { CityManagement } from './city-management/city-management';
 import { AddCityModal } from './add-city-modal/add-city-modal';
 import { LocationManagement } from './location-management/location-management';
 import { AddLocationModal } from './add-location-modal/add-location-modal';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -143,10 +146,12 @@ import { AddLocationModal } from './add-location-modal/add-location-modal';
     CountryManagement,
     AddCountry,
     UpdateCountry,
+<<<<<<< Updated upstream
     Role,
     Admin,
     Service,
-    AgentCode,
+    AgentCode
+=======
     ModeOfPayment,
     AddModeModal,
     PermissionList,
@@ -155,6 +160,7 @@ import { AddLocationModal } from './add-location-modal/add-location-modal';
     AddCityModal,
     LocationManagement,
     AddLocationModal
+>>>>>>> Stashed changes
   ],
   imports: [
     CommonModule,

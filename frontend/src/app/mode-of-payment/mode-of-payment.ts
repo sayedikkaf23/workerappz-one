@@ -1,84 +1,66 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { Grid } from "gridjs";
-
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AdminService } from '../services/admin.service';
-import * as XLSX from 'xlsx';
-import { Router} from '@angular/router';
 
 @Component({
-  selector: 'app-country-management',
+  selector: 'app-mode-of-payment',
   standalone: false,
-  templateUrl: './country-management.html',
-  styleUrl: './country-management.css'
+  templateUrl: './mode-of-payment.html',
+  styleUrl: './mode-of-payment.css'
 })
-export class CountryManagement {
-
-  isLoading = false; // Loader state
-    currencies:any[] = []; // Array to hold all categories
+export class ModeOfPayment {
+   isLoading = false; // Loader state
+    modes:any[] = []; // Array to hold all categories
     paginatedCategories:any[] = []; // Array to hold paginated categories
     currentPage = 1; // Current page number
     totalPages = 1; // Total pages number
-      countryData:any[] = []; // To hold country details
+    showAddModeOfPayModal = false;
     searchTerm = ''; // Search term
   
     filteredCategories:any[] = []; 
-  countryId: number = 0; // 0 means all countries, or you can set it to a specific country ID if needed
-    constructor(private adminService: AdminService, private router: Router) {}
+  
+    constructor(private adminService: AdminService) {}
   
     ngOnInit(): void {
-      this.loadCountries();
-      
+      this.loadCurrencies();
     }
-
-     ngAfterViewInit(): void {
-    new Grid({
-      columns: [
-        { name: 'Short Name' },
-        { name: 'Long Name' },
-        { name: 'Active' },
-        { name: 'Auth' }
-      ],
-      data: this.paginatedCategories.map(c => [
-        c.name,
-        c.code,
-        c.isActive ? 'Yes' : 'No',
-        c.auth
-      ]),
-      pagination: {  limit: 5 },
-      search: true,
-      sort: true,
-      fixedHeader: true,
-      height: '350px'
-    }).render(document.getElementById("cards-table")!);
-  }
+    
+    handleCategoryAdded(mode: { countryName: string, modeName: string}) {
+      console.log('Mode of Payment added:', mode);
+      this.showAddModeOfPayModal = false;
+      this.loadCurrencies(); // Reload currencies after adding
+    }
   
- 
-  
-    loadCountries(): void {
+    loadCurrencies(): void {
       this.isLoading = true;
-      this.adminService.getCountryDetails(this.countryId).subscribe({
-      next: (data) => {
-        this.countryData = data.resData;
-               this.filteredCategories = this.countryData;
-        this.filterCountries();
+      this.adminService.getCurrencies().subscribe(
+          (res) => {
+        // sort newest first
+       this.modes = res.data;
+            this.filteredCategories = this.modes;
+        this.filterCurrencies();
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Error fetching country details', err);
-         this.isLoading = false;
-      }
-    });
-     
+        // (response) => {
+          
+          // this.categories = response.categories; // Extract categories from response
+          // this.filterCategories(); // Apply search filter and pagination
+          // this.isLoading = false;
+        // },
+        (error) => {
+          console.error('Error fetching categories:', error);
+          this.isLoading = false;
+        }
+      );
     }
   
-    filterCountries(): void {
+    filterCurrencies(): void {
       const searchTermLower = this.searchTerm.toLowerCase().trim();
     
       // If the search term is empty, display all categories
       if (!searchTermLower) {
-        this.filteredCategories = [...this.countryData];
+        this.filteredCategories = [...this.modes];
       } else {
-        this.filteredCategories = this.countryData.filter(category => {
+        this.filteredCategories = this.modes.filter(category => {
           // Convert each property to a string for comparison
           const name = category.name.toLowerCase();
           const code = category.code.toLowerCase();
@@ -111,7 +93,7 @@ export class CountryManagement {
     goToPage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
-      this.filterCountries(); // Reload paginated categories for the selected page
+      this.filterCurrencies(); // Reload paginated categories for the selected page
     }
   
     approveCard(category: any): void {
@@ -124,9 +106,6 @@ export class CountryManagement {
   
     viewCategoryDetails(category: any): void {
       console.log('Viewing Details:', category);
-    }
-    openAddCountry(){
-      this.router.navigate(['/admin/master/country/add']);
     }
   
     // exportToExcel(): void {
