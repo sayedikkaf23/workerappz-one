@@ -1578,15 +1578,25 @@
                                                     <h3 class="card-title mb-0">Agent Details</h3>
                                                     <!-- <button class="btn btn-sm btn-primary" (click)="refreshAgents()">
           <i class="ri-refresh-line me-1"></i>Refresh
-        </button> -->
-                                                    <div class="input-group input-group-sm search-pill w-auto">
-                                                        <span class="input-group-text bg-transparent border-0 pe-0">
-                                                            <i class="ri-search-line text-muted"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control border-0 shadow-none"
-                                                            [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()"
-                                                            placeholder="Search agents, IDs, status..." />
 
+          
+        </button> -->
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <!-- Export All Button -->
+                                                        <button class="btn btn-sm text-bg-primary"
+                                                            (click)="exportAllAgentsToExcel()">
+                                                            <i class="ri-download-2-line me-1"></i>Download Report
+                                                        </button>
+                                                        <div class="input-group input-group-sm search-pill w-auto">
+                                                            <span class="input-group-text bg-transparent border-0 pe-0">
+                                                                <i class="ri-search-line text-muted"></i>
+                                                            </span>
+                                                            <input type="text" class="form-control border-0 shadow-none"
+                                                                [(ngModel)]="searchQuery"
+                                                                (ngModelChange)="onSearchChange()"
+                                                                placeholder="Search agents, IDs, status..." />
+
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -1643,25 +1653,19 @@
                                                                     <td>
                                                                         <div class="hstack gap-2">
                                                                             <button
-                                                                                class="btn btn-icon btn-sm btn-info-light"
-                                                                                title="Transfer Balance"
+                                                                                class="btn btn-icon btn-sm btn-warning-light"
+                                                                                title="Edit Agent"
                                                                                 (click)="openTransfer(a)">
-                                                                                <i class="ri-exchange-line"></i>
+                                                                                <i class="ri-edit-2-line"></i>
                                                                             </button>
 
-                                                                            <!-- <button
-                                                                                class="btn btn-icon btn-sm btn-secondary-light"
-                                                                                [title]="a.downloadReports ? 'Disable Download Reports' : 'Enable Download Reports'"
-                                                                                (click)="toggleDownloadReports(a, !a.downloadReports)">
-                                                                                <i class="ri-download-2-line"></i>
-                                                                            </button> -->
+
                                                                             <button
-                                                                                class="btn btn-icon btn-sm btn-secondary-light"
-                                                                                title="Download Report (Excel)"
-                                                                                (click)="exportAgentToExcel(a)">
-                                                                                <i class="ri-download-2-line"></i>
-                                                                            </button>
-
+      class="btn btn-icon btn-sm btn-danger-light"
+      title="Delete Agent"
+      (click)="deleteAgent(a)">
+      <i class="ri-delete-bin-line"></i>
+    </button>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

@@ -445,5 +445,35 @@ private timestamp(): string {
   const pad = (n: number) => String(n).padStart(2, '0');
   return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
+exportAllAgentsToExcel(): void {
+  try {
+    const rows = this.agents.map(a => this.agentToRow(a));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Agents Report');
+
+    const filename = `Agents_Report_${this.timestamp()}.xlsx`;
+    XLSX.writeFile(wb, filename);
+    this.toastr.success('Excel generated', filename);
+  } catch {
+    this.toastr.error('Failed to generate Excel', 'Download Report');
+  }
+}
+
+deleteAgent(a: Agent) {
+  if (!confirm(`Are you sure you want to delete Agent ${a.id}?`)) return;
+alert('Delete not implemented in this demo.');
+  // this.adminService.deleteAgent(a.id).subscribe({
+  //   next: (r) => {
+  //     if (r?.resCode === 200) {
+  //       this.toastr.success('Agent deleted', `Agent ${a.id}`);
+  //       this.fetchAgents();
+  //     } else {
+  //       this.toastr.warning(r?.resMessage || 'Delete failed', `Agent ${a.id}`);
+  //     }
+  //   },
+  //   error: () => this.toastr.error('Failed to delete agent', 'Error'),
+  // });
+}
 
 }
