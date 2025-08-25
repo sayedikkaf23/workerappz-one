@@ -74,7 +74,7 @@
           </ul>
         </li>
       <!-- Second submenu -->
-      <ul class="slide-menu child2" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
+      <!-- <ul class="slide-menu child2" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
         <li class="slide">
           <a
             [routerLink]="['/admin/master/global/credit-limit']"
@@ -84,19 +84,19 @@
           >Global</a>
         </li>
       </ul>
-    </li>
+    -->
   </ul>
   <ul class="slide-menu child1" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
     <li class="slide has-sub"
         [class.open]="open.Currency || isActive(['/admin/master/currency'])">
 
-      <a class="side-menu__item" (click)="toggleMenu('Currency')">
+      <!-- <a class="side-menu__item" (click)="toggleMenu('Currency')">
         Currency
         <i class="fe fe-chevron-right side-menu__angle"></i>
-      </a>
+      </a> -->
 
       <!-- Second submenu -->
-      <ul class="slide-menu child2" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
+      <!-- <ul class="slide-menu child2" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
         <li class="slide">
           <a
             [routerLink]="['/admin/master/currency']"
@@ -105,7 +105,7 @@
             (click)="$event.stopPropagation()"
           >Currency</a>
         </li>
-      </ul>
+      </ul>  -->
     </li>
   </ul>
   <ul class="slide-menu child1" [style.display]="isActive(['/admin/master']) || open.pages ? 'block' : 'none'">
@@ -119,10 +119,10 @@
         '/admin/master/mode-of-payment'
       ])">
 
-      <a class="side-menu__item" (click)="toggleMenu('Country')">
+      <!-- <a class="side-menu__item" (click)="toggleMenu('Country')">
         Country
         <i class="fe fe-chevron-right side-menu__angle"></i>
-      </a>
+      </a> -->
 
       <!-- Second submenu -->
       <ul class="slide-menu child2" [style.display]="open.Country || isActive(['/admin/master/country']) ? 'block' : 'none'">
@@ -177,7 +177,7 @@
       </ul>
     </li>
   </ul>
-</li>
+<!-- </li> -->
 
         <!-- Start::slide__category -->
         <li class="slide__category"><span class="category-name">Settings</span></li>
@@ -258,7 +258,7 @@
 
         <!-- End::slide -->
 
-      </ul>
+      <!-- </ul> -->
       <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
           height="24" viewBox="0 0 24 24">
           <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">

@@ -1,5 +1,4 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { Grid } from "gridjs";
 
 import { AdminService } from '../services/admin.service';
 import * as XLSX from 'xlsx';
@@ -31,25 +30,6 @@ export class CountryManagement {
     }
 
      ngAfterViewInit(): void {
-    new Grid({
-      columns: [
-        { name: 'Short Name' },
-        { name: 'Long Name' },
-        { name: 'Active' },
-        { name: 'Auth' }
-      ],
-      data: this.paginatedCategories.map(c => [
-        c.name,
-        c.code,
-        c.isActive ? 'Yes' : 'No',
-        c.auth
-      ]),
-      pagination: {  limit: 5 },
-      search: true,
-      sort: true,
-      fixedHeader: true,
-      height: '350px'
-    }).render(document.getElementById("cards-table")!);
   }
   
  

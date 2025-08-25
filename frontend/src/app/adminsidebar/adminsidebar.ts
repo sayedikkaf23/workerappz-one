@@ -161,8 +161,8 @@ isActive(paths: string[]): boolean {
 // open: any = {
 //   pages: false,
 //   Global: false,
-    Currency: false,
-    Country: false
+    // Currency: false,
+    // Country: false
 //   Settings: false,
 // };
 
